@@ -1,0 +1,62 @@
+version: '3.9'
+
+services:
+  # nginx:
+  #  image: nginx
+  #  container_name: msm_nginx
+  #  restart: always
+  #  ports:
+  #    - "443:443"
+  #  volumes:
+  #    - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  #    - ./nginx/localhost:/etc/nginx/sites-enabled/localhost
+  #    - ./nginx/localhost:/etc/nginx/sites-available/localhost
+  #    - ./cert/localhost.cer:/etc/ssl/localhost.cer
+  #    - ./cert/localhost.pem:/etc/ssl/localhost.pem
+  #    - ./cert/rootca.cer:/etc/ssl/rootca.cer
+
+  postgres:
+    container_name: postgres_md
+    restart: unless-stopped
+    image: postgres:15.2
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    env_file:
+      - ./.db-env
+    ports:
+      - "7777:5432"
+    networks:
+      - net
+
+  server:
+    build: server/.
+    #   restart: always
+    networks:
+      - net
+    ports:
+      - "8761:8761"
+    #    volumes:
+    #      - /home/nifont/v1/md/tmp/git-props-msm:/app/tmp/git-props-msm
+    container_name: md_server
+    image: md/server:1
+
+#  server:
+#    build: server/.
+#    #   restart: always
+#    depends_on:
+#      - postgres
+#    networks:
+#      - net
+#    ports:
+#      - "8761:8761"
+#
+#    #    volumes:
+#    #      - /home/nifont/v1/md/tmp/git-props-msm:/app/tmp/git-props-msm
+#    env_file:
+#      - ./.db-env
+#    container_name: md_server
+#    image: md/server:1
+
+
+networks:
+  net:
