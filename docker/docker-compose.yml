@@ -43,6 +43,8 @@ services:
   client:
     build: client/.
     #   restart: always
+    depends_on:
+      - server
     networks:
       - net
     ports:
@@ -51,6 +53,20 @@ services:
     #      - /home/nifont/v1/md/tmp/git-props-msm:/app/tmp/git-props-msm
     container_name: md_client
     image: md/client:1
+
+  gateway:
+    build: gateway/.
+    #   restart: always
+    depends_on:
+      - client
+    networks:
+      - net
+    ports:
+      - "8765:8765"
+    #    volumes:
+    #      - /home/nifont/v1/md/tmp/git-props-msm:/app/tmp/git-props-msm
+    container_name: md_gateway
+    image: md/gateway:1
 
 #  server:
 #    build: server/.

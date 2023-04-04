@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm")
-    kotlin("plugin.spring")
     id("org.springframework.boot")
     id("io.spring.dependency-management")
+    kotlin("jvm")
+    kotlin("plugin.spring")
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_17
@@ -19,13 +19,21 @@ extra["springCloudVersion"] = "2022.0.2"
 val sshAntTask = configurations.create("sshAntTask")
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+//    implementation("org.springframework.boot:spring-boot-starter-security")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-gateway")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     sshAntTask("org.apache.ant:ant-jsch:1.10.12")
- }
+}
 
 dependencyManagement {
     imports {
@@ -40,8 +48,9 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+val jarFileName = "gateway.jar"
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
-    this.archiveFileName.set("server.jar")
+    this.archiveFileName.set(jarFileName)
 }
 
 ant.withGroovyBuilder {
@@ -61,7 +70,7 @@ val remoteUrl = "nmedalist.ru"
 val myFolder = System.getenv("MY_FOLDER") ?: "~"
 val patchKey = "$myFolder/Deploy/serverkey"
 
-task("remote-server") {
+task("remote-gateway") {
     dependsOn("bootJar")
     ant.withGroovyBuilder {
         doLast {
@@ -69,11 +78,10 @@ task("remote-server") {
             val user = "nifont"
             val host = remoteUrl
             val key = file(patchKey)
-            val jarFileName = "server.jar"
             try {
                 "scp"(
                     "file" to file("build/libs/$jarFileName"),
-                    "todir" to "$user@$host:~/v1/md/server",
+                    "todir" to "$user@$host:~/v1/md/gateway",
                     "keyfile" to key,
                     "trust" to true,
                     "knownhosts" to knownHosts
@@ -92,6 +100,3 @@ task("remote-server") {
         }
     }
 }
-//kotlin {
-//    jvmToolchain(11)
-//}

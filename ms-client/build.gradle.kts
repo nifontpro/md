@@ -21,8 +21,9 @@ val sshAntTask = configurations.create("sshAntTask")
 dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
-
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+
 	sshAntTask("org.apache.ant:ant-jsch:1.10.12")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

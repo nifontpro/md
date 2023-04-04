@@ -18,3 +18,4 @@ pluginManagement {
 
 include("ms-server")
 include("ms-client")
+include("ms-gateway")
