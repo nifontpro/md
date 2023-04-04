@@ -16,7 +16,5 @@ pluginManagement {
     }
 }
 
-//include("config")
-include("server")
-
-
+include("ms-server")
+include("ms-client")

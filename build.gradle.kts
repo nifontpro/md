@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm") apply false
     id("io.spring.dependency-management")  apply false
@@ -14,17 +12,6 @@ allprojects {
     repositories {
         mavenCentral()
     }
-
-    tasks.withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "17"
-        }
-    }
-
-    tasks.withType<Test> {
-        useJUnitPlatform()
-    }
 }
 
 subprojects {
@@ -38,8 +25,4 @@ subprojects {
 
 //kotlin {
 //    jvmToolchain(11)
-//}
-
-//application {
-//    mainClass.set("MainKt")
 //}
