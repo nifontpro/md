@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+server, client">
-      <change afterPath="$PROJECT_DIR$/ms-client/src/main/resources/application-remote.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-gateway/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-gateway/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-gateway/src/main/kotlin/ru/nb/msgateway/MsGatewayApplication.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-gateway/src/main/resources/application-local.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-gateway/src/main/resources/application-main.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-gateway/src/main/resources/application-remote.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-client/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-client/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-client/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-client/src/main/resources/application-local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-client/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-client/src/main/resources/application-main.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-server/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-server/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-server/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-    </list>
+    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+gateway" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,24 +45,6 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="md" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="md" type="f1a62948:ProjectNode" />
-                <item name="ms-client" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="md" type="f1a62948:ProjectNode" />
-                <item name="ms-client" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="md" type="f1a62948:ProjectNode" />
-                <item name="ms-client" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -291,7 +256,7 @@
       <workItem from="1680614606823" duration="4471000" />
       <workItem from="1680619451122" duration="71000" />
       <workItem from="1680619530356" duration="504000" />
-      <workItem from="1680620108976" duration="9815000" />
+      <workItem from="1680620108976" duration="10186000" />
     </task>
     <task id="LOCAL-00001" summary="Work version Init">
       <created>1680614424386</created>
@@ -314,7 +279,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680623203091</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="+gateway">
+      <created>1680637723335</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1680637723335</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -324,6 +296,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Work version Init" />
     <MESSAGE value="+server, client" />
-    <option name="LAST_COMMIT_MESSAGE" value="+server, client" />
+    <MESSAGE value="+gateway" />
+    <option name="LAST_COMMIT_MESSAGE" value="+gateway" />
   </component>
 </project>
