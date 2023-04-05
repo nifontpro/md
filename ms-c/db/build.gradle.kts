@@ -9,7 +9,6 @@ plugins {
 	kotlin("plugin.allopen")
 }
 
-// Обязательно для создания прокси-объектов:
 allOpen {
 	annotation("jakarta.persistence.Entity")
 	annotation("jakarta.persistence.Embeddable")
@@ -23,7 +22,9 @@ repositories {
 	maven { url = uri("https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates") }
 }
 
-extra["springCloudVersion"] = "2022.0.2"
+val springCloudVersion: String by project
+val jvmTargetVersion: String by project
+extra["springCloudVersion"] = springCloudVersion
 val sshAntTask = configurations.create("sshAntTask")
 
 dependencies {
@@ -49,7 +50,8 @@ dependencies {
 
 dependencyManagement {
 	imports {
-		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+//		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+		mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
 	}
 }
 
@@ -57,7 +59,7 @@ dependencyManagement {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "17"
+		jvmTarget = jvmTargetVersion
 	}
 }
 

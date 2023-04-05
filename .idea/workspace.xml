@@ -4,37 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+gateway">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cor/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/otus/cor/CorDslMarker.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/otus/cor/ICorExec.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/otus/cor/corDsl.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/otus/cor/handlers/AbstractCorExec.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/otus/cor/handlers/CorChain.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/otus/cor/handlers/CorWorker.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cor/src/test/kotlin/ru/otus/CorBaseTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker/service.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/db/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/db/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/DbApplication.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-local.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-main.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-remote.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/domain/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/domain/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/java/ru/md/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/rest/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/rest/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/TestController.kt" afterDir="false" />
+    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+proxy, client">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proxy/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proxy/src/main/kotlin/ru/md/proxy/controller/AuthResponse.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proxy/src/main/kotlin/ru/md/proxy/controller/BFFController.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proxy/src/main/kotlin/ru/md/proxy/security/SpringSecurityFluxConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proxy/src/main/kotlin/ru/md/proxy/utils/CookieUtils.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proxy/src/main/kotlin/ru/md/proxy/webclient/UserWebClientBuilder.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proxy/src/main/resources/application-local.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proxy/src/main/resources/application-remote.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proxy/src/main/resources/ssl/localhost.cer" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proxy/src/main/resources/ssl/localhost.pem" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proxy/src/main/resources/ssl/localhost.pfx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proxy/src/main/resources/ssl/rootca.cer" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-gateway/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/ms-gateway/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-server/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/DbApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/ClientApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-main.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-main.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/TestController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/UserController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-client/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/proxy/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-client/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-client/src/main/kotlin/ru/md/msclient/ClientApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/proxy/src/main/kotlin/ru/md/proxy/ProxyApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-client/src/main/kotlin/ru/md/msclient/controller/TestController.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-client/src/main/resources/application-local.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-client/src/main/resources/application-main.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-client/src/main/resources/application-remote.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-gateway/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-gateway/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-server/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-server/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,6 +75,12 @@
         <task path="$PROJECT_DIR$/ms-c">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/ms-c/db">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/ms-c/rest">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -85,19 +92,6 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="md" type="f1a62948:ProjectNode" />
                 <item name="ms-c" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="md" type="f1a62948:ProjectNode" />
-                <item name="ms-c" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="md" type="f1a62948:ProjectNode" />
-                <item name="ms-c" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -143,7 +137,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "corretto-17",
-    "last_opened_file_path": "C:/Users/Nifont/program/md/cor",
+    "last_opened_file_path": "C:/Users/Nifont/program/md/proxy/src/main/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -165,11 +159,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Nifont\program\md\proxy\src\main\resources" />
+      <recent name="C:\Users\Nifont\program\md\proxy\src\main\kotlin\ru\md\proxy" />
       <recent name="C:\Users\Nifont\program\md" />
       <recent name="C:\Users\Nifont\program\md\ms-c\db\src\main\resources" />
       <recent name="C:\Users\Nifont\program\md\ms-c\db\src\main\kotlin\ru\md\msc\db" />
-      <recent name="C:\Users\Nifont\program\md\ms-client\src\main\resources" />
-      <recent name="C:\Users\Nifont\program\md\ms-gateway\src\main\resources" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -179,7 +173,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.md:ms-c [remote-client]">
+  <component name="RunManager" selected="Gradle.md:ms-gateway [clean]">
     <configuration name="md:ms-c [remote-client]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -192,6 +186,72 @@
         <option name="taskNames">
           <list>
             <option value="remote-client" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>false</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="md:ms-c:db [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/ms-c/db" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>false</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="md:ms-c:rest [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/ms-c/rest" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>false</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="md:ms-gateway [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/ms-gateway" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -248,11 +308,15 @@
     </configuration>
     <configuration name="ClientApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="ACTIVE_PROFILES" value="main, local" />
-      <module name="md.ms-client.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="ru.md.msclient.ClientApplication" />
+      <envs>
+        <env name="POSTGRES_USER" value="medalist" />
+        <env name="POSTGRES_PASSWORD" value="mdMsxNecMedals0248" />
+      </envs>
+      <module name="md.ms-c.db.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="ru.md.msc.db.ClientApplication" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ru.md.msclient.*" />
+          <option name="PATTERN" value="ru.md.msc.db.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -274,6 +338,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ProxyApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ACTIVE_PROFILES" value="local" />
+      <envs>
+        <env name="KC_SECRET" value="7Nr1YE5UbKMmp7ss6nHcVCrnemKvPPzp" />
+      </envs>
+      <module name="md.proxy.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="ru.md.proxy.ProxyApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.md.proxy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="ACTIVE_PROFILES" value="local" />
       <module name="md.ms-server.main" />
@@ -288,30 +369,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestDbApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="md.ms-c.c-db.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="ru.md.msc.db.TestDbApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestDbApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="md.ms-c.db.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="ru.md.msc.db.TestDbApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Gradle.md:ms-c [remote-client]" />
       <item itemvalue="Gradle.md:ms-gateway [remote-gateway]" />
       <item itemvalue="Gradle.md:ms-server [remote-server]" />
-      <item itemvalue="Spring Boot.TestDbApplication" />
-      <item itemvalue="Spring Boot.TestDbApplication (1)" />
+      <item itemvalue="Gradle.md:ms-c:db [clean]" />
+      <item itemvalue="Gradle.md:ms-c:rest [clean]" />
+      <item itemvalue="Gradle.md:ms-gateway [clean]" />
       <item itemvalue="Spring Boot.ServerApplication" />
       <item itemvalue="Spring Boot.ClientApplication" />
       <item itemvalue="Spring Boot.MsmGatewayApplication" />
+      <item itemvalue="Spring Boot.ProxyApplication" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.md:ms-gateway [clean]" />
+        <item itemvalue="Gradle.md:ms-c:rest [clean]" />
+        <item itemvalue="Gradle.md:ms-c:db [clean]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -331,7 +407,7 @@
       <workItem from="1680619451122" duration="71000" />
       <workItem from="1680619530356" duration="504000" />
       <workItem from="1680620108976" duration="10248000" />
-      <workItem from="1680676638567" duration="7514000" />
+      <workItem from="1680676638567" duration="16327000" />
     </task>
     <task id="LOCAL-00001" summary="Work version Init">
       <created>1680614424386</created>
@@ -368,7 +444,21 @@
       <option name="project" value="LOCAL" />
       <updated>1680637850554</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="+cor">
+      <created>1680685375434</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1680685375434</updated>
+    </task>
+    <task id="LOCAL-00007" summary="+cor">
+      <created>1680685386234</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1680685386234</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -379,6 +469,8 @@
     <MESSAGE value="Work version Init" />
     <MESSAGE value="+server, client" />
     <MESSAGE value="+gateway" />
-    <option name="LAST_COMMIT_MESSAGE" value="+gateway" />
+    <MESSAGE value="+cor" />
+    <MESSAGE value="+proxy, client" />
+    <option name="LAST_COMMIT_MESSAGE" value="+proxy, client" />
   </component>
 </project>

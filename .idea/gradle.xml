@@ -14,9 +14,9 @@
             <option value="$PROJECT_DIR$/ms-c/db" />
             <option value="$PROJECT_DIR$/ms-c/domain" />
             <option value="$PROJECT_DIR$/ms-c/rest" />
-            <option value="$PROJECT_DIR$/ms-client" />
             <option value="$PROJECT_DIR$/ms-gateway" />
             <option value="$PROJECT_DIR$/ms-server" />
+            <option value="$PROJECT_DIR$/proxy" />
           </set>
         </option>
       </GradleProjectSettings>

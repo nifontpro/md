@@ -5,9 +5,9 @@ plugins {
     id("io.spring.dependency-management")
     kotlin("jvm")
     kotlin("plugin.spring")
-    kotlin("plugin.jpa")
 }
 
+val jvmTargetVersion: String by project
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
@@ -27,7 +27,7 @@ dependencies {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "17"
+        jvmTarget = jvmTargetVersion
     }
 }
 

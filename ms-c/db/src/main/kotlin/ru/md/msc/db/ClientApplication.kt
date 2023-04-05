@@ -6,8 +6,8 @@ import org.springframework.context.annotation.ComponentScan
 
 @SpringBootApplication
 @ComponentScan(basePackages = ["ru.md.msc"])
-class TestDbApplication
+class ClientApplication
 
 fun main(args: Array<String>) {
-	runApplication<TestDbApplication>(*args)
+	runApplication<ClientApplication>(*args)
 }

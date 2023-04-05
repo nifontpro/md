@@ -1,11 +1,11 @@
-package ru.md.msclient
+package ru.md.proxy
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class ClientApplication
+class ProxyApplication
 
 fun main(args: Array<String>) {
-    runApplication<ClientApplication>(*args)
+	runApplication<ProxyApplication>(*args)
 }
