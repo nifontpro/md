@@ -1,0 +1,7 @@
+https://habr.com/ru/articles/486200/
+
+docker system df
+docker image ls -f dangling=true
+
+docker image rm $(docker image ls -f dangling=true -q)
+docker system prune

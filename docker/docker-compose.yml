@@ -47,8 +47,6 @@ services:
       - server
     networks:
       - net
-    ports:
-      - "9393:9393"
     #    volumes:
     #      - /home/nifont/v1/md/tmp/git-props-msm:/app/tmp/git-props-msm
     container_name: md_client
@@ -88,3 +86,4 @@ services:
 
 networks:
   net:
+    name: 'md_net'

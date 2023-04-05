@@ -9,6 +9,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/cor" />
+            <option value="$PROJECT_DIR$/ms-c" />
+            <option value="$PROJECT_DIR$/ms-c/db" />
+            <option value="$PROJECT_DIR$/ms-c/domain" />
+            <option value="$PROJECT_DIR$/ms-c/rest" />
             <option value="$PROJECT_DIR$/ms-client" />
             <option value="$PROJECT_DIR$/ms-gateway" />
             <option value="$PROJECT_DIR$/ms-server" />
