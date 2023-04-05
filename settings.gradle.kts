@@ -19,11 +19,11 @@ pluginManagement {
 include("cor")
 include("ms-server")
 include("ms-gateway")
+include("front")
+//include("proxy")
 
 include("ms-c")
 include("ms-c:db")
 include("ms-c:domain")
 include("ms-c:rest")
 
-//findProject(":ms-c:rest")?.name = "c-rest"
-include("proxy")
