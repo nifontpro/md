@@ -5,38 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+proxy, client">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proxy/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proxy/src/main/kotlin/ru/md/proxy/controller/AuthResponse.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proxy/src/main/kotlin/ru/md/proxy/controller/BFFController.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proxy/src/main/kotlin/ru/md/proxy/security/SpringSecurityFluxConfig.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proxy/src/main/kotlin/ru/md/proxy/utils/CookieUtils.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proxy/src/main/kotlin/ru/md/proxy/webclient/UserWebClientBuilder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proxy/src/main/resources/application-local.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proxy/src/main/resources/application-remote.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proxy/src/main/resources/ssl/localhost.cer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proxy/src/main/resources/ssl/localhost.pem" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proxy/src/main/resources/ssl/localhost.pfx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proxy/src/main/resources/ssl/rootca.cer" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ms-c/db/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/DbApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/ClientApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-main.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-main.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/domain/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/rest/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/TestController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/UserController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-client/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/proxy/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-client/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-client/src/main/kotlin/ru/md/msclient/ClientApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/proxy/src/main/kotlin/ru/md/proxy/ProxyApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-client/src/main/kotlin/ru/md/msclient/controller/TestController.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-client/src/main/resources/application-local.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-client/src/main/resources/application-main.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-client/src/main/resources/application-remote.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-gateway/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-gateway/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-server/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-server/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-remote.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-remote.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proxy/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/proxy/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proxy/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/proxy/src/main/resources/application-local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proxy/src/main/resources/application-remote.properties" beforeDir="false" afterPath="$PROJECT_DIR$/proxy/src/main/resources/application-remote.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +56,9 @@
         <task path="$PROJECT_DIR$/ms-c/rest">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/proxy">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -92,6 +70,24 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="md" type="f1a62948:ProjectNode" />
                 <item name="ms-c" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="md" type="f1a62948:ProjectNode" />
+                <item name="proxy" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="md" type="f1a62948:ProjectNode" />
+                <item name="proxy" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="md" type="f1a62948:ProjectNode" />
+                <item name="proxy" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -173,7 +169,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.md:ms-gateway [clean]">
+  <component name="RunManager" selected="Gradle.md:proxy [remote-proxy]">
     <configuration name="md:ms-c [remote-client]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -245,7 +241,7 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/ms-gateway" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -296,6 +292,28 @@
         <option name="taskNames">
           <list>
             <option value="remote-server" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>false</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="md:proxy [remote-proxy]" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/proxy" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="remote-proxy" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -370,6 +388,7 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Gradle.md:proxy [remote-proxy]" />
       <item itemvalue="Gradle.md:ms-c [remote-client]" />
       <item itemvalue="Gradle.md:ms-gateway [remote-gateway]" />
       <item itemvalue="Gradle.md:ms-server [remote-server]" />
@@ -383,9 +402,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.md:ms-c:db [clean]" />
         <item itemvalue="Gradle.md:ms-gateway [clean]" />
         <item itemvalue="Gradle.md:ms-c:rest [clean]" />
-        <item itemvalue="Gradle.md:ms-c:db [clean]" />
       </list>
     </recent_temporary>
   </component>
@@ -407,7 +426,7 @@
       <workItem from="1680619451122" duration="71000" />
       <workItem from="1680619530356" duration="504000" />
       <workItem from="1680620108976" duration="10248000" />
-      <workItem from="1680676638567" duration="16327000" />
+      <workItem from="1680676638567" duration="21215000" />
     </task>
     <task id="LOCAL-00001" summary="Work version Init">
       <created>1680614424386</created>
@@ -458,7 +477,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680685386234</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="+proxy, client">
+      <created>1680702105549</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1680702105549</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

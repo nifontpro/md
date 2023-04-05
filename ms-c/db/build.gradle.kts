@@ -24,8 +24,8 @@ repositories {
 
 val springCloudVersion: String by project
 val jvmTargetVersion: String by project
-extra["springCloudVersion"] = springCloudVersion
 val sshAntTask = configurations.create("sshAntTask")
+extra["springCloudVersion"] = springCloudVersion
 
 dependencies {
 	implementation(project(":ms-c:rest"))

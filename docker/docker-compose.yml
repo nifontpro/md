@@ -37,7 +37,7 @@ services:
       - "8761:8761"
     #    volumes:
     #      - /home/nifont/v1/md/tmp/git-props-msm:/app/tmp/git-props-msm
-    container_name: md_server
+    container_name: server
     image: md/server:1
 
   client:
@@ -49,7 +49,9 @@ services:
       - net
     #    volumes:
     #      - /home/nifont/v1/md/tmp/git-props-msm:/app/tmp/git-props-msm
-    container_name: md_client
+    env_file:
+      - ./.db-env
+    container_name: client
     image: md/client:1
 
   gateway:
@@ -63,8 +65,24 @@ services:
       - "8765:8765"
     #    volumes:
     #      - /home/nifont/v1/md/tmp/git-props-msm:/app/tmp/git-props-msm
-    container_name: md_gateway
+    container_name: gateway
     image: md/gateway:1
+
+  proxy:
+    build: proxy/.
+    #   restart: always
+    depends_on:
+      - gateway
+    networks:
+      - net
+    ports:
+      - "8902:8902"
+    env_file:
+      - ./.kc-env
+    volumes:
+      - ../cert:/etc/ssl/
+    container_name: proxy
+    image: md/proxy:1
 
 #  server:
 #    build: server/.
