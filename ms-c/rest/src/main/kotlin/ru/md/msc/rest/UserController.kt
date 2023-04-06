@@ -8,7 +8,10 @@ import java.security.Principal
 class UserController {
 
 	@PostMapping("test")
-	suspend fun test() = RS("Test user endpoint: OK")
+	suspend fun test(): RS {
+		val usedMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576
+		return RS("Test user endpoint: OK, used: $usedMb Mb")
+	}
 
 	@PostMapping("data")
 	suspend fun getData(

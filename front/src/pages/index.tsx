@@ -36,9 +36,13 @@ const Home: NextPage = () => {
     return (
         <div className="flex flex-col m-2 break-all">
 
-            <div className="text-gray-700">KEYCLOAK_URL: {process.env.KEYCLOAK_URL}</div>
-            <div className="text-gray-700">APP_URL: {process.env.APP_URL}</div>
+            <div className="text-red-700">KEYCLOAK_URL: {process.env.KEYCLOAK_URL}</div>
+            <div className="text-green-700">APP_URL: {process.env.APP_URL}</div>
+            <div className="text-blue-700">API_SERVER_URL: {process.env.API_SERVER_URL}</div>
 
+            <div className="text-cyan-700">
+                {isAuth ? <>Вход выполнен</>: <>Вход не выполнен</>}
+            </div>
             <div className="text-red-700">Info from client: {getInfo?.res}</div>
             <button onClick={loginHandler} className="m-3 border-2 text-green-700">
                 Login

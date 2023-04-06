@@ -4,15 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+test front data">
+    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+test auth data">
+      <change afterPath="$PROJECT_DIR$/docker/nginx/cert/localhost.cer" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker/nginx/cert/localhost.pem" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker/nginx/cert/rootca.cer" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker/nginx/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker/nginx/nginx/localhost" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker/nginx/nginx/nginx.conf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-gateway/src/main/resources/ssl/localhost.cer" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-gateway/src/main/resources/ssl/localhost.pem" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-gateway/src/main/resources/ssl/localhost.pfx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-gateway/src/main/resources/ssl/rootca.cer" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/.env" beforeDir="false" afterPath="$PROJECT_DIR$/front/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/app/resource/data/base.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/resource/data/base.api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/auth/data/auth.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/auth/data/auth.slice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/auth/provider/AuthProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/auth/provider/AuthProvider.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-remote.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-remote.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/pages/login/redirect/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/pages/login/redirect/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/UserController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/UserController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-gateway/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-gateway/src/main/resources/application-local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-gateway/src/main/resources/application-main.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-gateway/src/main/resources/application-main.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-gateway/src/main/resources/application-remote.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-gateway/src/main/resources/application-remote.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +143,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "corretto-17",
-    "last_opened_file_path": "C:/Users/Nifont/program/md/front/src/auth/provider",
+    "last_opened_file_path": "C:/Users/Nifont/program/md/docker/nginx",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -157,11 +166,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Nifont\program\md\docker\nginx" />
+      <recent name="C:\Users\Nifont\program\md\ms-gateway\src\main\resources" />
       <recent name="C:\Users\Nifont\program\md\front\src\auth\provider" />
       <recent name="C:\Users\Nifont\program\md\ms-c\rest\src\main\kotlin\ru\md\msc\rest" />
       <recent name="C:\Users\Nifont\program\md\front" />
-      <recent name="C:\Users\Nifont\program\md" />
-      <recent name="C:\Users\Nifont\program\md\proxy\src\main\resources" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
       <recent name="ru.nb.msgateway" />
@@ -174,7 +183,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.md:ms-c [remote-client]">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="md:ms-c [remote-client]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -400,9 +409,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.dev" />
         <item itemvalue="Gradle.md:ms-c:rest [clean]" />
         <item itemvalue="Gradle.md:ms-c:db [clean]" />
-        <item itemvalue="npm.dev" />
         <item itemvalue="Gradle.md:ms-gateway [clean]" />
       </list>
     </recent_temporary>
@@ -429,7 +438,8 @@
       <workItem from="1680710061573" duration="2130000" />
       <workItem from="1680712741113" duration="14609000" />
       <workItem from="1680732947844" duration="1608000" />
-      <workItem from="1680763863469" duration="5813000" />
+      <workItem from="1680763863469" duration="11143000" />
+      <workItem from="1680804931654" duration="2839000" />
     </task>
     <task id="LOCAL-00001" summary="Work version Init">
       <created>1680614424386</created>
@@ -501,7 +511,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680733598023</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="+test auth data">
+      <created>1680772041840</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1680772041840</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -516,6 +533,7 @@
     <MESSAGE value="+proxy, client" />
     <MESSAGE value="+proxy remote deploy" />
     <MESSAGE value="+test front data" />
-    <option name="LAST_COMMIT_MESSAGE" value="+test front data" />
+    <MESSAGE value="+test auth data" />
+    <option name="LAST_COMMIT_MESSAGE" value="+test auth data" />
   </component>
 </project>

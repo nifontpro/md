@@ -11,6 +11,7 @@ const Login: NextPage = () => {
     useEffect(() => {
         const challenge = pkceChallenge(128)
         let tmpState = generateState(30)
+
         localStorage.setItem("codeVerifier", challenge.code_verifier)
         localStorage.setItem("codeChallenge", challenge.code_challenge)
         localStorage.setItem("state", tmpState)
