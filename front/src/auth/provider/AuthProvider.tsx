@@ -1,18 +1,16 @@
-import {FC, PropsWithChildren, useEffect} from 'react';
-import {useRouter} from 'next/router';
-import {useAuthState} from "@/auth/data/auth.slice";
+import {FC, PropsWithChildren} from 'react';
 
 const AuthProvider: FC<PropsWithChildren> = ({children}) => {
 
-    const {isAuth} = useAuthState()
-    const {push} = useRouter();
+    // const {isAuth} = useAuthState()
+    // const {push} = useRouter();
 
-    useEffect(() => {
-        if (!isAuth) {
-            push("/login").then()
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isAuth])
+    // useEffect(() => {
+    //     if (!isAuth) {
+    //         push("/login").then()
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isAuth])
 
     return <>{children}</>;
 };

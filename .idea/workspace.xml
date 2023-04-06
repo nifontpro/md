@@ -4,55 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+proxy remote deploy">
-      <change afterPath="$PROJECT_DIR$/front/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/.eslintrc.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/next.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/postcss.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/public/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/public/next.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/public/thirteen.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/public/vercel.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/app/MainProvider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/app/globals.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/app/resource/data/base.api.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/app/resource/data/resource.api.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/app/resource/data/test.api.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/app/resource/model/idToken.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/auth/data/auth.api.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/auth/data/auth.slice.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/auth/data/localStore.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/auth/data/store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/auth/data/useAuth.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/auth/provider/AuthProvider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/auth/storage/createWebStorage.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/auth/storage/getStorage.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/auth/storage/index.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/auth/storage/session.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/pages/_app.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/pages/index.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/pages/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/pages/login/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/pages/login/redirect/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/tailwind.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/security/KCRoleConverter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/security/KeycloakConfiguration.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/security/KeycloakGrantedAuthoritiesConverter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/security/ReactiveKeycloakJwtAuthenticationConverter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/security/SpringSecurityFluxConfig.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-gateway/src/main/kotlin/ru/nb/msgateway/SpringSecurityFluxConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+test front data">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/rest/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/UserController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/UserController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-gateway/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-gateway/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/.env" beforeDir="false" afterPath="$PROJECT_DIR$/front/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/app/resource/data/base.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/resource/data/base.api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/auth/data/auth.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/auth/data/auth.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/auth/provider/AuthProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/auth/provider/AuthProvider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-remote.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/resources/application-remote.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,49 +119,49 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Nifont/program/md/ms-c/rest/src/main/kotlin/ru/md/msc/rest&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Nifont/program/md/ms-gateway/src/main/java/ru/md/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.31027254&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;96748b062cf4a2ad9b5bbc79f0456278&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Nifont\\program\\md\\front\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "corretto-17",
+    "last_opened_file_path": "C:/Users/Nifont/program/md/front/src/auth/provider",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/Nifont/program/md/ms-gateway/src/main/java/ru/md/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.31027254",
+    "settings.editor.selected.configurable": "File.Encoding",
+    "spring.configuration.checksum": "96748b062cf4a2ad9b5bbc79f0456278",
+    "ts.external.directory.path": "C:\\Users\\Nifont\\program\\md\\front\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Nifont\program\md\front\src\auth\provider" />
       <recent name="C:\Users\Nifont\program\md\ms-c\rest\src\main\kotlin\ru\md\msc\rest" />
       <recent name="C:\Users\Nifont\program\md\front" />
       <recent name="C:\Users\Nifont\program\md" />
       <recent name="C:\Users\Nifont\program\md\proxy\src\main\resources" />
-      <recent name="C:\Users\Nifont\program\md\proxy\src\main\kotlin\ru\md\proxy" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
       <recent name="ru.nb.msgateway" />
@@ -214,7 +174,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="Gradle.md:ms-c [remote-client]">
     <configuration name="md:ms-c [remote-client]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -440,10 +400,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.md:ms-c:rest [clean]" />
+        <item itemvalue="Gradle.md:ms-c:db [clean]" />
         <item itemvalue="npm.dev" />
         <item itemvalue="Gradle.md:ms-gateway [clean]" />
-        <item itemvalue="Gradle.md:ms-c:db [clean]" />
-        <item itemvalue="Gradle.md:ms-c:rest [clean]" />
       </list>
     </recent_temporary>
   </component>
@@ -468,7 +428,8 @@
       <workItem from="1680676638567" duration="23365000" />
       <workItem from="1680710061573" duration="2130000" />
       <workItem from="1680712741113" duration="14609000" />
-      <workItem from="1680732947844" duration="420000" />
+      <workItem from="1680732947844" duration="1608000" />
+      <workItem from="1680763863469" duration="5813000" />
     </task>
     <task id="LOCAL-00001" summary="Work version Init">
       <created>1680614424386</created>
@@ -533,7 +494,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680706914671</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="+test front data">
+      <created>1680733598023</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1680733598023</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -547,6 +515,7 @@
     <MESSAGE value="+cor" />
     <MESSAGE value="+proxy, client" />
     <MESSAGE value="+proxy remote deploy" />
-    <option name="LAST_COMMIT_MESSAGE" value="+proxy remote deploy" />
+    <MESSAGE value="+test front data" />
+    <option name="LAST_COMMIT_MESSAGE" value="+test front data" />
   </component>
 </project>

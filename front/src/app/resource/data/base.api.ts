@@ -2,8 +2,9 @@ import {BaseQueryFn, FetchArgs, fetchBaseQuery, FetchBaseQueryError} from "@redu
 import {CLIENT_ID, IAuthResponse, KEYCLOAK_URI} from "@/auth/data/auth.api";
 import {TypeRootState} from "@/auth/data/store";
 import {authActions} from "@/auth/data/auth.slice";
+import process from "process";
 
-const API_SERVER_URL = "http://localhost:8765/client"
+const API_SERVER_URL = process.env.API_SERVER_URL
 
 export const baseQuery = fetchBaseQuery({
     baseUrl: API_SERVER_URL,

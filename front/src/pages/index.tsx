@@ -11,12 +11,12 @@ import {authActions, useAuthState} from "@/auth/data/auth.slice";
 const Home: NextPage = () => {
 
     const {push} = useRouter()
-    const {idToken} = useAuthState()
+    const {isAuth, idToken} = useAuthState()
     const dispatch = useDispatch()
     const {decodedToken, isExpired} = useJwt(idToken || '');
     const payload = decodedToken as IPayload | undefined
 
-    const {data: getInfo} = resourceApi.useGetTestDataQuery()
+    const {data: getInfo} = resourceApi.useGetTestDataQuery(undefined, {skip: !isAuth})
 
     const logoutHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
@@ -36,8 +36,8 @@ const Home: NextPage = () => {
     return (
         <div className="flex flex-col m-2 break-all">
 
-            <div className="text-red-700">KEYCLOAK_URL: {process.env.KEYCLOAK_URL}</div>
-            <div className="text-red-700">APP_URL: {process.env.APP_URL}</div>
+            <div className="text-gray-700">KEYCLOAK_URL: {process.env.KEYCLOAK_URL}</div>
+            <div className="text-gray-700">APP_URL: {process.env.APP_URL}</div>
 
             <div className="text-red-700">Info from client: {getInfo?.res}</div>
             <button onClick={loginHandler} className="m-3 border-2 text-green-700">
