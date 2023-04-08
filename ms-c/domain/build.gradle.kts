@@ -6,7 +6,9 @@ val coroutinesVersion: String by project
 val kotlinLoggingVersion: String by project
 
 dependencies {
-	implementation(project(":cor"))
+//	implementation(project(":cor"))
+	implementation(project(":base:domain"))
+
 	implementation(kotlin("stdlib-common"))
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 	implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingVersion")

@@ -28,6 +28,7 @@ val sshAntTask = configurations.create("sshAntTask")
 extra["springCloudVersion"] = springCloudVersion
 
 dependencies {
+	implementation(project(":ms-c:domain"))
 	implementation(project(":ms-c:rest"))
 
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -50,7 +51,6 @@ dependencies {
 
 dependencyManagement {
 	imports {
-//		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
 		mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
 	}
 }

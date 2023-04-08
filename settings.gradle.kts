@@ -27,3 +27,6 @@ include("ms-c:db")
 include("ms-c:domain")
 include("ms-c:rest")
 
+include("base")
+include("base:domain")
+include("base:rest")

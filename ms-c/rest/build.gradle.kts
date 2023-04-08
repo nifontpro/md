@@ -15,6 +15,8 @@ repositories {
 }
 
 dependencies {
+	implementation(project(":ms-c:domain"))
+
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
