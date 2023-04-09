@@ -1,8 +1,8 @@
-package ru.otus.cor
+package ru.md.cor
 
-import ru.otus.cor.handlers.CorChainDsl
-import ru.otus.cor.handlers.CorWorkerDsl
-import ru.otus.cor.handlers.executeParallel
+import ru.md.cor.handlers.CorChainDsl
+import ru.md.cor.handlers.CorWorkerDsl
+import ru.md.cor.handlers.executeParallel
 
 /**
  * Базовый билдер (dsl)

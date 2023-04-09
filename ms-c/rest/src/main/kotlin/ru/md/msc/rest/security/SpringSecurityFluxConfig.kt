@@ -24,8 +24,8 @@ class SpringSecurityFluxConfig {
 
 		http.authorizeExchange()
 			.pathMatchers("/user/test").permitAll()
-//			.pathMatchers("/user/**").hasRole("user")
-			.pathMatchers("/user/**").permitAll()
+			.pathMatchers("/user/**").hasRole("user")
+//			.pathMatchers("/user/**").permitAll()
 			.pathMatchers("/admin/**").hasRole("admin")
 			.anyExchange().authenticated()
 			.and()

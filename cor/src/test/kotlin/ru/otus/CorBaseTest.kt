@@ -2,10 +2,10 @@ package ru.otus
 
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
-import ru.otus.cor.*
-import ru.otus.cor.handlers.CorChain
-import ru.otus.cor.handlers.CorWorker
-import ru.otus.cor.handlers.executeSequential
+import ru.md.cor.*
+import ru.md.cor.handlers.CorChain
+import ru.md.cor.handlers.CorWorker
+import ru.md.cor.handlers.executeSequential
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 

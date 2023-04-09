@@ -11,7 +11,7 @@ import {authActions, useAuthState} from "@/auth/data/auth.slice";
 const Home: NextPage = () => {
 
     const {push} = useRouter()
-    const {isAuth, idToken} = useAuthState()
+    const {isAuth, idToken, accessToken} = useAuthState()
     const dispatch = useDispatch()
     const {decodedToken, isExpired} = useJwt(idToken || '');
     const payload = decodedToken as IPayload | undefined
@@ -52,6 +52,7 @@ const Home: NextPage = () => {
             </button>
             <div className="text-blue-700">name: {payload?.name}</div>
             <div className="text-green-700">email: {payload?.email}</div>
+            <div className="text-blue-600">{accessToken}</div>
         </div>
     );
 

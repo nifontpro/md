@@ -8,7 +8,6 @@ allprojects {
     group = "ru.md"
     version = "1.0-SNAPSHOT"
 
-
     repositories {
         mavenCentral()
     }

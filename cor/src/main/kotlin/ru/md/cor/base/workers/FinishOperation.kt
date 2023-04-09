@@ -1,9 +1,9 @@
-package ru.md.base.domain.biz.workers
+package ru.md.cor.base.workers
 
-import ru.md.base.domain.biz.BaseContext
-import ru.md.base.domain.biz.ContextState
-import ru.otus.cor.ICorChainDsl
-import ru.otus.cor.worker
+import ru.md.cor.ICorChainDsl
+import ru.md.cor.base.biz.BaseContext
+import ru.md.cor.base.biz.ContextState
+import ru.md.cor.worker
 
 fun <T : BaseContext> ICorChainDsl<T>.finishOperation(
 	title: String = "Завершение операции"

@@ -1,17 +1,25 @@
-package ru.md.msc.rest
+package ru.md.msc.rest.user
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.web.bind.annotation.*
 import ru.md.msc.domain.user.biz.TestBiz
+import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.service.UserService
+import ru.md.msc.rest.base.process
+import ru.md.msc.rest.user.mappers.fromTransport
+import ru.md.msc.rest.user.mappers.toTransportGetUser
+import ru.md.msc.rest.user.request.CreateOwnerRequest
+import ru.md.msc.rest.utils.JwtUtils
 import java.security.Principal
 
 @RestController
 @RequestMapping("user")
 class UserController(
+	private val userProcessor: UserProcessor,
 	private val userService: UserService,
+	private val jwtUtils: JwtUtils,
 	private val testBiz: TestBiz
 ) {
 
@@ -19,6 +27,21 @@ class UserController(
 	suspend fun test(): RS {
 		val usedMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576
 		return RS("Test user endpoint: OK, used: $usedMb Mb")
+	}
+
+	@PostMapping("create_owner")
+	suspend fun createOwner(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: CreateOwnerRequest
+	): User? {
+		val authData = jwtUtils.decodeBearerJwt(bearerToken)
+		val requestWithEmail = request.copy(email = authData.email)
+		return process(
+			processor = userProcessor,
+			request = requestWithEmail,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportGetUser() }
+		)
 	}
 
 	@PostMapping("data")
@@ -36,6 +59,10 @@ class UserController(
 		return withContext(Dispatchers.IO) {
 			userService.getAll()
 		}
+	}
+
+	companion object {
+		private const val AUTH = "Authorization"
 	}
 }
 

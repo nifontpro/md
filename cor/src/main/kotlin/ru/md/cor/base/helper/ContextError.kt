@@ -1,4 +1,4 @@
-package ru.md.base.domain.biz.helper
+package ru.md.cor.base.helper
 
 data class ContextError(
 	val code: String = "",

@@ -15,6 +15,7 @@ repositories {
 }
 
 dependencies {
+	implementation(project(":cor"))
 	implementation(project(":ms-c:domain"))
 
 	implementation("org.springframework.boot:spring-boot-starter-webflux")

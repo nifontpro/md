@@ -1,7 +1,7 @@
-package ru.md.base.domain.biz.helper
+package ru.md.cor.base.helper
 
-import ru.md.base.domain.biz.BaseContext
-import ru.md.base.domain.biz.ContextState
+import ru.md.cor.base.biz.BaseContext
+import ru.md.cor.base.biz.ContextState
 
 fun BaseContext.addError(error: ContextError) = errors.add(error)
 
