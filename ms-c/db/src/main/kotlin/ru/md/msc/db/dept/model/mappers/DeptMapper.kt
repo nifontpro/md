@@ -10,3 +10,11 @@ fun DeptEntity.toDept() = Dept(
 	classname = classname,
 	type = type,
 )
+
+fun Dept.toDeptEntity() = DeptEntity(
+	id = id,
+	parentId = parentId,
+	name = name,
+	classname = classname,
+	type = type
+)

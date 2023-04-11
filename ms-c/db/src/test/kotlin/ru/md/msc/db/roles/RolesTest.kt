@@ -2,13 +2,11 @@ package ru.md.msc.db.roles
 
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.boot.test.context.SpringBootTest
 import ru.md.msc.db.user.repo.RoleRepository
 import ru.md.msc.domain.user.model.RoleEnum
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@SpringBootTest
 class RolesTest(
 	@Autowired private val roleRepository: RoleRepository
 ) {

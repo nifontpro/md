@@ -33,9 +33,9 @@ class UserDetailsEntity(
 	val createdAt: LocalDateTime? = null,
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@MapsId
 	@JoinColumn(name = "user_id")
-	val user: UserEntity
+	@MapsId
+	val user: UserEntity? = null
 
 ) : Serializable {
 

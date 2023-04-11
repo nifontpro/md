@@ -21,6 +21,7 @@ import ru.md.msc.domain.user.model.RoleEnum
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.domain.user.service.UserService
+import java.time.LocalDateTime
 
 @Service
 @Transactional
@@ -32,18 +33,25 @@ class UserServiceImpl(
 ) : UserService {
 
 	/**
-	 * Создание корневого владельца
+	 * Создание корневого владельца вместе с отделом
 	 */
 	override fun createOwner(userDetails: UserDetails): RepositoryData<UserDetails> {
 
 		val userDetailsEntity = (userDetails.toUserDetailsEntity())
+
 		val deptEntity = DeptEntity(
-			parentId = 1,
-			name = userDetails.user.email,
-			classname = "Корневой отдел",
+			parentId = 1, // Найти id Корневого отдела ROOT
+			name = "Владелец " + userDetails.user?.email,
+			classname = "Корневой",
 			type = DeptType.USER,
 		)
-		val deptDetailsEntity = DeptDetailsEntity(dept = deptEntity)
+		val deptDetailsEntity = DeptDetailsEntity(
+			dept = deptEntity,
+			address = userDetails.address,
+			email = userDetails.user?.email,
+			phone = userDetails.phone,
+			createdAt = LocalDateTime.now()
+		)
 
 		try {
 			deptDetailsRepository.save(deptDetailsEntity)
@@ -52,7 +60,7 @@ class UserServiceImpl(
 			return DeptErrors.createDept()
 		}
 
-		userDetailsEntity.user.dept = deptEntity
+		userDetailsEntity.user?.dept = deptEntity
 
 		try {
 			userDetailsRepository.save(userDetailsEntity)
@@ -64,7 +72,7 @@ class UserServiceImpl(
 		val roleOwner = RoleEntity(roleEnum = RoleEnum.OWNER, user = userDetailsEntity.user)
 		val roleAdmin = RoleEntity(roleEnum = RoleEnum.ADMIN, user = userDetailsEntity.user)
 		val roles = listOf(roleOwner, roleAdmin)
-		userDetailsEntity.user.roles.addAll(roles)
+		userDetailsEntity.user?.roles?.addAll(roles)
 		// Автоматическое добавление ролей при завершении транзакции
 
 		return RepositoryData.success(data = userDetailsEntity.toUserDetails())

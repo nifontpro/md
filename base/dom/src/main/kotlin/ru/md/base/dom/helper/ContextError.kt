@@ -5,7 +5,6 @@ data class ContextError(
 	val group: String = "",
 	val field: String = "",
 	val message: String = "",
-	val exception: Throwable? = null,
 	val level: Levels = Levels.ERROR,
 ) {
 	@Suppress("unused")

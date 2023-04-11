@@ -19,14 +19,14 @@ class DeptEntity(
 
 	@Column(name = "parent_id")
 	val parentId: Long? = null,
-	val name: String? = null,
+	val name: String = "",
 	val classname: String? = null,
 
 	@Column(name = "code")
 	val type: DeptType = DeptType.UNDEF,
 
-//	@OneToOne(mappedBy = "dept", fetch = FetchType.LAZY/*, optional = false*/)
-//	val details: DeptDetailsEntity? = null,
+	@OneToOne(mappedBy = "dept", fetch = FetchType.LAZY, optional = false)
+	val details: DeptDetailsEntity? = null,
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dep_id")

@@ -9,7 +9,7 @@ fun UserDetailsEntity.toUserDetails() = UserDetails(
 	address = address,
 	description = description,
 	createdAt = createdAt,
-	user = user.toUser()
+	user = user?.toUser()
 )
 
 fun UserDetails.toUserDetailsEntity() = UserDetailsEntity(
@@ -17,5 +17,5 @@ fun UserDetails.toUserDetailsEntity() = UserDetailsEntity(
 	address = address,
 	description = description,
 	createdAt = LocalDateTime.now(),
-	user = user.toUserEntity()
+	user = user?.toUserEntity()
 )

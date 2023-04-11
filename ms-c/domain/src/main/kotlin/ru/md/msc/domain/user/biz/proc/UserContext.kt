@@ -6,18 +6,14 @@ import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.domain.user.service.UserService
 
-//@Service
-class UserContext(
-
-) : BaseContext(command = UserCommand.NONE) {
-	lateinit var userService: UserService
-
+class UserContext : BaseContext(command = UserCommand.NONE) {
 	var user: User = User()
 	var userDetails: UserDetails = UserDetails()
 	val users: MutableList<User> = mutableListOf()
 	val usersDetails: MutableList<UserDetails> = mutableListOf()
 	var emailVerified: Boolean = false
 
+	lateinit var userService: UserService
 }
 
 enum class UserCommand : IBaseCommand {
