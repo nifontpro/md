@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.*
 import ru.md.msc.domain.user.biz.TestBiz
 import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.User
-import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.domain.user.service.UserService
 import ru.md.msc.rest.base.BaseResponse
 import ru.md.msc.rest.base.process
 import ru.md.msc.rest.user.mappers.fromTransport
 import ru.md.msc.rest.user.mappers.toTransportGetUserDetails
-import ru.md.msc.rest.user.request.CreateOwnerRequest
+import ru.md.msc.rest.user.model.request.CreateOwnerRequest
+import ru.md.msc.rest.user.model.response.UserDetailsResponse
 import ru.md.msc.rest.utils.JwtUtils
 import java.security.Principal
 
@@ -35,7 +35,7 @@ class UserController(
 	suspend fun createOwner(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: CreateOwnerRequest
-	): BaseResponse<UserDetails> {
+	): BaseResponse<UserDetailsResponse> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken)
 		println("AuthData: $authData")
 		val requestWithEmail = request.copy(email = authData.email, emailVerified = authData.emailVerified)

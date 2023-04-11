@@ -4,7 +4,7 @@ import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
-import ru.md.msc.rest.user.request.CreateOwnerRequest
+import ru.md.msc.rest.user.model.request.CreateOwnerRequest
 
 fun UserContext.fromTransport(request: CreateOwnerRequest) {
 	command = UserCommand.CREATE_OWNER

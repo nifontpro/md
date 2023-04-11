@@ -1,4 +1,4 @@
-package ru.md.msc.rest.user.request
+package ru.md.msc.rest.user.model.request
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import ru.md.msc.domain.user.model.Gender
