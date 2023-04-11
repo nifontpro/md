@@ -1,12 +1,13 @@
 package ru.md.msc.db.user.model
 
 import jakarta.persistence.*
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Table
 import org.hibernate.annotations.*
 import ru.md.msc.db.dept.model.DeptEntity
-import ru.md.msc.domain.user.model.Gender
 import ru.md.msc.db.user.model.image.UserImageEntity
 import ru.md.msc.db.user.model.role.RoleEntity
+import ru.md.msc.domain.user.model.Gender
 import java.io.Serializable
 import java.util.*
 
@@ -24,7 +25,7 @@ class UserEntity(
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	val id: Long? = null,
 
-	val email: String? = null,
+	val email: String = "",
 	val firstname: String = "",
 	val patronymic: String? = null,
 	val lastname: String? = null,
@@ -40,10 +41,10 @@ class UserEntity(
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)
 	val details: UserDetailsEntity? = null,
 
-	@OneToMany(fetch = FetchType.LAZY/*, cascade = [CascadeType.ALL]*/)
-	@JoinColumn(name = "user_id") // Если однонаправленная связь, без mappedBy
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
+//	@JoinColumn(name = "user_id") // Если однонаправленная связь, без mappedBy
 	@Fetch(FetchMode.SUBSELECT)
-	val roles: List<RoleEntity> = emptyList(),
+	val roles: MutableList<RoleEntity> = mutableListOf(),
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")

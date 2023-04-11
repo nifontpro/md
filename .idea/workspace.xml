@@ -4,37 +4,67 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+test auth data">
-      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserContext.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserProcessor.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/base/BaseController.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/mappers/FromTransport.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/mappers/ToTransport.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/request/CreateOwnerRequest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/utils/JwtUtils.kt" afterDir="false" />
+    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+biz spring">
+      <change afterPath="$PROJECT_DIR$/.idea/GrepConsole.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/base/dom/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/base/dom/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/base/dom/src/main/kotlin/ru/md/base/dom/model/CheckRepositoryData.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/base/dom/src/main/kotlin/ru/md/base/dom/model/RepositoryData.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/converter/DeptTypeConverter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/service/DeptErrors.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/role/RoleOldEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/service/UserErrors.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/db/src/test/kotlin/ru/md/msc/db/roles/RolesTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/db/src/test/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/model/DeptType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/validate/ValidateUserEmailVerified.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/validate/ValidateUserFirstnameEmpty.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/validate/db/ValidateOwnerByEmailExist.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/workers/CreateOwner.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/base/BaseResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/domain/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/base/domain/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/domain/src/main/kotlin/ru/md/base/domain/biz/BaseContext.kt" beforeDir="false" afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/base/biz/BaseContext.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/domain/src/main/kotlin/ru/md/base/domain/biz/IBaseProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/base/biz/IBaseProcessor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/domain/src/main/kotlin/ru/md/base/domain/biz/helper/ContextError.kt" beforeDir="false" afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/base/helper/ContextError.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/domain/src/main/kotlin/ru/md/base/domain/biz/helper/ContextErrorsHelpers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/base/helper/ContextErrorsHelpers.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/domain/src/main/kotlin/ru/md/base/domain/biz/workers/FinishOperation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/base/workers/FinishOperation.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/domain/src/main/kotlin/ru/md/base/domain/biz/workers/InitStatus.kt" beforeDir="false" afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/base/workers/InitStatus.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/domain/src/main/kotlin/ru/md/base/domain/biz/workers/Operation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/base/workers/Operation.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cor/src/main/kotlin/ru/otus/cor/CorDslMarker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/CorDslMarker.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cor/src/main/kotlin/ru/otus/cor/ICorExec.kt" beforeDir="false" afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/ICorExec.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cor/src/main/kotlin/ru/otus/cor/corDsl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/corDsl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cor/src/main/kotlin/ru/otus/cor/handlers/AbstractCorExec.kt" beforeDir="false" afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/handlers/AbstractCorExec.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cor/src/main/kotlin/ru/otus/cor/handlers/CorChain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/handlers/CorChain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cor/src/main/kotlin/ru/otus/cor/handlers/CorWorker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/handlers/CorWorker.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cor/src/test/kotlin/ru/otus/CorBaseTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/cor/src/test/kotlin/ru/otus/CorBaseTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/domain/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/domain/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/base/biz/BaseContext.kt" beforeDir="false" afterPath="$PROJECT_DIR$/base/dom/src/main/kotlin/ru/md/base/dom/biz/BaseContext.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/base/biz/IBaseProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/base/dom/src/main/kotlin/ru/md/base/dom/biz/IBaseProcessor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/base/helper/ContextError.kt" beforeDir="false" afterPath="$PROJECT_DIR$/base/dom/src/main/kotlin/ru/md/base/dom/helper/ContextError.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/base/helper/ContextErrorsHelpers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/base/dom/src/main/kotlin/ru/md/base/dom/helper/ContextErrorsHelpers.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/base/workers/FinishOperation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/base/dom/src/main/kotlin/ru/md/base/dom/workers/FinishOperation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/base/workers/InitStatus.kt" beforeDir="false" afterPath="$PROJECT_DIR$/base/dom/src/main/kotlin/ru/md/base/dom/workers/InitStatus.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cor/src/main/kotlin/ru/md/cor/base/workers/Operation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/base/dom/src/main/kotlin/ru/md/base/dom/workers/Operation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/ClientApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/ClientApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/DeptEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/DeptEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/mappers/DeptMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/mappers/DeptMapper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/UserDetailsEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/UserDetailsEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/UserEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/UserEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/gender/GenderConverter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/converter/GenderConverter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/mappers/RoleMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/converter/RoleConverter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/mappers/UserDetailsMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/mappers/UserDetailsMapper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/mappers/UserMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/mappers/UserMapper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/role/RoleEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/role/RoleEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/role/RoleId.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/role/RoleId.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/repo/RoleRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/repo/RoleRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/repo/UserRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/repo/UserRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/service/UserServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/service/UserServiceImpl.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ms-c/domain/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/model/Dept.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/model/Dept.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserContext.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserContext.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserProcessor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/model/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/model/User.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/model/UserDetails.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/model/UserDetails.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/service/UserService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/service/UserService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ms-c/rest/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/UserController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/UserController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/base/BaseController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/base/BaseController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/di/UserConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/di/UserConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/security/SpringSecurityFluxConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/security/SpringSecurityFluxConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/UserController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/UserController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/mappers/FromTransport.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/mappers/FromTransport.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/mappers/ToTransport.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/mappers/ToTransport.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/request/CreateOwnerRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/request/CreateOwnerRequest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,8 +162,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Interface" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Data Class" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -168,7 +198,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "corretto-17",
-    "last_opened_file_path": "C:/Users/Nifont/program/md/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/mappers",
+    "last_opened_file_path": "C:/Users/Nifont/program/md/ms-c/rest/src/main/kotlin/ru/md/msc/rest/base",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -178,8 +208,8 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.31027254",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "spring.configuration.checksum": "96748b062cf4a2ad9b5bbc79f0456278",
+    "settings.editor.selected.configurable": "terminal",
+    "spring.configuration.checksum": "2860d75142e98b41cc839fa173b9ee53",
     "ts.external.directory.path": "C:\\Users\\Nifont\\program\\md\\front\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   },
@@ -191,22 +221,26 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Nifont\program\md\ms-c\rest\src\main\kotlin\ru\md\msc\rest\user\mappers" />
-      <recent name="C:\Users\Nifont\program\md\ms-c\rest\src\main\kotlin\ru\md\msc\rest" />
-      <recent name="C:\Users\Nifont\program\md\ms-c\rest\src\main\kotlin\ru\md\msc\rest\utils" />
-      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\proc" />
-      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\context" />
+      <recent name="C:\Users\Nifont\program\md\ms-c\rest\src\main\kotlin\ru\md\msc\rest\base" />
+      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\validate\db" />
+      <recent name="C:\Users\Nifont\program\md\ms-c\db\src\test\resources" />
+      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\workers" />
+      <recent name="C:\Users\Nifont\program\md\base\dom\src\main\kotlin" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Nifont\program\md\base\dom\src\main\kotlin\ru\md\base\dom\model" />
       <recent name="C:\Users\Nifont\program\md\ms-c\rest\src\main\kotlin\ru\md\msc\rest\user" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\proc" />
     </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="ru.md.msc.db.user.model.converter" />
+    </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
-      <recent name="ru.md.msc.db.user.di" />
+      <recent name="ru.md.msc.db.roles" />
       <recent name="ru.md.msc.db.dept.service" />
-      <recent name="ru.md.msc.db.award.repo" />
-      <recent name="ru.md.msc.db.user.repo" />
-      <recent name="ru.md.msc.db.dept.repo" />
+      <recent name="ru.md.msc.db.user.model.role" />
+      <recent name="ru.md.msc.db.dept.model.converter" />
+      <recent name="ru.md.msc.domain.dept.model" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -220,26 +254,64 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.ClientApplication">
-    <configuration name="md [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="RolesTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
+        <option name="env">
+          <map>
+            <entry key="POSTGRES_PASSWORD" value="mdMsxNecMedals0248" />
+            <entry key="POSTGRES_USER" value="medalist" />
+          </map>
+        </option>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value="clean" />
+            <option value=":ms-c:db:test" />
+            <option value="--tests" />
+            <option value="&quot;ru.md.msc.db.roles.RolesTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="RolesTest.getOwnerByEmail" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="env">
+          <map>
+            <entry key="POSTGRES_PASSWORD" value="mdMsxNecMedals0248" />
+            <entry key="POSTGRES_USER" value="medalist" />
+          </map>
+        </option>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":ms-c:db:test" />
+            <option value="--tests" />
+            <option value="&quot;ru.md.msc.db.roles.RolesTest.getOwnerByEmail&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="md:base:domain [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -276,28 +348,6 @@
         <option name="taskNames">
           <list>
             <option value="remote-client" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
-      <method v="2" />
-    </configuration>
-    <configuration name="md:ms-c:db [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/ms-c/db" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -456,10 +506,10 @@
       <item itemvalue="Gradle.md:ms-c [remote-client]" />
       <item itemvalue="Gradle.md:ms-gateway [remote-gateway]" />
       <item itemvalue="Gradle.md:ms-server [remote-server]" />
+      <item itemvalue="Gradle.RolesTest" />
+      <item itemvalue="Gradle.RolesTest.getOwnerByEmail" />
       <item itemvalue="Gradle.md:base:domain [clean]" />
       <item itemvalue="Gradle.md:ms-c:domain [clean]" />
-      <item itemvalue="Gradle.md [clean]" />
-      <item itemvalue="Gradle.md:ms-c:db [clean]" />
       <item itemvalue="npm.dev" />
       <item itemvalue="Spring Boot.ServerApplication" />
       <item itemvalue="Spring Boot.ClientApplication" />
@@ -467,11 +517,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.RolesTest.getOwnerByEmail" />
+        <item itemvalue="Gradle.RolesTest" />
         <item itemvalue="npm.dev" />
         <item itemvalue="Gradle.md:ms-c:domain [clean]" />
-        <item itemvalue="Gradle.md:ms-c:db [clean]" />
         <item itemvalue="Gradle.md:base:domain [clean]" />
-        <item itemvalue="Gradle.md [clean]" />
       </list>
     </recent_temporary>
   </component>
@@ -503,7 +553,9 @@
       <workItem from="1680889599052" duration="1012000" />
       <workItem from="1680934647880" duration="9034000" />
       <workItem from="1680977678797" duration="5535000" />
-      <workItem from="1681054279048" duration="13947000" />
+      <workItem from="1681054279048" duration="14468000" />
+      <workItem from="1681134125476" duration="25080000" />
+      <workItem from="1681192341825" duration="15019000" />
     </task>
     <task id="LOCAL-00001" summary="Work version Init">
       <created>1680614424386</created>
@@ -589,7 +641,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680808010473</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="+biz spring">
+      <created>1681073002546</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1681073002546</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -605,7 +664,8 @@
     <MESSAGE value="+proxy remote deploy" />
     <MESSAGE value="+test front data" />
     <MESSAGE value="+test auth data" />
-    <option name="LAST_COMMIT_MESSAGE" value="+test auth data" />
+    <MESSAGE value="+biz spring" />
+    <option name="LAST_COMMIT_MESSAGE" value="+biz spring" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

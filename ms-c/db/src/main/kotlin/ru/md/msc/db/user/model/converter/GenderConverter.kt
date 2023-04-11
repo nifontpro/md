@@ -1,4 +1,4 @@
-package ru.md.msc.db.user.model.gender
+package ru.md.msc.db.user.model.converter
 
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter

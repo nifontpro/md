@@ -10,7 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/base" />
-            <option value="$PROJECT_DIR$/base/domain" />
+            <option value="$PROJECT_DIR$/base/dom" />
             <option value="$PROJECT_DIR$/base/rest" />
             <option value="$PROJECT_DIR$/cor" />
             <option value="$PROJECT_DIR$/front" />

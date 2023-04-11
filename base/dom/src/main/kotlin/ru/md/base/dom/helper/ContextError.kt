@@ -1,4 +1,4 @@
-package ru.md.cor.base.helper
+package ru.md.base.dom.helper
 
 data class ContextError(
 	val code: String = "",
@@ -16,9 +16,3 @@ data class ContextError(
 		UNAUTHORIZED
 	}
 }
-
-// ответ API
-data class BaseError(
-	val errors: List<ContextError>,
-	val type: String = "multiError"
-)

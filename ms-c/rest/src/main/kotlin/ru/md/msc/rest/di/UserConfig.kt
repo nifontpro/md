@@ -9,7 +9,4 @@ class UserConfig {
 
 	@Bean
 	fun testBiz() = TestBiz()
-
-//	@Bean
-//	fun userProcessor() = UserProcessor()
 }

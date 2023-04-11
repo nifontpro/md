@@ -13,4 +13,6 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 	@Query("from UserEntity u")
 	fun getsAll(): List<UserEntity>
 
+	fun findByEmailIgnoreCase(email: String): List<UserEntity>
+
 }

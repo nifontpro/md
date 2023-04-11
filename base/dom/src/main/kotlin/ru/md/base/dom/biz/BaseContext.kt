@@ -1,6 +1,6 @@
-package ru.md.cor.base.biz
+package ru.md.base.dom.biz
 
-import ru.md.cor.base.helper.ContextError
+import ru.md.base.dom.helper.ContextError
 
 interface IBaseCommand
 

@@ -14,5 +14,7 @@ data class CreateOwnerRequest(
 	val description: String? = null,
 
 	@JsonIgnore
-	val email: String = ""
+	val email: String = "",
+	@JsonIgnore
+	val emailVerified: Boolean = false
 )

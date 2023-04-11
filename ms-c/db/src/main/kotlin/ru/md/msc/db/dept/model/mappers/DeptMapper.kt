@@ -7,5 +7,6 @@ fun DeptEntity.toDept() = Dept(
 	id = id,
 	parentId = parentId,
 	name = name,
-	code = code,
+	classname = classname,
+	type = type,
 )

@@ -23,7 +23,7 @@ class UserDetailsEntity(
 
 	@Id
 	@Column(name = "user_id")
-	val id: Long? = null,
+	val userId: Long? = null,
 
 	val phone: String? = null,
 	val address: String? = null,
@@ -43,14 +43,14 @@ class UserDetailsEntity(
 		if (this === other) return true
 		if (other == null || javaClass != other.javaClass) return false
 		val details = other as UserDetailsEntity
-		return id == details.id && phone == details.phone && address == details.address && description == details.description && createdAt == details.createdAt
+		return userId == details.userId && phone == details.phone && address == details.address && description == details.description && createdAt == details.createdAt
 	}
 
 	override fun hashCode(): Int {
-		return Objects.hash(id, phone, address, description, createdAt)
+		return Objects.hash(userId, phone, address, description, createdAt)
 	}
 
 	override fun toString(): String {
-		return "UserDetails: {id: $id, phone: $phone, address: $address}"
+		return "UserDetails: {id: $userId, phone: $phone, address: $address}"
 	}
 }

@@ -17,6 +17,7 @@ repositories {
 dependencies {
 	implementation(project(":cor"))
 	implementation(project(":ms-c:domain"))
+	implementation(project(":base:dom"))
 
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.springframework.boot:spring-boot-starter-security")

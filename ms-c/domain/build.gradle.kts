@@ -5,7 +5,6 @@ plugins {
 	kotlin("plugin.spring")
 }
 
-//val coroutinesVersion: String by project
 val kotlinLoggingVersion: String by project
 
 val jvmTargetVersion: String by project
@@ -17,6 +16,7 @@ repositories {
 
 dependencies {
 	implementation(project(":cor"))
+	implementation(project(":base:dom"))
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")

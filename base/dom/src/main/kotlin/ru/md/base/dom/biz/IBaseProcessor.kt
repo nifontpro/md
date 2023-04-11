@@ -1,4 +1,4 @@
-package ru.md.cor.base.biz
+package ru.md.base.dom.biz
 
 interface IBaseProcessor<T> {
 	suspend fun exec(ctx: T)

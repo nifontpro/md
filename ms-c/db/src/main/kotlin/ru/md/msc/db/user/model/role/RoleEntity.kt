@@ -1,46 +1,46 @@
 package ru.md.msc.db.user.model.role
 
 import jakarta.persistence.*
+import ru.md.msc.db.user.model.UserEntity
+import ru.md.msc.domain.user.model.RoleEnum
 import java.util.*
 
 @Entity
-@Table(name = "user_role", schema = "users", catalog = "medalist")
+@Table(name = "user_roles", schema = "users", catalog = "medalist")
 //@Cacheable
 //@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-@IdClass(RoleId::class)
 class RoleEntity(
 
 	@Id
-//	@Column(name = "user_id")
-	val userId: Long = 0,
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	val id: Long? = null,
 
-	@Id
-	val code: String = "",
-//	val roleEnum: RoleEnum,
+	@Column(name = "role_code")
+	val roleEnum: RoleEnum,
 
-	/*	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	//	@MapsId
-	//	@JoinColumn(name = "user_id")
-		var user: UserEntity,*/
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	var user: UserEntity? = null,
 
-) : Comparable<RoleEntity> {
+//	) : Comparable<RolesEntity> {
+	)  {
 
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true
 		if (other == null || javaClass != other.javaClass) return false
 		val role = other as RoleEntity
-		return userId == role.userId && code == role.code
+		return id == role.id && roleEnum == role.roleEnum
 	}
 
 	override fun hashCode(): Int {
-		return Objects.hash(code + userId)
+		return Objects.hash(roleEnum, id)
 	}
 
 	override fun toString(): String {
-		return "RoleEntity: {$userId, $code}"
+		return "RoleEntity: {$id, $roleEnum}"
 	}
 
-	override fun compareTo(other: RoleEntity): Int {
-		return code.compareTo(other.code)
-	}
+//	override fun compareTo(other: RolesEntity): Int {
+//		return roleEnum.compareTo(other.roleEnum)
+//	}
 }

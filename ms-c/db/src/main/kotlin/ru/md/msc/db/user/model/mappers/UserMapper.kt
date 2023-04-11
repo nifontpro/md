@@ -1,6 +1,7 @@
 package ru.md.msc.db.user.model.mappers
 
 import ru.md.msc.db.user.model.UserEntity
+import ru.md.msc.domain.user.model.Gender
 import ru.md.msc.domain.user.model.RoleEnum
 import ru.md.msc.domain.user.model.User
 
@@ -10,6 +11,7 @@ fun User.toUserEntity() = UserEntity(
 	firstname = firstname,
 	patronymic = patronymic,
 	lastname = lastname,
+	gender = gender ?: Gender.UNDEF,
 //	roles = roles.map { it.toRoleEntity() }.toSet(),
 	post = post,
 )
@@ -21,12 +23,6 @@ fun UserEntity.toUser() = User(
 	patronymic = patronymic,
 	lastname = lastname,
 	gender = gender,
-	roles = roles.map { roleCodeToEnum(it.code) }.toSet(),
+	roles = roles.map { it.roleEnum }.toSet(),
 	post = post,
 )
-
-private fun roleCodeToEnum(code: String): RoleEnum {
-	return RoleEnum.values().find {
-		it.code == code
-	} ?: throw Exception("Ошибка конвертации кода роли: $code")
-}

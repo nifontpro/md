@@ -10,5 +10,4 @@ class ClientApplication
 
 fun main(args: Array<String>) {
 	runApplication<ClientApplication>(*args)
-
 }

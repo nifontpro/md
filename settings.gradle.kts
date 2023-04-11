@@ -28,5 +28,5 @@ include("ms-c:domain")
 include("ms-c:rest")
 
 include("base")
-include("base:domain")
 include("base:rest")
+include("base:dom")

@@ -1,7 +1,7 @@
 package ru.md.msc.rest.base
 
-import ru.md.cor.base.biz.BaseContext
-import ru.md.cor.base.biz.IBaseProcessor
+import ru.md.base.dom.biz.BaseContext
+import ru.md.base.dom.biz.IBaseProcessor
 import kotlin.reflect.full.createInstance
 
 /**
@@ -11,8 +11,8 @@ suspend inline fun <reified T, reified R, reified C : BaseContext> process(
 	processor: IBaseProcessor<C>,
 	request: T,
 	fromTransport: C.(T) -> Unit,
-	toTransport: C.() -> R? = { null }
-): R? {
+	toTransport: C.() -> R
+): R {
 	val context = C::class.createInstance()
 	context.fromTransport(request)
 	processor.exec(context)

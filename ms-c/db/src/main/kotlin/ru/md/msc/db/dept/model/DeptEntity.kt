@@ -5,6 +5,7 @@ import jakarta.persistence.*
 import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import ru.md.msc.db.dept.model.image.DeptImageEntity
+import ru.md.msc.domain.dept.model.DeptType
 import java.util.*
 
 @Entity
@@ -18,10 +19,11 @@ class DeptEntity(
 
 	@Column(name = "parent_id")
 	val parentId: Long? = null,
-
 	val name: String? = null,
+	val classname: String? = null,
 
-	val code: String? = null,
+	@Column(name = "code")
+	val type: DeptType = DeptType.UNDEF,
 
 //	@OneToOne(mappedBy = "dept", fetch = FetchType.LAZY/*, optional = false*/)
 //	val details: DeptDetailsEntity? = null,
@@ -41,11 +43,11 @@ class DeptEntity(
 		if (this === other) return true
 		if (other == null || javaClass != other.javaClass) return false
 		val deptEntity = other as DeptEntity
-		return id == deptEntity.id && parentId == deptEntity.parentId && name == deptEntity.name && code == deptEntity.code
+		return id == deptEntity.id && parentId == deptEntity.parentId && name == deptEntity.name && type == deptEntity.type
 	}
 
 	override fun hashCode(): Int {
-		return Objects.hash(id, parentId, name, code)
+		return Objects.hash(id, parentId, name, type)
 	}
 
 	override fun toString(): String {
