@@ -1,7 +1,7 @@
 package ru.md.msc.db.user.service
 
-import ru.md.base.dom.model.RepositoryData
-import ru.md.base.dom.model.RepositoryError
+import ru.md.msc.domain.base.model.RepositoryData
+import ru.md.msc.domain.base.model.RepositoryError
 
 class UserErrors {
 	companion object {
@@ -20,6 +20,22 @@ class UserErrors {
 				repository = REPO,
 				violationCode = "get owner by email exist",
 				description = "Ошибка при проверке существования владельца по email"
+			)
+		)
+
+		fun notFound() = RepositoryData.error(
+			error = RepositoryError(
+				repository = REPO,
+				violationCode = "not found",
+				description = "Сотрудник не найден"
+			)
+		)
+
+		fun getError() = RepositoryData.error(
+			error = RepositoryError(
+				repository = REPO,
+				violationCode = "get error",
+				description = "Ошибка получения сотрудника"
 			)
 		)
 

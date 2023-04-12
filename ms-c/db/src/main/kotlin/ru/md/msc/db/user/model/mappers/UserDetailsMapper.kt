@@ -12,10 +12,10 @@ fun UserDetailsEntity.toUserDetails() = UserDetails(
 	user = user?.toUser()
 )
 
-fun UserDetails.toUserDetailsEntity() = UserDetailsEntity(
+fun UserDetails.toUserDetailsEntity(create: Boolean = false) = UserDetailsEntity(
 	phone = phone,
 	address = address,
 	description = description,
-	createdAt = LocalDateTime.now(),
+	createdAt = if (create) LocalDateTime.now() else createdAt,
 	user = user?.toUserEntity()
 )

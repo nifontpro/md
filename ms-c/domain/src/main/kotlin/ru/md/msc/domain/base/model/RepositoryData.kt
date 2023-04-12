@@ -1,4 +1,4 @@
-package ru.md.base.dom.model
+package ru.md.msc.domain.base.model
 
 data class RepositoryData<out T>(
 	val data: T? = null,

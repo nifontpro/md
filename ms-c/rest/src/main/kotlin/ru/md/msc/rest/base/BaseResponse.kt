@@ -1,8 +1,8 @@
 package ru.md.msc.rest.base
 
-import ru.md.base.dom.biz.BaseContext
-import ru.md.base.dom.biz.ContextState
-import ru.md.base.dom.helper.ContextError
+import ru.md.msc.domain.base.biz.BaseContext
+import ru.md.msc.domain.base.biz.ContextState
+import ru.md.msc.domain.base.helper.ContextError
 
 data class BaseResponse<out T>(
 	val data: T? = null,

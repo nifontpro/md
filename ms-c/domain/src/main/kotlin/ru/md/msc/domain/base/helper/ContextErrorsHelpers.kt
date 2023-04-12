@@ -1,7 +1,7 @@
-package ru.md.base.dom.helper
+package ru.md.msc.domain.base.helper
 
-import ru.md.base.dom.biz.BaseContext
-import ru.md.base.dom.biz.ContextState
+import ru.md.msc.domain.base.biz.BaseContext
+import ru.md.msc.domain.base.biz.ContextState
 
 fun BaseContext.addError(error: ContextError) = errors.add(error)
 
@@ -41,14 +41,14 @@ fun errorDb(
 )
 
 fun errorUnauthorized(
-	role: String, // Уровень доступа
-	description: String,
+	role: String = "not found", // Уровень доступа
+	message: String,
 	level: ContextError.Levels = ContextError.Levels.UNAUTHORIZED,
 ) = ContextError(
 	code = "unauthorized-$role",
 	field = role,
 	group = "unauthorized",
-	message = "Недостаточно прав для совершения операции (минимум '$description')",
+	message = message,
 	level = level,
 )
 

@@ -1,9 +1,9 @@
-package ru.md.base.dom.model
+package ru.md.msc.domain.base.model
 
-import ru.md.base.dom.biz.BaseContext
-import ru.md.base.dom.biz.ContextState
-import ru.md.base.dom.helper.addError
-import ru.md.base.dom.helper.errorDb
+import ru.md.msc.domain.base.biz.BaseContext
+import ru.md.msc.domain.base.biz.ContextState
+import ru.md.msc.domain.base.helper.addError
+import ru.md.msc.domain.base.helper.errorDb
 
 suspend fun <T> BaseContext.checkRepositoryData(operation: suspend () -> RepositoryData<T>): T? {
 	val result = operation()

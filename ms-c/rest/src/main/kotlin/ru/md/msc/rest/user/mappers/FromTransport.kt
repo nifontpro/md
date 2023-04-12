@@ -8,9 +8,7 @@ import ru.md.msc.rest.user.model.request.CreateOwnerRequest
 
 fun UserContext.fromTransport(request: CreateOwnerRequest) {
 	command = UserCommand.CREATE_OWNER
-	emailVerified = request.emailVerified
 	user = User(
-		email = request.email,
 		firstname = request.firstname,
 		patronymic = request.patronymic,
 		lastname = request.lastname,

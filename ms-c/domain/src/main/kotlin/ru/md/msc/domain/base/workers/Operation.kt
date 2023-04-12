@@ -1,8 +1,8 @@
-package ru.md.base.dom.workers
+package ru.md.msc.domain.base.workers
 
-import ru.md.base.dom.biz.BaseContext
-import ru.md.base.dom.biz.ContextState
-import ru.md.base.dom.biz.IBaseCommand
+import ru.md.msc.domain.base.biz.BaseContext
+import ru.md.msc.domain.base.biz.ContextState
+import ru.md.msc.domain.base.biz.IBaseCommand
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.chain
 import ru.md.cor.worker

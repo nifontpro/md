@@ -1,7 +1,7 @@
 package ru.md.msc.db.dept.service
 
-import ru.md.base.dom.model.RepositoryData
-import ru.md.base.dom.model.RepositoryError
+import ru.md.msc.domain.base.model.RepositoryData
+import ru.md.msc.domain.base.model.RepositoryError
 
 class DeptErrors {
 	companion object {

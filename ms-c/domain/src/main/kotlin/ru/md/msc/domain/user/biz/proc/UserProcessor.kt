@@ -1,13 +1,13 @@
 package ru.md.msc.domain.user.biz.proc
 
 import org.springframework.stereotype.Component
-import ru.md.base.dom.biz.IBaseProcessor
-import ru.md.base.dom.workers.finishOperation
-import ru.md.base.dom.workers.initStatus
-import ru.md.base.dom.workers.operation
 import ru.md.cor.rootChain
+import ru.md.msc.domain.base.biz.IBaseProcessor
+import ru.md.msc.domain.base.workers.finishOperation
+import ru.md.msc.domain.base.workers.initStatus
+import ru.md.msc.domain.base.workers.operation
+import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
-import ru.md.msc.domain.user.biz.validate.validateUserEmailVerified
 import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
 import ru.md.msc.domain.user.biz.workers.createOwner
 import ru.md.msc.domain.user.service.UserService
@@ -15,10 +15,14 @@ import ru.md.msc.domain.user.service.UserService
 @Component
 @Suppress("RemoveExplicitTypeArguments")
 class UserProcessor(
-	private val userService: UserService
+	private val userService: UserService,
+	private val deptService: DeptService
 ) : IBaseProcessor<UserContext> {
 
-	override suspend fun exec(ctx: UserContext) = businessChain.exec(ctx.also { it.userService = userService })
+	override suspend fun exec(ctx: UserContext) = businessChain.exec(ctx.also {
+		it.userService = userService
+		it.deptService = deptService
+	})
 
 	companion object {
 
@@ -27,7 +31,6 @@ class UserProcessor(
 
 			operation("Регистрация корневого владельца", UserCommand.CREATE_OWNER) {
 				validateUserFirstnameEmpty("Проверка имени пользователя")
-				validateUserEmailVerified("Проверка подтвержденности почты")
 				validateOwnerByEmailExist("Проверка существования владельца с email")
 				createOwner("Создаем владельца")
 			}

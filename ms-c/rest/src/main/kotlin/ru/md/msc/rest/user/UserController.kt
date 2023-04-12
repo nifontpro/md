@@ -3,10 +3,10 @@ package ru.md.msc.rest.user
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.web.bind.annotation.*
-import ru.md.msc.domain.user.biz.TestBiz
 import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.service.UserService
+import ru.md.msc.rest.base.AUTH
 import ru.md.msc.rest.base.BaseResponse
 import ru.md.msc.rest.base.process
 import ru.md.msc.rest.user.mappers.fromTransport
@@ -22,7 +22,6 @@ class UserController(
 	private val userProcessor: UserProcessor,
 	private val userService: UserService,
 	private val jwtUtils: JwtUtils,
-	private val testBiz: TestBiz
 ) {
 
 	@PostMapping("test")
@@ -32,16 +31,14 @@ class UserController(
 	}
 
 	@PostMapping("create_owner")
-	suspend fun createOwner(
+	private suspend fun createOwner(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: CreateOwnerRequest
 	): BaseResponse<UserDetailsResponse> {
-		val authData = jwtUtils.decodeBearerJwt(bearerToken)
-		println("AuthData: $authData")
-		val requestWithEmail = request.copy(email = authData.email, emailVerified = authData.emailVerified)
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = userProcessor,
-			request = requestWithEmail,
+			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportGetUserDetails() }
 		)
@@ -58,14 +55,9 @@ class UserController(
 
 	@GetMapping("all")
 	suspend fun getAll(): List<User> {
-		println(testBiz.test())
 		return withContext(Dispatchers.IO) {
 			userService.getAll()
 		}
-	}
-
-	companion object {
-		private const val AUTH = "Authorization"
 	}
 }
 

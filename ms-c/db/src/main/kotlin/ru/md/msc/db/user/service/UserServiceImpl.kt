@@ -3,8 +3,8 @@ package ru.md.msc.db.user.service
 import jakarta.transaction.Transactional
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import ru.md.base.dom.model.RepositoryData
 import ru.md.msc.db.dept.model.DeptDetailsEntity
 import ru.md.msc.db.dept.model.DeptEntity
 import ru.md.msc.db.dept.repo.DeptDetailsRepository
@@ -16,6 +16,7 @@ import ru.md.msc.db.user.model.role.RoleEntity
 import ru.md.msc.db.user.repo.RoleRepository
 import ru.md.msc.db.user.repo.UserDetailsRepository
 import ru.md.msc.db.user.repo.UserRepository
+import ru.md.msc.domain.base.model.RepositoryData
 import ru.md.msc.domain.dept.model.DeptType
 import ru.md.msc.domain.user.model.RoleEnum
 import ru.md.msc.domain.user.model.User
@@ -37,7 +38,7 @@ class UserServiceImpl(
 	 */
 	override fun createOwner(userDetails: UserDetails): RepositoryData<UserDetails> {
 
-		val userDetailsEntity = (userDetails.toUserDetailsEntity())
+		val userDetailsEntity = (userDetails.toUserDetailsEntity(create = true))
 
 		val deptEntity = DeptEntity(
 			parentId = 1, // Найти id Корневого отдела ROOT
@@ -87,9 +88,6 @@ class UserServiceImpl(
 		} catch (e: Exception) {
 			return UserErrors.getOwnerByEmailExist()
 		}
-
-		log.info("Проверка наличия Владельца по email: $roles")
-
 		return RepositoryData.success(data = roles.isNotEmpty())
 	}
 
@@ -97,12 +95,13 @@ class UserServiceImpl(
 		return userRepository.findAll().map { it.toUser() }
 	}
 
-	override fun add(userDetails: UserDetails) {
-		val userDetailsEntity = userDetailsRepository.save(userDetails.toUserDetailsEntity())
-		val user = userDetailsEntity.user
-		val role = RoleEntity(roleEnum = RoleEnum.USER, user = user)
-		roleRepository.save(role)
-//		user.addRole(role)
+	override fun getById(userId: Long): RepositoryData<User> {
+		return try {
+			val user = userRepository.findByIdOrNull(userId)?.toUser()
+			RepositoryData.success(data = user)
+		} catch (e: Exception) {
+			UserErrors.getError()
+		}
 	}
 
 	companion object {
