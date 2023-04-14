@@ -9,7 +9,7 @@ import java.util.*
 class DeptDetailsEntity(
 
 	@Id
-	@Column(name = "user_id")
+	@Column(name = "dept_id")
 	val deptId: Long? = null,
 
 	val address: String? = null,

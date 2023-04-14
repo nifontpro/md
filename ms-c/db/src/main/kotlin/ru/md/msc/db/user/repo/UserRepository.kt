@@ -10,9 +10,6 @@ import ru.md.msc.db.user.model.UserEntity
 interface UserRepository : JpaRepository<UserEntity, Long> {
 
 	@EntityGraph("withDept")
-	@Query("from UserEntity u")
-	fun getsAll(): List<UserEntity>
-
 	fun findByEmailIgnoreCase(email: String): List<UserEntity>
 
 }

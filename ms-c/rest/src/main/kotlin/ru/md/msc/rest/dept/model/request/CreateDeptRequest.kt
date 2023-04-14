@@ -2,7 +2,7 @@ package ru.md.msc.rest.dept.model.request
 
 data class CreateDeptRequest(
 	val authId: Long = 0,
-	val parentId: Long? = null,
+	val parentId: Long = 0,
 	val name: String = "",
 	val classname: String? = null,
 	val address: String? = null,

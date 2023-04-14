@@ -15,6 +15,14 @@ class UserErrors {
 			)
 		)
 
+		fun create() = RepositoryData.error(
+			error = RepositoryError(
+				repository = REPO,
+				violationCode = "create",
+				description = "Ошибка создания профиля сотрудника"
+			)
+		)
+
 		fun getOwnerByEmailExist() = RepositoryData.error(
 			error = RepositoryError(
 				repository = REPO,
@@ -23,7 +31,7 @@ class UserErrors {
 			)
 		)
 
-		fun notFound() = RepositoryData.error(
+		fun userNotFound() = RepositoryData.error(
 			error = RepositoryError(
 				repository = REPO,
 				violationCode = "not found",
@@ -35,7 +43,7 @@ class UserErrors {
 			error = RepositoryError(
 				repository = REPO,
 				violationCode = "get error",
-				description = "Ошибка получения сотрудника"
+				description = "Ошибка чтения"
 			)
 		)
 

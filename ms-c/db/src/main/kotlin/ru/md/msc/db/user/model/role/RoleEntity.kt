@@ -2,7 +2,7 @@ package ru.md.msc.db.user.model.role
 
 import jakarta.persistence.*
 import ru.md.msc.db.user.model.UserEntity
-import ru.md.msc.domain.user.model.RoleEnum
+import ru.md.msc.domain.user.model.RoleUser
 import java.util.*
 
 @Entity
@@ -16,7 +16,7 @@ class RoleEntity(
 	val id: Long? = null,
 
 	@Column(name = "role_code")
-	val roleEnum: RoleEnum,
+	val roleUser: RoleUser,
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
@@ -29,15 +29,15 @@ class RoleEntity(
 		if (this === other) return true
 		if (other == null || javaClass != other.javaClass) return false
 		val role = other as RoleEntity
-		return id == role.id && roleEnum == role.roleEnum
+		return id == role.id && roleUser == role.roleUser
 	}
 
 	override fun hashCode(): Int {
-		return Objects.hash(roleEnum, id)
+		return Objects.hash(roleUser, id)
 	}
 
 	override fun toString(): String {
-		return "RoleEntity: {$id, $roleEnum}"
+		return "RoleEntity: {$id, $roleUser}"
 	}
 
 //	override fun compareTo(other: RolesEntity): Int {

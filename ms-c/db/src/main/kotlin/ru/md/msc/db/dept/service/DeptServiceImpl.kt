@@ -4,12 +4,12 @@ import jakarta.transaction.Transactional
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import ru.md.msc.domain.base.model.RepositoryData
 import ru.md.msc.db.dept.model.mappers.toDept
 import ru.md.msc.db.dept.model.mappers.toDeptDetails
 import ru.md.msc.db.dept.model.mappers.toDeptDetailsEntity
 import ru.md.msc.db.dept.repo.DeptDetailsRepository
 import ru.md.msc.db.dept.repo.DeptRepository
+import ru.md.msc.domain.base.model.RepositoryData
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
 import ru.md.msc.domain.dept.service.DeptService
@@ -30,6 +30,18 @@ class DeptServiceImpl(
 			return DeptErrors.createDept()
 		}
 		return RepositoryData.success(deptDetailsEntity.toDeptDetails())
+	}
+
+	/**
+	 * Проверка, является ли отдел [downId] потомком [upId] в дереве отделов
+	 */
+	override fun validateDeptLevel(upId: Long, downId: Long): RepositoryData<Boolean> {
+		return try {
+			val res = deptRepository.upTreeHasDeptId(downId = downId, upId = upId)
+			RepositoryData.success(data = res)
+		} catch (e: Exception) {
+			DeptErrors.getDeptAuth()
+		}
 	}
 
 	override fun findAll(): List<Dept> {

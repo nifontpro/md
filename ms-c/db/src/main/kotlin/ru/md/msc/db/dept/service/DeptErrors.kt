@@ -14,5 +14,13 @@ class DeptErrors {
 				description = "Ошибка создания отдела"
 			)
 		)
+
+		fun getDeptAuth() = RepositoryData.error(
+			error = RepositoryError(
+				repository = REPO,
+				violationCode = "dept auth",
+				description = "Ошибка проверки прав доступа отдела"
+			)
+		)
 	}
 }

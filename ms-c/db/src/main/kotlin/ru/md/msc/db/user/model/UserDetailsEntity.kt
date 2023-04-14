@@ -32,7 +32,7 @@ class UserDetailsEntity(
 	@Column(name = "created_at")
 	val createdAt: LocalDateTime? = null,
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
 	@JoinColumn(name = "user_id")
 	@MapsId
 	val user: UserEntity? = null

@@ -2,17 +2,17 @@ package ru.md.msc.db.user.model.converter
 
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter
-import ru.md.msc.domain.user.model.RoleEnum
+import ru.md.msc.domain.user.model.RoleUser
 
 @Converter(autoApply = true)
-class RoleConverter : AttributeConverter<RoleEnum, String> {
+class RoleConverter : AttributeConverter<RoleUser, String> {
 
-	override fun convertToDatabaseColumn(roleEnum: RoleEnum): String {
-		return roleEnum.code
+	override fun convertToDatabaseColumn(roleUser: RoleUser): String {
+		return roleUser.code
 	}
 
-	override fun convertToEntityAttribute(code: String): RoleEnum {
-		return RoleEnum.values().find {
+	override fun convertToEntityAttribute(code: String): RoleUser {
+		return RoleUser.values().find {
 			it.code == code
 		} ?: throw Exception("RoleMapper: Не найдено значение роли: $code")
 	}

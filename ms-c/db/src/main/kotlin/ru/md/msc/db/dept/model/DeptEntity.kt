@@ -18,7 +18,7 @@ class DeptEntity(
 	val id: Long? = null,
 
 	@Column(name = "parent_id")
-	val parentId: Long? = null,
+	val parentId: Long = 0,
 	val name: String = "",
 	val classname: String? = null,
 

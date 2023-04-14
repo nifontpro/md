@@ -9,7 +9,9 @@ import ru.md.msc.db.dept.model.DeptDetailsEntity
 import ru.md.msc.db.dept.model.DeptEntity
 import ru.md.msc.db.dept.repo.DeptDetailsRepository
 import ru.md.msc.db.dept.service.DeptErrors
+import ru.md.msc.db.user.model.UserDetailsEntity
 import ru.md.msc.db.user.model.mappers.toUser
+import ru.md.msc.db.user.model.mappers.toUserDept
 import ru.md.msc.db.user.model.mappers.toUserDetails
 import ru.md.msc.db.user.model.mappers.toUserDetailsEntity
 import ru.md.msc.db.user.model.role.RoleEntity
@@ -18,11 +20,14 @@ import ru.md.msc.db.user.repo.UserDetailsRepository
 import ru.md.msc.db.user.repo.UserRepository
 import ru.md.msc.domain.base.model.RepositoryData
 import ru.md.msc.domain.dept.model.DeptType
-import ru.md.msc.domain.user.model.RoleEnum
+import ru.md.msc.domain.user.model.RoleUser
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.domain.user.service.UserService
 import java.time.LocalDateTime
+
+// id корневого отдела программы
+const val ROOT_DEPT_ID = 1L
 
 @Service
 @Transactional
@@ -41,15 +46,15 @@ class UserServiceImpl(
 		val userDetailsEntity = (userDetails.toUserDetailsEntity(create = true))
 
 		val deptEntity = DeptEntity(
-			parentId = 1, // Найти id Корневого отдела ROOT
-			name = "Владелец " + userDetails.user?.email,
+			parentId = ROOT_DEPT_ID,
+			name = "Владелец " + userDetails.user.email,
 			classname = "Корневой",
-			type = DeptType.USER,
+			type = DeptType.USER_OWNER,
 		)
 		val deptDetailsEntity = DeptDetailsEntity(
 			dept = deptEntity,
 			address = userDetails.address,
-			email = userDetails.user?.email,
+			email = userDetails.user.email,
 			phone = userDetails.phone,
 			createdAt = LocalDateTime.now()
 		)
@@ -70,19 +75,37 @@ class UserServiceImpl(
 			return UserErrors.createOwner()
 		}
 
-		val roleOwner = RoleEntity(roleEnum = RoleEnum.OWNER, user = userDetailsEntity.user)
-		val roleAdmin = RoleEntity(roleEnum = RoleEnum.ADMIN, user = userDetailsEntity.user)
-		val roles = listOf(roleOwner, roleAdmin)
-		userDetailsEntity.user?.roles?.addAll(roles)
-		// Автоматическое добавление ролей при завершении транзакции
+		addRolesToUserEntity(userDetails, userDetailsEntity)
 
 		return RepositoryData.success(data = userDetailsEntity.toUserDetails())
 	}
 
+	override fun create(userDetails: UserDetails): RepositoryData<UserDetails> {
+		val userDetailsEntity = (userDetails.toUserDetailsEntity(create = true))
+		try {
+			userDetailsRepository.save(userDetailsEntity)
+		} catch (e: Exception) {
+			log.error(e.message)
+			return UserErrors.create()
+		}
+		addRolesToUserEntity(userDetails, userDetailsEntity)
+		return RepositoryData.success(data = userDetailsEntity.toUserDetails())
+	}
+
+	private fun addRolesToUserEntity(
+		userDetails: UserDetails,
+		userDetailsEntity: UserDetailsEntity
+	) {
+		userDetails.user.roles.map { roleEnum ->
+			val roleEntity = RoleEntity(roleUser = roleEnum, user = userDetailsEntity.user)
+			userDetailsEntity.user?.roles?.add(roleEntity)
+		}
+	}
+
 	override fun doesOwnerWithEmailExist(email: String): RepositoryData<Boolean> {
 		val roles = try {
-			roleRepository.findByRoleEnumAndUserEmail(
-				roleEnum = RoleEnum.OWNER,
+			roleRepository.findByRoleUserAndUserEmail(
+				roleUser = RoleUser.OWNER,
 				userEmail = email
 			)
 		} catch (e: Exception) {
@@ -91,21 +114,30 @@ class UserServiceImpl(
 		return RepositoryData.success(data = roles.isNotEmpty())
 	}
 
+	override fun findByEmailWithDept(email: String): RepositoryData<List<User>> {
+		return try {
+			val users = userRepository.findByEmailIgnoreCase(email = email).map {
+				it.toUserDept()
+			}
+			RepositoryData.success(data = users)
+		} catch (e: Exception) {
+			return UserErrors.getError()
+		}
+	}
+
 	override fun getAll(): List<User> {
 		return userRepository.findAll().map { it.toUser() }
 	}
 
 	override fun getById(userId: Long): RepositoryData<User> {
 		return try {
-			val user = userRepository.findByIdOrNull(userId)?.toUser()
+			val user = userRepository.findByIdOrNull(userId)?.toUser() ?: return UserErrors.userNotFound()
 			RepositoryData.success(data = user)
 		} catch (e: Exception) {
 			UserErrors.getError()
 		}
 	}
 
-	companion object {
-		var log: Logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
-	}
+	val log: Logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
 
 }

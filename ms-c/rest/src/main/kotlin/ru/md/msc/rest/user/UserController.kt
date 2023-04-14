@@ -11,7 +11,9 @@ import ru.md.msc.rest.base.BaseResponse
 import ru.md.msc.rest.base.process
 import ru.md.msc.rest.user.mappers.fromTransport
 import ru.md.msc.rest.user.mappers.toTransportGetUserDetails
+import ru.md.msc.rest.user.mappers.toTransportGetUsers
 import ru.md.msc.rest.user.model.request.CreateOwnerRequest
+import ru.md.msc.rest.user.model.request.GetProfilesRequest
 import ru.md.msc.rest.user.model.response.UserDetailsResponse
 import ru.md.msc.rest.utils.JwtUtils
 import java.security.Principal
@@ -41,6 +43,20 @@ class UserController(
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportGetUserDetails() }
+		)
+	}
+
+	@PostMapping("profiles")
+	private suspend fun getProfiles(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetProfilesRequest
+	): BaseResponse<List<User>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = userProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportGetUsers() }
 		)
 	}
 

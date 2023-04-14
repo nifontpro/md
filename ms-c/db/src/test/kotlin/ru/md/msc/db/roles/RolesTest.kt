@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import ru.md.msc.db.user.repo.RoleRepository
-import ru.md.msc.domain.user.model.RoleEnum
+import ru.md.msc.domain.user.model.RoleUser
 
 @SpringBootTest
 class RolesTest(
@@ -13,8 +13,8 @@ class RolesTest(
 
 	@Test
 	fun getOwnerByEmail() {
-		val roleEntity = roleRepository.findByRoleEnumAndUserEmail(
-			roleEnum = RoleEnum.OWNER,
+		val roleEntity = roleRepository.findByRoleUserAndUserEmail(
+			roleUser = RoleUser.OWNER,
 			userEmail = "leprinxol@gmail.com"
 		)
 		println(roleEntity)

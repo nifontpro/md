@@ -8,11 +8,12 @@ import ru.md.msc.domain.user.model.UserDetails
 class UserContext : BaseContext(command = UserCommand.NONE) {
 	var user: User = User()
 	var userDetails: UserDetails = UserDetails()
-	val users: MutableList<User> = mutableListOf()
-	val usersDetails: MutableList<UserDetails> = mutableListOf()
+	var users: List<User> = emptyList()
+	var usersDetails: List<UserDetails> = emptyList()
 }
 
 enum class UserCommand : IBaseCommand {
 	NONE,
 	CREATE_OWNER,
+	GET_PROFILES,
 }

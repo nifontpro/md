@@ -10,6 +10,7 @@ import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
 import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
 import ru.md.msc.domain.user.biz.workers.createOwner
+import ru.md.msc.domain.user.biz.workers.getProfiles
 import ru.md.msc.domain.user.service.UserService
 
 @Component
@@ -33,6 +34,10 @@ class UserProcessor(
 				validateUserFirstnameEmpty("Проверка имени пользователя")
 				validateOwnerByEmailExist("Проверка существования владельца с email")
 				createOwner("Создаем владельца")
+			}
+
+			operation("Получение профилей пользователя", UserCommand.GET_PROFILES) {
+				getProfiles("Получаем доступные профили")
 			}
 
 			finishOperation()

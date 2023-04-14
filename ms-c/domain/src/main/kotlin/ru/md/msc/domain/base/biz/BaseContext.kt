@@ -1,5 +1,7 @@
 package ru.md.msc.domain.base.biz
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import ru.md.msc.domain.base.helper.ContextError
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.user.model.User
@@ -18,6 +20,8 @@ abstract class BaseContext(
 ) {
 	lateinit var userService: UserService
 	lateinit var deptService: DeptService
+
+	val log: Logger = LoggerFactory.getLogger(BaseContext::class.java)
 }
 
 enum class BaseCommand : IBaseCommand {

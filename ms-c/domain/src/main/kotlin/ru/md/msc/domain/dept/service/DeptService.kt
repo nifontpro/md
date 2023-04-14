@@ -7,4 +7,5 @@ import ru.md.msc.domain.dept.model.DeptDetails
 interface DeptService {
 	fun findAll(): List<Dept>
 	fun create(deptDetails: DeptDetails): RepositoryData<DeptDetails>
+	fun validateDeptLevel(upId: Long, downId: Long): RepositoryData<Boolean>
 }
