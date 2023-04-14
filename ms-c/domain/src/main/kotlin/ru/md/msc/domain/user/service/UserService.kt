@@ -8,7 +8,7 @@ interface UserService {
 	fun getAll(): List<User>
 	fun createOwner(userDetails: UserDetails): RepositoryData<UserDetails>
 	fun doesOwnerWithEmailExist(email: String): RepositoryData<Boolean>
-	fun getById(userId: Long): RepositoryData<User>
+	fun findById(userId: Long): RepositoryData<User>
 	fun create(userDetails: UserDetails): RepositoryData<UserDetails>
-	fun findByEmailWithDept(email: String): RepositoryData<List<User>>
+	fun findByAuthEmailWithDept(authEmail: String): RepositoryData<List<User>>
 }

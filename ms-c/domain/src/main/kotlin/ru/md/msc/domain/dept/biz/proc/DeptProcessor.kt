@@ -11,6 +11,7 @@ import ru.md.msc.domain.base.workers.operation
 import ru.md.msc.domain.dept.biz.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.dept.biz.workers.createDept
 import ru.md.msc.domain.dept.biz.workers.createTestUsers
+import ru.md.msc.domain.dept.biz.workers.getSubtreeDepts
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.user.service.UserService
 
@@ -31,11 +32,16 @@ class DeptProcessor(
 			initStatus()
 
 			operation("Создать отдел", DeptCommand.CREATE) {
-				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAdminRole("Проверка наличия прав Администратора")
 				validateAuthDeptLevel("Проверка доступа к отделу")
 				createDept("Создаем отдел")
 				createTestUsers("Создаем тестовых сотрудников")
+			}
+
+			operation("Получить поддерево отделов", DeptCommand.GET_DEPTS_TREE) {
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				getSubtreeDepts("Получаем поддерево отделов")
 			}
 
 			finishOperation()

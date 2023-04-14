@@ -8,11 +8,11 @@ import ru.md.msc.domain.dept.model.DeptDetails
 class DeptContext : BaseContext() {
 	var dept: Dept = Dept()
 	var deptDetails: DeptDetails = DeptDetails()
-	val depts: MutableList<Dept> = mutableListOf()
-	val deptsDetails: MutableList<DeptDetails> = mutableListOf()
-	var emailVerified: Boolean = false
+	var depts: List<Dept> = emptyList()
+	var deptsDetails: List<DeptDetails> = emptyList()
 }
 
 enum class DeptCommand : IBaseCommand {
 	CREATE,
+	GET_DEPTS_TREE
 }

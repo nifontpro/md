@@ -14,12 +14,12 @@ fun <T : BaseContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: String) =
 	handle {
 
 		authUser = checkRepositoryData {
-			userService.getById(authId)
+			userService.findById(authId)
 		} ?: return@handle
 
 		log.info("Get Auth user: $authUser")
 
-		if (authUser.email != authEmail) {
+		if (authUser.authEmail != authEmail) {
 			fail(
 				errorUnauthorized(
 					message = "Доступ по authId запрещен",

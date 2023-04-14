@@ -44,9 +44,13 @@ class DeptServiceImpl(
 		}
 	}
 
-	override fun findAll(): List<Dept> {
-		return deptRepository.findAll().map {
-			it.toDept()
+	override fun findSubTreeDepts(deptId: Long): RepositoryData<List<Dept>> {
+		val ids = deptRepository.subTreeIds(deptId = deptId)
+		return try {
+			val depts = deptRepository.findByIdIn(ids = ids)
+			RepositoryData.success(data = depts.map { it.toDept() })
+		} catch (e: Exception) {
+			DeptErrors.getDepts()
 		}
 	}
 

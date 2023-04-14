@@ -13,7 +13,7 @@ class RolesTest(
 
 	@Test
 	fun getOwnerByEmail() {
-		val roleEntity = roleRepository.findByRoleUserAndUserEmail(
+		val roleEntity = roleRepository.findByRoleUserAndUserAuthEmail(
 			roleUser = RoleUser.OWNER,
 			userEmail = "leprinxol@gmail.com"
 		)

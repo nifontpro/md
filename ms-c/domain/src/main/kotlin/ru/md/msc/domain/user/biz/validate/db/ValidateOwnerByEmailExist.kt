@@ -14,17 +14,17 @@ fun ICorChainDsl<UserContext>.validateOwnerByEmailExist(title: String) = worker 
 	handle {
 
 		// Обязательно устанавливаем email!
-		user = user.copy(email = authEmail)
+		user = user.copy(authEmail = authEmail)
 
 		val ownerExist = checkRepositoryData {
-			userService.doesOwnerWithEmailExist(user.email)
+			userService.doesOwnerWithEmailExist(user.authEmail)
 		} ?: return@handle
 
 		if (ownerExist) fail(
 			errorValidation(
 				field = "email",
 				violationCode = "owner already exist",
-				description = "Владелец с почтой ${user.email} уже существует"
+				description = "Владелец с почтой ${user.authEmail} уже существует"
 			)
 		)
 	}

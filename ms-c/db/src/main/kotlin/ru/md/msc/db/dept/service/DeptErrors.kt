@@ -22,5 +22,13 @@ class DeptErrors {
 				description = "Ошибка проверки прав доступа отдела"
 			)
 		)
+
+		fun getDepts() = RepositoryData.error(
+			error = RepositoryError(
+				repository = REPO,
+				violationCode = "get depts",
+				description = "Ошибка получения отделов"
+			)
+		)
 	}
 }

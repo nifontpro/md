@@ -10,7 +10,7 @@ import ru.md.msc.domain.user.model.User
 fun User.toUserEntity() = UserEntity(
 	id = id,
 	dept = dept?.toDeptEntity(),
-	email = email,
+	authEmail = authEmail,
 	firstname = firstname,
 	patronymic = patronymic,
 	lastname = lastname,
@@ -22,7 +22,7 @@ fun User.toUserEntity() = UserEntity(
 fun UserEntity.toUser() = User(
 	id = id,
 	dept = Dept(id = dept?.id),
-	email = email,
+	authEmail = authEmail,
 	firstname = firstname,
 	patronymic = patronymic,
 	lastname = lastname,
@@ -34,7 +34,7 @@ fun UserEntity.toUser() = User(
 fun UserEntity.toUserDept() = User(
 	id = id,
 	dept = dept?.toDept(),
-	email = email,
+	authEmail = authEmail,
 	firstname = firstname,
 	patronymic = patronymic,
 	lastname = lastname,

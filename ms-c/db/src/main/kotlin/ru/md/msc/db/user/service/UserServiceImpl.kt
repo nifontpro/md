@@ -47,14 +47,14 @@ class UserServiceImpl(
 
 		val deptEntity = DeptEntity(
 			parentId = ROOT_DEPT_ID,
-			name = "Владелец " + userDetails.user.email,
+			name = "Владелец " + userDetails.user.authEmail,
 			classname = "Корневой",
 			type = DeptType.USER_OWNER,
 		)
 		val deptDetailsEntity = DeptDetailsEntity(
 			dept = deptEntity,
 			address = userDetails.address,
-			email = userDetails.user.email,
+			email = userDetails.user.authEmail,
 			phone = userDetails.phone,
 			createdAt = LocalDateTime.now()
 		)
@@ -104,7 +104,7 @@ class UserServiceImpl(
 
 	override fun doesOwnerWithEmailExist(email: String): RepositoryData<Boolean> {
 		val roles = try {
-			roleRepository.findByRoleUserAndUserEmail(
+			roleRepository.findByRoleUserAndUserAuthEmail(
 				roleUser = RoleUser.OWNER,
 				userEmail = email
 			)
@@ -114,9 +114,9 @@ class UserServiceImpl(
 		return RepositoryData.success(data = roles.isNotEmpty())
 	}
 
-	override fun findByEmailWithDept(email: String): RepositoryData<List<User>> {
+	override fun findByAuthEmailWithDept(authEmail: String): RepositoryData<List<User>> {
 		return try {
-			val users = userRepository.findByEmailIgnoreCase(email = email).map {
+			val users = userRepository.findByAuthEmailIgnoreCase(authEmail = authEmail).map {
 				it.toUserDept()
 			}
 			RepositoryData.success(data = users)
@@ -129,7 +129,7 @@ class UserServiceImpl(
 		return userRepository.findAll().map { it.toUser() }
 	}
 
-	override fun getById(userId: Long): RepositoryData<User> {
+	override fun findById(userId: Long): RepositoryData<User> {
 		return try {
 			val user = userRepository.findByIdOrNull(userId)?.toUser() ?: return UserErrors.userNotFound()
 			RepositoryData.success(data = user)

@@ -14,4 +14,12 @@ interface DeptRepository : JpaRepository<DeptEntity, Long> {
 	 */
 	@Procedure(procedureName = "dep.up_tree_has_id")
 	fun upTreeHasDeptId(downId: Long, upId: Long): Boolean
+
+	/**
+	 * Получить ids всех элементов поддерева отделов, включая вершину
+	 */
+	@Procedure(procedureName = "dep.sub_tree_ids")
+	fun subTreeIds(deptId: Long): List<Long>
+
+	fun findByIdIn(ids: List<Long>): List<DeptEntity>
 }

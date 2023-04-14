@@ -14,7 +14,7 @@ fun ICorChainDsl<UserContext>.getProfiles(title: String) = worker {
 	handle {
 
 		users = checkRepositoryData {
-			userService.findByEmailWithDept(email = authEmail)
+			userService.findByAuthEmailWithDept(authEmail = authEmail)
 		} ?: return@handle
 	}
 }

@@ -9,7 +9,7 @@ data class User(
 	val firstname: String = "",
 	val patronymic: String? = null,
 	val lastname: String? = null,
-	val email: String = "",
+	val authEmail: String = "",
 	val gender: Gender? = null,
 	val post: String? = null,
 	val roles: Set<RoleUser> = emptySet(),

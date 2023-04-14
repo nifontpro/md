@@ -25,7 +25,8 @@ class UserEntity(
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	val id: Long? = null,
 
-	val email: String = "",
+	@Column(name = "auth_email")
+	val authEmail: String = "",
 	val firstname: String = "",
 	val patronymic: String? = null,
 	val lastname: String? = null,
@@ -61,11 +62,11 @@ class UserEntity(
 	}
 
 	override fun hashCode(): Int {
-		return Objects.hash(email + id)
+		return Objects.hash(authEmail + id)
 	}
 
 	override fun toString(): String {
-		return "User: {$id, $firstname, $email}"
+		return "User: {$id, $firstname, $authEmail}"
 	}
 
 }

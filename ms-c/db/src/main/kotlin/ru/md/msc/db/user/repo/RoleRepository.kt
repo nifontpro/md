@@ -8,6 +8,6 @@ import ru.md.msc.domain.user.model.RoleUser
 @Repository
 interface RoleRepository : JpaRepository<RoleEntity, Long> {
 
-	fun findByRoleUserAndUserEmail(roleUser: RoleUser, userEmail: String): List<RoleEntity>
+	fun findByRoleUserAndUserAuthEmail(roleUser: RoleUser, userEmail: String): List<RoleEntity>
 
 }

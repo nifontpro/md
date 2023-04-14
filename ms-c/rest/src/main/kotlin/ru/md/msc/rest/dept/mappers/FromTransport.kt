@@ -6,6 +6,7 @@ import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
 import ru.md.msc.domain.dept.model.DeptType
 import ru.md.msc.rest.dept.model.request.CreateDeptRequest
+import ru.md.msc.rest.dept.model.request.GetAuthSubtreeDeptsRequest
 
 fun DeptContext.fromTransport(request: CreateDeptRequest) {
 	command = DeptCommand.CREATE
@@ -23,4 +24,9 @@ fun DeptContext.fromTransport(request: CreateDeptRequest) {
 		phone = request.phone,
 		description = request.description
 	)
+}
+
+fun DeptContext.fromTransport(request: GetAuthSubtreeDeptsRequest) {
+	command = DeptCommand.GET_DEPTS_TREE
+	authId = request.authId
 }
