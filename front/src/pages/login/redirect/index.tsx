@@ -1,7 +1,7 @@
 import {NextPage} from "next";
 import {useRouter} from "next/router";
 import React, {useEffect, useState} from "react";
-import {authApi} from "@/auth/data/auth.api";
+import {authApi} from "@/app/api/auth/auth.api";
 
 const Redirect: NextPage = () => {
 

@@ -1,7 +1,7 @@
 import {BaseQueryFn, FetchArgs, fetchBaseQuery, FetchBaseQueryError} from "@reduxjs/toolkit/query";
-import {CLIENT_ID, IAuthResponse, KEYCLOAK_URI} from "@/auth/data/auth.api";
-import {TypeRootState} from "@/auth/data/store";
-import {authActions} from "@/auth/data/auth.slice";
+import {CLIENT_ID, IAuthResponse, KEYCLOAK_URI} from "@/app/api/auth/auth.api";
+import {TypeRootState} from "@/app/store/storage/store";
+import {authActions} from "@/app/store/storage/auth/auth.slice";
 import process from "process";
 
 const API_SERVER_URL = process.env.API_SERVER_URL

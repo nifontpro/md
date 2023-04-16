@@ -1,12 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {combineReducers} from 'redux';
-import {authApi} from '@/auth/data/auth.api';
+import {authApi} from '@/app/api/auth/auth.api';
 import {TypedUseSelectorHook, useSelector} from "react-redux";
 import storage from 'redux-persist/lib/storage'
 import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE} from 'redux-persist'
-import {resourceApi} from "@/app/resource/data/resource.api";
-import {testApi} from "@/app/resource/data/test.api";
-import {authSlice} from "@/auth/data/auth.slice";
+import {userApi} from "@/app/api/user/user.api";
+import {authSlice} from "@/app/store/storage/auth/auth.slice";
 
 const persistConfig = {
     key: 'root',
@@ -17,8 +16,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     auth: authSlice.reducer,
     [authApi.reducerPath]: authApi.reducer,
-    [resourceApi.reducerPath]: resourceApi.reducer,
-    [testApi.reducerPath]: testApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -33,8 +31,7 @@ export const store = configureStore({
             }
         }).concat(
             authApi.middleware,
-            resourceApi.middleware,
-            testApi.middleware,
+            userApi.middleware,
         ),
 });
 

@@ -1,12 +1,12 @@
 import type {NextPage} from 'next';
 import React from "react";
-import {resourceApi} from "@/app/resource/data/resource.api";
-import {APP_URI, CLIENT_ID, KEYCLOAK_URI} from "@/auth/data/auth.api";
+import {userApi} from "@/app/api/user/user.api";
+import {APP_URI, CLIENT_ID, KEYCLOAK_URI} from "@/app/api/auth/auth.api";
 import {useJwt} from "react-jwt";
-import {IPayload} from "@/app/resource/model/idToken";
+import {IPayload} from "@/app/domain/model/base/idToken";
 import {useRouter} from "next/router";
 import {useDispatch} from "react-redux";
-import {authActions, useAuthState} from "@/auth/data/auth.slice";
+import {authActions, useAuthState} from "@/app/store/storage/auth/auth.slice";
 
 const Home: NextPage = () => {
 
@@ -16,7 +16,7 @@ const Home: NextPage = () => {
     const {decodedToken, isExpired} = useJwt(idToken || '');
     const payload = decodedToken as IPayload | undefined
 
-    const {data: getInfo} = resourceApi.useGetTestDataQuery(undefined, {skip: !isAuth})
+    const {data: getInfo} = userApi.useGetTestDataQuery(undefined, {skip: !isAuth})
 
     const logoutHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()

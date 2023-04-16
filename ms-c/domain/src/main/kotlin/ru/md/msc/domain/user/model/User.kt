@@ -10,7 +10,7 @@ data class User(
 	val patronymic: String? = null,
 	val lastname: String? = null,
 	val authEmail: String = "",
-	val gender: Gender? = null,
+	val gender: Gender = Gender.UNDEF,
 	val post: String? = null,
 	val roles: Set<RoleUser> = emptySet(),
 )

@@ -1,7 +1,7 @@
 import type {NextPage} from 'next';
 import {useEffect} from "react";
 import dynamic from "next/dynamic";
-import {AUTH_CODE_REDIRECT_URI, CLIENT_ID, KEYCLOAK_URI} from "@/auth/data/auth.api";
+import {AUTH_CODE_REDIRECT_URI, CLIENT_ID, KEYCLOAK_URI} from "@/app/api/auth/auth.api";
 
 const Login: NextPage = () => {
 
