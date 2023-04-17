@@ -15,6 +15,7 @@ import ru.md.msc.rest.user.mappers.toTransportGetUsers
 import ru.md.msc.rest.user.model.request.CreateOwnerRequest
 import ru.md.msc.rest.user.model.request.DeleteUserRequest
 import ru.md.msc.rest.user.model.request.GetProfilesRequest
+import ru.md.msc.rest.user.model.request.GetUsersByDeptRequest
 import ru.md.msc.rest.user.model.response.UserDetailsResponse
 import ru.md.msc.rest.utils.JwtUtils
 import java.security.Principal
@@ -51,6 +52,20 @@ class UserController(
 	private suspend fun getProfiles(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetProfilesRequest
+	): BaseResponse<List<User>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = userProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportGetUsers() }
+		)
+	}
+
+	@PostMapping("get_by_dept")
+	private suspend fun getProfiles(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetUsersByDeptRequest
 	): BaseResponse<List<User>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(

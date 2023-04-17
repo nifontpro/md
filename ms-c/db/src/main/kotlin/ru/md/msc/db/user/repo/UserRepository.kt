@@ -11,4 +11,6 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 	@EntityGraph("withDept")
 	fun findByAuthEmailIgnoreCase(authEmail: String): List<UserEntity>
 
+	fun findByDeptId(deptId: Long): List<UserEntity>
+
 }

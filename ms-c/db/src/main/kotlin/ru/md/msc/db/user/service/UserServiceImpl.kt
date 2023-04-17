@@ -125,6 +125,17 @@ class UserServiceImpl(
 		}
 	}
 
+	override fun findByDeptId(deptId: Long): RepositoryData<List<User>> {
+		return try {
+			val users = userRepository.findByDeptId(deptId = deptId).map {
+				it.toUserDept()
+			}
+			RepositoryData.success(data = users)
+		} catch (e: Exception) {
+			return UserErrors.getError()
+		}
+	}
+
 	override fun getAll(): List<User> {
 		return userRepository.findAll().map { it.toUser() }
 	}

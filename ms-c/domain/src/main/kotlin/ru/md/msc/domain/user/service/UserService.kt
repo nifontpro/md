@@ -12,4 +12,5 @@ interface UserService {
 	fun create(userDetails: UserDetails): RepositoryData<UserDetails>
 	fun findByAuthEmailWithDept(authEmail: String): RepositoryData<List<User>>
 	fun deleteById(userId: Long): RepositoryData<UserDetails>
+	fun findByDeptId(deptId: Long): RepositoryData<List<User>>
 }

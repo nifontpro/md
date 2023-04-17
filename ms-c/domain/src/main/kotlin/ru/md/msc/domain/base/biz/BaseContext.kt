@@ -16,6 +16,7 @@ abstract class BaseContext(
 
 	var authEmail: String = "",
 	var authId: Long = 0,
+	var authDeptId: Long = 0,
 	var authUser: User = User()
 ) {
 	lateinit var userService: UserService
