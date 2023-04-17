@@ -4,7 +4,6 @@ import ru.md.msc.db.dept.model.mappers.toDept
 import ru.md.msc.db.dept.model.mappers.toDeptEntity
 import ru.md.msc.db.user.model.UserEntity
 import ru.md.msc.domain.dept.model.Dept
-import ru.md.msc.domain.user.model.Gender
 import ru.md.msc.domain.user.model.User
 
 fun User.toUserEntity() = UserEntity(
@@ -14,7 +13,7 @@ fun User.toUserEntity() = UserEntity(
 	firstname = firstname,
 	patronymic = patronymic,
 	lastname = lastname,
-	gender = gender ?: Gender.UNDEF,
+	gender = gender,
 	post = post,
 )
 

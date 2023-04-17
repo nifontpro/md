@@ -13,6 +13,15 @@ fun <T : BaseContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: String) =
 	on { state == ContextState.RUNNING }
 	handle {
 
+		if (authId < 1) {
+			fail(
+				errorUnauthorized(
+					message = "Неверный authId",
+				)
+			)
+			return@handle
+		}
+
 		authUser = checkRepositoryData {
 			userService.findById(authId)
 		} ?: return@handle

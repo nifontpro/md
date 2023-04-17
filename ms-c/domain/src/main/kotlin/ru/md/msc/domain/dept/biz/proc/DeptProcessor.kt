@@ -40,7 +40,6 @@ class DeptProcessor(
 			}
 
 			operation("Получить поддерево отделов", DeptCommand.GET_DEPTS_TREE) {
-				// Добавить проверку authId==0 -> err
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				getSubtreeDepts("Получаем поддерево отделов")
 			}

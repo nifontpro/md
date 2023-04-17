@@ -13,6 +13,7 @@ import ru.md.msc.rest.user.mappers.fromTransport
 import ru.md.msc.rest.user.mappers.toTransportGetUserDetails
 import ru.md.msc.rest.user.mappers.toTransportGetUsers
 import ru.md.msc.rest.user.model.request.CreateOwnerRequest
+import ru.md.msc.rest.user.model.request.DeleteUserRequest
 import ru.md.msc.rest.user.model.request.GetProfilesRequest
 import ru.md.msc.rest.user.model.response.UserDetailsResponse
 import ru.md.msc.rest.utils.JwtUtils
@@ -57,6 +58,20 @@ class UserController(
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportGetUsers() }
+		)
+	}
+
+	@PostMapping("delete")
+	private suspend fun deleteUser(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: DeleteUserRequest
+	): BaseResponse<UserDetailsResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = userProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportGetUserDetails() }
 		)
 	}
 

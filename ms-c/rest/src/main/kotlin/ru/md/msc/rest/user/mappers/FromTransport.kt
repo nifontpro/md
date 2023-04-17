@@ -5,6 +5,7 @@ import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.rest.user.model.request.CreateOwnerRequest
+import ru.md.msc.rest.user.model.request.DeleteUserRequest
 import ru.md.msc.rest.user.model.request.GetProfilesRequest
 
 fun UserContext.fromTransport(request: CreateOwnerRequest) {
@@ -27,4 +28,10 @@ fun UserContext.fromTransport(request: CreateOwnerRequest) {
 @Suppress("UNUSED_PARAMETER")
 fun UserContext.fromTransport(request: GetProfilesRequest) {
 	command = UserCommand.GET_PROFILES
+}
+
+fun UserContext.fromTransport(request: DeleteUserRequest) {
+	command = UserCommand.DELETE
+	authId = request.authId
+	user = user.copy(id = request.userId)
 }

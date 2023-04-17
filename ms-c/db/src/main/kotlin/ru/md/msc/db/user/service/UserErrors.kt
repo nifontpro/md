@@ -47,5 +47,13 @@ class UserErrors {
 			)
 		)
 
+		fun deleteError() = RepositoryData.error(
+			error = RepositoryError(
+				repository = REPO,
+				violationCode = "delete error",
+				description = "Ошибка удаления сотрудника"
+			)
+		)
+
 	}
 }

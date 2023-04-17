@@ -5,27 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+get depts subtree">
+      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/workers/DeleteUser.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/model/request/DeleteUserRequest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/app/MainProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/domain/providers/MainProvider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/app/resource/data/base.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/api/base/base.api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/app/resource/data/resource.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/api/test/resource.api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/app/resource/data/test.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/api/test/test.api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/app/resource/model/idToken.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/domain/model/base/idToken.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/auth/data/auth.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/api/auth/auth.api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/auth/data/auth.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/domain/redux/auth/auth.slice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/auth/data/localStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/domain/storage/localStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/auth/data/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/domain/storage/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/auth/data/useAuth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/domain/hooks/useAuth.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/auth/provider/AuthProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/domain/providers/AuthProvider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/auth/storage/createWebStorage.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/domain/storage/createWebStorage.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/auth/storage/getStorage.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/domain/storage/getStorage.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/auth/storage/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/domain/storage/index.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/auth/storage/session.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/app/domain/storage/session.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/pages/login/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/pages/login/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/pages/login/redirect/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/pages/login/redirect/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/mappers/UserMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/mappers/UserMapper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/service/UserErrors.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/service/UserErrors.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/service/UserServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/service/UserServiceImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/base/validate/db/GetAuthUserAndVerifyEmail.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/base/validate/db/GetAuthUserAndVerifyEmail.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptProcessor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserContext.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserContext.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserProcessor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/service/UserService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/service/UserService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/UserController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/UserController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/mappers/FromTransport.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/mappers/FromTransport.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,8 +116,8 @@
       <list>
         <option value="Kotlin Interface" />
         <option value="Kotlin File" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Data Class" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -149,51 +141,51 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Dept__Main__Op&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Nifont/program/md/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/workers&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Nifont/program/md/ms-gateway/src/main/java/ru/md/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.31027254&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Kotlin&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;ba6589a101a57194e7c156f9031fe338&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Nifont\\program\\md\\front\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "git-widget-placeholder": "Dept__Main__Op",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "corretto-17",
+    "last_opened_file_path": "C:/Users/Nifont/program/md/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/workers",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/Nifont/program/md/ms-gateway/src/main/java/ru/md/Main.java",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.31027254",
+    "settings.editor.selected.configurable": "preferences.sourceCode.Kotlin",
+    "spring.configuration.checksum": "ba6589a101a57194e7c156f9031fe338",
+    "ts.external.directory.path": "C:\\Users\\Nifont\\program\\md\\front\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\workers" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\dept\biz\workers" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\base\validate\db" />
-      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\workers" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\dept\biz\validate\db" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\base\validate" />
     </key>
@@ -529,6 +521,7 @@
       <workItem from="1681407172114" duration="15337000" />
       <workItem from="1681454937822" duration="19323000" />
       <workItem from="1681665049815" duration="879000" />
+      <workItem from="1681709989078" duration="6923000" />
     </task>
     <task id="LOCAL-00001" summary="Work version Init">
       <created>1680614424386</created>

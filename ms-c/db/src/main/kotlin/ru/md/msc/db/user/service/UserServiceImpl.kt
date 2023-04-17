@@ -138,6 +138,22 @@ class UserServiceImpl(
 		}
 	}
 
+	override fun deleteById(userId: Long): RepositoryData<UserDetails> {
+		val userDetailsEntity = try {
+			userDetailsRepository.findByIdOrNull(userId) ?: return UserErrors.userNotFound()
+		} catch (e: Exception) {
+			return UserErrors.getError()
+		}
+
+		return try {
+			userRepository.deleteById(userDetailsEntity.user?.id ?: 0)
+			RepositoryData.success(data = userDetailsEntity.toUserDetails())
+		} catch (e: Exception) {
+			UserErrors.deleteError()
+		}
+
+	}
+
 	val log: Logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
 
 }
