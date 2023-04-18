@@ -136,14 +136,19 @@ class UserServiceImpl(
 		}
 	}
 
-	override fun getAll(): List<User> {
-		return userRepository.findAll().map { it.toUser() }
-	}
-
 	override fun findById(userId: Long): RepositoryData<User> {
 		return try {
 			val user = userRepository.findByIdOrNull(userId)?.toUser() ?: return UserErrors.userNotFound()
 			RepositoryData.success(data = user)
+		} catch (e: Exception) {
+			UserErrors.getError()
+		}
+	}
+
+	override fun findByIdDetails(userId: Long): RepositoryData<UserDetails> {
+		return try {
+			val userDetails = userDetailsRepository.findByUserId(userId)?.toUserDetails() ?: return UserErrors.userNotFound()
+			RepositoryData.success(data = userDetails)
 		} catch (e: Exception) {
 			UserErrors.getError()
 		}

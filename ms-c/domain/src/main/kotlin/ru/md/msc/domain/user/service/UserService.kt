@@ -5,7 +5,6 @@ import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
 
 interface UserService {
-	fun getAll(): List<User>
 	fun createOwner(userDetails: UserDetails): RepositoryData<UserDetails>
 	fun doesOwnerWithEmailExist(email: String): RepositoryData<Boolean>
 	fun findById(userId: Long): RepositoryData<User>
@@ -13,4 +12,5 @@ interface UserService {
 	fun findByAuthEmailWithDept(authEmail: String): RepositoryData<List<User>>
 	fun deleteById(userId: Long): RepositoryData<UserDetails>
 	fun findByDeptId(deptId: Long): RepositoryData<List<User>>
+	fun findByIdDetails(userId: Long): RepositoryData<UserDetails>
 }

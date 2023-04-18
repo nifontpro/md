@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+get users by dept">
+    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+delete user rtk">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -511,6 +511,7 @@
       <workItem from="1681665049815" duration="879000" />
       <workItem from="1681709989078" duration="12219000" />
       <workItem from="1681747633830" duration="4052000" />
+      <workItem from="1681817280027" duration="1458000" />
     </task>
     <task id="LOCAL-00001" summary="Work version Init">
       <created>1680614424386</created>
@@ -659,7 +660,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681725044296</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="+delete user rtk">
+      <created>1681817549279</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1681817549279</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -684,7 +692,8 @@
     <MESSAGE value="+get depts subtree" />
     <MESSAGE value="+delete user" />
     <MESSAGE value="+get users by dept" />
-    <option name="LAST_COMMIT_MESSAGE" value="+get users by dept" />
+    <MESSAGE value="+delete user rtk" />
+    <option name="LAST_COMMIT_MESSAGE" value="+delete user rtk" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

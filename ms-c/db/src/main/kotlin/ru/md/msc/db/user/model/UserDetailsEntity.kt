@@ -7,16 +7,17 @@ import java.util.*
 
 @Entity
 @Table(name = "user_details", schema = "users", catalog = "medalist")
-/*@NamedEntityGraph(
-	name = "withUserRoles",
-	attributeNodes = [
-		NamedAttributeNode(value = "user", subgraph = "userWithRoles"),
-	],
-	subgraphs = [NamedSubgraph(name = "userWithRoles", attributeNodes = [NamedAttributeNode("roles")])]
-)*/
 
 @NamedEntityGraph(
-	name = "withUserRoles",
+	name = "withUserDept",
+	attributeNodes = [
+		NamedAttributeNode(value = "user", subgraph = "userWithDept"),
+	],
+	subgraphs = [NamedSubgraph(name = "userWithDept", attributeNodes = [NamedAttributeNode("dept")])]
+)
+
+@NamedEntityGraph(
+	name = "withUser",
 	attributeNodes = [NamedAttributeNode(value = "user")]
 )
 class UserDetailsEntity(

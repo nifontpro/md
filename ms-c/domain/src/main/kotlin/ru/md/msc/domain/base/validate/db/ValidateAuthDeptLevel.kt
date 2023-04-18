@@ -16,19 +16,19 @@ fun <T : BaseContext> ICorChainDsl<T>.validateAuthDeptLevel(title: String) = wor
 	on { state == ContextState.RUNNING }
 	handle {
 
-		if (authDeptId < 1) {
+		if (deptId < 1) {
 			fail(
 				errorUnauthorized(
-					message = "Неверный отдел",
+					message = "Неверный id отдела",
 				)
 			)
 			return@handle
 		}
 
-		if (authUser.dept?.id == authDeptId) return@handle
+		if (authUser.dept?.id == deptId) return@handle
 
 		val auth = checkRepositoryData {
-			deptService.validateDeptLevel(authUser.dept?.id ?: 0, authDeptId)
+			deptService.validateDeptLevel(upId = authUser.dept?.id ?: 0, downId = deptId)
 		} ?: return@handle
 
 		if (!auth) {

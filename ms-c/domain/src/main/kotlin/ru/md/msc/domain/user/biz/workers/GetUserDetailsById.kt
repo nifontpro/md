@@ -6,15 +6,15 @@ import ru.md.msc.domain.base.biz.ContextState
 import ru.md.msc.domain.base.model.checkRepositoryData
 import ru.md.msc.domain.user.biz.proc.UserContext
 
-fun ICorChainDsl<UserContext>.getUsersByDept(title: String) = worker {
+fun ICorChainDsl<UserContext>.getUserDetailsById(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
 
 	handle {
 
-		users = checkRepositoryData {
-			userService.findByDeptId(deptId = deptId)
+		userDetails = checkRepositoryData {
+			userService.findByIdDetails(userId = userId)
 		} ?: return@handle
 	}
 }

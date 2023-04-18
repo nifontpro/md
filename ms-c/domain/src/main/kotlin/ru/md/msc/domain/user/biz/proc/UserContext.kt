@@ -9,7 +9,7 @@ class UserContext : BaseContext(command = UserCommand.NONE) {
 	var user: User = User()
 	var userDetails: UserDetails = UserDetails()
 	var users: List<User> = emptyList()
-	var usersDetails: List<UserDetails> = emptyList()
+//	var usersDetails: List<UserDetails> = emptyList()
 }
 
 enum class UserCommand : IBaseCommand {
@@ -17,5 +17,6 @@ enum class UserCommand : IBaseCommand {
 	CREATE_OWNER,
 	GET_PROFILES,
 	GET_BY_DEPT,
+	GET_BY_ID_DETAILS,
 	DELETE,
 }

@@ -1,21 +1,20 @@
 package ru.md.msc.domain.user.biz.proc
 
 import org.springframework.stereotype.Component
+import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.msc.domain.base.biz.IBaseProcessor
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
+import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
+import ru.md.msc.domain.base.validate.db.validateAuthUserLevel
 import ru.md.msc.domain.base.validate.validateAdminRole
 import ru.md.msc.domain.base.workers.finishOperation
 import ru.md.msc.domain.base.workers.initStatus
 import ru.md.msc.domain.base.workers.operation
-import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
 import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
-import ru.md.msc.domain.user.biz.workers.createOwner
-import ru.md.msc.domain.user.biz.workers.deleteUser
-import ru.md.msc.domain.user.biz.workers.getProfiles
-import ru.md.msc.domain.user.biz.workers.getUsersByDept
+import ru.md.msc.domain.user.biz.workers.*
 import ru.md.msc.domain.user.service.UserService
 
 @Component
@@ -31,7 +30,7 @@ class UserProcessor(
 
 	companion object {
 
-		private val businessChain = rootChain {
+		private val businessChain = rootChain<UserContext> {
 			initStatus()
 
 			operation("Регистрация корневого владельца", UserCommand.CREATE_OWNER) {
@@ -50,9 +49,22 @@ class UserProcessor(
 				getUsersByDept("Получаем сотрудников")
 			}
 
+			operation("Получение сотрудника", UserCommand.GET_BY_ID_DETAILS) {
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+
+				chain {
+					on { userId != authUser.id } // Если запрос не собственного профиля:
+					validateAdminRole("Проверка наличия прав Администратора")
+					validateAuthUserLevel("Проверка доступа к сотруднику")
+				}
+
+				getUserDetailsById("Получаем сотрудника")
+			}
+
 			operation("Удаление сотрудника", UserCommand.DELETE) {
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAdminRole("Проверка наличия прав Администратора")
+				validateAuthUserLevel("Проверка доступа к сотруднику")
 				deleteUser("Удаляем сотрудника")
 			}
 

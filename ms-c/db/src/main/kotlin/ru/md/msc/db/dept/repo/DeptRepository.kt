@@ -9,11 +9,18 @@ import ru.md.msc.db.dept.model.DeptEntity
 interface DeptRepository : JpaRepository<DeptEntity, Long> {
 
 	/**
-	 * Хранимая процедура проверяет, является ли отдел upId
-	 * предком отдела downId (нижнего в иерархии отделов)
+	 * Хранимая процедура проверяет, является ли отдел [upId]
+	 * предком отдела [downId] (нижнего в иерархии отделов)
 	 */
 	@Procedure(procedureName = "dep.up_tree_has_id")
 	fun upTreeHasDeptId(downId: Long, upId: Long): Boolean
+
+	/**
+	 * Хранимая процедура проверяет, является ли сотрудник [userId]
+	 * потомком отдела [upId]
+	 */
+	@Procedure(procedureName = "dep.check_user_child")
+	fun checkUserChild(userId: Long, upId: Long): Boolean
 
 	/**
 	 * Получить ids всех элементов поддерева отделов, включая вершину

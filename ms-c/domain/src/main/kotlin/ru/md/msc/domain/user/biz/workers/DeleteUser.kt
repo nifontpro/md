@@ -14,7 +14,7 @@ fun ICorChainDsl<UserContext>.deleteUser(title: String) = worker {
 	handle {
 
 		userDetails = checkRepositoryData {
-			userService.deleteById(user.id ?: 0)
+			userService.deleteById(userId = userId)
 		} ?: return@handle
 	}
 }

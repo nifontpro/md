@@ -44,6 +44,18 @@ class DeptServiceImpl(
 		}
 	}
 
+	/**
+	 * Проверка, является ли сотрудник [userId] потомком отдела [upId] в дереве отделов
+	 */
+	override fun validateUserLevel(upId: Long, userId: Long): RepositoryData<Boolean> {
+		return try {
+			val res = deptRepository.checkUserChild(userId = userId, upId = upId)
+			RepositoryData.success(data = res)
+		} catch (e: Exception) {
+			DeptErrors.getDeptAuth()
+		}
+	}
+
 	override fun findSubTreeDepts(deptId: Long): RepositoryData<List<Dept>> {
 		val ids = deptRepository.subTreeIds(deptId = deptId)
 		return try {

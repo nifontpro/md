@@ -8,31 +8,36 @@ import ru.md.msc.domain.base.helper.errorUnauthorized
 import ru.md.msc.domain.base.helper.fail
 import ru.md.msc.domain.base.model.checkRepositoryData
 
-fun <T : BaseContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: String) = worker {
+/**
+ * Проверка, имеет ли администратор доступ к заданному отделу
+ */
+fun <T : BaseContext> ICorChainDsl<T>.validateAuthUserLevel(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
 	handle {
 
-		if (authId < 1) {
+		if (userId < 1) {
 			fail(
 				errorUnauthorized(
-					message = "Неверный authId",
+					message = "Неверный id сотрудника",
 				)
 			)
 			return@handle
 		}
 
-		authUser = checkRepositoryData {
-			userService.findById(authId)
+		if (authUser.id == userId) return@handle
+
+		val auth = checkRepositoryData {
+			deptService.validateUserLevel(upId = authUser.dept?.id ?: 0, userId = userId)
 		} ?: return@handle
 
-		if (authUser.authEmail != authEmail) {
+		if (!auth) {
 			fail(
 				errorUnauthorized(
-					message = "Доступ по authId запрещен",
+					role = "userId",
+					message = "Нет доступа к сотруднику",
 				)
 			)
-			return@handle
 		}
 	}
 }

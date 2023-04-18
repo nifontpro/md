@@ -35,7 +35,7 @@ class DeptProcessor(
 			operation("Создать отдел", DeptCommand.CREATE) {
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAdminRole("Проверка наличия прав Администратора")
-				worker("Для проверки доступа к какому отделу") { authDeptId = dept.parentId}
+				worker("Для проверки доступа к какому отделу") { deptId = dept.parentId}
 				validateAuthDeptLevel("Проверка доступа к отделу")
 				createDept("Создаем отдел")
 				createTestUsers("Создаем тестовых сотрудников")
