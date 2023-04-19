@@ -5,8 +5,6 @@ plugins {
 	kotlin("plugin.spring")
 }
 
-val kotlinLoggingVersion: String by project
-
 val jvmTargetVersion: String by project
 java.sourceCompatibility = JavaVersion.VERSION_17
 
@@ -27,15 +25,5 @@ dependencies {
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
-
-/*	implementation(kotlin("stdlib-common"))
-	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-
-	implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingVersion")
-
-	implementation(kotlin("test-common"))
-	implementation(kotlin("test-annotations-common"))
-	testImplementation(kotlin("test-junit"))*/
-
 
 }
