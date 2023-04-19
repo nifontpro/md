@@ -4,8 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+delete user rtk">
+    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+get user by id">
+      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/base/validate/ValidateDeptId.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/base/validate/ValidateUserId.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/workers/DeleteDept.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/workers/GetDeptDetailsById.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/model/request/DeleteDeptRequest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/model/request/GetDeptByIdRequest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/DeptDetailsEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/DeptDetailsEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/DeptEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/DeptEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/image/DeptImageEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/image/DeptImageEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/mappers/DeptDetailsMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/mappers/DeptDetailsMapper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/mappers/DeptMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/mappers/DeptMapper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/service/DeptErrors.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/service/DeptErrors.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/service/DeptServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/service/DeptServiceImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/UserEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/UserEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/mappers/UserDetailsMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/mappers/UserDetailsMapper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/mappers/UserMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/model/mappers/UserMapper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/repo/UserRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/repo/UserRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/service/UserServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/service/UserServiceImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/test/kotlin/ru/md/msc/db/dept/DeptTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/test/kotlin/ru/md/msc/db/dept/DeptTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/base/validate/db/ValidateAuthDeptLevel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/base/validate/db/ValidateAuthDeptLevel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/base/validate/db/ValidateAuthUserLevel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/base/validate/db/ValidateAuthUserLevel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptContext.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptContext.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptProcessor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/workers/CreateTestUsers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/workers/CreateTestUsers.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/model/Dept.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/model/Dept.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/service/DeptService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/service/DeptService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserProcessor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/workers/DeleteUser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/workers/DeleteUser.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/model/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/model/User.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/service/UserService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/service/UserService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/DeptController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/DeptController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/mappers/FromTransport.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/mappers/FromTransport.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/model/request/CreateDeptRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/model/request/CreateDeptRequest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +178,7 @@
     &quot;git-widget-placeholder&quot;: &quot;Dept__Main__Op&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Nifont/program/md/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/workers&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Nifont/program/md/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/workers&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -171,28 +204,28 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\workers" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\dept\biz\workers" />
-      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\base\validate\db" />
-      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\dept\biz\validate\db" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\base\validate" />
+      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\base\validate\db" />
+      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\workers" />
+      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\dept\biz\validate\db" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\base\validate" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\base\validate\db" />
       <recent name="C:\Users\Nifont\program\md\front\src\app\domain\storage" />
       <recent name="C:\Users\Nifont\program\md\front\src\app\domain\hooks" />
       <recent name="C:\Users\Nifont\program\md\front\src\app\domain\providers" />
-      <recent name="C:\Users\Nifont\program\md\front\src\app\domain\redux\auth" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="ru.md.msc.db.user.model.converter" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
-      <recent name="ru.md.msc.rest.user.model.request" />
       <recent name="ru.md.msc.rest.dept.model.request" />
+      <recent name="ru.md.msc.rest.user.model.request" />
+      <recent name="ru.md.msc.db.user" />
       <recent name="ru.md.msc.db.dept" />
       <recent name="ru.md.msc.rest.user.model.response" />
-      <recent name="ru.md.msc.domain.dept.biz.proc" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -206,6 +239,54 @@
     </option>
   </component>
   <component name="RunManager" selected="npm.dev">
+    <configuration name="DeptTest.delete" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":ms-c:db:test" />
+            <option value="--tests" />
+            <option value="&quot;ru.md.msc.db.dept.DeptTest.delete&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="DeptTest.getByIdDetails" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":ms-c:db:test" />
+            <option value="--tests" />
+            <option value="&quot;ru.md.msc.db.dept.DeptTest.getByIdDetails&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
     <configuration name="DeptTest.getSubtreeDepts" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -230,7 +311,7 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="DeptTest.getSubtreeIds" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="UserTest.findByIdDetails" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -243,31 +324,7 @@
           <list>
             <option value=":ms-c:db:test" />
             <option value="--tests" />
-            <option value="&quot;ru.md.msc.db.dept.DeptTest.getSubtreeIds&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
-      <method v="2" />
-    </configuration>
-    <configuration name="DeptTest.hasUpTreeId" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":ms-c:db:test" />
-            <option value="--tests" />
-            <option value="&quot;ru.md.msc.db.dept.DeptTest.hasUpTreeId&quot;" />
+            <option value="&quot;ru.md.msc.db.user.UserTest.findByIdDetails&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -290,28 +347,6 @@
         <option name="taskNames">
           <list>
             <option value="remote-client" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
-      <method v="2" />
-    </configuration>
-    <configuration name="md:ms-c:domain [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/ms-c/domain" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -448,10 +483,10 @@
       <item itemvalue="Gradle.md:ms-c [remote-client]" />
       <item itemvalue="Gradle.md:ms-gateway [remote-gateway]" />
       <item itemvalue="Gradle.md:ms-server [remote-server]" />
+      <item itemvalue="Gradle.DeptTest.delete" />
+      <item itemvalue="Gradle.DeptTest.getByIdDetails" />
+      <item itemvalue="Gradle.UserTest.findByIdDetails" />
       <item itemvalue="Gradle.DeptTest.getSubtreeDepts" />
-      <item itemvalue="Gradle.DeptTest.getSubtreeIds" />
-      <item itemvalue="Gradle.DeptTest.hasUpTreeId" />
-      <item itemvalue="Gradle.md:ms-c:domain [clean]" />
       <item itemvalue="npm.dev" />
       <item itemvalue="Spring Boot.ServerApplication" />
       <item itemvalue="Spring Boot.ClientApplication" />
@@ -460,10 +495,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="npm.dev" />
+        <item itemvalue="Gradle.DeptTest.delete" />
+        <item itemvalue="Gradle.DeptTest.getByIdDetails" />
+        <item itemvalue="Gradle.UserTest.findByIdDetails" />
         <item itemvalue="Gradle.DeptTest.getSubtreeDepts" />
-        <item itemvalue="Gradle.DeptTest.getSubtreeIds" />
-        <item itemvalue="Gradle.DeptTest.hasUpTreeId" />
-        <item itemvalue="Gradle.md:ms-c:domain [clean]" />
       </list>
     </recent_temporary>
   </component>
@@ -511,7 +546,8 @@
       <workItem from="1681665049815" duration="879000" />
       <workItem from="1681709989078" duration="12219000" />
       <workItem from="1681747633830" duration="4052000" />
-      <workItem from="1681817280027" duration="1458000" />
+      <workItem from="1681817280027" duration="25826000" />
+      <workItem from="1681883941257" duration="889000" />
     </task>
     <task id="LOCAL-00001" summary="Work version Init">
       <created>1680614424386</created>
@@ -667,7 +703,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681817549279</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="+get user by id">
+      <created>1681831580720</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1681831580720</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -693,7 +736,8 @@
     <MESSAGE value="+delete user" />
     <MESSAGE value="+get users by dept" />
     <MESSAGE value="+delete user rtk" />
-    <option name="LAST_COMMIT_MESSAGE" value="+delete user rtk" />
+    <MESSAGE value="+get user by id" />
+    <option name="LAST_COMMIT_MESSAGE" value="+get user by id" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

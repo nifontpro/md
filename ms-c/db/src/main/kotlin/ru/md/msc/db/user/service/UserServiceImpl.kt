@@ -9,6 +9,7 @@ import ru.md.msc.db.dept.model.DeptDetailsEntity
 import ru.md.msc.db.dept.model.DeptEntity
 import ru.md.msc.db.dept.repo.DeptDetailsRepository
 import ru.md.msc.db.dept.service.DeptErrors
+import ru.md.msc.db.dept.service.DeptServiceImpl
 import ru.md.msc.db.user.model.UserDetailsEntity
 import ru.md.msc.db.user.model.mappers.toUser
 import ru.md.msc.db.user.model.mappers.toUserDept
@@ -154,20 +155,14 @@ class UserServiceImpl(
 		}
 	}
 
-	override fun deleteById(userId: Long): RepositoryData<UserDetails> {
-		val userDetailsEntity = try {
-			userDetailsRepository.findByIdOrNull(userId) ?: return UserErrors.userNotFound()
-		} catch (e: Exception) {
-			return UserErrors.getError()
-		}
-
+	override fun deleteById(userId: Long): RepositoryData<Unit> {
 		return try {
-			userRepository.deleteById(userDetailsEntity.user?.id ?: 0)
-			RepositoryData.success(data = userDetailsEntity.toUserDetails())
+			userRepository.deleteById(userId)
+			RepositoryData.success()
 		} catch (e: Exception) {
+			log.error(e.message)
 			UserErrors.deleteError()
 		}
-
 	}
 
 	val log: Logger = LoggerFactory.getLogger(UserServiceImpl::class.java)

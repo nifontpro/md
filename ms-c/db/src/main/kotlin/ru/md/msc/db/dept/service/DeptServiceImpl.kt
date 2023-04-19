@@ -3,6 +3,7 @@ package ru.md.msc.db.dept.service
 import jakarta.transaction.Transactional
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.msc.db.dept.model.mappers.toDept
 import ru.md.msc.db.dept.model.mappers.toDeptDetails
@@ -40,6 +41,7 @@ class DeptServiceImpl(
 			val res = deptRepository.upTreeHasDeptId(downId = downId, upId = upId)
 			RepositoryData.success(data = res)
 		} catch (e: Exception) {
+			log.error(e.message)
 			DeptErrors.getDeptAuth()
 		}
 	}
@@ -52,6 +54,7 @@ class DeptServiceImpl(
 			val res = deptRepository.checkUserChild(userId = userId, upId = upId)
 			RepositoryData.success(data = res)
 		} catch (e: Exception) {
+			log.error(e.message)
 			DeptErrors.getDeptAuth()
 		}
 	}
@@ -62,7 +65,28 @@ class DeptServiceImpl(
 			val depts = deptRepository.findByIdIn(ids = ids)
 			RepositoryData.success(data = depts.map { it.toDept() })
 		} catch (e: Exception) {
-			DeptErrors.getDepts()
+			log.error(e.message)
+			DeptErrors.getError()
+		}
+	}
+
+	override fun findByIdDetails(deptId: Long): RepositoryData<DeptDetails> {
+		return try {
+			val deptDetails = deptDetailsRepository.findByIdOrNull(deptId)?.toDeptDetails() ?: return DeptErrors.notFound()
+			RepositoryData.success(data = deptDetails)
+		} catch (e: Exception) {
+			log.error(e.message)
+			DeptErrors.getError()
+		}
+	}
+
+	override fun deleteById(deptId: Long): RepositoryData<Unit> {
+		return try {
+			deptRepository.deleteById(deptId)
+			RepositoryData.success()
+		} catch (e: RuntimeException) {
+//			log.error(e.message)
+			DeptErrors.getError()
 		}
 	}
 

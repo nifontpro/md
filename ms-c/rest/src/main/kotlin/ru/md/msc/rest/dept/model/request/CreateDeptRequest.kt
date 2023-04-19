@@ -9,4 +9,6 @@ data class CreateDeptRequest(
 	val email: String? = null,
 	val phone: String? = null,
 	val description: String? = null,
+
+	val addTestUser: Boolean = false,
 )

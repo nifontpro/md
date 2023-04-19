@@ -4,7 +4,7 @@ import ru.md.msc.domain.dept.model.Dept
 import java.util.Collections.emptySet
 
 data class User(
-	val id: Long? = null,
+	val id: Long = 0,
 	val dept: Dept? = null,
 	val firstname: String = "",
 	val patronymic: String? = null,

@@ -6,6 +6,12 @@ import java.util.*
 
 @Entity
 @Table(name = "dept_details", schema = "dep", catalog = "medalist")
+
+//@NamedEntityGraph(
+//	name = "withDeptEager",
+//	attributeNodes = [NamedAttributeNode("dept")]
+//)
+
 class DeptDetailsEntity(
 
 	@Id

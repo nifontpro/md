@@ -9,10 +9,14 @@ class DeptContext : BaseContext() {
 	var dept: Dept = Dept()
 	var deptDetails: DeptDetails = DeptDetails()
 	var depts: List<Dept> = emptyList()
-	var deptsDetails: List<DeptDetails> = emptyList()
+
+	//	var deptsDetails: List<DeptDetails> = emptyList()
+	var addTestUser: Boolean = false
 }
 
 enum class DeptCommand : IBaseCommand {
 	CREATE,
-	GET_DEPTS_TREE
+	GET_DEPTS_TREE,
+	GET_DEPT_BY_ID_DETAILS,
+	DELETE
 }

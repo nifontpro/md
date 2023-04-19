@@ -18,7 +18,7 @@ class DeptEntity(
 	val id: Long? = null,
 
 	@Column(name = "parent_id")
-	val parentId: Long = 0,
+	val parentId: Long = 0, // Если будет получение ROOT - исправить на nullable
 	val name: String = "",
 	val classname: String? = null,
 
@@ -28,8 +28,8 @@ class DeptEntity(
 	@OneToOne(mappedBy = "dept", fetch = FetchType.LAZY, optional = false)
 	val details: DeptDetailsEntity? = null,
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "dep_id")
+	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+	@JoinColumn(name = "dept_id")
 	@Fetch(FetchMode.SUBSELECT)
 	val images: List<DeptImageEntity> = emptyList()
 

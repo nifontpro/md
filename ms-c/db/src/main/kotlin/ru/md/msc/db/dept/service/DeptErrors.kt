@@ -23,11 +23,27 @@ class DeptErrors {
 			)
 		)
 
-		fun getDepts() = RepositoryData.error(
+		fun getError() = RepositoryData.error(
 			error = RepositoryError(
 				repository = REPO,
 				violationCode = "get depts",
 				description = "Ошибка получения отделов"
+			)
+		)
+
+		fun deleteError() = RepositoryData.error(
+			error = RepositoryError(
+				repository = REPO,
+				violationCode = "delete",
+				description = "Ошибка удаления отдела"
+			)
+		)
+
+		fun notFound() = RepositoryData.error(
+			error = RepositoryError(
+				repository = REPO,
+				violationCode = "not found",
+				description = "Отдел не найден"
 			)
 		)
 	}

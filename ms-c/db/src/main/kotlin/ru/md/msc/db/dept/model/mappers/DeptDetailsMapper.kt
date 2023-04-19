@@ -14,7 +14,7 @@ fun DeptDetailsEntity.toDeptDetails() = DeptDetails(
 )
 
 fun DeptDetails.toDeptDetailsEntity(create: Boolean = false) = DeptDetailsEntity(
-	dept = dept?.toDeptEntity(),
+	dept = dept?.toDeptEntity(create = create),
 	address = address,
 	email = email,
 	phone = phone,

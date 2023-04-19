@@ -10,7 +10,9 @@ import ru.md.msc.rest.dept.mappers.fromTransport
 import ru.md.msc.rest.dept.mappers.toTransportGetDeptDetails
 import ru.md.msc.rest.dept.mappers.toTransportGetDepts
 import ru.md.msc.rest.dept.model.request.CreateDeptRequest
+import ru.md.msc.rest.dept.model.request.DeleteDeptRequest
 import ru.md.msc.rest.dept.model.request.GetAuthSubtreeDeptsRequest
+import ru.md.msc.rest.dept.model.request.GetDeptByIdRequest
 import ru.md.msc.rest.dept.model.response.DeptDetailsResponse
 import ru.md.msc.rest.utils.JwtUtils
 
@@ -46,6 +48,34 @@ class DeptController(
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportGetDepts() }
+		)
+	}
+
+	@PostMapping("get_id")
+	private suspend fun getDeptById(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetDeptByIdRequest
+	): BaseResponse<DeptDetailsResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = deptProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportGetDeptDetails() }
+		)
+	}
+
+	@PostMapping("delete")
+	private suspend fun delete(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: DeleteDeptRequest
+	): BaseResponse<DeptDetailsResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = deptProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportGetDeptDetails() }
 		)
 	}
 }

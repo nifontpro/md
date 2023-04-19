@@ -31,4 +31,16 @@ class DeptTest(
 		val depts = deptService.findSubTreeDepts(81)
 		println("depts: $depts")
 	}
+
+	@Test
+	fun getByIdDetails() {
+		val dept = deptService.findByIdDetails(deptId = 81)
+		println("dept: $dept")
+	}
+
+	@Test
+	@Transactional
+	fun delete() {
+		deptRepository.deleteById(90)
+	}
 }

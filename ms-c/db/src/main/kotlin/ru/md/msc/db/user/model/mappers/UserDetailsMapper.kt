@@ -18,5 +18,5 @@ fun UserDetails.toUserDetailsEntity(create: Boolean = false) = UserDetailsEntity
 	address = address,
 	description = description,
 	createdAt = if (create) LocalDateTime.now() else createdAt,
-	user = user.toUserEntity()
+	user = user.toUserEntity(create = create)
 )

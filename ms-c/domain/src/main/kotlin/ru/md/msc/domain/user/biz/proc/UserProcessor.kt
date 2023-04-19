@@ -8,6 +8,7 @@ import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.db.validateAuthUserLevel
 import ru.md.msc.domain.base.validate.validateAdminRole
+import ru.md.msc.domain.base.validate.validateUserId
 import ru.md.msc.domain.base.workers.finishOperation
 import ru.md.msc.domain.base.workers.initStatus
 import ru.md.msc.domain.base.workers.operation
@@ -43,13 +44,14 @@ class UserProcessor(
 				getProfiles("Получаем доступные профили")
 			}
 
-			operation("Получение сотрудников", UserCommand.GET_BY_DEPT) {
+			operation("Получение сотрудников отдела", UserCommand.GET_BY_DEPT) {
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAuthDeptLevel("Проверка доступа к отделу")
 				getUsersByDept("Получаем сотрудников")
 			}
 
 			operation("Получение сотрудника", UserCommand.GET_BY_ID_DETAILS) {
+				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 
 				chain {
@@ -62,9 +64,11 @@ class UserProcessor(
 			}
 
 			operation("Удаление сотрудника", UserCommand.DELETE) {
+				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAdminRole("Проверка наличия прав Администратора")
 				validateAuthUserLevel("Проверка доступа к сотруднику")
+				getUserDetailsById("Получаем сотрудника")
 				deleteUser("Удаляем сотрудника")
 			}
 

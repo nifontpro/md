@@ -39,8 +39,8 @@ class UserEntity(
 	@JoinColumn(name = "dept_id")
 	var dept: DeptEntity? = null,
 
-	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)
-	val details: UserDetailsEntity? = null,
+//	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)
+//	val details: UserDetailsEntity? = null,
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
 //	@JoinColumn(name = "user_id") // Если однонаправленная связь, без mappedBy

@@ -7,7 +7,7 @@ import java.sql.Timestamp
 import java.util.*
 
 @Entity
-@Table(name = "award_image", schema = "md", catalog = "medalist")
+@Table(name = "dept_image", schema = "dep", catalog = "medalist")
 class DeptImageEntity(
 
 	@Id
@@ -33,8 +33,8 @@ class DeptImageEntity(
 //	@JoinColumn(name = "user_id")
 //	val user: UserEntity? = null,
 
-	@Column(name = "award_id")
-	val awardId: Long? = null,
+	@Column(name = "dept_id")
+	val deptId: Long? = null,
 
 	) : BaseImage {
 
@@ -50,6 +50,6 @@ class DeptImageEntity(
 	}
 
 	override fun toString(): String {
-		return "UserImage={id: $id, userId: $awardId, imageUrl: $imageUrl, type: $type}"
+		return "UserImage={id: $id, userId: $deptId, imageUrl: $imageUrl, type: $type}"
 	}
 }
