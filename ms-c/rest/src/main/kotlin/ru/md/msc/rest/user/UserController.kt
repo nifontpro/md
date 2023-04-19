@@ -1,11 +1,12 @@
 package ru.md.msc.rest.user
 
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
+import ru.md.msc.domain.user.biz.proc.UserCommand
+import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.User
-import ru.md.msc.rest.base.AUTH
-import ru.md.msc.rest.base.BaseResponse
-import ru.md.msc.rest.base.process
+import ru.md.msc.rest.base.*
 import ru.md.msc.rest.user.mappers.fromTransport
 import ru.md.msc.rest.user.mappers.toTransportGetUserDetails
 import ru.md.msc.rest.user.mappers.toTransportGetUsers
@@ -20,12 +21,6 @@ class UserController(
 	private val userProcessor: UserProcessor,
 	private val jwtUtils: JwtUtils,
 ) {
-
-	@PostMapping("test")
-	suspend fun test(): RS {
-		val usedMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576
-		return RS("Test user endpoint: OK, used: $usedMb Mb")
-	}
 
 	@PostMapping("create_owner")
 	private suspend fun createOwner(
@@ -95,6 +90,31 @@ class UserController(
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportGetUserDetails() }
 		)
+	}
+
+	@PostMapping("/up")
+	suspend fun up(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestPart("file") file: MultipartFile,
+		@RequestPart("userId") userId: String,
+		@RequestPart("description") description: String? = null,
+	): BaseResponse<Unit> {
+		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
+		val context = UserContext().apply { command = UserCommand.IMG_ADD }
+		return imageProcess(
+			authData = authData,
+			context = context,
+			processor = userProcessor,
+			multipartFile = file,
+			entityId = userId.toLongOr0(),
+			description = description,
+		)
+	}
+
+	@PostMapping("test")
+	suspend fun test(): RS {
+		val usedMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576
+		return RS("Test user endpoint: OK, used: $usedMb Mb")
 	}
 
 	@PostMapping("data")

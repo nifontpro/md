@@ -19,4 +19,5 @@ enum class UserCommand : IBaseCommand {
 	GET_BY_DEPT,
 	GET_BY_ID_DETAILS,
 	DELETE,
+	IMG_ADD,
 }

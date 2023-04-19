@@ -3,6 +3,7 @@ package ru.md.msc.domain.user.biz.proc
 import org.springframework.stereotype.Component
 import ru.md.cor.chain
 import ru.md.cor.rootChain
+import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.IBaseProcessor
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
@@ -70,6 +71,13 @@ class UserProcessor(
 				validateAuthUserLevel("Проверка доступа к сотруднику")
 				getUserDetailsById("Получаем сотрудника")
 				deleteUser("Удаляем сотрудника")
+			}
+
+			operation("Добавление изображения", UserCommand.IMG_ADD) {
+				worker("Получение id сущности") { userId = fileData.entityId }
+				validateUserId("Проверка userId")
+				worker("Test") { log.info("FILENAME: "+fileData.filename) }
+				worker("Test") { log.info("userId: $userId") }
 			}
 
 			finishOperation()

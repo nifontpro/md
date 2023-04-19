@@ -4,6 +4,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import ru.md.msc.domain.base.helper.ContextError
 import ru.md.msc.domain.dept.service.DeptService
+import ru.md.msc.domain.image.model.FileData
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.service.UserService
 
@@ -21,7 +22,9 @@ abstract class BaseContext(
 	var userId: Long = 0,
 	var deptId: Long = 0,
 
-) {
+	var fileData: FileData = FileData(),
+
+	) {
 	lateinit var userService: UserService
 	lateinit var deptService: DeptService
 

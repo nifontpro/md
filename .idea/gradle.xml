@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/ms-c/db" />
             <option value="$PROJECT_DIR$/ms-c/domain" />
             <option value="$PROJECT_DIR$/ms-c/rest" />
+            <option value="$PROJECT_DIR$/ms-c/s3" />
             <option value="$PROJECT_DIR$/ms-gateway" />
             <option value="$PROJECT_DIR$/ms-server" />
           </set>
