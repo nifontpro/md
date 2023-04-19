@@ -1,7 +1,6 @@
 package ru.md.msc.db.dept.model.mappers
 
 import ru.md.msc.db.dept.model.DeptEntity
-import ru.md.msc.db.user.model.mappers.toUserEntity
 import ru.md.msc.domain.dept.model.Dept
 
 fun DeptEntity.toDept() = Dept(

@@ -5,12 +5,12 @@ import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.IBaseProcessor
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
+import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateAdminRole
+import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.workers.finishOperation
 import ru.md.msc.domain.base.workers.initStatus
 import ru.md.msc.domain.base.workers.operation
-import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
-import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.dept.biz.workers.*
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.user.service.UserService
@@ -34,7 +34,7 @@ class DeptProcessor(
 			operation("Создать отдел", DeptCommand.CREATE) {
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAdminRole("Проверка наличия прав Администратора")
-				worker("Для проверки доступа к какому отделу") { deptId = dept.parentId}
+				worker("Для проверки доступа к какому отделу") { deptId = dept.parentId }
 				validateDeptId("Проверяем deptId")
 				validateAuthDeptLevel("Проверка доступа к отделу")
 				createDept("Создаем отдел")
@@ -60,7 +60,6 @@ class DeptProcessor(
 				validateAuthDeptLevel("Проверка доступа к отделу")
 				getDeptDetailsById("Получаем отдел")
 				deleteDept("Удаляем отдел")
-				worker("tes") {log.info("TEST CATCH")}
 			}
 
 			finishOperation()

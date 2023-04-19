@@ -36,7 +36,7 @@ fun errorDb(
 	code = "db-$repository-$violationCode",
 	field = repository,
 	group = "db",
-	message = "Ошибка БД: $description",
+	message = "БД: $description",
 	level = level,
 )
 

@@ -1,11 +1,11 @@
 package ru.md.msc.domain.user.biz.validate.db
 
+import ru.md.cor.ICorChainDsl
+import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.ContextState
 import ru.md.msc.domain.base.helper.errorValidation
 import ru.md.msc.domain.base.helper.fail
-import ru.md.msc.domain.base.model.checkRepositoryData
-import ru.md.cor.ICorChainDsl
-import ru.md.cor.worker
+import ru.md.msc.domain.user.biz.proc.getUserError
 import ru.md.msc.domain.user.biz.proc.UserContext
 
 fun ICorChainDsl<UserContext>.validateOwnerByEmailExist(title: String) = worker {
@@ -16,9 +16,12 @@ fun ICorChainDsl<UserContext>.validateOwnerByEmailExist(title: String) = worker 
 		// Обязательно устанавливаем email!
 		user = user.copy(authEmail = authEmail)
 
-		val ownerExist = checkRepositoryData {
+		val ownerExist = try {
 			userService.doesOwnerWithEmailExist(user.authEmail)
-		} ?: return@handle
+		} catch (e: Exception) {
+			getUserError()
+			return@handle
+		}
 
 		if (ownerExist) fail(
 			errorValidation(

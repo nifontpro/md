@@ -4,9 +4,9 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.BaseContext
 import ru.md.msc.domain.base.biz.ContextState
+import ru.md.msc.domain.base.helper.errorDb
 import ru.md.msc.domain.base.helper.errorUnauthorized
 import ru.md.msc.domain.base.helper.fail
-import ru.md.msc.domain.base.model.checkRepositoryData
 
 /**
  * Проверка, имеет ли администратор доступ к заданному отделу
@@ -18,15 +18,24 @@ fun <T : BaseContext> ICorChainDsl<T>.validateAuthUserLevel(title: String) = wor
 
 		if (authUser.id == userId) return@handle
 
-		val auth = checkRepositoryData {
+		val auth = try {
 			deptService.validateUserLevel(upId = authUser.dept?.id ?: 0, userId = userId)
-		} ?: return@handle
+		} catch (e: Exception) {
+			fail(
+				errorDb(
+					repository = "user",
+					violationCode = "user level",
+					description = "Ошибка проверки доступа к данным сотрудника"
+				)
+			)
+			return@handle
+		}
 
 		if (!auth) {
 			fail(
 				errorUnauthorized(
 					role = "userId",
-					message = "Нет доступа к сотруднику",
+					message = "Доступ к данным сотрудника запрещен",
 				)
 			)
 		}

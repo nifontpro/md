@@ -1,16 +1,15 @@
 package ru.md.msc.domain.user.service
 
-import ru.md.msc.domain.base.model.RepositoryData
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
 
 interface UserService {
-	fun createOwner(userDetails: UserDetails): RepositoryData<UserDetails>
-	fun doesOwnerWithEmailExist(email: String): RepositoryData<Boolean>
-	fun findById(userId: Long): RepositoryData<User>
-	fun create(userDetails: UserDetails): RepositoryData<UserDetails>
-	fun findByAuthEmailWithDept(authEmail: String): RepositoryData<List<User>>
-	fun deleteById(userId: Long): RepositoryData<Unit>
-	fun findByDeptId(deptId: Long): RepositoryData<List<User>>
-	fun findByIdDetails(userId: Long): RepositoryData<UserDetails>
+	fun createOwner(userDetails: UserDetails): UserDetails
+	fun doesOwnerWithEmailExist(email: String): Boolean
+	fun findById(userId: Long): User?
+	fun create(userDetails: UserDetails): UserDetails
+	fun findByAuthEmailWithDept(authEmail: String): List<User>
+	fun deleteById(userId: Long)
+	fun findByDeptId(deptId: Long): List<User>
+	fun findByIdDetails(userId: Long): UserDetails?
 }

@@ -3,8 +3,8 @@ package ru.md.msc.domain.dept.biz.workers
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.ContextState
-import ru.md.msc.domain.base.model.checkRepositoryData
 import ru.md.msc.domain.dept.biz.proc.DeptContext
+import ru.md.msc.domain.dept.biz.proc.getDeptError
 
 fun ICorChainDsl<DeptContext>.getSubtreeDepts(title: String) = worker {
 
@@ -13,8 +13,11 @@ fun ICorChainDsl<DeptContext>.getSubtreeDepts(title: String) = worker {
 
 	handle {
 
-		depts = checkRepositoryData {
+		depts = try {
 			deptService.findSubTreeDepts(authUser.dept?.id ?: 0)
-		} ?: return@handle
+		} catch (e: Exception) {
+			getDeptError()
+			return@handle
+		}
 	}
 }

@@ -3,7 +3,8 @@ package ru.md.msc.domain.dept.biz.workers
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.ContextState
-import ru.md.msc.domain.base.model.checkRepositoryData
+import ru.md.msc.domain.base.helper.errorDb
+import ru.md.msc.domain.base.helper.fail
 import ru.md.msc.domain.dept.biz.proc.DeptContext
 
 fun ICorChainDsl<DeptContext>.deleteDept(title: String) = worker {
@@ -13,16 +14,17 @@ fun ICorChainDsl<DeptContext>.deleteDept(title: String) = worker {
 
 	handle {
 
-/*//		checkRepositoryData {
-			try {
-				deptService.deleteById(deptId = deptId)
-			} catch (e: Exception) {
-				log.info("DEL ERROR")
-			}
-//		}*/
-
-		checkRepositoryData {
+		try {
 			deptService.deleteById(deptId = deptId)
+		} catch (e: Exception) {
+			log.info(e.message)
+			fail(
+				errorDb(
+					repository = "dept",
+					violationCode = "delete",
+					description = "Удаление отдела невозможно"
+				)
+			)
 		}
 	}
 }

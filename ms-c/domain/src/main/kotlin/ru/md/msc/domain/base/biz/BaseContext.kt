@@ -20,6 +20,7 @@ abstract class BaseContext(
 
 	var userId: Long = 0,
 	var deptId: Long = 0,
+
 ) {
 	lateinit var userService: UserService
 	lateinit var deptService: DeptService

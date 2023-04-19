@@ -3,7 +3,8 @@ package ru.md.msc.domain.user.biz.workers
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.ContextState
-import ru.md.msc.domain.base.model.checkRepositoryData
+import ru.md.msc.domain.user.biz.proc.getUserError
+import ru.md.msc.domain.user.biz.proc.userNotFound
 import ru.md.msc.domain.user.biz.proc.UserContext
 
 fun ICorChainDsl<UserContext>.getUserDetailsById(title: String) = worker {
@@ -13,8 +14,14 @@ fun ICorChainDsl<UserContext>.getUserDetailsById(title: String) = worker {
 
 	handle {
 
-		userDetails = checkRepositoryData {
+		userDetails = try {
 			userService.findByIdDetails(userId = userId)
-		} ?: return@handle
+		} catch (e: Exception) {
+			getUserError()
+			return@handle
+		} ?: run {
+			userNotFound()
+			return@handle
+		}
 	}
 }

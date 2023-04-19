@@ -3,7 +3,8 @@ package ru.md.msc.domain.dept.biz.workers
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.ContextState
-import ru.md.msc.domain.base.model.checkRepositoryData
+import ru.md.msc.domain.base.helper.errorDb
+import ru.md.msc.domain.base.helper.fail
 import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.user.model.Gender
@@ -37,9 +38,18 @@ fun ICorChainDsl<DeptContext>.createTestUsers(title: String) = worker {
 				description = "Для теста"
 			)
 
-			checkRepositoryData {
+			try {
 				userService.create(userDetails)
-			} ?: return@handle
+			} catch (e: Exception) {
+				fail(
+					errorDb(
+						repository = "user",
+						violationCode = "user create",
+						description = "Ошибка создания тестового сотрудника"
+					)
+				)
+				return@handle
+			}
 		}
 	}
 }

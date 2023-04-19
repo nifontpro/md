@@ -3,7 +3,7 @@ package ru.md.msc.domain.user.biz.workers
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.ContextState
-import ru.md.msc.domain.base.model.checkRepositoryData
+import ru.md.msc.domain.user.biz.proc.getUserError
 import ru.md.msc.domain.user.biz.proc.UserContext
 
 fun ICorChainDsl<UserContext>.getUsersByDept(title: String) = worker {
@@ -13,8 +13,11 @@ fun ICorChainDsl<UserContext>.getUsersByDept(title: String) = worker {
 
 	handle {
 
-		users = checkRepositoryData {
+		users = try {
 			userService.findByDeptId(deptId = deptId)
-		} ?: return@handle
+		} catch (e: Exception) {
+			getUserError()
+			return@handle
+		}
 	}
 }

@@ -4,9 +4,9 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.BaseContext
 import ru.md.msc.domain.base.biz.ContextState
+import ru.md.msc.domain.base.helper.errorDb
 import ru.md.msc.domain.base.helper.errorUnauthorized
 import ru.md.msc.domain.base.helper.fail
-import ru.md.msc.domain.base.model.checkRepositoryData
 
 fun <T : BaseContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: String) = worker {
 	this.title = title
@@ -14,17 +14,25 @@ fun <T : BaseContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: String) =
 	handle {
 
 		if (authId < 1) {
-			fail(
-				errorUnauthorized(
-					message = "Неверный authId",
-				)
-			)
+			notValidAuthId()
 			return@handle
 		}
 
-		authUser = checkRepositoryData {
+		authUser = try {
 			userService.findById(authId)
-		} ?: return@handle
+		} catch (e: Exception) {
+			fail(
+				errorDb(
+					repository = "user",
+					violationCode = "find by id ",
+					description = "Ошибка получения сотрудника"
+				)
+			)
+			return@handle
+		} ?: run {
+			notValidAuthId()
+			return@handle
+		}
 
 		if (authUser.authEmail != authEmail) {
 			fail(
@@ -35,4 +43,12 @@ fun <T : BaseContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: String) =
 			return@handle
 		}
 	}
+}
+
+private fun <T : BaseContext> T.notValidAuthId() {
+	fail(
+		errorUnauthorized(
+			message = "Неверный authId",
+		)
+	)
 }
