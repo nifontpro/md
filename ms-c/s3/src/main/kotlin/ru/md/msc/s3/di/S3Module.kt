@@ -19,8 +19,8 @@ class S3Module {
 			ProfileCredentialsProvider().credentials
 		} catch (e: Exception) {
 
-			val accessKey = System.getenv("S3_ACCESS_KEY")
-			val secretKey = System.getenv("S3_SECRET_KEY")
+			val accessKey = System.getenv("S3_ID")
+			val secretKey = System.getenv("S3_KEY")
 			if (accessKey == null || secretKey == null) {
 				throw AmazonClientException(
 					"Cannot load the credentials from the credential profiles file. " +
@@ -33,7 +33,7 @@ class S3Module {
 			}
 		}
 
-		val s3: AmazonS3 = AmazonS3ClientBuilder.standard()
+		return AmazonS3ClientBuilder.standard()
 			.withCredentials(AWSStaticCredentialsProvider(credentials))
 			.withEndpointConfiguration(
 				AwsClientBuilder.EndpointConfiguration(
@@ -41,6 +41,5 @@ class S3Module {
 				)
 			)
 			.build()
-		return s3
 	}
 }

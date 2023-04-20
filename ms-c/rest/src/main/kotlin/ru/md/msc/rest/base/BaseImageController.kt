@@ -3,6 +3,7 @@ package ru.md.msc.rest.base
 import org.springframework.web.multipart.MultipartFile
 import ru.md.msc.domain.base.biz.BaseContext
 import ru.md.msc.domain.base.biz.IBaseProcessor
+import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.rest.utils.AuthData
 import java.io.File
 
@@ -13,21 +14,22 @@ suspend fun <C : BaseContext> imageProcess(
 	multipartFile: MultipartFile,
 	entityId: Long,
 	description: String?,
-): BaseResponse<Unit> {
+): BaseResponse<BaseImage> {
 	if (!authData.emailVerified || authData.email.isBlank()) {
 		context.emailNotVerified()
-		return context.baseResponse(Unit)
+		return BaseResponse.error(errors = context.errors)
 	}
 	context.authEmail = authData.email
 
 	val fileData = saveFile(multipartFile = multipartFile, entityId = entityId, description = description) ?: run {
 		context.fileSaveError()
-		return context.baseResponse(Unit)
+		return BaseResponse.error(errors = context.errors)
 	}
 	context.fileData = fileData
 
 	processor.exec(context)
 
 	File(fileData.url).delete()
-	return context.baseResponse(Unit)
+
+	return context.baseResponse(data = context.baseImage)
 }

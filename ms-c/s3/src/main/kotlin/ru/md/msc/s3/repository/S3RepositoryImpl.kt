@@ -3,12 +3,12 @@ package ru.md.msc.s3.repository
 import com.amazonaws.services.s3.AmazonS3
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Repository
 import ru.md.msc.domain.image.model.FileData
 import ru.md.msc.domain.image.repository.S3Repository
 import java.io.File
 
-@Service
+@Repository
 class S3RepositoryImpl(
 	private val s3: AmazonS3
 ) : S3Repository {
@@ -30,15 +30,9 @@ class S3RepositoryImpl(
 		}
 	}
 
-	override suspend fun deleteObject(key: String, system: Boolean): Boolean {
-		return try {
-			withContext(Dispatchers.IO) {
-				s3.deleteObject(getBucketName(system), key)
-			}
-			true
-		} catch (e: Exception) {
-			println(e.message)
-			false
+	override suspend fun deleteObject(key: String, system: Boolean) {
+		withContext(Dispatchers.IO) {
+			s3.deleteObject(getBucketName(system), key)
 		}
 	}
 

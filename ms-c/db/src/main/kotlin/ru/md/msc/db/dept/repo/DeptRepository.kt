@@ -28,5 +28,11 @@ interface DeptRepository : JpaRepository<DeptEntity, Long> {
 	@Procedure(procedureName = "dep.sub_tree_ids")
 	fun subTreeIds(deptId: Long): List<Long>
 
+	/**
+	 * Получить корневой отдел (тот который создал владелец) от текущего [deptId]
+	 */
+	@Procedure(procedureName = "dep.get_root_id")
+	fun getRootId(deptId: Long): Long?
+
 	fun findByIdIn(ids: List<Long>): List<DeptEntity>
 }

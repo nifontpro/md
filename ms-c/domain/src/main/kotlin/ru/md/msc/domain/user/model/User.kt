@@ -1,6 +1,7 @@
 package ru.md.msc.domain.user.model
 
 import ru.md.msc.domain.dept.model.Dept
+import ru.md.msc.domain.image.model.BaseImage
 import java.util.Collections.emptySet
 
 data class User(
@@ -13,4 +14,5 @@ data class User(
 	val gender: Gender = Gender.UNDEF,
 	val post: String? = null,
 	val roles: Set<RoleUser> = emptySet(),
+	val images: List<BaseImage> = emptyList(),
 )

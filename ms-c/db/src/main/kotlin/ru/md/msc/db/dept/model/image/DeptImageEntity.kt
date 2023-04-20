@@ -1,9 +1,9 @@
 package ru.md.msc.db.dept.model.image
 
 import jakarta.persistence.*
-import ru.md.msc.domain.base.model.BaseImage
-import ru.md.msc.domain.base.model.ImageType
-import java.sql.Timestamp
+import ru.md.msc.domain.image.model.IBaseImage
+import ru.md.msc.domain.image.model.ImageType
+import java.time.LocalDateTime
 import java.util.*
 
 @Entity
@@ -12,31 +12,27 @@ class DeptImageEntity(
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	val id: Long? = null,
+	override val id: Long? = null,
 
 	@Column(name = "image_url")
-	override val imageUrl: String? = null,
+	override val imageUrl: String = "",
 
 	@Column(name = "image_key")
-	override val imageKey: String? = null,
+	override val imageKey: String = "",
 
 	@Column(name = "type_code")
 	override val type: ImageType = ImageType.UNDEF,
 
 	@Column(name = "main")
-	override val main: Boolean? = null,
+	override val main: Boolean = false,
 
 	@Column(name = "created_at")
-	override val createdAt: Timestamp? = null,
-
-//	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-//	@JoinColumn(name = "user_id")
-//	val user: UserEntity? = null,
+	override val createdAt: LocalDateTime? = null,
 
 	@Column(name = "dept_id")
 	val deptId: Long? = null,
 
-	) : BaseImage {
+	) : IBaseImage {
 
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true

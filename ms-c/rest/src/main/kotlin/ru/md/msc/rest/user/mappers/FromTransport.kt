@@ -1,5 +1,6 @@
 package ru.md.msc.rest.user.mappers
 
+import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.model.User
@@ -34,14 +35,21 @@ fun UserContext.fromTransport(request: GetUsersByDeptRequest) {
 	deptId = request.deptId
 }
 
+fun UserContext.fromTransport(request: GetUserByIdRequest) {
+	command = UserCommand.GET_BY_ID_DETAILS
+	authId = request.authId
+	userId = request.userId
+}
+
 fun UserContext.fromTransport(request: DeleteUserRequest) {
 	command = UserCommand.DELETE
 	authId = request.authId
 	userId = request.userId
 }
 
-fun UserContext.fromTransport(request: GetUserByIdRequest) {
-	command = UserCommand.GET_BY_ID_DETAILS
-	authId = request.authId
+
+fun UserContext.fromTransport(request: DeleteUserImageRequest) {
+	command = UserCommand.IMG_DELETE
+	baseImage = BaseImage(id = request.imageId)
 	userId = request.userId
 }

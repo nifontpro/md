@@ -2,11 +2,13 @@ package ru.md.msc.rest.user
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.rest.base.*
+import ru.md.msc.rest.base.mappers.toTransportGetBaseImage
 import ru.md.msc.rest.user.mappers.fromTransport
 import ru.md.msc.rest.user.mappers.toTransportGetUserDetails
 import ru.md.msc.rest.user.mappers.toTransportGetUsers
@@ -92,13 +94,13 @@ class UserController(
 		)
 	}
 
-	@PostMapping("/up")
-	suspend fun up(
+	@PostMapping("img_add")
+	suspend fun imageAdd(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestPart("file") file: MultipartFile,
 		@RequestPart("userId") userId: String,
 		@RequestPart("description") description: String? = null,
-	): BaseResponse<Unit> {
+	): BaseResponse<BaseImage> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = UserContext().apply { command = UserCommand.IMG_ADD }
 		return imageProcess(
@@ -108,6 +110,20 @@ class UserController(
 			multipartFile = file,
 			entityId = userId.toLongOr0(),
 			description = description,
+		)
+	}
+
+	@PostMapping("img_delete")
+	private suspend fun imageDelete(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: DeleteUserImageRequest
+	): BaseResponse<BaseImage> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = userProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportGetBaseImage() }
 		)
 	}
 

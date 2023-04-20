@@ -1,5 +1,7 @@
 package ru.md.msc.domain.user.service
 
+import ru.md.msc.domain.image.model.BaseImage
+import ru.md.msc.domain.image.model.FileData
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
 
@@ -12,4 +14,6 @@ interface UserService {
 	fun deleteById(userId: Long)
 	fun findByDeptId(deptId: Long): List<User>
 	fun findByIdDetails(userId: Long): UserDetails?
+	suspend fun addImage(userId: Long, fileData: FileData): BaseImage
+	suspend fun deleteImage(userId: Long, imageId: Long): BaseImage
 }

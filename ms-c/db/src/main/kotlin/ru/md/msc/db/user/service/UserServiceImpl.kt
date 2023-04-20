@@ -3,10 +3,13 @@ package ru.md.msc.db.user.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import ru.md.msc.db.base.mapper.toImage
 import ru.md.msc.db.dept.model.DeptDetailsEntity
 import ru.md.msc.db.dept.model.DeptEntity
 import ru.md.msc.db.dept.repo.DeptDetailsRepository
+import ru.md.msc.db.dept.repo.DeptRepository
 import ru.md.msc.db.user.model.UserDetailsEntity
+import ru.md.msc.db.user.model.image.UserImageEntity
 import ru.md.msc.db.user.model.mappers.toUser
 import ru.md.msc.db.user.model.mappers.toUserDept
 import ru.md.msc.db.user.model.mappers.toUserDetails
@@ -14,8 +17,15 @@ import ru.md.msc.db.user.model.mappers.toUserDetailsEntity
 import ru.md.msc.db.user.model.role.RoleEntity
 import ru.md.msc.db.user.repo.RoleRepository
 import ru.md.msc.db.user.repo.UserDetailsRepository
+import ru.md.msc.db.user.repo.UserImageRepository
 import ru.md.msc.db.user.repo.UserRepository
 import ru.md.msc.domain.dept.model.DeptType
+import ru.md.msc.domain.image.model.BaseImage
+import ru.md.msc.domain.image.model.FileData
+import ru.md.msc.domain.image.model.ImageType
+import ru.md.msc.domain.image.repository.S3Repository
+import ru.md.msc.domain.user.biz.proc.ImageNotFoundException
+import ru.md.msc.domain.user.biz.proc.UserNotFoundException
 import ru.md.msc.domain.user.model.RoleUser
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
@@ -31,7 +41,10 @@ class UserServiceImpl(
 	private val userRepository: UserRepository,
 	private val userDetailsRepository: UserDetailsRepository,
 	private val roleRepository: RoleRepository,
-	private val deptDetailsRepository: DeptDetailsRepository
+	private val deptRepository: DeptRepository,
+	private val deptDetailsRepository: DeptDetailsRepository,
+	private val s3Repository: S3Repository,
+	private val userImageRepository: UserImageRepository,
 ) : UserService {
 
 	/**
@@ -111,5 +124,38 @@ class UserServiceImpl(
 	override fun deleteById(userId: Long) {
 		userRepository.deleteById(userId)
 	}
+
+	override suspend fun addImage(userId: Long, fileData: FileData): BaseImage {
+		val userEntity = userRepository.findByIdOrNull(userId) ?: throw UserNotFoundException()
+		val deptId = userEntity.dept?.id ?: throw Exception()
+		val rootDeptId = deptRepository.getRootId(deptId = deptId) ?: throw Exception()
+		val prefix = "R$rootDeptId/D$deptId/U$userId"
+		val imageKey = "$prefix/${fileData.filename}"
+		val imageUrl = s3Repository.putObject(key = imageKey, fileData = fileData) ?: throw Exception()
+
+		val userImageEntity = UserImageEntity(
+			userId = userId,
+			imageUrl = imageUrl,
+			imageKey = imageKey,
+			type = ImageType.USER,
+			createdAt = LocalDateTime.now()
+		)
+
+		userImageRepository.save(userImageEntity)
+		return userImageEntity.toImage()
+	}
+
+	override suspend fun deleteImage(userId: Long, imageId: Long): BaseImage {
+		val userImageEntity = userImageRepository.findByIdAndUserId(userId = userId, imageId = imageId) ?: run {
+			throw ImageNotFoundException()
+		}
+		userImageRepository.delete(userImageEntity)
+		s3Repository.deleteObject(key = userImageEntity.imageKey)
+		return userImageEntity.toImage()
+	}
+
+//	companion object {
+//		val log: Logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
+//	}
 
 }

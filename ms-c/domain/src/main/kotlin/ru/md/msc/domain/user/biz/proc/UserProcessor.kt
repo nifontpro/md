@@ -74,10 +74,20 @@ class UserProcessor(
 			}
 
 			operation("Добавление изображения", UserCommand.IMG_ADD) {
-				worker("Получение id сущности") { userId = fileData.entityId }
+				worker("Получение id сущности") { userId = fileData.entityId; authId = userId }
 				validateUserId("Проверка userId")
-				worker("Test") { log.info("FILENAME: "+fileData.filename) }
-				worker("Test") { log.info("userId: $userId") }
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+
+				addUserImage("Добавляем изображение")
+			}
+
+			operation("Удаление изображения", UserCommand.IMG_DELETE) {
+				validateUserId("Проверка userId")
+				// validate baseImage.id
+				worker("Подготовка") { authId = userId }
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+
+				deleteUserImage("Удаляем изображение")
 			}
 
 			finishOperation()

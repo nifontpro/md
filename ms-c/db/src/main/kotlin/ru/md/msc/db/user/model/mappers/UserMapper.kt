@@ -1,5 +1,6 @@
 package ru.md.msc.db.user.model.mappers
 
+import ru.md.msc.db.base.mapper.toImage
 import ru.md.msc.db.dept.model.mappers.toDept
 import ru.md.msc.db.dept.model.mappers.toDeptEntity
 import ru.md.msc.db.user.model.UserEntity
@@ -40,4 +41,5 @@ fun UserEntity.toUserDept() = User(
 	gender = gender,
 	post = post,
 	roles = roles.map { it.roleUser }.toSet(),
+	images = images.map { it.toImage() }
 )

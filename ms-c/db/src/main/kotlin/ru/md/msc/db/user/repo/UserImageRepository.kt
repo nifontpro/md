@@ -13,4 +13,7 @@ interface UserImageRepository : JpaRepository<UserImageEntity, Long> {
 	@Query("from UserImageEntity i where i.userId in :userIds and i.main = true")
 	fun findMainImages(userIds: List<Long>): List<UserImageEntity>
 
+	@Query("from UserImageEntity i where i.id = :imageId and i.userId = :userId")
+	fun findByIdAndUserId(imageId: Long, userId: Long): UserImageEntity?
+
 }

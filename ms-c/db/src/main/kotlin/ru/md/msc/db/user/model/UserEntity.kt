@@ -43,16 +43,15 @@ class UserEntity(
 //	val details: UserDetailsEntity? = null,
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
-//	@JoinColumn(name = "user_id") // Если однонаправленная связь, без mappedBy
 	@Fetch(FetchMode.SUBSELECT)
 	val roles: MutableList<RoleEntity> = mutableListOf(),
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	@Fetch(FetchMode.SUBSELECT)
-	val images: List<UserImageEntity> = emptyList()
+	val images: MutableList<UserImageEntity> = mutableListOf(),
 
-) : Serializable {
+	) : Serializable {
 
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true
