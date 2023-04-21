@@ -38,6 +38,20 @@ class UserController(
 		)
 	}
 
+	@PostMapping("create")
+	private suspend fun createUser(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: CreateUserRequest
+	): BaseResponse<UserDetailsResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = userProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportGetUserDetails() }
+		)
+	}
+
 	@PostMapping("profiles")
 	private suspend fun getProfiles(
 		@RequestHeader(name = AUTH) bearerToken: String,
@@ -99,7 +113,6 @@ class UserController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestPart("file") file: MultipartFile,
 		@RequestPart("userId") userId: String,
-		@RequestPart("description") description: String? = null,
 	): BaseResponse<BaseImage> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = UserContext().apply { command = UserCommand.IMG_ADD }
@@ -109,7 +122,25 @@ class UserController(
 			processor = userProcessor,
 			multipartFile = file,
 			entityId = userId.toLongOr0(),
-			description = description,
+		)
+	}
+
+	@PostMapping("img_update")
+	suspend fun imageUpdate(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestPart("file") file: MultipartFile,
+		@RequestPart("userId") userId: String,
+		@RequestPart("imageId") imageId: String,
+	): BaseResponse<BaseImage> {
+		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
+		val context = UserContext().apply { command = UserCommand.IMG_UPDATE }
+		return imageProcess(
+			authData = authData,
+			context = context,
+			processor = userProcessor,
+			multipartFile = file,
+			entityId = userId.toLongOr0(),
+			imageId = imageId.toLongOr0(),
 		)
 	}
 

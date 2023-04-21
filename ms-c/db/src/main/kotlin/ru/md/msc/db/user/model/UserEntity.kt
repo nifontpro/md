@@ -26,7 +26,7 @@ class UserEntity(
 	val id: Long? = null,
 
 	@Column(name = "auth_email")
-	val authEmail: String = "",
+	val authEmail: String? = null,
 	val firstname: String = "",
 	val patronymic: String? = null,
 	val lastname: String? = null,

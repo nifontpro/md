@@ -13,7 +13,7 @@ suspend fun <C : BaseContext> imageProcess(
 	processor: IBaseProcessor<C>,
 	multipartFile: MultipartFile,
 	entityId: Long,
-	description: String?,
+	imageId: Long = 0,
 ): BaseResponse<BaseImage> {
 	if (!authData.emailVerified || authData.email.isBlank()) {
 		context.emailNotVerified()
@@ -21,11 +21,12 @@ suspend fun <C : BaseContext> imageProcess(
 	}
 	context.authEmail = authData.email
 
-	val fileData = saveFile(multipartFile = multipartFile, entityId = entityId, description = description) ?: run {
+	val fileData = saveFile(multipartFile = multipartFile, entityId = entityId) ?: run {
 		context.fileSaveError()
 		return BaseResponse.error(errors = context.errors)
 	}
 	context.fileData = fileData
+	context.imageId = imageId
 
 	processor.exec(context)
 

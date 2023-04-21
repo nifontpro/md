@@ -6,7 +6,7 @@ import ru.md.msc.domain.image.model.BaseImage
 fun IBaseImage.toImage() = BaseImage(
 	id = id,
 	imageUrl = imageUrl,
-	imageKey = imageKey,
+//	imageKey = imageKey,
 	type = type,
 	main = main,
 	createdAt = createdAt

@@ -145,6 +145,14 @@ class UserServiceImpl(
 		return userImageEntity.toImage()
 	}
 
+	override suspend fun updateImage(userId: Long, imageId: Long, fileData: FileData): BaseImage {
+		val userImageEntity = userImageRepository.findByIdAndUserId(userId = userId, imageId = imageId) ?: run {
+			throw ImageNotFoundException()
+		}
+		s3Repository.putObject(key = userImageEntity.imageKey, fileData = fileData) ?: throw Exception()
+		return userImageEntity.toImage()
+	}
+
 	override suspend fun deleteImage(userId: Long, imageId: Long): BaseImage {
 		val userImageEntity = userImageRepository.findByIdAndUserId(userId = userId, imageId = imageId) ?: run {
 			throw ImageNotFoundException()

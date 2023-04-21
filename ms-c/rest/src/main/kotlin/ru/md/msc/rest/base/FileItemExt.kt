@@ -5,7 +5,7 @@ import ru.md.msc.domain.image.model.FileData
 import java.io.File
 import java.util.*
 
-fun saveFile(multipartFile: MultipartFile, entityId: Long, description: String?): FileData? {
+fun saveFile(multipartFile: MultipartFile, entityId: Long): FileData? {
 	val fileBytes = multipartFile.bytes
 	val fileSize = multipartFile.size
 	if (fileBytes.isEmpty()) return null
@@ -27,7 +27,6 @@ fun saveFile(multipartFile: MultipartFile, entityId: Long, description: String?)
 			url = url,
 			filename = fileName,
 			size = fileSize,
-			description = description
 		)
 	} catch (e: Exception) {
 		null

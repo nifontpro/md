@@ -17,7 +17,7 @@ fun ICorChainDsl<UserContext>.validateOwnerByEmailExist(title: String) = worker 
 		user = user.copy(authEmail = authEmail)
 
 		val ownerExist = try {
-			userService.doesOwnerWithEmailExist(user.authEmail)
+			userService.doesOwnerWithEmailExist(user.authEmail ?: "")
 		} catch (e: Exception) {
 			getUserError()
 			return@handle

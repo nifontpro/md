@@ -22,6 +22,7 @@ abstract class BaseContext(
 
 	var userId: Long = 0,
 	var deptId: Long = 0,
+	var imageId: Long = 0,
 
 	var fileData: FileData = FileData(),
 	var baseImage: BaseImage = BaseImage()

@@ -41,6 +41,14 @@ class UserProcessor(
 				createOwner("Создаем владельца")
 			}
 
+			operation("Создание профиля сотрудника", UserCommand.CREATE) {
+				validateUserFirstnameEmpty("Проверка имени пользователя")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAdminRole("Проверка наличия прав Администратора")
+				validateAuthDeptLevel("Проверка доступа к отделу")
+				createUser("Создаем профиль сотрудника")
+			}
+
 			operation("Получение профилей пользователя", UserCommand.GET_PROFILES) {
 				getProfiles("Получаем доступные профили")
 			}
@@ -81,12 +89,19 @@ class UserProcessor(
 				addUserImage("Добавляем изображение")
 			}
 
+			operation("Обновление изображения", UserCommand.IMG_UPDATE) {
+				// validate imageId
+				worker("Получение id сущности") { userId = fileData.entityId; authId = userId }
+				validateUserId("Проверка userId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				updateUserImage("Обновляем изображение")
+			}
+
 			operation("Удаление изображения", UserCommand.IMG_DELETE) {
 				validateUserId("Проверка userId")
-				// validate baseImage.id
+				// validate imageId
 				worker("Подготовка") { authId = userId }
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-
 				deleteUserImage("Удаляем изображение")
 			}
 

@@ -1,6 +1,6 @@
 package ru.md.msc.rest.user.mappers
 
-import ru.md.msc.domain.image.model.BaseImage
+import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.model.User
@@ -10,6 +10,27 @@ import ru.md.msc.rest.user.model.request.*
 fun UserContext.fromTransport(request: CreateOwnerRequest) {
 	command = UserCommand.CREATE_OWNER
 	user = User(
+		firstname = request.firstname,
+		patronymic = request.patronymic,
+		lastname = request.lastname,
+		post = request.post,
+		gender = request.gender,
+	)
+	userDetails = UserDetails(
+		user = user,
+		phone = request.phone,
+		address = request.address,
+		description = request.description
+	)
+}
+
+fun UserContext.fromTransport(request: CreateUserRequest) {
+	command = UserCommand.CREATE
+	authId = request.authId
+	deptId = request.deptId // auth
+	user = User(
+		dept = Dept(id = deptId),
+		authEmail = request.authEmail,
 		firstname = request.firstname,
 		patronymic = request.patronymic,
 		lastname = request.lastname,
@@ -50,6 +71,6 @@ fun UserContext.fromTransport(request: DeleteUserRequest) {
 
 fun UserContext.fromTransport(request: DeleteUserImageRequest) {
 	command = UserCommand.IMG_DELETE
-	baseImage = BaseImage(id = request.imageId)
+	imageId = request.imageId
 	userId = request.userId
 }

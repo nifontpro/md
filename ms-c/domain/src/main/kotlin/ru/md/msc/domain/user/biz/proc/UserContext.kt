@@ -14,11 +14,13 @@ class UserContext : BaseContext(command = UserCommand.NONE) {
 
 enum class UserCommand : IBaseCommand {
 	NONE,
+	CREATE,
 	CREATE_OWNER,
 	GET_PROFILES,
 	GET_BY_DEPT,
 	GET_BY_ID_DETAILS,
 	DELETE,
 	IMG_ADD,
+	IMG_UPDATE,
 	IMG_DELETE,
 }

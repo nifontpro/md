@@ -9,7 +9,7 @@ import ru.md.msc.domain.user.biz.proc.ImageNotFoundException
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.userImageNotFound
 
-fun ICorChainDsl<UserContext>.deleteUserImage(title: String) = worker {
+fun ICorChainDsl<UserContext>.updateUserImage(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
@@ -17,18 +17,21 @@ fun ICorChainDsl<UserContext>.deleteUserImage(title: String) = worker {
 	handle {
 
 		try {
-			baseImage = userService.deleteImage(userId = userId, imageId = imageId)
+			baseImage = userService.updateImage(userId = userId, imageId = imageId, fileData = fileData)
 		} catch (e: ImageNotFoundException) {
 			userImageNotFound()
+			return@handle
 		} catch (e: Exception) {
 			log.info(e.message)
 			fail(
 				errorDb(
 					repository = "user",
-					violationCode = "image delete",
-					description = "Ошибка удаления изображения"
+					violationCode = "image update",
+					description = "Ошибка обновления изображения"
 				)
 			)
+			return@handle
 		}
+
 	}
 }

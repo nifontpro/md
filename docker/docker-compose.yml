@@ -1,19 +1,6 @@
 version: '3.9'
 
 services:
-  # nginx:
-  #  image: nginx
-  #  container_name: msm_nginx
-  #  restart: always
-  #  ports:
-  #    - "443:443"
-  #  volumes:
-  #    - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-  #    - ./nginx/localhost:/etc/nginx/sites-enabled/localhost
-  #    - ./nginx/localhost:/etc/nginx/sites-available/localhost
-  #    - ./cert/localhost.cer:/etc/ssl/localhost.cer
-  #    - ./cert/localhost.pem:/etc/ssl/localhost.pem
-  #    - ./cert/rootca.cer:/etc/ssl/rootca.cer
 
   postgres:
     container_name: postgres_md
@@ -30,7 +17,7 @@ services:
 
   server:
     build: server/.
-    #   restart: always
+    restart: always
     networks:
       - net
     ports:
@@ -42,66 +29,31 @@ services:
 
   client:
     build: client/.
-    #   restart: always
+    restart: always
     depends_on:
       - server
     networks:
       - net
-    #    volumes:
-    #      - /home/nifont/v1/md/tmp/git-props-msm:/app/tmp/git-props-msm
     env_file:
       - ./.db-env
+      - ./.s3-env
     container_name: client
     image: md/client:1
 
   gateway:
     build: gateway/.
-    #   restart: always
+    restart: always
     depends_on:
       - client
     networks:
       - net
     ports:
       - "8765:8765"
-    #    volumes:
-    #      - /home/nifont/v1/md/tmp/git-props-msm:/app/tmp/git-props-msm
+    volumes:
+      - ../cert:/etc/ssl/
     container_name: gateway
     image: md/gateway:1
 
-  proxy:
-    build: proxy/.
-    #   restart: always
-    depends_on:
-      - gateway
-    networks:
-      - net
-    ports:
-      - "8902:8902"
-    env_file:
-      - ./.kc-env
-    volumes:
-      - ../cert:/etc/ssl/
-    container_name: proxy
-    image: md/proxy:1
-
-#  server:
-#    build: server/.
-#    #   restart: always
-#    depends_on:
-#      - postgres
-#    networks:
-#      - net
-#    ports:
-#      - "8761:8761"
-#
-#    #    volumes:
-#    #      - /home/nifont/v1/md/tmp/git-props-msm:/app/tmp/git-props-msm
-#    env_file:
-#      - ./.db-env
-#    container_name: md_server
-#    image: md/server:1
-
-
 networks:
   net:
-    name: 'md_net'
+    name: md_net
