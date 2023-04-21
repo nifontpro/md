@@ -2,6 +2,7 @@ package ru.md.msc.domain.user.biz.proc
 
 import ru.md.msc.domain.base.biz.BaseContext
 import ru.md.msc.domain.base.biz.IBaseCommand
+import ru.md.msc.domain.user.model.RoleUser
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
 
@@ -9,6 +10,7 @@ class UserContext : BaseContext(command = UserCommand.NONE) {
 	var user: User = User()
 	var userDetails: UserDetails = UserDetails()
 	var users: List<User> = emptyList()
+	var notValidRole: RoleUser? = null
 //	var usersDetails: List<UserDetails> = emptyList()
 }
 

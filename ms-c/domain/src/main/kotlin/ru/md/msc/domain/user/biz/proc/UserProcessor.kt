@@ -9,6 +9,7 @@ import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.db.validateAuthUserLevel
 import ru.md.msc.domain.base.validate.validateAdminRole
+import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId
 import ru.md.msc.domain.base.workers.finishOperation
 import ru.md.msc.domain.base.workers.initStatus
@@ -16,6 +17,7 @@ import ru.md.msc.domain.base.workers.operation
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
 import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
+import ru.md.msc.domain.user.biz.validate.validateUserRoles
 import ru.md.msc.domain.user.biz.workers.*
 import ru.md.msc.domain.user.service.UserService
 
@@ -38,14 +40,17 @@ class UserProcessor(
 			operation("Регистрация корневого владельца", UserCommand.CREATE_OWNER) {
 				validateUserFirstnameEmpty("Проверка имени пользователя")
 				validateOwnerByEmailExist("Проверка существования владельца с email")
+				trimFieldUserDetails("Очищаем поля")
 				createOwner("Создаем владельца")
 			}
 
 			operation("Создание профиля сотрудника", UserCommand.CREATE) {
 				validateUserFirstnameEmpty("Проверка имени пользователя")
+				validateUserRoles("Проверка ролей")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAdminRole("Проверка наличия прав Администратора")
 				validateAuthDeptLevel("Проверка доступа к отделу")
+				trimFieldUserDetails("Очищаем поля")
 				createUser("Создаем профиль сотрудника")
 			}
 
@@ -85,12 +90,11 @@ class UserProcessor(
 				worker("Получение id сущности") { userId = fileData.entityId; authId = userId }
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-
 				addUserImage("Добавляем изображение")
 			}
 
 			operation("Обновление изображения", UserCommand.IMG_UPDATE) {
-				// validate imageId
+				validateImageId("Проверка imageId")
 				worker("Получение id сущности") { userId = fileData.entityId; authId = userId }
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
@@ -99,7 +103,7 @@ class UserProcessor(
 
 			operation("Удаление изображения", UserCommand.IMG_DELETE) {
 				validateUserId("Проверка userId")
-				// validate imageId
+				validateImageId("Проверка imageId")
 				worker("Подготовка") { authId = userId }
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				deleteUserImage("Удаляем изображение")

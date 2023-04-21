@@ -36,6 +36,7 @@ fun UserContext.fromTransport(request: CreateUserRequest) {
 		lastname = request.lastname,
 		post = request.post,
 		gender = request.gender,
+		roles = request.roles
 	)
 	userDetails = UserDetails(
 		user = user,
@@ -67,7 +68,6 @@ fun UserContext.fromTransport(request: DeleteUserRequest) {
 	authId = request.authId
 	userId = request.userId
 }
-
 
 fun UserContext.fromTransport(request: DeleteUserImageRequest) {
 	command = UserCommand.IMG_DELETE

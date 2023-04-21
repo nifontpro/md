@@ -1,6 +1,7 @@
 package ru.md.msc.rest.user.model.request
 
 import ru.md.msc.domain.user.model.Gender
+import ru.md.msc.domain.user.model.RoleUser
 
 data class CreateUserRequest(
 	val authId: Long = 0,
@@ -14,4 +15,5 @@ data class CreateUserRequest(
 	val phone: String? = null,
 	val address: String? = null,
 	val description: String? = null,
+	val roles: Set<RoleUser> = emptySet()
 )
