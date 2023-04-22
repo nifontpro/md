@@ -83,14 +83,16 @@ class UserServiceImpl(
 		return userDetailsEntity.toUserDetails()
 	}
 
-	override fun update(userDetails: UserDetails): UserDetails {
+	override fun update(userDetails: UserDetails, isAuthUserHasAdminRole: Boolean): UserDetails {
 		val oldUserDetailsEntity = userDetailsRepository.findByUserId(userDetails.user.id) ?: throw UserNotFoundException()
 		with(oldUserDetailsEntity) {
 			user?.let {
 				it.firstname = userDetails.user.firstname
 				it.patronymic = userDetails.user.patronymic
 				it.lastname = userDetails.user.lastname
-//				it.authEmail = userDetails.user.authEmail // ADMIN
+				if (isAuthUserHasAdminRole) {
+					it.authEmail = userDetails.user.authEmail
+				}
 				it.gender = userDetails.user.gender
 				it.post = userDetails.user.post
 			}
@@ -98,7 +100,9 @@ class UserServiceImpl(
 			address = userDetails.address
 			description = userDetails.description
 		}
-		userDetailsRepository.save(oldUserDetailsEntity)
+		if (isAuthUserHasAdminRole) {
+			addRolesToUserEntity(userDetails, oldUserDetailsEntity)
+		}
 		return oldUserDetailsEntity.toUserDetails()
 	}
 
@@ -106,9 +110,12 @@ class UserServiceImpl(
 		userDetails: UserDetails,
 		userDetailsEntity: UserDetailsEntity
 	) {
-		userDetails.user.roles.map { roleEnum ->
-			val roleEntity = RoleEntity(roleUser = roleEnum, user = userDetailsEntity.user)
-			userDetailsEntity.user?.roles?.add(roleEntity)
+		val roles = userDetails.user.roles.map { roleEnum ->
+			RoleEntity(roleUser = roleEnum, user = userDetailsEntity.user)
+		}
+		userDetailsEntity.user?.roles?.let {
+			it.removeAll { true }
+			it.addAll(roles)
 		}
 	}
 

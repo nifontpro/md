@@ -13,9 +13,9 @@ fun <T : BaseContext> ICorChainDsl<T>.validateAdminRole(title: String) = worker 
 	on { state == ContextState.RUNNING }
 	handle {
 
-		val noAdmin = authUser.roles.find { it == RoleUser.ADMIN } == null
+		isAuthUserHasAdminRole = authUser.roles.find { it == RoleUser.ADMIN } != null
 
-		if (noAdmin) {
+		if (!isAuthUserHasAdminRole) {
 			fail(
 				errorUnauthorized(
 					role = "ADMIN",

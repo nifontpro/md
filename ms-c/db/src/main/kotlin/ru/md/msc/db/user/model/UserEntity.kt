@@ -42,7 +42,7 @@ class UserEntity(
 //	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)
 //	val details: UserDetailsEntity? = null,
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST], orphanRemoval = true)
 	@Fetch(FetchMode.SUBSELECT)
 	val roles: MutableList<RoleEntity> = mutableListOf(),
 

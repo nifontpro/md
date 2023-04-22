@@ -19,6 +19,7 @@ abstract class BaseContext(
 	var authEmail: String = "",
 	var authId: Long = 0,
 	var authUser: User = User(),
+	var isAuthUserHasAdminRole: Boolean = false,
 
 	var userId: Long = 0,
 	var deptId: Long = 0,
@@ -27,7 +28,7 @@ abstract class BaseContext(
 	var fileData: FileData = FileData(),
 	var baseImage: BaseImage = BaseImage()
 
-	) {
+) {
 	lateinit var userService: UserService
 	lateinit var deptService: DeptService
 

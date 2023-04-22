@@ -15,7 +15,7 @@ fun ICorChainDsl<UserContext>.updateUser(title: String) = worker {
 	handle {
 
 		try {
-			userDetails = userService.update(userDetails = userDetails)
+			userDetails = userService.update(userDetails = userDetails, isAuthUserHasAdminRole = isAuthUserHasAdminRole)
 		} catch (e: Exception) {
 			fail(
 				errorDb(
