@@ -17,6 +17,7 @@ class UserContext : BaseContext(command = UserCommand.NONE) {
 enum class UserCommand : IBaseCommand {
 	NONE,
 	CREATE,
+	UPDATE,
 	CREATE_OWNER,
 	GET_PROFILES,
 	GET_BY_DEPT,

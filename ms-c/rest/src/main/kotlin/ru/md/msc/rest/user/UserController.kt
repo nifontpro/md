@@ -52,6 +52,20 @@ class UserController(
 		)
 	}
 
+	@PostMapping("update")
+	private suspend fun updateUser(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: UpdateUserRequest
+	): BaseResponse<UserDetailsResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = userProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportGetUserDetails() }
+		)
+	}
+
 	@PostMapping("profiles")
 	private suspend fun getProfiles(
 		@RequestHeader(name = AUTH) bearerToken: String,

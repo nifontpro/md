@@ -9,7 +9,7 @@ import ru.md.msc.domain.base.helper.errorUnauthorized
 import ru.md.msc.domain.base.helper.fail
 
 /**
- * Проверка доступа к сотруднику
+ * Проверка доступа администратора к сотруднику
  */
 fun <T : BaseContext> ICorChainDsl<T>.validateAuthUserLevel(title: String) = worker {
 	this.title = title

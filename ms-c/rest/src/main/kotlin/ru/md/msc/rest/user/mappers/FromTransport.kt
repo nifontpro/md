@@ -46,6 +46,29 @@ fun UserContext.fromTransport(request: CreateUserRequest) {
 	)
 }
 
+fun UserContext.fromTransport(request: UpdateUserRequest) {
+	command = UserCommand.UPDATE
+	authId = request.authId
+	userId = request.userId // auth
+	user = User(
+		id = userId,
+		dept = Dept(id = deptId),
+		authEmail = request.authEmail,
+		firstname = request.firstname,
+		patronymic = request.patronymic,
+		lastname = request.lastname,
+		post = request.post,
+		gender = request.gender,
+		roles = request.roles
+	)
+	userDetails = UserDetails(
+		user = user,
+		phone = request.phone,
+		address = request.address,
+		description = request.description
+	)
+}
+
 @Suppress("UNUSED_PARAMETER")
 fun UserContext.fromTransport(request: GetProfilesRequest) {
 	command = UserCommand.GET_PROFILES

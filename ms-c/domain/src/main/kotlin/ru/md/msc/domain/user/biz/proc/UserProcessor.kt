@@ -54,6 +54,19 @@ class UserProcessor(
 				createUser("Создаем профиль сотрудника")
 			}
 
+			operation("Обновление профиля сотрудника", UserCommand.UPDATE) {
+				validateUserFirstnameEmpty("Проверка имени пользователя")
+//				validateUserRoles("Проверка ролей")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				chain {
+					on { userId != authUser.id } // Если запрос не собственного профиля:
+					validateAdminRole("Проверка наличия прав Администратора")
+					validateAuthUserLevel("Проверка доступа к сотруднику")
+				}
+				trimFieldUserDetails("Очищаем поля")
+				updateUser("Обновляем профиль сотрудника")
+			}
+
 			operation("Получение профилей пользователя", UserCommand.GET_PROFILES) {
 				getProfiles("Получаем доступные профили")
 			}
@@ -64,7 +77,7 @@ class UserProcessor(
 				getUsersByDept("Получаем сотрудников")
 			}
 
-			operation("Получение сотрудника", UserCommand.GET_BY_ID_DETAILS) {
+			operation("Получение профиля сотрудника", UserCommand.GET_BY_ID_DETAILS) {
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 
@@ -77,7 +90,7 @@ class UserProcessor(
 				getUserDetailsById("Получаем сотрудника")
 			}
 
-			operation("Удаление сотрудника", UserCommand.DELETE) {
+			operation("Удаление профиля сотрудника", UserCommand.DELETE) {
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAdminRole("Проверка наличия прав Администратора")

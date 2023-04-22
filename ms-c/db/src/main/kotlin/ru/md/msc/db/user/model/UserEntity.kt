@@ -26,11 +26,11 @@ class UserEntity(
 	val id: Long? = null,
 
 	@Column(name = "auth_email")
-	val authEmail: String? = null,
-	val firstname: String = "",
-	val patronymic: String? = null,
-	val lastname: String? = null,
-	val post: String? = null,
+	var authEmail: String? = null,
+	var firstname: String = "",
+	var patronymic: String? = null,
+	var lastname: String? = null,
+	var post: String? = null,
 
 	@Column(name = "gender_code")
 	var gender: Gender = Gender.UNDEF,

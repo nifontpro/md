@@ -83,6 +83,25 @@ class UserServiceImpl(
 		return userDetailsEntity.toUserDetails()
 	}
 
+	override fun update(userDetails: UserDetails): UserDetails {
+		val oldUserDetailsEntity = userDetailsRepository.findByUserId(userDetails.user.id) ?: throw UserNotFoundException()
+		with(oldUserDetailsEntity) {
+			user?.let {
+				it.firstname = userDetails.user.firstname
+				it.patronymic = userDetails.user.patronymic
+				it.lastname = userDetails.user.lastname
+//				it.authEmail = userDetails.user.authEmail // ADMIN
+				it.gender = userDetails.user.gender
+				it.post = userDetails.user.post
+			}
+			phone = userDetails.phone
+			address = userDetails.address
+			description = userDetails.description
+		}
+		userDetailsRepository.save(oldUserDetailsEntity)
+		return oldUserDetailsEntity.toUserDetails()
+	}
+
 	private fun addRolesToUserEntity(
 		userDetails: UserDetails,
 		userDetailsEntity: UserDetailsEntity

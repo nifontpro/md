@@ -26,9 +26,9 @@ class UserDetailsEntity(
 	@Column(name = "user_id")
 	val userId: Long? = null,
 
-	val phone: String? = null,
-	val address: String? = null,
-	val description: String? = null,
+	var phone: String? = null,
+	var address: String? = null,
+	var description: String? = null,
 
 	@Column(name = "created_at")
 	val createdAt: LocalDateTime? = null,
@@ -36,7 +36,7 @@ class UserDetailsEntity(
 	@OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
 	@JoinColumn(name = "user_id")
 	@MapsId
-	val user: UserEntity? = null
+	var user: UserEntity? = null
 
 ) : Serializable {
 

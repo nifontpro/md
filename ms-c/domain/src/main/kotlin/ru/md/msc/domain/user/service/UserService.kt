@@ -17,4 +17,5 @@ interface UserService {
 	suspend fun deleteImage(userId: Long, imageId: Long): BaseImage
 	fun create(userDetails: UserDetails): UserDetails
 	suspend fun updateImage(userId: Long, imageId: Long, fileData: FileData): BaseImage
+	fun update(userDetails: UserDetails): UserDetails
 }
