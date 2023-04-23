@@ -1,0 +1,13 @@
+CREATE ROLE md_ro;
+GRANT CONNECT ON DATABASE medalist TO md_ro;
+GRANT USAGE ON SCHEMA dep TO md_ro;
+GRANT USAGE ON SCHEMA md TO md_ro;
+GRANT USAGE ON SCHEMA users TO md_ro;
+
+GRANT SELECT ON TABLE users.user_data TO md_ro;
+GRANT SELECT ON TABLE users.user_details TO md_ro;
+GRANT SELECT ON TABLE users.user_roles TO md_ro;
+GRANT SELECT ON TABLE users.user_image TO md_ro;
+
+CREATE USER u WITH PASSWORD '*';
+GRANT md_ro TO u;
