@@ -4,22 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+update user profile + roles">
-      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/workers/UpdateDept.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/model/request/UpdateDeptRequest.kt" afterDir="false" />
+    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+update dept profile">
+      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/base/validate/ValidateOwnerRole.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/db-user.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docker/db-user.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/DeptDetailsEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/DeptDetailsEntity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/DeptEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/DeptEntity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/mappers/DeptDetailsMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/mappers/DeptDetailsMapper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/service/DeptServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/service/DeptServiceImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptContext.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptContext.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptErrors.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptErrors.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptProcessor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/model/DeptDetails.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/model/DeptDetails.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/service/DeptService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/service/DeptService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/DeptController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/DeptController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/mappers/FromTransport.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/mappers/FromTransport.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/service/UserServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/user/service/UserServiceImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserContext.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserContext.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/user/biz/proc/UserProcessor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/mappers/FromTransport.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/mappers/FromTransport.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/model/request/UpdateUserRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/model/request/UpdateUserRequest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +152,7 @@
     "git-widget-placeholder": "Dept__Main__Op",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "corretto-17",
-    "last_opened_file_path": "C:/Users/Nifont/program/md/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/workers",
+    "last_opened_file_path": "C:/Users/Nifont/program/md/ms-c/domain/src/main/kotlin/ru/md/msc/domain/base/validate",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -185,18 +178,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\base\validate" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\dept\biz\workers" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\workers" />
-      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\base\validate" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\validate" />
       <recent name="C:\Users\Nifont\program\md\ms-c\rest\src\main\kotlin\ru\md\msc\rest\base\mappers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\dept\biz\validate" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\proc" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\base\validate" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\base\validate\db" />
       <recent name="C:\Users\Nifont\program\md\front\src\app\domain\storage" />
-      <recent name="C:\Users\Nifont\program\md\front\src\app\domain\hooks" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="ru.md.msc.domain.image.model" />
@@ -536,7 +529,8 @@
       <workItem from="1681970973322" duration="23424000" />
       <workItem from="1682073233846" duration="13827000" />
       <workItem from="1682145105294" duration="9701000" />
-      <workItem from="1682318752667" duration="3846000" />
+      <workItem from="1682318752667" duration="5691000" />
+      <workItem from="1682349875055" duration="2900000" />
     </task>
     <task id="LOCAL-00001" summary="Work version Init">
       <created>1680614424386</created>
@@ -755,7 +749,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682156147923</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="+update dept profile">
+      <created>1682325096767</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1682325096767</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -763,7 +764,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="+gateway" />
     <MESSAGE value="+cor" />
     <MESSAGE value="+proxy, client" />
     <MESSAGE value="+proxy remote deploy" />
@@ -788,7 +788,8 @@
     <MESSAGE value="+add use roles" />
     <MESSAGE value="+update user profile" />
     <MESSAGE value="+update user profile + roles" />
-    <option name="LAST_COMMIT_MESSAGE" value="+update user profile + roles" />
+    <MESSAGE value="+update dept profile" />
+    <option name="LAST_COMMIT_MESSAGE" value="+update dept profile" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

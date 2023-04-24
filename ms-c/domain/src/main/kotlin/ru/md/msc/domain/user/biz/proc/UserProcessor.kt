@@ -1,11 +1,13 @@
 package ru.md.msc.domain.user.biz.proc
 
 import org.springframework.stereotype.Component
+import ru.md.cor.ICorChainDsl
 import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.IBaseProcessor
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
+import ru.md.msc.domain.base.validate.db.validateAuthDeptDownLevel
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.db.validateAuthUserLevel
 import ru.md.msc.domain.base.validate.validateAdminRole
@@ -56,15 +58,23 @@ class UserProcessor(
 
 			operation("Обновление профиля сотрудника", UserCommand.UPDATE) {
 				validateUserFirstnameEmpty("Проверка имени пользователя")
-//				validateUserRoles("Проверка ролей")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+
 				chain {
 					on { userId != authUser.id } // Если запрос не собственного профиля:
-					validateAdminRole("Проверка наличия прав Администратора")
-					validateAuthUserLevel("Проверка доступа к сотруднику")
+					validateAdminModifyUserByRole() // Тогда должны быть права Администратора
 				}
+
 				trimFieldUserDetails("Очищаем поля")
 				updateUser("Обновляем профиль сотрудника")
+			}
+
+			operation("Удаление профиля сотрудника", UserCommand.DELETE) {
+				validateUserId("Проверка userId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAdminModifyUserByRole()
+				getUserDetailsById("Получаем сотрудника")
+				deleteUser("Удаляем сотрудника")
 			}
 
 			operation("Получение профилей пользователя", UserCommand.GET_PROFILES) {
@@ -88,15 +98,6 @@ class UserProcessor(
 				}
 
 				getUserDetailsById("Получаем сотрудника")
-			}
-
-			operation("Удаление профиля сотрудника", UserCommand.DELETE) {
-				validateUserId("Проверка userId")
-				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAdminRole("Проверка наличия прав Администратора")
-				validateAuthUserLevel("Проверка доступа к сотруднику")
-				getUserDetailsById("Получаем сотрудника")
-				deleteUser("Удаляем сотрудника")
 			}
 
 			operation("Добавление изображения", UserCommand.IMG_ADD) {
@@ -124,5 +125,26 @@ class UserProcessor(
 
 			finishOperation()
 		}.build()
+
+		/**
+		 * Проверка доступа авторизованного пользователя с правами Администратора
+		 * к обновлению/удалению профиля сотрудника в зависимости от его роли.
+		 * Администратор имеет право над сотрудниками в своем и нижестоящих отделах
+		 * и имеет право над Администраторами нижестоящих отделов
+		 */
+		private fun ICorChainDsl<UserContext>.validateAdminModifyUserByRole() {
+
+			validateAdminRole("Проверка наличия прав Администратора")
+			findUpdateUser("Получаем профиль для обновления")
+			chain {
+				on { !isUpdateUserHasAdminRole } // Обновляемый без прав ADMIN
+				validateAuthDeptLevel("Проверка доступа к отделу")
+			}
+			chain {
+				on { isUpdateUserHasAdminRole } // Обновляемый имеет роль ADMIN
+				validateAuthDeptDownLevel("Проверка доступа к нижестоящему отделу")
+			}
+		}
+
 	}
 }

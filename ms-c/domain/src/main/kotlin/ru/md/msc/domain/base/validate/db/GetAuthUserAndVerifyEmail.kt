@@ -4,9 +4,9 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.BaseContext
 import ru.md.msc.domain.base.biz.ContextState
-import ru.md.msc.domain.base.helper.errorDb
 import ru.md.msc.domain.base.helper.errorUnauthorized
 import ru.md.msc.domain.base.helper.fail
+import ru.md.msc.domain.user.biz.proc.getUserError
 
 fun <T : BaseContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: String) = worker {
 	this.title = title
@@ -21,13 +21,7 @@ fun <T : BaseContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: String) =
 		authUser = try {
 			userService.findById(authId)
 		} catch (e: Exception) {
-			fail(
-				errorDb(
-					repository = "user",
-					violationCode = "find by id ",
-					description = "Ошибка получения сотрудника"
-				)
-			)
+			getUserError()
 			return@handle
 		} ?: run {
 			notValidAuthId()

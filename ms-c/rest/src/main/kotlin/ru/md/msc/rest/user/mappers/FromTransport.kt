@@ -59,7 +59,7 @@ fun UserContext.fromTransport(request: UpdateUserRequest) {
 		lastname = request.lastname,
 		post = request.post,
 		gender = request.gender,
-		roles = request.roles
+//		roles = request.roles
 	)
 	userDetails = UserDetails(
 		user = user,

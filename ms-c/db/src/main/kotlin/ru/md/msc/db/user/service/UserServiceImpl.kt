@@ -100,9 +100,9 @@ class UserServiceImpl(
 			address = userDetails.address
 			description = userDetails.description
 		}
-		if (isAuthUserHasAdminRole) {
-			addRolesToUserEntity(userDetails, oldUserDetailsEntity)
-		}
+//		if (isAuthUserHasAdminRole) {
+//			addRolesToUserEntity(userDetails, oldUserDetailsEntity)
+//		}
 		return oldUserDetailsEntity.toUserDetails()
 	}
 

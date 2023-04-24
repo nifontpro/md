@@ -1,5 +1,6 @@
 package ru.md.msc.domain.user.biz.proc
 
+import ru.md.msc.domain.base.biz.BaseContext
 import ru.md.msc.domain.base.helper.ContextError
 import ru.md.msc.domain.base.helper.errorDb
 import ru.md.msc.domain.base.helper.fail
@@ -25,12 +26,12 @@ fun UserContext.userImageNotFound() {
 	)
 }
 
-fun UserContext.getUserError() {
+fun BaseContext.getUserError() {
 	fail(
 		errorDb(
 			repository = "user",
 			violationCode = "get error",
-			description = "Ошибка чтения сотрудников"
+			description = "Ошибка получения сотрудника"
 		)
 	)
 }

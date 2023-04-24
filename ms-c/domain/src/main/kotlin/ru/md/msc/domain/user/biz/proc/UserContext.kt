@@ -11,6 +11,10 @@ class UserContext : BaseContext(command = UserCommand.NONE) {
 	var userDetails: UserDetails = UserDetails()
 	var users: List<User> = emptyList()
 	var notValidRole: RoleUser? = null
+
+	var updateUser: User = User()
+	var isUpdateUserHasAdminRole: Boolean = false
+
 //	var usersDetails: List<UserDetails> = emptyList()
 }
 
