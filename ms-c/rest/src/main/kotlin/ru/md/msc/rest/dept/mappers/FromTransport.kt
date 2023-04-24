@@ -5,10 +5,7 @@ import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
 import ru.md.msc.domain.dept.model.DeptType
-import ru.md.msc.rest.dept.model.request.CreateDeptRequest
-import ru.md.msc.rest.dept.model.request.DeleteDeptRequest
-import ru.md.msc.rest.dept.model.request.GetAuthSubtreeDeptsRequest
-import ru.md.msc.rest.dept.model.request.GetDeptByIdRequest
+import ru.md.msc.rest.dept.model.request.*
 
 fun DeptContext.fromTransport(request: CreateDeptRequest) {
 	command = DeptCommand.CREATE
@@ -28,6 +25,24 @@ fun DeptContext.fromTransport(request: CreateDeptRequest) {
 	)
 
 	addTestUser = request.addTestUser
+}
+
+fun DeptContext.fromTransport(request: UpdateDeptRequest) {
+	command = DeptCommand.UPDATE
+	authId = request.authId
+	deptId = request.deptId
+	dept = Dept(
+		id = request.deptId,
+		name = request.name,
+		classname = request.classname,
+	)
+	deptDetails = DeptDetails(
+		dept = dept,
+		address = request.address,
+		email = request.email,
+		phone = request.phone,
+		description = request.description
+	)
 }
 
 fun DeptContext.fromTransport(request: GetAuthSubtreeDeptsRequest) {

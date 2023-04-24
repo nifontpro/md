@@ -3,7 +3,7 @@ package ru.md.msc.domain.dept.model
 import java.time.LocalDateTime
 
 data class DeptDetails(
-	val dept: Dept? = null,
+	val dept: Dept = Dept(),
 	val address: String? = null,
 	val email: String? = null,
 	val phone: String? = null,

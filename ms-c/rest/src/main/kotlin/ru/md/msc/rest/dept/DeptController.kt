@@ -9,10 +9,7 @@ import ru.md.msc.rest.base.process
 import ru.md.msc.rest.dept.mappers.fromTransport
 import ru.md.msc.rest.dept.mappers.toTransportGetDeptDetails
 import ru.md.msc.rest.dept.mappers.toTransportGetDepts
-import ru.md.msc.rest.dept.model.request.CreateDeptRequest
-import ru.md.msc.rest.dept.model.request.DeleteDeptRequest
-import ru.md.msc.rest.dept.model.request.GetAuthSubtreeDeptsRequest
-import ru.md.msc.rest.dept.model.request.GetDeptByIdRequest
+import ru.md.msc.rest.dept.model.request.*
 import ru.md.msc.rest.dept.model.response.DeptDetailsResponse
 import ru.md.msc.rest.utils.JwtUtils
 
@@ -26,6 +23,20 @@ class DeptController(
 	@PostMapping("create")
 	private suspend fun create(
 		@RequestBody request: CreateDeptRequest,
+		@RequestHeader(name = AUTH) bearerToken: String
+	): BaseResponse<DeptDetailsResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = deptProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportGetDeptDetails() }
+		)
+	}
+
+	@PostMapping("update")
+	private suspend fun update(
+		@RequestBody request: UpdateDeptRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<DeptDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)

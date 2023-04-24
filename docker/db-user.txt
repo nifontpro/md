@@ -9,5 +9,7 @@ GRANT SELECT ON TABLE users.user_details TO md_ro;
 GRANT SELECT ON TABLE users.user_roles TO md_ro;
 GRANT SELECT ON TABLE users.user_image TO md_ro;
 
+GRANT SELECT ON TABLE dep.dept TO md_ro;
+
 CREATE USER u WITH PASSWORD '*';
 GRANT md_ro TO u;

@@ -8,6 +8,7 @@ import ru.md.msc.db.dept.model.mappers.toDeptDetails
 import ru.md.msc.db.dept.model.mappers.toDeptDetailsEntity
 import ru.md.msc.db.dept.repo.DeptDetailsRepository
 import ru.md.msc.db.dept.repo.DeptRepository
+import ru.md.msc.domain.dept.biz.proc.DeptNotFoundException
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
 import ru.md.msc.domain.dept.service.DeptService
@@ -23,6 +24,22 @@ class DeptServiceImpl(
 		val deptDetailsEntity = deptDetails.toDeptDetailsEntity(create = true)
 		deptDetailsRepository.save(deptDetailsEntity)
 		return deptDetailsEntity.toDeptDetails()
+	}
+
+	override fun update(deptDetails: DeptDetails): DeptDetails {
+		val oldDeptDetailsEntity =
+			deptDetailsRepository.findByIdOrNull(deptDetails.dept.id) ?: throw DeptNotFoundException()
+		with(oldDeptDetailsEntity) {
+			dept?.let {
+				it.name = deptDetails.dept.name
+				it.classname = deptDetails.dept.classname
+			}
+			address = deptDetails.address
+			email = deptDetails.email
+			phone = deptDetails.phone
+			description = deptDetails.description
+		}
+		return oldDeptDetailsEntity.toDeptDetails()
 	}
 
 	/**
@@ -46,7 +63,7 @@ class DeptServiceImpl(
 	}
 
 	override fun findByIdDetails(deptId: Long): DeptDetails? {
-			return deptDetailsRepository.findByIdOrNull(deptId)?.toDeptDetails()
+		return deptDetailsRepository.findByIdOrNull(deptId)?.toDeptDetails()
 	}
 
 	override fun deleteById(deptId: Long) {

@@ -22,3 +22,5 @@ fun DeptContext.getDeptError() {
 		)
 	)
 }
+
+class DeptNotFoundException(message: String = "") : RuntimeException(message)

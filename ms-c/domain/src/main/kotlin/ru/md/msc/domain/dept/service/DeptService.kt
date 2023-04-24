@@ -10,4 +10,5 @@ interface DeptService {
 	fun validateUserLevel(upId: Long, userId: Long): Boolean
 	fun findByIdDetails(deptId: Long): DeptDetails?
 	fun deleteById(deptId: Long)
+	fun update(deptDetails: DeptDetails): DeptDetails
 }

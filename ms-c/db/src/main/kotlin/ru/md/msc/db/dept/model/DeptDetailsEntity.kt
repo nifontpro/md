@@ -18,10 +18,10 @@ class DeptDetailsEntity(
 	@Column(name = "dept_id")
 	val deptId: Long? = null,
 
-	val address: String? = null,
-	val email: String? = null,
-	val phone: String? = null,
-	val description: String? = null,
+	var address: String? = null,
+	var email: String? = null,
+	var phone: String? = null,
+	var description: String? = null,
 
 	@Column(name = "created_at")
 	val createdAt: LocalDateTime? = null,

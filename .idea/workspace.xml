@@ -4,8 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+add use roles">
-      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/mappers/FromTransport.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/user/mappers/FromTransport.kt" afterDir="false" />
+    <list default="true" id="def612ea-686e-4c6b-a000-07e824c9bdb7" name="Changes" comment="+update user profile + roles">
+      <change afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/workers/UpdateDept.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/model/request/UpdateDeptRequest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/db-user.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docker/db-user.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/DeptDetailsEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/DeptDetailsEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/DeptEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/DeptEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/mappers/DeptDetailsMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/model/mappers/DeptDetailsMapper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/service/DeptServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/db/src/main/kotlin/ru/md/msc/db/dept/service/DeptServiceImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptContext.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptContext.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptErrors.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptErrors.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/proc/DeptProcessor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/model/DeptDetails.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/model/DeptDetails.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/service/DeptService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/service/DeptService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/DeptController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/DeptController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/mappers/FromTransport.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ms-c/rest/src/main/kotlin/ru/md/msc/rest/dept/mappers/FromTransport.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +159,7 @@
     "git-widget-placeholder": "Dept__Main__Op",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "corretto-17",
-    "last_opened_file_path": "C:/Users/Nifont/program/md/ms-c/domain/src/main/kotlin/ru/md/msc/domain/base/validate",
+    "last_opened_file_path": "C:/Users/Nifont/program/md/ms-c/domain/src/main/kotlin/ru/md/msc/domain/dept/biz/workers",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -171,11 +185,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\base\validate" />
+      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\dept\biz\workers" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\workers" />
+      <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\base\validate" />
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\validate" />
       <recent name="C:\Users\Nifont\program\md\ms-c\rest\src\main\kotlin\ru\md\msc\rest\base\mappers" />
-      <recent name="C:\Users\Nifont\program\md\ms-c\rest\src\main\kotlin\ru\md\msc\rest\base" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Nifont\program\md\ms-c\domain\src\main\kotlin\ru\md\msc\domain\user\biz\proc" />
@@ -189,9 +203,9 @@
       <recent name="ru.md.msc.db.user.model.converter" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="ru.md.msc.rest.dept.model.request" />
       <recent name="ru.md.msc.rest.user.model.request" />
       <recent name="ru.md.msc.db.base.converter" />
-      <recent name="ru.md.msc.rest.dept.model.request" />
       <recent name="ru.md.msc.db.user" />
       <recent name="ru.md.msc.db.dept" />
     </key>
@@ -206,7 +220,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.md:ms-c [remote-client]">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="DeptTest.delete" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -255,30 +269,6 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="UserTest.findByIdDetails" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":ms-c:db:test" />
-            <option value="--tests" />
-            <option value="&quot;ru.md.msc.db.user.UserTest.findByIdDetails&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
-      <method v="2" />
-    </configuration>
     <configuration name="UserTest.findImage" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -293,6 +283,30 @@
             <option value=":ms-c:db:test" />
             <option value="--tests" />
             <option value="&quot;ru.md.msc.db.user.UserTest.findImage&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="UserTest.update" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":ms-c:db:test" />
+            <option value="--tests" />
+            <option value="&quot;ru.md.msc.db.user.UserTest.update&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -451,10 +465,10 @@
       <item itemvalue="Gradle.md:ms-c [remote-client]" />
       <item itemvalue="Gradle.md:ms-gateway [remote-gateway]" />
       <item itemvalue="Gradle.md:ms-server [remote-server]" />
+      <item itemvalue="Gradle.UserTest.update" />
       <item itemvalue="Gradle.UserTest.findImage" />
       <item itemvalue="Gradle.DeptTest.delete" />
       <item itemvalue="Gradle.DeptTest.getByIdDetails" />
-      <item itemvalue="Gradle.UserTest.findByIdDetails" />
       <item itemvalue="npm.dev" />
       <item itemvalue="Spring Boot.ServerApplication" />
       <item itemvalue="Spring Boot.ClientApplication" />
@@ -463,10 +477,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="npm.dev" />
+        <item itemvalue="Gradle.UserTest.update" />
         <item itemvalue="Gradle.UserTest.findImage" />
         <item itemvalue="Gradle.DeptTest.delete" />
         <item itemvalue="Gradle.DeptTest.getByIdDetails" />
-        <item itemvalue="Gradle.UserTest.findByIdDetails" />
       </list>
     </recent_temporary>
   </component>
@@ -521,6 +535,8 @@
       <workItem from="1681969482540" duration="1409000" />
       <workItem from="1681970973322" duration="23424000" />
       <workItem from="1682073233846" duration="13827000" />
+      <workItem from="1682145105294" duration="9701000" />
+      <workItem from="1682318752667" duration="3846000" />
     </task>
     <task id="LOCAL-00001" summary="Work version Init">
       <created>1680614424386</created>
@@ -725,7 +741,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682091845223</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="+update user profile">
+      <created>1682153501937</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1682153501937</updated>
+    </task>
+    <task id="LOCAL-00031" summary="+update user profile + roles">
+      <created>1682156147923</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1682156147923</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -733,8 +763,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Work version Init" />
-    <MESSAGE value="+server, client" />
     <MESSAGE value="+gateway" />
     <MESSAGE value="+cor" />
     <MESSAGE value="+proxy, client" />
@@ -758,7 +786,9 @@
     <MESSAGE value="+/- user images" />
     <MESSAGE value="update user images" />
     <MESSAGE value="+add use roles" />
-    <option name="LAST_COMMIT_MESSAGE" value="+add use roles" />
+    <MESSAGE value="+update user profile" />
+    <MESSAGE value="+update user profile + roles" />
+    <option name="LAST_COMMIT_MESSAGE" value="+update user profile + roles" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
