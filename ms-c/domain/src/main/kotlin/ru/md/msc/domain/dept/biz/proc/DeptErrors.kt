@@ -38,8 +38,8 @@ fun BaseContext.getDeptAuthIOError() {
 fun BaseContext.deptAuthError() {
 	fail(
 		errorUnauthorized(
-			role = "deptId",
-			message = "Нет доступа к отделу",
+			role = "dept",
+			message = "Администратор не имеет доступа к отделу или его сотруднику",
 		)
 	)
 }

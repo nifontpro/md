@@ -8,12 +8,12 @@ import ru.md.msc.domain.user.biz.proc.getUserError
 import ru.md.msc.domain.user.biz.proc.userNotFound
 import ru.md.msc.domain.user.model.RoleUser
 
-fun ICorChainDsl<UserContext>.findUpdateUser(title: String) = worker {
+fun ICorChainDsl<UserContext>.findModifyUserAndGetRolesAndDeptId(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
 	handle {
 
-		updateUser = try {
+		modifyUser = try {
 			userService.findById(userId = userId)
 		} catch (e: Exception) {
 			getUserError()
@@ -23,7 +23,7 @@ fun ICorChainDsl<UserContext>.findUpdateUser(title: String) = worker {
 			return@handle
 		}
 
-		isUpdateUserHasAdminRole = authUser.roles.find { it == RoleUser.ADMIN } != null
-		deptId = updateUser.dept?.id ?: 0 // Для авторизации по отделу
+		isModifyUserHasAdminRole = authUser.roles.find { it == RoleUser.ADMIN } != null
+		deptId = modifyUser.dept?.id ?: 0 // Для авторизации по отделу
 	}
 }

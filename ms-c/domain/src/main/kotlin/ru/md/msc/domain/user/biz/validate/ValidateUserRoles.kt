@@ -7,7 +7,7 @@ import ru.md.msc.domain.base.helper.fail
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.model.RoleUser
 
-fun ICorChainDsl<UserContext>.validateUserRoles(title: String) = worker {
+fun ICorChainDsl<UserContext>.validateCreateUserRoles(title: String) = worker {
 	this.title = title
 	on {
 		user.roles.forEach { role ->

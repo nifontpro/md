@@ -11,6 +11,7 @@ import ru.md.msc.domain.base.validate.db.validateAuthDeptDownLevel
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.db.validateAuthUserLevel
 import ru.md.msc.domain.base.validate.validateAdminRole
+import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId
 import ru.md.msc.domain.base.workers.finishOperation
@@ -19,7 +20,7 @@ import ru.md.msc.domain.base.workers.operation
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
 import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
-import ru.md.msc.domain.user.biz.validate.validateUserRoles
+import ru.md.msc.domain.user.biz.validate.validateCreateUserRoles
 import ru.md.msc.domain.user.biz.workers.*
 import ru.md.msc.domain.user.service.UserService
 
@@ -48,10 +49,11 @@ class UserProcessor(
 
 			operation("Создание профиля сотрудника", UserCommand.CREATE) {
 				validateUserFirstnameEmpty("Проверка имени пользователя")
-				validateUserRoles("Проверка ролей")
+				validateDeptId("Проверка deptId")
+				validateCreateUserRoles("Проверка ролей")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAdminRole("Проверка наличия прав Администратора")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				findCreateUserAdminRole("Сканируем роль ADMIN у нового сотрудника")
+				validateAdminModifyUserByRole()
 				trimFieldUserDetails("Очищаем поля")
 				createUser("Создаем профиль сотрудника")
 			}
@@ -62,6 +64,7 @@ class UserProcessor(
 
 				chain {
 					on { userId != authUser.id } // Если запрос не собственного профиля:
+					findModifyUserAndGetRolesAndDeptId("Получаем профиль для обновления")
 					validateAdminModifyUserByRole() // Тогда должны быть права Администратора
 				}
 
@@ -72,9 +75,10 @@ class UserProcessor(
 			operation("Удаление профиля сотрудника", UserCommand.DELETE) {
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				findModifyUserAndGetRolesAndDeptId("Получаем профиль для обновления")
 				validateAdminModifyUserByRole()
-				getUserDetailsById("Получаем сотрудника")
 				deleteUser("Удаляем сотрудника")
+				getUserDetailsById("Получаем сотрудника")
 			}
 
 			operation("Получение профилей пользователя", UserCommand.GET_PROFILES) {
@@ -128,20 +132,18 @@ class UserProcessor(
 
 		/**
 		 * Проверка доступа авторизованного пользователя с правами Администратора
-		 * к обновлению/удалению профиля сотрудника в зависимости от его роли.
+		 * к созданию/обновлению/удалению профиля сотрудника в зависимости от его роли.
 		 * Администратор имеет право над сотрудниками в своем и нижестоящих отделах
 		 * и имеет право над Администраторами нижестоящих отделов
 		 */
 		private fun ICorChainDsl<UserContext>.validateAdminModifyUserByRole() {
-
 			validateAdminRole("Проверка наличия прав Администратора")
-			findUpdateUser("Получаем профиль для обновления")
 			chain {
-				on { !isUpdateUserHasAdminRole } // Обновляемый без прав ADMIN
+				on { !isModifyUserHasAdminRole } // Обновляемый без прав ADMIN
 				validateAuthDeptLevel("Проверка доступа к отделу")
 			}
 			chain {
-				on { isUpdateUserHasAdminRole } // Обновляемый имеет роль ADMIN
+				on { isModifyUserHasAdminRole } // Обновляемый имеет роль ADMIN
 				validateAuthDeptDownLevel("Проверка доступа к нижестоящему отделу")
 			}
 		}
