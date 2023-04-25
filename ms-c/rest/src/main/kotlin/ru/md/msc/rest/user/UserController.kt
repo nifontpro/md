@@ -130,12 +130,14 @@ class UserController(
 	): BaseResponse<BaseImage> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = UserContext().apply { command = UserCommand.IMG_ADD }
+		val entityId = userId.toLongOr0()
 		return imageProcess(
 			authData = authData,
 			context = context,
 			processor = userProcessor,
 			multipartFile = file,
-			entityId = userId.toLongOr0(),
+			authId = entityId,
+			entityId = entityId,
 		)
 	}
 
@@ -148,12 +150,14 @@ class UserController(
 	): BaseResponse<BaseImage> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = UserContext().apply { command = UserCommand.IMG_UPDATE }
+		val entityId = userId.toLongOr0()
 		return imageProcess(
 			authData = authData,
 			context = context,
 			processor = userProcessor,
 			multipartFile = file,
-			entityId = userId.toLongOr0(),
+			authId = entityId,
+			entityId = entityId,
 			imageId = imageId.toLongOr0(),
 		)
 	}

@@ -10,7 +10,7 @@ fun UserDetailsEntity.toUserDetails() = UserDetails(
 	address = address,
 	description = description,
 	createdAt = createdAt,
-	user = user?.toUserDept() ?: User()
+	user = user?.toUser() ?: User()
 )
 
 fun UserDetails.toUserDetailsEntity(create: Boolean = false) = UserDetailsEntity(

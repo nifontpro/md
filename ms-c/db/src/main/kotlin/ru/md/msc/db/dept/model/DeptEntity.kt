@@ -2,8 +2,6 @@ package ru.md.msc.db.dept.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import jakarta.persistence.*
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
 import ru.md.msc.db.dept.model.image.DeptImageEntity
 import ru.md.msc.domain.dept.model.DeptType
 import java.util.*
@@ -25,13 +23,13 @@ class DeptEntity(
 	@Column(name = "code")
 	val type: DeptType = DeptType.UNDEF,
 
-	@OneToOne(mappedBy = "dept", fetch = FetchType.LAZY, optional = false)
-	val details: DeptDetailsEntity? = null,
+//	@OneToOne(mappedBy = "dept", fetch = FetchType.LAZY, optional = false)
+//	val details: DeptDetailsEntity? = null,
 
-	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dept_id")
-	@Fetch(FetchMode.SUBSELECT)
-	val images: List<DeptImageEntity> = emptyList()
+	@OrderBy("id DESC")
+	val images: MutableList<DeptImageEntity> = mutableListOf(),
 
 //	@OneToMany(mappedBy = "dept", fetch = FetchType.LAZY)
 //	@Fetch(FetchMode.SUBSELECT)

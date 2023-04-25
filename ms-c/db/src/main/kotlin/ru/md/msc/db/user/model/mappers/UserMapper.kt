@@ -19,7 +19,7 @@ fun User.toUserEntity(create: Boolean = false) = UserEntity(
 )
 
 // Для ленивой загрузки без отделов
-fun UserEntity.toUser() = User(
+fun UserEntity.toUserOnlyRoles() = User(
 	id = id ?: 0,
 	dept = Dept(id = dept?.id ?: 0),
 	authEmail = authEmail,
@@ -31,7 +31,7 @@ fun UserEntity.toUser() = User(
 	roles = roles.map { it.roleUser }.toSet(),
 )
 
-fun UserEntity.toUserDept() = User(
+fun UserEntity.toUser() = User(
 	id = id ?: 0,
 	dept = dept?.toDept(),
 	authEmail = authEmail,

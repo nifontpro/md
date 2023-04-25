@@ -6,6 +6,7 @@ import ru.md.msc.domain.base.helper.ContextError
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.domain.image.model.FileData
+import ru.md.msc.domain.image.repository.S3Repository
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.service.UserService
 
@@ -26,11 +27,13 @@ abstract class BaseContext(
 	var imageId: Long = 0,
 
 	var fileData: FileData = FileData(),
-	var baseImage: BaseImage = BaseImage()
+	var baseImage: BaseImage = BaseImage(),
+	var baseImages: List<BaseImage> = emptyList(),
 
 ) {
 	lateinit var userService: UserService
 	lateinit var deptService: DeptService
+	lateinit var s3Repository: S3Repository
 
 	val log: Logger = LoggerFactory.getLogger(BaseContext::class.java)
 }

@@ -12,6 +12,7 @@ suspend fun <C : BaseContext> imageProcess(
 	context: C,
 	processor: IBaseProcessor<C>,
 	multipartFile: MultipartFile,
+	authId: Long,
 	entityId: Long,
 	imageId: Long = 0,
 ): BaseResponse<BaseImage> {
@@ -26,6 +27,7 @@ suspend fun <C : BaseContext> imageProcess(
 		return BaseResponse.error(errors = context.errors)
 	}
 	context.fileData = fileData
+	context.authId = authId
 	context.imageId = imageId
 
 	processor.exec(context)

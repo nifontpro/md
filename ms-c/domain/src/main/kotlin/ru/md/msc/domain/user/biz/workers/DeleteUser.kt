@@ -15,9 +15,9 @@ fun ICorChainDsl<UserContext>.deleteUser(title: String) = worker {
 	handle {
 
 		try {
-			userService.deleteById(userId = userId)
+			userService.deleteById(userId)
 		} catch (e: Exception) {
-			log.info(e.message)
+			log.error(e.message)
 			fail(
 				errorDb(
 					repository = "user",
@@ -26,6 +26,5 @@ fun ICorChainDsl<UserContext>.deleteUser(title: String) = worker {
 				)
 			)
 		}
-
 	}
 }

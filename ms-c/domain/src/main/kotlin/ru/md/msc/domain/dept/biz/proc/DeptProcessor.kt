@@ -75,6 +75,15 @@ class DeptProcessor(
 				deleteDept("Удаляем отдел")
 			}
 
+			operation("Добавление изображения", DeptCommand.IMG_ADD) {
+				worker("Получение id сущности") { deptId = fileData.entityId }
+				validateDeptId("Проверяем deptId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAdminRole("Проверка наличия прав Администратора")
+				validateAuthDeptLevel("Проверка доступа к отделу")
+				addDeptImage("Добавляем картинку")
+			}
+
 			finishOperation()
 		}.build()
 	}

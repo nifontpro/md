@@ -5,6 +5,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.stereotype.Repository
 import ru.md.msc.domain.image.model.FileData
+import ru.md.msc.domain.image.model.IBaseImage
+import ru.md.msc.domain.image.model.ImageType
 import ru.md.msc.domain.image.repository.S3Repository
 import java.io.File
 
@@ -36,28 +38,13 @@ class S3RepositoryImpl(
 		}
 	}
 
-//	// Удаляем все изображения сущности
-//	override suspend fun deleteAllImages(entity: IImages): Boolean {
-//		return try {
-//			withContext(Dispatchers.IO) {
-//
-//				// Удаляем, если изображение не из хранилища
-//				if (!entity.sysImage) {
-//					entity.imageKey?.let {
-//						s3.deleteObject(Constants.S3_BUCKET_NAME, it)
-//					}
-//				}
-//
-//				entity.images.forEach { imageRef ->
-//					s3.deleteObject(Constants.S3_BUCKET_NAME, imageRef.imageKey)
-//				}
-//			}
-//			true
-//		} catch (e: Exception) {
-//			println(e.message)
-//			false
-//		}
-//	}
+	override suspend fun deleteBaseImage(entity: IBaseImage) {
+		withContext(Dispatchers.IO) {
+			if (entity.type == ImageType.USER) {
+				deleteObject(entity.imageKey)
+			}
+		}
+	}
 
 	/**
 	 * Проверка доступности хранилища

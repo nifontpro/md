@@ -20,4 +20,7 @@ enum class DeptCommand : IBaseCommand {
 	GET_DEPT_BY_ID_DETAILS,
 	DELETE,
 	UPDATE,
+	IMG_ADD,
+	IMG_UPDATE,
+	IMG_DELETE,
 }

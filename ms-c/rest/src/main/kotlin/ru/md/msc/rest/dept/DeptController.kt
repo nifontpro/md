@@ -1,11 +1,13 @@
 package ru.md.msc.rest.dept
 
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
+import ru.md.msc.domain.dept.biz.proc.DeptCommand
+import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.domain.dept.biz.proc.DeptProcessor
 import ru.md.msc.domain.dept.model.Dept
-import ru.md.msc.rest.base.AUTH
-import ru.md.msc.rest.base.BaseResponse
-import ru.md.msc.rest.base.process
+import ru.md.msc.domain.image.model.BaseImage
+import ru.md.msc.rest.base.*
 import ru.md.msc.rest.dept.mappers.fromTransport
 import ru.md.msc.rest.dept.mappers.toTransportGetDeptDetails
 import ru.md.msc.rest.dept.mappers.toTransportGetDepts
@@ -87,6 +89,25 @@ class DeptController(
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportGetDeptDetails() }
+		)
+	}
+
+	@PostMapping("img_add")
+	suspend fun imageAdd(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestPart("file") file: MultipartFile,
+		@RequestPart("authId") authId: String,
+		@RequestPart("deptId") deptId: String,
+	): BaseResponse<BaseImage> {
+		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
+		val context = DeptContext().apply { command = DeptCommand.IMG_ADD }
+		return imageProcess(
+			authData = authData,
+			context = context,
+			processor = deptProcessor,
+			multipartFile = file,
+			authId = authId.toLongOr0(),
+			entityId = deptId.toLongOr0(),
 		)
 	}
 }

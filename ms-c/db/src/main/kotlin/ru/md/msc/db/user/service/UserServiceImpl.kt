@@ -11,9 +11,9 @@ import ru.md.msc.db.dept.repo.DeptRepository
 import ru.md.msc.db.user.model.UserDetailsEntity
 import ru.md.msc.db.user.model.image.UserImageEntity
 import ru.md.msc.db.user.model.mappers.toUser
-import ru.md.msc.db.user.model.mappers.toUserDept
 import ru.md.msc.db.user.model.mappers.toUserDetails
 import ru.md.msc.db.user.model.mappers.toUserDetailsEntity
+import ru.md.msc.db.user.model.mappers.toUserOnlyRoles
 import ru.md.msc.db.user.model.role.RoleEntity
 import ru.md.msc.db.user.repo.RoleRepository
 import ru.md.msc.db.user.repo.UserDetailsRepository
@@ -129,18 +129,18 @@ class UserServiceImpl(
 
 	override fun findByAuthEmailWithDept(authEmail: String): List<User> {
 		return userRepository.findByAuthEmailIgnoreCase(authEmail = authEmail).map {
-			it.toUserDept()
+			it.toUser()
 		}
 	}
 
 	override fun findByDeptId(deptId: Long): List<User> {
 		return userRepository.findByDeptId(deptId = deptId).map {
-			it.toUserDept()
+			it.toUser()
 		}
 	}
 
 	override fun findById(userId: Long): User? {
-		return userRepository.findByIdOrNull(userId)?.toUser()
+		return userRepository.findByIdOrNull(userId)?.toUserOnlyRoles()
 	}
 
 	override fun findByIdDetails(userId: Long): UserDetails? {

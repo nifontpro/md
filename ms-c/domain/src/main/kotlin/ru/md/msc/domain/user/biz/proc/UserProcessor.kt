@@ -14,25 +14,29 @@ import ru.md.msc.domain.base.validate.validateAdminRole
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId
+import ru.md.msc.domain.base.workers.deleteBaseImagesFromS3
 import ru.md.msc.domain.base.workers.finishOperation
 import ru.md.msc.domain.base.workers.initStatus
 import ru.md.msc.domain.base.workers.operation
 import ru.md.msc.domain.dept.service.DeptService
+import ru.md.msc.domain.image.repository.S3Repository
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
-import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
 import ru.md.msc.domain.user.biz.validate.validateCreateUserRoles
+import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
 import ru.md.msc.domain.user.biz.workers.*
 import ru.md.msc.domain.user.service.UserService
 
 @Component
 class UserProcessor(
 	private val userService: UserService,
-	private val deptService: DeptService
+	private val deptService: DeptService,
+	private val s3Repository: S3Repository
 ) : IBaseProcessor<UserContext> {
 
 	override suspend fun exec(ctx: UserContext) = businessChain.exec(ctx.also {
 		it.userService = userService
 		it.deptService = deptService
+		it.s3Repository = s3Repository
 	})
 
 	companion object {
@@ -77,8 +81,10 @@ class UserProcessor(
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				findModifyUserAndGetRolesAndDeptId("Получаем профиль для обновления")
 				validateAdminModifyUserByRole()
-				deleteUser("Удаляем сотрудника")
 				getUserDetailsById("Получаем сотрудника")
+				deleteUser("Удаляем сотрудника")
+				worker("Подготовка к удалению изображений") { baseImages = userDetails.user.images }
+				deleteBaseImagesFromS3("Удаляем все изображения")
 			}
 
 			operation("Получение профилей пользователя", UserCommand.GET_PROFILES) {
@@ -105,7 +111,7 @@ class UserProcessor(
 			}
 
 			operation("Добавление изображения", UserCommand.IMG_ADD) {
-				worker("Получение id сущности") { userId = fileData.entityId; authId = userId }
+				worker("Получение id сущности") { userId = fileData.entityId }
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				addUserImage("Добавляем изображение")
@@ -113,7 +119,7 @@ class UserProcessor(
 
 			operation("Обновление изображения", UserCommand.IMG_UPDATE) {
 				validateImageId("Проверка imageId")
-				worker("Получение id сущности") { userId = fileData.entityId; authId = userId }
+				worker("Получение id сущности") { userId = fileData.entityId }
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				updateUserImage("Обновляем изображение")

@@ -30,7 +30,6 @@ fun ICorChainDsl<UserContext>.updateUserImage(title: String) = worker {
 					description = "Ошибка обновления изображения"
 				)
 			)
-			return@handle
 		}
 
 	}

@@ -2,6 +2,7 @@ package ru.md.msc.db.user.model
 
 import jakarta.persistence.*
 import jakarta.persistence.CascadeType
+import jakarta.persistence.OrderBy
 import jakarta.persistence.Table
 import org.hibernate.annotations.*
 import ru.md.msc.db.dept.model.DeptEntity
@@ -42,14 +43,15 @@ class UserEntity(
 //	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)
 //	val details: UserDetailsEntity? = null,
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST], orphanRemoval = true)
-	@Fetch(FetchMode.SUBSELECT)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+	@OrderBy("roleUser ASC")
 	val roles: MutableList<RoleEntity> = mutableListOf(),
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
 	@JoinColumn(name = "user_id")
-	@Fetch(FetchMode.SUBSELECT)
-	val images: MutableList<UserImageEntity> = mutableListOf(),
+	@OrderBy("id DESC")
+	val images: List<UserImageEntity> = emptyList(),
+//	val images: MutableList<UserImageEntity> = mutableListOf(),
 
 	) : Serializable {
 
