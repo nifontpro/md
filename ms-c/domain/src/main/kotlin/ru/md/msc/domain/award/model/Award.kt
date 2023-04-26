@@ -5,13 +5,11 @@ import ru.md.msc.domain.image.model.BaseImage
 import java.time.LocalDateTime
 
 data class Award(
-	val id: Long? = null,
-	var dept: Dept = Dept(),
-	var startDate: LocalDateTime? = null,
-	var endDate: LocalDateTime? = null,
-	var name: String? = null,
-	var typeCode: String? = null,
-
+	val id: Long = 0,
+	val name: String = "",
+	val type: AwardType = AwardType.UNDEF,
+	val startDate: LocalDateTime = LocalDateTime.now(),
+	val endDate: LocalDateTime = LocalDateTime.now(),
+	val dept: Dept = Dept(),
 	val images: List<BaseImage> = emptyList()
-
 )

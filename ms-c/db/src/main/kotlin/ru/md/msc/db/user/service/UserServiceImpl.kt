@@ -77,7 +77,7 @@ class UserServiceImpl(
 	}
 
 	override fun create(userDetails: UserDetails): UserDetails {
-		val userDetailsEntity = (userDetails.toUserDetailsEntity(create = true))
+		val userDetailsEntity = userDetails.toUserDetailsEntity(create = true)
 		userDetailsRepository.save(userDetailsEntity)
 		addRolesToUserEntity(userDetails, userDetailsEntity)
 		return userDetailsEntity.toUserDetails()

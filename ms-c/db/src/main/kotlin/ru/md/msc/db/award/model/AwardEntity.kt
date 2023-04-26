@@ -1,10 +1,9 @@
 package ru.md.msc.db.award.model
 
 import jakarta.persistence.*
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
 import ru.md.msc.db.award.model.image.AwardImageEntity
 import ru.md.msc.db.dept.model.DeptEntity
+import ru.md.msc.domain.award.model.AwardType
 import java.time.LocalDateTime
 import java.util.*
 
@@ -15,27 +14,28 @@ class AwardEntity(
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	val id: Long? = null,
 
+	var name: String = "",
+
+	@Column(name = "type_code")
+	var type: AwardType = AwardType.UNDEF,
+
+
+	@Column(name = "start_date")
+	var startDate: LocalDateTime = LocalDateTime.now(),
+
+	@Column(name = "end_date")
+	var endDate: LocalDateTime = LocalDateTime.now(),
+
+//	@OneToOne(mappedBy = "award", fetch = FetchType.LAZY, optional = false)
+//	val details: AwardDetailsEntity? = null,
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "dept_id")
 	var dept: DeptEntity? = null,
 
-	@Column(name = "start_date")
-	var startDate: LocalDateTime? = null,
-
-	@Column(name = "end_date")
-	var endDate: LocalDateTime? = null,
-
-	var name: String = "",
-
-	@Column(name = "type_code")
-	var typeCode: String? = null,
-
-	@OneToOne(mappedBy = "award", fetch = FetchType.LAZY, optional = false)
-	val details: AwardDetailsEntity? = null,
-
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "award_id")
-	@Fetch(FetchMode.SUBSELECT)
+//	@Fetch(FetchMode.SUBSELECT)
 	val images: List<AwardImageEntity> = emptyList()
 
 ) {
@@ -43,11 +43,12 @@ class AwardEntity(
 		if (this === other) return true
 		if (other == null || javaClass != other.javaClass) return false
 		val award = other as AwardEntity
-		return id == award.id && dept?.id == award.dept?.id && startDate == award.startDate && endDate == award.endDate && name == award.name && typeCode == award.typeCode
+		return id == award.id && dept?.id == award.dept?.id && startDate == award.startDate &&
+				endDate == award.endDate && name == award.name && type == award.type
 	}
 
 	override fun hashCode(): Int {
-		return Objects.hash(id, startDate, endDate, name, typeCode, dept?.id)
+		return Objects.hash(id, startDate, endDate, name, type, dept?.id)
 	}
 
 	override fun toString(): String {

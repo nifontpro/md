@@ -1,15 +1,14 @@
 package ru.md.msc.domain.dept.biz.proc
 
 import org.springframework.stereotype.Component
-import ru.md.cor.ICorChainDsl
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.IBaseProcessor
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
-import ru.md.msc.domain.base.validate.validateAdminRole
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
+import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevel
 import ru.md.msc.domain.base.workers.finishOperation
 import ru.md.msc.domain.base.workers.initStatus
 import ru.md.msc.domain.base.workers.operation
@@ -35,7 +34,7 @@ class DeptProcessor(
 			initStatus()
 
 			operation("Создать отдел", DeptCommand.CREATE) {
-				// validateDeptName
+				validateDeptName("Проверяем имя отдела")
 				worker("Для проверки доступа к какому отделу") { deptId = dept.parentId }
 				validateAdminDeptLevel()
 				trimFieldDeptDetails("Очищаем поля")
@@ -83,16 +82,6 @@ class DeptProcessor(
 
 			finishOperation()
 		}.build()
-
-		/**
-		 * Проверка возможности доступа Администратора к отделу
-		 */
-		private fun ICorChainDsl<DeptContext>.validateAdminDeptLevel() {
-			validateDeptId("Проверяем deptId")
-			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-			validateAdminRole("Проверка наличия прав Администратора")
-			validateAuthDeptLevel("Проверка доступа к отделу")
-		}
 
 	}
 }
