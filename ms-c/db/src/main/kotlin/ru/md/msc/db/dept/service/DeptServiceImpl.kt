@@ -107,4 +107,13 @@ class DeptServiceImpl(
 		return deptImageEntity.toImage()
 	}
 
+	override suspend fun deleteImage(deptId: Long, imageId: Long): BaseImage {
+		val deptImageEntity = deptImageRepository.findByIdAndDeptId(deptId = deptId, imageId = imageId) ?: run {
+			throw ImageNotFoundException()
+		}
+		deptImageRepository.delete(deptImageEntity)
+		s3Repository.deleteObject(key = deptImageEntity.imageKey)
+		return deptImageEntity.toImage()
+	}
+
 }

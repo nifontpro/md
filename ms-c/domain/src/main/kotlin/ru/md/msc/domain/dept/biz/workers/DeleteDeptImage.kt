@@ -1,14 +1,14 @@
-package ru.md.msc.domain.user.biz.workers
+package ru.md.msc.domain.dept.biz.workers
 
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.ContextState
 import ru.md.msc.domain.base.biz.deleteImageError
 import ru.md.msc.domain.base.biz.imageNotFoundError
+import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.domain.user.biz.proc.ImageNotFoundException
-import ru.md.msc.domain.user.biz.proc.UserContext
 
-fun ICorChainDsl<UserContext>.deleteUserImage(title: String) = worker {
+fun ICorChainDsl<DeptContext>.deleteDeptImage(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
@@ -16,12 +16,14 @@ fun ICorChainDsl<UserContext>.deleteUserImage(title: String) = worker {
 	handle {
 
 		try {
-			baseImage = userService.deleteImage(userId = userId, imageId = imageId)
+			baseImage = deptService.deleteImage(deptId = deptId, imageId = imageId)
 		} catch (e: ImageNotFoundException) {
 			imageNotFoundError()
+			return@handle
 		} catch (e: Exception) {
 			log.info(e.message)
 			deleteImageError()
 		}
+
 	}
 }

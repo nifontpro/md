@@ -15,4 +15,5 @@ interface DeptService {
 	fun update(deptDetails: DeptDetails): DeptDetails
     suspend fun addImage(deptId: Long, fileData: FileData): BaseImage
 	suspend fun updateImage(deptId: Long, imageId: Long, fileData: FileData): BaseImage
+	suspend fun deleteImage(deptId: Long, imageId: Long): BaseImage
 }

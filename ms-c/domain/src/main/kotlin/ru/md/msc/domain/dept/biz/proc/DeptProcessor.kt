@@ -80,6 +80,12 @@ class DeptProcessor(
 				updateDeptImage("Обновляем картинку")
 			}
 
+			operation("Удаление изображения", DeptCommand.IMG_DELETE) {
+				validateImageId("Проверка imageId")
+				validateAdminDeptLevel()
+				deleteDeptImage("Удаляем изображение")
+			}
+
 			finishOperation()
 		}.build()
 

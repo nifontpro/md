@@ -61,3 +61,10 @@ fun DeptContext.fromTransport(request: DeleteDeptRequest) {
 	authId = request.authId
 	deptId = request.deptId
 }
+
+fun DeptContext.fromTransport(request: DeleteDeptImageRequest) {
+	command = DeptCommand.IMG_DELETE
+	authId = request.authId
+	deptId = request.deptId
+	imageId = request.imageId
+}

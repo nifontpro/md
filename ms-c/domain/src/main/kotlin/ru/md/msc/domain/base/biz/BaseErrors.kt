@@ -34,3 +34,13 @@ fun BaseContext.updateImageError() {
 		)
 	)
 }
+
+fun BaseContext.deleteImageError() {
+	fail(
+		errorDb(
+			repository = "image",
+			violationCode = "delete",
+			description = "Ошибка удаления изображения"
+		)
+	)
+}
