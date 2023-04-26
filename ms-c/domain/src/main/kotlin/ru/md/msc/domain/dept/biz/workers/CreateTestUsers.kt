@@ -28,7 +28,7 @@ fun ICorChainDsl<DeptContext>.createTestUsers(title: String) = worker {
 				lastname = "Отдела ${dept.name}",
 				post = "Нет",
 				gender = Gender.UNDEF,
-				dept = Dept(id = deptDetails.dept?.id ?: 0),
+				dept = Dept(id = deptDetails.dept.id),
 				roles = setOf(RoleUser.USER)
 			)
 			val userDetails = UserDetails(

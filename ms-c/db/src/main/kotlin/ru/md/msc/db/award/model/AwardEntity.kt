@@ -5,7 +5,7 @@ import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import ru.md.msc.db.award.model.image.AwardImageEntity
 import ru.md.msc.db.dept.model.DeptEntity
-import java.sql.Timestamp
+import java.time.LocalDateTime
 import java.util.*
 
 @Entity
@@ -20,12 +20,12 @@ class AwardEntity(
 	var dept: DeptEntity? = null,
 
 	@Column(name = "start_date")
-	var startDate: Timestamp? = null,
+	var startDate: LocalDateTime? = null,
 
 	@Column(name = "end_date")
-	var endDate: Timestamp? = null,
+	var endDate: LocalDateTime? = null,
 
-	var name: String? = null,
+	var name: String = "",
 
 	@Column(name = "type_code")
 	var typeCode: String? = null,
