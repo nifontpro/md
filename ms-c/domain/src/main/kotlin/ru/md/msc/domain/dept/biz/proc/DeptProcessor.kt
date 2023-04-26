@@ -1,6 +1,7 @@
 package ru.md.msc.domain.dept.biz.proc
 
 import org.springframework.stereotype.Component
+import ru.md.cor.ICorChainDsl
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.IBaseProcessor
@@ -8,6 +9,7 @@ import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateAdminRole
 import ru.md.msc.domain.base.validate.validateDeptId
+import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.workers.finishOperation
 import ru.md.msc.domain.base.workers.initStatus
 import ru.md.msc.domain.base.workers.operation
@@ -34,11 +36,8 @@ class DeptProcessor(
 
 			operation("Создать отдел", DeptCommand.CREATE) {
 				// validateDeptName
-				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAdminRole("Проверка наличия прав Администратора")
 				worker("Для проверки доступа к какому отделу") { deptId = dept.parentId }
-				validateDeptId("Проверяем deptId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAdminDeptLevel()
 				trimFieldDeptDetails("Очищаем поля")
 				createDept("Создаем отдел")
 				createTestUsers("Создаем тестовых сотрудников")
@@ -58,33 +57,42 @@ class DeptProcessor(
 
 			operation("Обновить профиль", DeptCommand.UPDATE) {
 				validateDeptName("Проверяем имя отдела")
-				validateDeptId("Проверяем deptId")
-				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAdminRole("Проверка наличия прав Администратора")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAdminDeptLevel()
 				trimFieldDeptDetails("Очищаем поля")
 				updateDept("Обновляем профиль")
 			}
 
 			operation("Удалить отдел", DeptCommand.DELETE) {
-				validateDeptId("Проверяем deptId")
-				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAdminRole("Проверка наличия прав Администратора")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAdminDeptLevel()
 				getDeptDetailsById("Получаем отдел")
 				deleteDept("Удаляем отдел")
 			}
 
 			operation("Добавление изображения", DeptCommand.IMG_ADD) {
 				worker("Получение id сущности") { deptId = fileData.entityId }
-				validateDeptId("Проверяем deptId")
-				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAdminRole("Проверка наличия прав Администратора")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAdminDeptLevel()
 				addDeptImage("Добавляем картинку")
+			}
+
+			operation("Обновление изображения", DeptCommand.IMG_UPDATE) {
+				validateImageId("Проверка imageId")
+				worker("Получение id сущности") { deptId = fileData.entityId }
+				validateAdminDeptLevel()
+				updateDeptImage("Обновляем картинку")
 			}
 
 			finishOperation()
 		}.build()
+
+		/**
+		 * Проверка возможности доступа Администратора к отделу
+		 */
+		private fun ICorChainDsl<DeptContext>.validateAdminDeptLevel() {
+			validateDeptId("Проверяем deptId")
+			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+			validateAdminRole("Проверка наличия прав Администратора")
+			validateAuthDeptLevel("Проверка доступа к отделу")
+		}
+
 	}
 }

@@ -3,11 +3,11 @@ package ru.md.msc.domain.user.biz.workers
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.ContextState
+import ru.md.msc.domain.base.biz.imageNotFoundError
 import ru.md.msc.domain.base.helper.errorDb
 import ru.md.msc.domain.base.helper.fail
 import ru.md.msc.domain.user.biz.proc.ImageNotFoundException
 import ru.md.msc.domain.user.biz.proc.UserContext
-import ru.md.msc.domain.user.biz.proc.userImageNotFound
 
 fun ICorChainDsl<UserContext>.deleteUserImage(title: String) = worker {
 
@@ -19,7 +19,7 @@ fun ICorChainDsl<UserContext>.deleteUserImage(title: String) = worker {
 		try {
 			baseImage = userService.deleteImage(userId = userId, imageId = imageId)
 		} catch (e: ImageNotFoundException) {
-			userImageNotFound()
+			imageNotFoundError()
 		} catch (e: Exception) {
 			log.info(e.message)
 			fail(

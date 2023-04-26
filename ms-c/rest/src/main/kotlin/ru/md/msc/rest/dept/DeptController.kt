@@ -110,4 +110,25 @@ class DeptController(
 			entityId = deptId.toLongOr0(),
 		)
 	}
+
+	@PostMapping("img_update")
+	suspend fun imageUpdate(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestPart("file") file: MultipartFile,
+		@RequestPart("authId") authId: String,
+		@RequestPart("deptId") deptId: String,
+		@RequestPart("imageId") imageId: String,
+	): BaseResponse<BaseImage> {
+		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
+		val context = DeptContext().apply { command = DeptCommand.IMG_UPDATE }
+		return imageProcess(
+			authData = authData,
+			context = context,
+			processor = deptProcessor,
+			multipartFile = file,
+			authId = authId.toLongOr0(),
+			entityId = deptId.toLongOr0(),
+			imageId = imageId.toLongOr0(),
+		)
+	}
 }

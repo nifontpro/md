@@ -19,6 +19,7 @@ import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.domain.image.model.FileData
 import ru.md.msc.domain.image.model.ImageType
 import ru.md.msc.domain.image.repository.S3Repository
+import ru.md.msc.domain.user.biz.proc.ImageNotFoundException
 import java.time.LocalDateTime
 
 @Service
@@ -95,6 +96,14 @@ class DeptServiceImpl(
 		)
 		// если id=null or Exception, то удалить изображение
 		deptImageRepository.save(deptImageEntity)
+		return deptImageEntity.toImage()
+	}
+
+	override suspend fun updateImage(deptId: Long, imageId: Long, fileData: FileData): BaseImage {
+		val deptImageEntity = deptImageRepository.findByIdAndDeptId(imageId = imageId, deptId = deptId) ?: run {
+			throw ImageNotFoundException()
+		}
+		s3Repository.putObject(key = deptImageEntity.imageKey, fileData = fileData) ?: throw Exception()
 		return deptImageEntity.toImage()
 	}
 

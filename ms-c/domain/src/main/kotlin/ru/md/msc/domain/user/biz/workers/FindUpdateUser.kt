@@ -5,7 +5,7 @@ import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.ContextState
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.getUserError
-import ru.md.msc.domain.user.biz.proc.userNotFound
+import ru.md.msc.domain.user.biz.proc.userNotFoundError
 import ru.md.msc.domain.user.model.RoleUser
 
 fun ICorChainDsl<UserContext>.findModifyUserAndGetRolesAndDeptId(title: String) = worker {
@@ -19,7 +19,7 @@ fun ICorChainDsl<UserContext>.findModifyUserAndGetRolesAndDeptId(title: String) 
 			getUserError()
 			return@handle
 		} ?: run {
-			userNotFound()
+			userNotFoundError()
 			return@handle
 		}
 

@@ -1,27 +1,15 @@
 package ru.md.msc.domain.user.biz.proc
 
 import ru.md.msc.domain.base.biz.BaseContext
-import ru.md.msc.domain.base.helper.ContextError
 import ru.md.msc.domain.base.helper.errorDb
 import ru.md.msc.domain.base.helper.fail
 
-fun UserContext.userNotFound() {
+fun UserContext.userNotFoundError() {
 	fail(
 		errorDb(
 			repository = "user",
 			violationCode = "not found",
 			description = "Сотрудник не найден"
-		)
-	)
-}
-
-fun UserContext.userImageNotFound() {
-	fail(
-		errorDb(
-			repository = "user",
-			violationCode = "image not found",
-			description = "Изображение не найдено у сотрудника",
-			level = ContextError.Levels.INFO,
 		)
 	)
 }

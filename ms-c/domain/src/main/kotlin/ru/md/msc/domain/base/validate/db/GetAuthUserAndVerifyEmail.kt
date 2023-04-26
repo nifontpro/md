@@ -4,6 +4,7 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.BaseContext
 import ru.md.msc.domain.base.biz.ContextState
+import ru.md.msc.domain.base.biz.notValidAuthIdError
 import ru.md.msc.domain.base.helper.errorUnauthorized
 import ru.md.msc.domain.base.helper.fail
 import ru.md.msc.domain.user.biz.proc.getUserError
@@ -14,7 +15,7 @@ fun <T : BaseContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: String) =
 	handle {
 
 		if (authId < 1) {
-			notValidAuthId()
+			notValidAuthIdError()
 			return@handle
 		}
 
@@ -24,7 +25,7 @@ fun <T : BaseContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: String) =
 			getUserError()
 			return@handle
 		} ?: run {
-			notValidAuthId()
+			notValidAuthIdError()
 			return@handle
 		}
 
@@ -37,12 +38,4 @@ fun <T : BaseContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: String) =
 			return@handle
 		}
 	}
-}
-
-private fun <T : BaseContext> T.notValidAuthId() {
-	fail(
-		errorUnauthorized(
-			message = "Неверный authId",
-		)
-	)
 }

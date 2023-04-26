@@ -7,7 +7,7 @@ import ru.md.msc.domain.base.helper.errorDb
 import ru.md.msc.domain.base.helper.fail
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserNotFoundException
-import ru.md.msc.domain.user.biz.proc.userNotFound
+import ru.md.msc.domain.user.biz.proc.userNotFoundError
 
 fun ICorChainDsl<UserContext>.addUserImage(title: String) = worker {
 
@@ -19,7 +19,7 @@ fun ICorChainDsl<UserContext>.addUserImage(title: String) = worker {
 		try {
 			baseImage = userService.addImage(userId = userId, fileData = fileData)
 		} catch (e: UserNotFoundException) {
-			userNotFound()
+			userNotFoundError()
 		} catch (e: Exception) {
 			log.info(e.message)
 			fail(
