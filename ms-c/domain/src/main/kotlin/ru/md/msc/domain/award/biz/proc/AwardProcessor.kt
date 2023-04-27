@@ -4,10 +4,13 @@ import org.springframework.stereotype.Component
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.validate.validateAwardDates
+import ru.md.msc.domain.award.biz.validate.validateAwardId
 import ru.md.msc.domain.award.biz.validate.validateAwardName
 import ru.md.msc.domain.award.biz.validate.validateAwardType
 import ru.md.msc.domain.award.biz.workers.createAward
+import ru.md.msc.domain.award.biz.workers.findModifyAwardById
 import ru.md.msc.domain.award.biz.workers.trimFieldAwardDetails
+import ru.md.msc.domain.award.biz.workers.updateAward
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.IBaseProcessor
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
@@ -48,15 +51,22 @@ class AwardProcessor(
 				createAward("Создаем награду")
 			}
 
+			operation("Обновить награду", AwardCommand.UPDATE) {
+				validateAwardId("Проверяем id")
+				validateAwardName("Проверяем имя")
+				validateAwardType("Проверяем тип")
+				validateAwardDates("Проверяем даты")
+				findModifyAwardById("Ищем награду в БД")
+				validateAdminDeptLevel()
+				trimFieldAwardDetails("Очищаем поля")
+				updateAward("Обновляем награду")
+			}
+
 			operation("Получить отдел по id", AwardCommand.GET_BY_ID_DETAILS) {
 				validateDeptId("Проверяем deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAuthDeptLevel("Проверка доступа к отделу")
 //				getDeptDetailsById("Получаем отдел")
-			}
-
-			operation("Обновить профиль", AwardCommand.UPDATE) {
-
 			}
 
 			operation("Удалить отдел", AwardCommand.DELETE) {

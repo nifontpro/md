@@ -19,7 +19,7 @@ class AwardDetailsEntity(
 	@Column(name = "created_at")
 	val createdAt: LocalDateTime? = null,
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@MapsId
 	@JoinColumn(name = "award_id")
 	val award: AwardEntity

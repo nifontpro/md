@@ -11,6 +11,7 @@ import ru.md.msc.db.dept.model.mappers.toDeptDetailsEntity
 import ru.md.msc.db.dept.repo.DeptDetailsRepository
 import ru.md.msc.db.dept.repo.DeptImageRepository
 import ru.md.msc.db.dept.repo.DeptRepository
+import ru.md.msc.domain.base.biz.ImageNotFoundException
 import ru.md.msc.domain.dept.biz.proc.DeptNotFoundException
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
@@ -19,7 +20,6 @@ import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.domain.image.model.FileData
 import ru.md.msc.domain.image.model.ImageType
 import ru.md.msc.domain.image.repository.S3Repository
-import ru.md.msc.domain.user.biz.proc.ImageNotFoundException
 import java.time.LocalDateTime
 
 @Service

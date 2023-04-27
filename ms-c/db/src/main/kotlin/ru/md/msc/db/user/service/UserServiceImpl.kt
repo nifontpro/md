@@ -19,12 +19,12 @@ import ru.md.msc.db.user.repo.RoleRepository
 import ru.md.msc.db.user.repo.UserDetailsRepository
 import ru.md.msc.db.user.repo.UserImageRepository
 import ru.md.msc.db.user.repo.UserRepository
+import ru.md.msc.domain.base.biz.ImageNotFoundException
 import ru.md.msc.domain.dept.model.DeptType
 import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.domain.image.model.FileData
 import ru.md.msc.domain.image.model.ImageType
 import ru.md.msc.domain.image.repository.S3Repository
-import ru.md.msc.domain.user.biz.proc.ImageNotFoundException
 import ru.md.msc.domain.user.biz.proc.UserNotFoundException
 import ru.md.msc.domain.user.model.RoleUser
 import ru.md.msc.domain.user.model.User
@@ -52,7 +52,7 @@ class UserServiceImpl(
 	 */
 	override fun createOwner(userDetails: UserDetails): UserDetails {
 
-		val userDetailsEntity = (userDetails.toUserDetailsEntity(create = true))
+		val userDetailsEntity = userDetails.toUserDetailsEntity(create = true)
 
 		val deptEntity = DeptEntity(
 			parentId = ROOT_DEPT_ID,

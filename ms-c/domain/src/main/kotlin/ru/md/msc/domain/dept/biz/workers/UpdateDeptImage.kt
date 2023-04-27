@@ -3,10 +3,10 @@ package ru.md.msc.domain.dept.biz.workers
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.ContextState
+import ru.md.msc.domain.base.biz.ImageNotFoundException
 import ru.md.msc.domain.base.biz.imageNotFoundError
 import ru.md.msc.domain.base.biz.updateImageError
 import ru.md.msc.domain.dept.biz.proc.DeptContext
-import ru.md.msc.domain.user.biz.proc.ImageNotFoundException
 
 fun ICorChainDsl<DeptContext>.updateDeptImage(title: String) = worker {
 

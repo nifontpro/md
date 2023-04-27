@@ -25,4 +25,3 @@ fun BaseContext.getUserError() {
 }
 
 class UserNotFoundException(message: String = "") : RuntimeException(message)
-class ImageNotFoundException(message: String = "") : RuntimeException(message)

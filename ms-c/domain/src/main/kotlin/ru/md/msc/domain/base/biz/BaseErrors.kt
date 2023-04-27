@@ -44,3 +44,5 @@ fun BaseContext.deleteImageError() {
 		)
 	)
 }
+
+class ImageNotFoundException(message: String = "") : RuntimeException(message)

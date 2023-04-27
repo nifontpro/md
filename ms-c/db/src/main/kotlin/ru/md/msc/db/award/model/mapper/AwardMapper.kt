@@ -15,6 +15,15 @@ fun AwardEntity.toAward() = Award(
 	dept = dept?.toDept() ?: Dept(),
 )
 
+fun AwardEntity.toAwardLazy() = Award(
+	id = id ?: 0,
+	name = name,
+	type = type,
+	startDate = startDate,
+	endDate = endDate,
+	dept = Dept(id = dept?.id ?: 0),
+)
+
 fun Award.toAwardEntity(create: Boolean = false) = AwardEntity(
 	id = if (create) null else id,
 	name = name,
