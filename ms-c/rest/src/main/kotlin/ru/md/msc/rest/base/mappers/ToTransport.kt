@@ -5,6 +5,6 @@ import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.rest.base.BaseResponse
 import ru.md.msc.rest.base.baseResponse
 
-fun BaseContext.toTransportGetBaseImage(): BaseResponse<BaseImage> {
+fun BaseContext.toTransportBaseImage(): BaseResponse<BaseImage> {
 	return baseResponse(baseImage)
 }

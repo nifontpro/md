@@ -7,15 +7,11 @@ import ru.md.msc.domain.award.biz.validate.validateAwardDates
 import ru.md.msc.domain.award.biz.validate.validateAwardId
 import ru.md.msc.domain.award.biz.validate.validateAwardName
 import ru.md.msc.domain.award.biz.validate.validateAwardType
-import ru.md.msc.domain.award.biz.workers.createAward
-import ru.md.msc.domain.award.biz.workers.findModifyAwardById
-import ru.md.msc.domain.award.biz.workers.trimFieldAwardDetails
-import ru.md.msc.domain.award.biz.workers.updateAward
+import ru.md.msc.domain.award.biz.workers.*
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.IBaseProcessor
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
-import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevel
 import ru.md.msc.domain.base.workers.finishOperation
@@ -56,20 +52,22 @@ class AwardProcessor(
 				validateAwardName("Проверяем имя")
 				validateAwardType("Проверяем тип")
 				validateAwardDates("Проверяем даты")
-				findModifyAwardById("Ищем награду в БД")
+				findDeptIdByAwardId("Получаем deptId")
 				validateAdminDeptLevel()
 				trimFieldAwardDetails("Очищаем поля")
 				updateAward("Обновляем награду")
 			}
 
-			operation("Получить отдел по id", AwardCommand.GET_BY_ID_DETAILS) {
-				validateDeptId("Проверяем deptId")
+			operation("Получить по id", AwardCommand.GET_BY_ID_DETAILS) {
+				worker("") { log.error("id: ${award.id}") }
+				validateAwardId("Проверяем id")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				findDeptIdByAwardId("Получаем deptId")
 				validateAuthDeptLevel("Проверка доступа к отделу")
-//				getDeptDetailsById("Получаем отдел")
+				getAwardByIdDetails("Получаем детальную награду")
 			}
 
-			operation("Удалить отдел", AwardCommand.DELETE) {
+			operation("Удалить награду", AwardCommand.DELETE) {
 
 			}
 

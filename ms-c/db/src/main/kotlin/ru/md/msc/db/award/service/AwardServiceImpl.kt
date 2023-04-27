@@ -22,9 +22,7 @@ class AwardServiceImpl(
 
 	override fun create(awardDetails: AwardDetails): AwardDetails {
 		val awardDetailsEntity = awardDetails.toAwardDetailsEntity(create = true)
-		println("before: ${awardDetails.award.startDate}")
 		awardDetailsRepository.save(awardDetailsEntity)
-		println("after: ${awardDetails.award.startDate}")
 		return awardDetailsEntity.toAwardDetails()
 	}
 
@@ -46,6 +44,15 @@ class AwardServiceImpl(
 	override fun findByIdLazy(awardId: Long): Award {
 		val awardEntity = awardRepository.findByIdOrNull(awardId) ?: throw AwardNotFoundException()
 		return awardEntity.toAwardLazy()
+	}
+
+	override fun findById(awardId: Long): AwardDetails {
+		val awardDetailsEntity = awardDetailsRepository.findByIdOrNull(awardId) ?: throw AwardNotFoundException()
+		return awardDetailsEntity.toAwardDetails()
+	}
+
+	override fun findDeptIdByAwardId(awardId: Long): Long {
+		return awardRepository.finDeptId(awardId = awardId) ?: throw AwardNotFoundException()
 	}
 
 }

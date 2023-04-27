@@ -8,7 +8,7 @@ import ru.md.msc.domain.award.biz.proc.awardNotFoundError
 import ru.md.msc.domain.award.biz.proc.getAwardError
 import ru.md.msc.domain.base.biz.ContextState
 
-fun ICorChainDsl<AwardContext>.findModifyAwardById(title: String) = worker {
+fun ICorChainDsl<AwardContext>.findDeptIdByAwardId(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
@@ -16,14 +16,12 @@ fun ICorChainDsl<AwardContext>.findModifyAwardById(title: String) = worker {
 	handle {
 
 		try {
-			modifyAward = awardService.findByIdLazy(awardId = award.id)
+			deptId = awardService.findDeptIdByAwardId(awardId = award.id)
 		} catch (e: AwardNotFoundException) {
 			awardNotFoundError()
 		} catch (e: Exception) {
 			getAwardError()
 		}
-
-		deptId = modifyAward.dept.id
 
 	}
 }

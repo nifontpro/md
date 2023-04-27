@@ -7,6 +7,7 @@ import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.base.model.converter.toLocalDateTimeUTC
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.rest.award.model.request.CreateAwardRequest
+import ru.md.msc.rest.award.model.request.GetAwardByIdRequest
 import ru.md.msc.rest.award.model.request.UpdateAwardRequest
 
 fun AwardContext.fromTransport(request: CreateAwardRequest) {
@@ -47,4 +48,10 @@ fun AwardContext.fromTransport(request: UpdateAwardRequest) {
 		description = request.description,
 		criteria = request.criteria,
 	)
+}
+
+fun AwardContext.fromTransport(request: GetAwardByIdRequest) {
+	command = AwardCommand.GET_BY_ID_DETAILS
+	authId = request.authId
+	award = Award(id = request.awardId)
 }

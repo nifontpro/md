@@ -5,6 +5,7 @@ import ru.md.msc.domain.award.biz.proc.AwardProcessor
 import ru.md.msc.rest.award.mappers.fromTransport
 import ru.md.msc.rest.award.mappers.toTransportAwardDetails
 import ru.md.msc.rest.award.model.request.CreateAwardRequest
+import ru.md.msc.rest.award.model.request.GetAwardByIdRequest
 import ru.md.msc.rest.award.model.request.UpdateAwardRequest
 import ru.md.msc.rest.award.model.response.AwardDetailsResponse
 import ru.md.msc.rest.base.AUTH
@@ -37,6 +38,20 @@ class AwardController(
 	private suspend fun update(
 		@RequestBody request: UpdateAwardRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
+	): BaseResponse<AwardDetailsResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = awardProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportAwardDetails() }
+		)
+	}
+
+	@PostMapping("get_id")
+	private suspend fun getAwardById(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetAwardByIdRequest
 	): BaseResponse<AwardDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(

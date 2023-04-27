@@ -8,10 +8,10 @@ import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.rest.base.*
-import ru.md.msc.rest.base.mappers.toTransportGetBaseImage
+import ru.md.msc.rest.base.mappers.toTransportBaseImage
 import ru.md.msc.rest.user.mappers.fromTransport
-import ru.md.msc.rest.user.mappers.toTransportGetUserDetails
-import ru.md.msc.rest.user.mappers.toTransportGetUsers
+import ru.md.msc.rest.user.mappers.toTransportUserDetails
+import ru.md.msc.rest.user.mappers.toTransportUsers
 import ru.md.msc.rest.user.model.request.*
 import ru.md.msc.rest.user.model.response.UserDetailsResponse
 import ru.md.msc.rest.utils.JwtUtils
@@ -34,7 +34,7 @@ class UserController(
 			processor = userProcessor,
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportGetUserDetails() }
+			toTransport = { toTransportUserDetails() }
 		)
 	}
 
@@ -48,7 +48,7 @@ class UserController(
 			processor = userProcessor,
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportGetUserDetails() }
+			toTransport = { toTransportUserDetails() }
 		)
 	}
 
@@ -62,7 +62,7 @@ class UserController(
 			processor = userProcessor,
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportGetUserDetails() }
+			toTransport = { toTransportUserDetails() }
 		)
 	}
 
@@ -76,7 +76,7 @@ class UserController(
 			processor = userProcessor,
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportGetUsers() }
+			toTransport = { toTransportUsers() }
 		)
 	}
 
@@ -90,7 +90,7 @@ class UserController(
 			processor = userProcessor,
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportGetUsers() }
+			toTransport = { toTransportUsers() }
 		)
 	}
 
@@ -104,7 +104,7 @@ class UserController(
 			processor = userProcessor,
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportGetUserDetails() }
+			toTransport = { toTransportUserDetails() }
 		)
 	}
 
@@ -118,7 +118,7 @@ class UserController(
 			processor = userProcessor,
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportGetUserDetails() }
+			toTransport = { toTransportUserDetails() }
 		)
 	}
 
@@ -172,14 +172,8 @@ class UserController(
 			processor = userProcessor,
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportGetBaseImage() }
+			toTransport = { toTransportBaseImage() }
 		)
-	}
-
-	@PostMapping("test")
-	suspend fun test(): RS {
-		val usedMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576
-		return RS("Test user endpoint: OK, used: $usedMb Mb")
 	}
 
 	@PostMapping("data")
@@ -187,8 +181,8 @@ class UserController(
 		@RequestBody body: RS? = null,
 		principal: Principal,
 	): RS {
-		println(principal.name)
-		return RS(res = "User data valid, body: ${body?.res}")
+		val usedMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576
+		return RS(res = "User data valid, body: ${body?.res}, used: $usedMb Mb, ${principal.name}")
 	}
 
 }

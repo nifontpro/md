@@ -8,7 +8,7 @@ import ru.md.msc.domain.dept.biz.proc.DeptProcessor
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.rest.base.*
-import ru.md.msc.rest.base.mappers.toTransportGetBaseImage
+import ru.md.msc.rest.base.mappers.toTransportBaseImage
 import ru.md.msc.rest.dept.mappers.fromTransport
 import ru.md.msc.rest.dept.mappers.toTransportGetDeptDetails
 import ru.md.msc.rest.dept.mappers.toTransportGetDepts
@@ -143,7 +143,7 @@ class DeptController(
 			processor = deptProcessor,
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportGetBaseImage() }
+			toTransport = { toTransportBaseImage() }
 		)
 	}
 

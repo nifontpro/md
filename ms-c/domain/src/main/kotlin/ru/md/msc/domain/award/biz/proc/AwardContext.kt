@@ -8,7 +8,6 @@ import ru.md.msc.domain.base.biz.IBaseCommand
 
 class AwardContext : BaseContext() {
 	var award: Award = Award()
-	var modifyAward: Award = Award()
 	var awardDetails: AwardDetails = AwardDetails()
 	var awards: List<Award> = emptyList()
 

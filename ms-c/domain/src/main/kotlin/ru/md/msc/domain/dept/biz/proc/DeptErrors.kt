@@ -39,7 +39,7 @@ fun BaseContext.deptAuthError() {
 	fail(
 		errorUnauthorized(
 			role = "dept",
-			message = "Администратор не имеет доступа к отделу или его сотруднику",
+			message = "Нет доступа к отделу или его данным",
 		)
 	)
 }
