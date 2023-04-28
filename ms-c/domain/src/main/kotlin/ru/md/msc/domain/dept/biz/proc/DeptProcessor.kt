@@ -9,24 +9,29 @@ import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateSortedFields
+import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
+import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.finishOperation
 import ru.md.msc.domain.base.workers.initStatus
 import ru.md.msc.domain.base.workers.operation
 import ru.md.msc.domain.dept.biz.validate.validateDeptName
 import ru.md.msc.domain.dept.biz.workers.*
 import ru.md.msc.domain.dept.service.DeptService
+import ru.md.msc.domain.image.repository.S3Repository
 import ru.md.msc.domain.user.service.UserService
 
 @Component
 class DeptProcessor(
 	private val userService: UserService,
-	private val deptService: DeptService
+	private val deptService: DeptService,
+	private val s3Repository: S3Repository
 ) : IBaseProcessor<DeptContext> {
 
 	override suspend fun exec(ctx: DeptContext) = businessChain.exec(ctx.also {
 		it.userService = userService
 		it.deptService = deptService
+		it.s3Repository = s3Repository
 	})
 
 	companion object {
@@ -73,20 +78,16 @@ class DeptProcessor(
 			operation("Добавление изображения", DeptCommand.IMG_ADD) {
 				worker("Получение id сущности") { deptId = fileData.entityId }
 				validateAdminDeptLevelChain()
-				addDeptImage("Добавляем картинку")
-			}
-
-			operation("Обновление изображения", DeptCommand.IMG_UPDATE) {
-				validateImageId("Проверка imageId")
-				worker("Получение id сущности") { deptId = fileData.entityId }
-				validateAdminDeptLevelChain()
-				updateDeptImage("Обновляем картинку")
+				addDeptImageToS3("Сохраняем изображение в s3")
+				addDeptImageToDb("Добавляем картинку в БД")
+				deleteS3ImageOnFailingChain()
 			}
 
 			operation("Удаление изображения", DeptCommand.IMG_DELETE) {
 				validateImageId("Проверка imageId")
 				validateAdminDeptLevelChain()
-				deleteDeptImage("Удаляем изображение")
+				deleteDeptImageFromDb("Удаляем изображение")
+				deleteBaseImageFromS3("Удаляем изображение из s3")
 			}
 
 			finishOperation()

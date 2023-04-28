@@ -24,6 +24,7 @@ fun ICorChainDsl<AwardContext>.addAwardImageToS3(title: String) = worker {
 			}
 		} catch (e: Exception) {
 			getDeptError()
+			return@handle
 		}
 
 		try {

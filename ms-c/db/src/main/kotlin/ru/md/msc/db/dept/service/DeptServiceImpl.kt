@@ -20,9 +20,7 @@ import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.image.model.BaseImage
-import ru.md.msc.domain.image.model.FileData
 import ru.md.msc.domain.image.model.ImageType
-import ru.md.msc.domain.image.repository.S3Repository
 import java.time.LocalDateTime
 
 @Service
@@ -31,7 +29,6 @@ class DeptServiceImpl(
 	private val deptRepository: DeptRepository,
 	private val deptDetailsRepository: DeptDetailsRepository,
 	private val deptImageRepository: DeptImageRepository,
-	private val s3Repository: S3Repository,
 ) : DeptService {
 
 	override fun create(deptDetails: DeptDetails): DeptDetails {
@@ -88,42 +85,27 @@ class DeptServiceImpl(
 	/**
 	 * Получение id отдела корневого Владельца
 	 */
-	override suspend fun getRootId(deptId: Long): Long? {
+	override fun getRootId(deptId: Long): Long? {
 		return deptRepository.getRootId(deptId = deptId)
 	}
 
-	override suspend fun addImage(deptId: Long, fileData: FileData): BaseImage {
-		val rootDeptId = deptRepository.getRootId(deptId = deptId) ?: throw Exception()
-		val prefix = "R$rootDeptId/D$deptId/IMAGES"
-		val imageKey = "$prefix/${fileData.filename}"
-		val imageUrl = s3Repository.putObject(key = imageKey, fileData = fileData) ?: throw Exception()
-
+	override fun addImage(deptId: Long, baseImage: BaseImage): BaseImage {
 		val deptImageEntity = DeptImageEntity(
 			deptId = deptId,
-			imageUrl = imageUrl,
-			imageKey = imageKey,
+			imageUrl = baseImage.imageUrl,
+			imageKey = baseImage.imageKey,
 			type = ImageType.USER,
 			createdAt = LocalDateTime.now()
 		)
-		// если id=null or Exception, то удалить изображение
 		deptImageRepository.save(deptImageEntity)
 		return deptImageEntity.toImage()
 	}
 
-	override suspend fun updateImage(deptId: Long, imageId: Long, fileData: FileData): BaseImage {
-		val deptImageEntity = deptImageRepository.findByIdAndDeptId(imageId = imageId, deptId = deptId) ?: run {
-			throw ImageNotFoundException()
-		}
-		s3Repository.putObject(key = deptImageEntity.imageKey, fileData = fileData) ?: throw Exception()
-		return deptImageEntity.toImage()
-	}
-
-	override suspend fun deleteImage(deptId: Long, imageId: Long): BaseImage {
+	override fun deleteImage(deptId: Long, imageId: Long): BaseImage {
 		val deptImageEntity = deptImageRepository.findByIdAndDeptId(deptId = deptId, imageId = imageId) ?: run {
 			throw ImageNotFoundException()
 		}
 		deptImageRepository.delete(deptImageEntity)
-		s3Repository.deleteObject(key = deptImageEntity.imageKey)
 		return deptImageEntity.toImage()
 	}
 

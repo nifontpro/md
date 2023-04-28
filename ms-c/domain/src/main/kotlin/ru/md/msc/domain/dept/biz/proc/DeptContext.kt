@@ -21,6 +21,5 @@ enum class DeptCommand : IBaseCommand {
 	DELETE,
 	UPDATE,
 	IMG_ADD,
-	IMG_UPDATE,
 	IMG_DELETE,
 }
