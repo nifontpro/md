@@ -8,7 +8,7 @@ import ru.md.msc.domain.base.biz.deleteImageError
 import ru.md.msc.domain.base.biz.imageNotFoundError
 import ru.md.msc.domain.user.biz.proc.UserContext
 
-fun ICorChainDsl<UserContext>.deleteUserImage(title: String) = worker {
+fun ICorChainDsl<UserContext>.deleteUserImageFromDb(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }

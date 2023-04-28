@@ -66,7 +66,7 @@ class AwardServiceImpl(
 		awardRepository.deleteById(awardId)
 	}
 
-	override suspend fun addImage(awardId: Long, baseImage: BaseImage): BaseImage {
+	override fun addImage(awardId: Long, baseImage: BaseImage): BaseImage {
 		val awardImageEntity = AwardImageEntity(
 			awardId = awardId,
 			imageUrl = baseImage.imageUrl,
@@ -78,7 +78,7 @@ class AwardServiceImpl(
 		return awardImageEntity.toImage()
 	}
 
-	override suspend fun deleteImage(awardId: Long, imageId: Long): BaseImage {
+	override fun deleteImage(awardId: Long, imageId: Long): BaseImage {
 		val userImageEntity = awardImageRepository.findByIdAndAwardId(awardId = awardId, imageId = imageId) ?: run {
 			throw ImageNotFoundException()
 		}

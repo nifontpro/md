@@ -82,7 +82,7 @@ class AwardProcessor(
 				validateImageId("Проверка imageId")
 				validateAdminAccessToAwardChain()
 				deleteAwardImageFromDb("Удаляем изображение из БД")
-				deleteBaseImageFromS3("Удаляем изображения из s3")
+				deleteBaseImageFromS3("Удаляем изображение из s3")
 			}
 
 			finishOperation()

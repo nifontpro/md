@@ -14,11 +14,8 @@ import ru.md.msc.domain.base.validate.validateAdminRole
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId
+import ru.md.msc.domain.base.workers.*
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
-import ru.md.msc.domain.base.workers.deleteBaseImagesFromS3
-import ru.md.msc.domain.base.workers.finishOperation
-import ru.md.msc.domain.base.workers.initStatus
-import ru.md.msc.domain.base.workers.operation
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.image.repository.S3Repository
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
@@ -124,7 +121,8 @@ class UserProcessor(
 				validateUserId("Проверка userId")
 				validateImageId("Проверка imageId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				deleteUserImage("Удаляем изображение")
+				deleteUserImageFromDb("Удаляем изображение из БД")
+				deleteBaseImageFromS3("Удаляем изображение из s3")
 			}
 
 			finishOperation()

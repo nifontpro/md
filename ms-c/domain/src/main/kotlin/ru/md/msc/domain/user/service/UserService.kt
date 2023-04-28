@@ -14,6 +14,6 @@ interface UserService {
 	fun findByAuthEmailWithDept(authEmail: String): List<User>
 	fun findByDeptId(deptId: Long): List<User>
 	fun findByIdDetails(userId: Long): UserDetails?
-	suspend fun addImage(userId: Long, baseImage: BaseImage): BaseImage
-	suspend fun deleteImage(userId: Long, imageId: Long): BaseImage
+	fun addImage(userId: Long, baseImage: BaseImage): BaseImage
+	fun deleteImage(userId: Long, imageId: Long): BaseImage
 }

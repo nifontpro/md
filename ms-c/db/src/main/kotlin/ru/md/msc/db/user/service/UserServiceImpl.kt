@@ -147,7 +147,7 @@ class UserServiceImpl(
 		userRepository.deleteById(userId)
 	}
 
-	override suspend fun addImage(userId: Long, baseImage: BaseImage): BaseImage {
+	override fun addImage(userId: Long, baseImage: BaseImage): BaseImage {
 		val userImageEntity = UserImageEntity(
 			userId = userId,
 			imageUrl = baseImage.imageUrl,
@@ -159,12 +159,11 @@ class UserServiceImpl(
 		return userImageEntity.toImage()
 	}
 
-	override suspend fun deleteImage(userId: Long, imageId: Long): BaseImage {
+	override fun deleteImage(userId: Long, imageId: Long): BaseImage {
 		val userImageEntity = userImageRepository.findByIdAndUserId(userId = userId, imageId = imageId) ?: run {
 			throw ImageNotFoundException()
 		}
 		userImageRepository.delete(userImageEntity)
-		s3Repository.deleteObject(key = userImageEntity.imageKey)
 		return userImageEntity.toImage()
 	}
 

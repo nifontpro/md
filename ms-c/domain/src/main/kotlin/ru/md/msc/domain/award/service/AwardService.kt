@@ -11,6 +11,6 @@ interface AwardService {
 	fun findById(awardId: Long): AwardDetails
 	fun findDeptIdByAwardId(awardId: Long): Long
 	fun deleteById(awardId: Long)
-	suspend fun addImage(awardId: Long, baseImage: BaseImage): BaseImage
-	suspend fun deleteImage(awardId: Long, imageId: Long): BaseImage
+	fun addImage(awardId: Long, baseImage: BaseImage): BaseImage
+	fun deleteImage(awardId: Long, imageId: Long): BaseImage
 }
