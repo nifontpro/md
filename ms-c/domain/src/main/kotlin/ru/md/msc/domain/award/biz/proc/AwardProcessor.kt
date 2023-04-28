@@ -2,6 +2,7 @@ package ru.md.msc.domain.award.biz.proc
 
 import org.springframework.stereotype.Component
 import ru.md.cor.ICorChainDsl
+import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.validate.validateAwardDates
@@ -9,16 +10,20 @@ import ru.md.msc.domain.award.biz.validate.validateAwardId
 import ru.md.msc.domain.award.biz.validate.validateAwardName
 import ru.md.msc.domain.award.biz.validate.validateAwardType
 import ru.md.msc.domain.award.biz.workers.*
+import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.service.AwardService
+import ru.md.msc.domain.base.biz.ContextState
 import ru.md.msc.domain.base.biz.IBaseProcessor
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevel
+import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.finishOperation
 import ru.md.msc.domain.base.workers.initStatus
 import ru.md.msc.domain.base.workers.operation
 import ru.md.msc.domain.dept.service.DeptService
+import ru.md.msc.domain.image.repository.S3Repository
 import ru.md.msc.domain.user.service.UserService
 
 @Component
@@ -26,12 +31,14 @@ class AwardProcessor(
 	private val userService: UserService,
 	private val deptService: DeptService,
 	private val awardService: AwardService,
+	private val s3Repository: S3Repository
 ) : IBaseProcessor<AwardContext> {
 
 	override suspend fun exec(ctx: AwardContext) = businessChain.exec(ctx.also {
 		it.userService = userService
 		it.deptService = deptService
 		it.awardService = awardService
+		it.s3Repository = s3Repository
 	})
 
 	companion object {
@@ -65,9 +72,14 @@ class AwardProcessor(
 			}
 
 			operation("Добавление изображения", AwardCommand.IMG_ADD) {
-				worker("Получение id сущности") { deptId = fileData.entityId }
-				validateAdminDeptLevel()
-//				addDeptImage("Добавляем картинку")
+				worker("Получение id сущности") { award = Award(id = fileData.entityId) }
+				validateAdminAccessToAwardChain()
+				addAwardImageToS3("Сохраняем изображение в s3")
+				addAwardImageToDb("Сохраняем изображение в БД")
+				chain {
+					on { state == ContextState.FAILING && baseImage.imageKey.isNotBlank() }
+					deleteBaseImageFromS3("Удаляем изображения из s3")
+				}
 			}
 
 			operation("Обновление изображения", AwardCommand.IMG_UPDATE) {

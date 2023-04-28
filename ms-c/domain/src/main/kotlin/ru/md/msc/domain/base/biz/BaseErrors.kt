@@ -45,4 +45,14 @@ fun BaseContext.deleteImageError() {
 	)
 }
 
+fun BaseContext.s3Error() {
+	fail(
+		errorDb(
+			repository = "s3",
+			violationCode = "i/o",
+			description = "Ошибка хранилища объектов"
+		)
+	)
+}
+
 class ImageNotFoundException(message: String = "") : RuntimeException(message)
