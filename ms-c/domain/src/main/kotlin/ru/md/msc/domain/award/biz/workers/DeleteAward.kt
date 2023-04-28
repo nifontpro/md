@@ -1,13 +1,13 @@
-package ru.md.msc.domain.user.biz.workers
+package ru.md.msc.domain.award.biz.workers
 
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
+import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.base.biz.ContextState
 import ru.md.msc.domain.base.helper.errorDb
 import ru.md.msc.domain.base.helper.fail
-import ru.md.msc.domain.user.biz.proc.UserContext
 
-fun ICorChainDsl<UserContext>.deleteUser(title: String) = worker {
+fun ICorChainDsl<AwardContext>.deleteAward(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
@@ -15,14 +15,14 @@ fun ICorChainDsl<UserContext>.deleteUser(title: String) = worker {
 	handle {
 
 		try {
-			userService.deleteById(userId)
+			awardService.deleteById(awardId = award.id)
 		} catch (e: Exception) {
 			log.error(e.message)
 			fail(
 				errorDb(
-					repository = "user",
+					repository = "award",
 					violationCode = "delete",
-					description = "Ошибка при удалении сотрудника, возможно у него есть награждения"
+					description = "Ошибка при удалении награды, возможно ею награжден сотрудник"
 				)
 			)
 		}

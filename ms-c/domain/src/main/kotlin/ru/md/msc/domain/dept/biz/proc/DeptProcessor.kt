@@ -8,6 +8,7 @@ import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
+import ru.md.msc.domain.base.validate.validateSortedFields
 import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevel
 import ru.md.msc.domain.base.workers.finishOperation
 import ru.md.msc.domain.base.workers.initStatus
@@ -43,6 +44,8 @@ class DeptProcessor(
 			}
 
 			operation("Получить поддерево отделов", DeptCommand.GET_DEPTS_TREE) {
+				worker("Допустимые поля сортировки") { orderFields = listOf("parentId", "name", "classname") }
+				validateSortedFields("Проверка списка сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				getSubtreeDepts("Получаем поддерево отделов")
 			}

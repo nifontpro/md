@@ -3,6 +3,7 @@ package ru.md.msc.domain.base.biz
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import ru.md.msc.domain.base.helper.ContextError
+import ru.md.msc.domain.base.model.BaseOrder
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.domain.image.model.FileData
@@ -30,7 +31,10 @@ abstract class BaseContext(
 	var baseImage: BaseImage = BaseImage(),
 	var baseImages: List<BaseImage> = emptyList(),
 
-) {
+	var orders: List<BaseOrder> = emptyList(),
+	var orderFields: List<String> = emptyList(),
+
+	) {
 	lateinit var userService: UserService
 	lateinit var deptService: DeptService
 	lateinit var s3Repository: S3Repository
@@ -42,7 +46,6 @@ enum class BaseCommand : IBaseCommand {
 	NONE
 }
 
-@Suppress("unused")
 enum class ContextState {
 	NONE,
 	STARTING, // Старт процессора

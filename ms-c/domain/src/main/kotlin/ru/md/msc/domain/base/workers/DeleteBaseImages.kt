@@ -13,6 +13,9 @@ fun <T : BaseContext> ICorChainDsl<T>.deleteBaseImagesFromS3(title: String) = wo
 	on { state == ContextState.RUNNING }
 	handle {
 
+		/**
+		 * Удаление в фоновом режиме, не задерживая основной процесс
+		 */
 		CoroutineScope(Dispatchers.IO).launch {
 			baseImages.forEach {
 				try {

@@ -1,6 +1,7 @@
 package ru.md.msc.domain.award.biz.proc
 
 import org.springframework.stereotype.Component
+import ru.md.cor.ICorChainDsl
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.validate.validateAwardDates
@@ -39,36 +40,28 @@ class AwardProcessor(
 			initStatus()
 
 			operation("Создать награду", AwardCommand.CREATE) {
-				validateAwardName("Проверяем имя")
-				validateAwardType("Проверяем тип")
-				validateAwardDates("Проверяем даты")
+				validateMainAwardFieldChain()
 				validateAdminDeptLevel()
 				trimFieldAwardDetails("Очищаем поля")
 				createAward("Создаем награду")
 			}
 
 			operation("Обновить награду", AwardCommand.UPDATE) {
-				validateAwardId("Проверяем id")
-				validateAwardName("Проверяем имя")
-				validateAwardType("Проверяем тип")
-				validateAwardDates("Проверяем даты")
-				findDeptIdByAwardId("Получаем deptId")
-				validateAdminDeptLevel()
+				validateMainAwardFieldChain()
+				validateAdminAccessToAwardChain()
 				trimFieldAwardDetails("Очищаем поля")
 				updateAward("Обновляем награду")
 			}
 
 			operation("Получить по id", AwardCommand.GET_BY_ID_DETAILS) {
-				worker("") { log.error("id: ${award.id}") }
-				validateAwardId("Проверяем id")
-				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				findDeptIdByAwardId("Получаем deptId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAdminAccessToAwardChain()
 				getAwardByIdDetails("Получаем детальную награду")
 			}
 
 			operation("Удалить награду", AwardCommand.DELETE) {
-
+				validateAdminAccessToAwardChain()
+				getAwardByIdDetails("Получаем детальную награду")
+				deleteAward("Удаляем")
 			}
 
 			operation("Добавление изображения", AwardCommand.IMG_ADD) {
@@ -86,6 +79,19 @@ class AwardProcessor(
 
 			finishOperation()
 		}.build()
+
+		private fun ICorChainDsl<AwardContext>.validateMainAwardFieldChain() {
+			validateAwardName("Проверяем имя")
+			validateAwardType("Проверяем тип")
+			validateAwardDates("Проверяем даты")
+		}
+
+		private fun ICorChainDsl<AwardContext>.validateAdminAccessToAwardChain() {
+			validateAwardId("Проверяем awardId")
+			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+			findDeptIdByAwardId("Получаем deptId")
+			validateAuthDeptLevel("Проверка доступа к отделу")
+		}
 
 	}
 }

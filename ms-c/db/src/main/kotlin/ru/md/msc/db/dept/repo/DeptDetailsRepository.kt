@@ -5,4 +5,9 @@ import org.springframework.stereotype.Repository
 import ru.md.msc.db.dept.model.DeptDetailsEntity
 
 @Repository
-interface DeptDetailsRepository : JpaRepository<DeptDetailsEntity, Long>
+interface DeptDetailsRepository : JpaRepository<DeptDetailsEntity, Long> {
+
+//	@EntityGraph("deptDetailsWithDept")
+//	fun findByDeptId(deptId: Long): DeptDetailsEntity?
+
+}

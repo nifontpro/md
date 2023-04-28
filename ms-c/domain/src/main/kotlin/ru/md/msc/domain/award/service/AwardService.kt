@@ -9,4 +9,5 @@ interface AwardService {
 	fun findByIdLazy(awardId: Long): Award
 	fun findById(awardId: Long): AwardDetails
 	fun findDeptIdByAwardId(awardId: Long): Long
+	fun deleteById(awardId: Long)
 }

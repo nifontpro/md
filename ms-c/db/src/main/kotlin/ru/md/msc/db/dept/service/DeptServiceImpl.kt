@@ -1,9 +1,11 @@
 package ru.md.msc.db.dept.service
 
 import jakarta.transaction.Transactional
+import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.msc.db.base.mapper.toImage
+import ru.md.msc.db.base.mapper.toOrder
 import ru.md.msc.db.dept.model.image.DeptImageEntity
 import ru.md.msc.db.dept.model.mappers.toDept
 import ru.md.msc.db.dept.model.mappers.toDeptDetails
@@ -12,6 +14,7 @@ import ru.md.msc.db.dept.repo.DeptDetailsRepository
 import ru.md.msc.db.dept.repo.DeptImageRepository
 import ru.md.msc.db.dept.repo.DeptRepository
 import ru.md.msc.domain.base.biz.ImageNotFoundException
+import ru.md.msc.domain.base.model.BaseOrder
 import ru.md.msc.domain.dept.biz.proc.DeptNotFoundException
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
@@ -67,9 +70,10 @@ class DeptServiceImpl(
 		return deptRepository.checkUserChild(userId = userId, upId = upId)
 	}
 
-	override fun findSubTreeDepts(deptId: Long): List<Dept> {
+	override fun findSubTreeDepts(deptId: Long, orders: List<BaseOrder>): List<Dept> {
 		val ids = deptRepository.subTreeIds(deptId = deptId)
-		val depts = deptRepository.findByIdIn(ids = ids)
+		val sort = Sort.by(orders.map { it.toOrder() })
+		val depts = deptRepository.findByIdIn(ids = ids, sort = sort)
 		return depts.map { it.toDept() }
 	}
 

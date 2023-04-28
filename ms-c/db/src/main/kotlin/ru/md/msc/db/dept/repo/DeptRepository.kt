@@ -1,6 +1,9 @@
 package ru.md.msc.db.dept.repo
 
+import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
+import org.springframework.data.jpa.repository.Query
 import org.springframework.data.jpa.repository.query.Procedure
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.dept.model.DeptEntity
@@ -34,5 +37,9 @@ interface DeptRepository : JpaRepository<DeptEntity, Long> {
 	@Procedure(procedureName = "dep.get_root_id")
 	fun getRootId(deptId: Long): Long?
 
-	fun findByIdIn(ids: List<Long>): List<DeptEntity>
+	fun findByIdIn(ids: List<Long>, sort: Sort): List<DeptEntity>
+
+	@Modifying
+	@Query("delete from DeptEntity d where d.id = :deptId")
+	override fun deleteById(deptId: Long)
 }

@@ -55,4 +55,8 @@ class AwardServiceImpl(
 		return awardRepository.finDeptId(awardId = awardId) ?: throw AwardNotFoundException()
 	}
 
+	override fun deleteById(awardId: Long) {
+		awardRepository.deleteById(awardId)
+	}
+
 }

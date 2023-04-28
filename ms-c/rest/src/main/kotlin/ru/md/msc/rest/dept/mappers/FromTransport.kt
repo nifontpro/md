@@ -48,6 +48,7 @@ fun DeptContext.fromTransport(request: UpdateDeptRequest) {
 fun DeptContext.fromTransport(request: GetAuthSubtreeDeptsRequest) {
 	command = DeptCommand.GET_DEPTS_TREE
 	authId = request.authId
+	orders = request.orders
 }
 
 fun DeptContext.fromTransport(request: GetDeptByIdRequest) {
