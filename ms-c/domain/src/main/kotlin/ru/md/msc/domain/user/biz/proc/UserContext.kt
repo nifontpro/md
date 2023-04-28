@@ -28,6 +28,5 @@ enum class UserCommand : IBaseCommand {
 	GET_BY_ID_DETAILS,
 	DELETE,
 	IMG_ADD,
-	IMG_UPDATE,
 	IMG_DELETE,
 }

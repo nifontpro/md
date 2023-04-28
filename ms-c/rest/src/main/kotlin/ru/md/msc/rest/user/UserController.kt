@@ -141,27 +141,6 @@ class UserController(
 		)
 	}
 
-	@PostMapping("img_update")
-	suspend fun imageUpdate(
-		@RequestHeader(name = AUTH) bearerToken: String,
-		@RequestPart("file") file: MultipartFile,
-		@RequestPart("userId") userId: String,
-		@RequestPart("imageId") imageId: String,
-	): BaseResponse<BaseImage> {
-		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
-		val context = UserContext().apply { command = UserCommand.IMG_UPDATE }
-		val entityId = userId.toLongOr0()
-		return imageProcess(
-			authData = authData,
-			context = context,
-			processor = userProcessor,
-			multipartFile = file,
-			authId = entityId,
-			entityId = entityId,
-			imageId = imageId.toLongOr0(),
-		)
-	}
-
 	@PostMapping("img_delete")
 	private suspend fun imageDelete(
 		@RequestHeader(name = AUTH) bearerToken: String,

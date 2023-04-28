@@ -14,6 +14,7 @@ import ru.md.msc.domain.base.validate.validateAdminRole
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId
+import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.deleteBaseImagesFromS3
 import ru.md.msc.domain.base.workers.finishOperation
 import ru.md.msc.domain.base.workers.initStatus
@@ -57,7 +58,7 @@ class UserProcessor(
 				validateCreateUserRoles("Проверка ролей")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				findCreateUserAdminRole("Сканируем роль ADMIN у нового сотрудника")
-				validateAdminModifyUserByRole()
+				validateAdminModifyUserByRoleChain()
 				trimFieldUserDetails("Очищаем поля")
 				createUser("Создаем профиль сотрудника")
 			}
@@ -69,7 +70,7 @@ class UserProcessor(
 				chain {
 					on { userId != authUser.id } // Если запрос не собственного профиля:
 					findModifyUserAndGetRolesAndDeptId("Получаем профиль для обновления")
-					validateAdminModifyUserByRole() // Тогда должны быть права Администратора
+					validateAdminModifyUserByRoleChain() // Тогда должны быть права Администратора
 				}
 
 				trimFieldUserDetails("Очищаем поля")
@@ -80,7 +81,7 @@ class UserProcessor(
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				findModifyUserAndGetRolesAndDeptId("Получаем профиль для обновления")
-				validateAdminModifyUserByRole()
+				validateAdminModifyUserByRoleChain()
 				getUserDetailsById("Получаем сотрудника")
 				deleteUser("Удаляем сотрудника")
 				worker("Подготовка к удалению изображений") { baseImages = userDetails.user.images }
@@ -114,21 +115,14 @@ class UserProcessor(
 				worker("Получение id сущности") { userId = fileData.entityId }
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				addUserImage("Добавляем изображение")
-			}
-
-			operation("Обновление изображения", UserCommand.IMG_UPDATE) {
-				validateImageId("Проверка imageId")
-				worker("Получение id сущности") { userId = fileData.entityId }
-				validateUserId("Проверка userId")
-				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				updateUserImage("Обновляем изображение")
+				addUserImageToS3("Сохраняем изображение в s3")
+				addUserImageToDb("Сохраняем изображение в БД")
+				deleteS3ImageOnFailingChain()
 			}
 
 			operation("Удаление изображения", UserCommand.IMG_DELETE) {
 				validateUserId("Проверка userId")
 				validateImageId("Проверка imageId")
-				worker("Подготовка") { authId = userId }
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				deleteUserImage("Удаляем изображение")
 			}
@@ -142,7 +136,7 @@ class UserProcessor(
 		 * Администратор имеет право над сотрудниками в своем и нижестоящих отделах
 		 * и имеет право над Администраторами нижестоящих отделов
 		 */
-		private fun ICorChainDsl<UserContext>.validateAdminModifyUserByRole() {
+		private fun ICorChainDsl<UserContext>.validateAdminModifyUserByRoleChain() {
 			validateAdminRole("Проверка наличия прав Администратора")
 			chain {
 				on { !isModifyUserHasAdminRole } // Обновляемый без прав ADMIN

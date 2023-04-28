@@ -11,16 +11,12 @@ import ru.md.msc.db.award.repo.AwardDetailsRepository
 import ru.md.msc.db.award.repo.AwardImageRepository
 import ru.md.msc.db.award.repo.AwardRepository
 import ru.md.msc.db.base.mapper.toImage
-import ru.md.msc.db.dept.repo.DeptRepository
 import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.ImageNotFoundException
 import ru.md.msc.domain.image.model.BaseImage
-import ru.md.msc.domain.image.model.FileData
-import ru.md.msc.domain.image.model.ImageType
-import ru.md.msc.domain.image.repository.S3Repository
 import java.time.LocalDateTime
 
 @Service
@@ -29,8 +25,6 @@ class AwardServiceImpl(
 	private val awardRepository: AwardRepository,
 	private val awardDetailsRepository: AwardDetailsRepository,
 	private val awardImageRepository: AwardImageRepository,
-	private val deptRepository: DeptRepository,
-	private val s3Repository: S3Repository,
 ) : AwardService {
 
 	override fun create(awardDetails: AwardDetails): AwardDetails {
@@ -72,21 +66,12 @@ class AwardServiceImpl(
 		awardRepository.deleteById(awardId)
 	}
 
-	override suspend fun addImageToS3(awardId: Long, fileData: FileData): BaseImage {
-		val deptId = awardRepository.finDeptId(awardId = awardId) ?: throw AwardNotFoundException()
-		val rootDeptId = deptRepository.getRootId(deptId = deptId) ?: throw Exception()
-		val prefix = "R$rootDeptId/D$deptId/A$awardId"
-		val imageKey = "$prefix/${fileData.filename}"
-		val imageUrl = s3Repository.putObject(key = imageKey, fileData = fileData) ?: throw Exception()
-		return BaseImage(imageUrl = imageUrl, imageKey = imageKey, type = ImageType.USER)
-	}
-
-	override suspend fun addImageToDb(awardId: Long, baseImage: BaseImage): BaseImage {
+	override suspend fun addImage(awardId: Long, baseImage: BaseImage): BaseImage {
 		val awardImageEntity = AwardImageEntity(
 			awardId = awardId,
 			imageUrl = baseImage.imageUrl,
 			imageKey = baseImage.imageKey,
-			type = ImageType.USER,
+			type = baseImage.type,
 			createdAt = LocalDateTime.now()
 		)
 		awardImageRepository.save(awardImageEntity)

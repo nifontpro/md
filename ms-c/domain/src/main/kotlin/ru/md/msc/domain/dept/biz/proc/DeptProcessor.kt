@@ -9,7 +9,7 @@ import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateSortedFields
-import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevel
+import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
 import ru.md.msc.domain.base.workers.finishOperation
 import ru.md.msc.domain.base.workers.initStatus
 import ru.md.msc.domain.base.workers.operation
@@ -37,7 +37,7 @@ class DeptProcessor(
 			operation("Создать отдел", DeptCommand.CREATE) {
 				validateDeptName("Проверяем имя отдела")
 				worker("Для проверки доступа к какому отделу") { deptId = dept.parentId }
-				validateAdminDeptLevel()
+				validateAdminDeptLevelChain()
 				trimFieldDeptDetails("Очищаем поля")
 				createDept("Создаем отдел")
 				createTestUsers("Создаем тестовых сотрудников")
@@ -59,33 +59,33 @@ class DeptProcessor(
 
 			operation("Обновить профиль", DeptCommand.UPDATE) {
 				validateDeptName("Проверяем имя отдела")
-				validateAdminDeptLevel()
+				validateAdminDeptLevelChain()
 				trimFieldDeptDetails("Очищаем поля")
 				updateDept("Обновляем профиль")
 			}
 
 			operation("Удалить отдел", DeptCommand.DELETE) {
-				validateAdminDeptLevel()
+				validateAdminDeptLevelChain()
 				getDeptDetailsById("Получаем отдел")
 				deleteDept("Удаляем отдел")
 			}
 
 			operation("Добавление изображения", DeptCommand.IMG_ADD) {
 				worker("Получение id сущности") { deptId = fileData.entityId }
-				validateAdminDeptLevel()
+				validateAdminDeptLevelChain()
 				addDeptImage("Добавляем картинку")
 			}
 
 			operation("Обновление изображения", DeptCommand.IMG_UPDATE) {
 				validateImageId("Проверка imageId")
 				worker("Получение id сущности") { deptId = fileData.entityId }
-				validateAdminDeptLevel()
+				validateAdminDeptLevelChain()
 				updateDeptImage("Обновляем картинку")
 			}
 
 			operation("Удаление изображения", DeptCommand.IMG_DELETE) {
 				validateImageId("Проверка imageId")
-				validateAdminDeptLevel()
+				validateAdminDeptLevelChain()
 				deleteDeptImage("Удаляем изображение")
 			}
 

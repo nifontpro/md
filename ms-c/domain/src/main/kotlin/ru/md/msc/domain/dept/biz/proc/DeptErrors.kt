@@ -5,7 +5,7 @@ import ru.md.msc.domain.base.helper.errorDb
 import ru.md.msc.domain.base.helper.errorUnauthorized
 import ru.md.msc.domain.base.helper.fail
 
-fun DeptContext.deptNotFound() {
+fun BaseContext.deptNotFound() {
 	fail(
 		errorDb(
 			repository = "dept",
@@ -15,7 +15,7 @@ fun DeptContext.deptNotFound() {
 	)
 }
 
-fun DeptContext.getDeptError() {
+fun BaseContext.getDeptError() {
 	fail(
 		errorDb(
 			repository = "dept",

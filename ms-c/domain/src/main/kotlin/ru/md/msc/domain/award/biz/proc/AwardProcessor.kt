@@ -2,7 +2,6 @@ package ru.md.msc.domain.award.biz.proc
 
 import org.springframework.stereotype.Component
 import ru.md.cor.ICorChainDsl
-import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.validate.validateAwardDates
@@ -12,12 +11,12 @@ import ru.md.msc.domain.award.biz.validate.validateAwardType
 import ru.md.msc.domain.award.biz.workers.*
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.service.AwardService
-import ru.md.msc.domain.base.biz.ContextState
 import ru.md.msc.domain.base.biz.IBaseProcessor
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateImageId
-import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevel
+import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
+import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
 import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.finishOperation
 import ru.md.msc.domain.base.workers.initStatus
@@ -48,7 +47,7 @@ class AwardProcessor(
 
 			operation("Создать награду", AwardCommand.CREATE) {
 				validateMainAwardFieldChain()
-				validateAdminDeptLevel()
+				validateAdminDeptLevelChain()
 				trimFieldAwardDetails("Очищаем поля")
 				createAward("Создаем награду")
 			}
@@ -76,10 +75,7 @@ class AwardProcessor(
 				validateAdminAccessToAwardChain()
 				addAwardImageToS3("Сохраняем изображение в s3")
 				addAwardImageToDb("Сохраняем изображение в БД")
-				chain {
-					on { state == ContextState.FAILING && baseImage.imageKey.isNotBlank() }
-					deleteBaseImageFromS3("Удаляем изображения из s3")
-				}
+				deleteS3ImageOnFailingChain()
 			}
 
 			operation("Удаление изображения", AwardCommand.IMG_DELETE) {

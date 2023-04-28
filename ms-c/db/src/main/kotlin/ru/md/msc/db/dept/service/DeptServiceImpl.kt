@@ -85,6 +85,13 @@ class DeptServiceImpl(
 		deptRepository.deleteById(deptId)
 	}
 
+	/**
+	 * Получение id отдела корневого Владельца
+	 */
+	override suspend fun getRootId(deptId: Long): Long? {
+		return deptRepository.getRootId(deptId = deptId)
+	}
+
 	override suspend fun addImage(deptId: Long, fileData: FileData): BaseImage {
 		val rootDeptId = deptRepository.getRootId(deptId = deptId) ?: throw Exception()
 		val prefix = "R$rootDeptId/D$deptId/IMAGES"
