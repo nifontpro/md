@@ -6,10 +6,7 @@ import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.base.model.converter.toLocalDateTimeUTC
 import ru.md.msc.domain.dept.model.Dept
-import ru.md.msc.rest.award.model.request.CreateAwardRequest
-import ru.md.msc.rest.award.model.request.DeleteAwardRequest
-import ru.md.msc.rest.award.model.request.GetAwardByIdRequest
-import ru.md.msc.rest.award.model.request.UpdateAwardRequest
+import ru.md.msc.rest.award.model.request.*
 
 fun AwardContext.fromTransport(request: CreateAwardRequest) {
 	command = AwardCommand.CREATE
@@ -60,5 +57,12 @@ fun AwardContext.fromTransport(request: GetAwardByIdRequest) {
 fun AwardContext.fromTransport(request: DeleteAwardRequest) {
 	command = AwardCommand.DELETE
 	authId = request.authId
+	award = Award(id = request.awardId)
+}
+
+fun AwardContext.fromTransport(request: DeleteAwardImageRequest) {
+	command = AwardCommand.IMG_DELETE
+	authId = request.authId
+	imageId = request.imageId
 	award = Award(id = request.awardId)
 }

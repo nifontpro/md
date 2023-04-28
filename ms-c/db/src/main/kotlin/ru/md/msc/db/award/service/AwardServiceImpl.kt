@@ -16,6 +16,7 @@ import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.award.service.AwardService
+import ru.md.msc.domain.base.biz.ImageNotFoundException
 import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.domain.image.model.FileData
 import ru.md.msc.domain.image.model.ImageType
@@ -90,6 +91,14 @@ class AwardServiceImpl(
 		)
 		awardImageRepository.save(awardImageEntity)
 		return awardImageEntity.toImage()
+	}
+
+	override suspend fun deleteImage(awardId: Long, imageId: Long): BaseImage {
+		val userImageEntity = awardImageRepository.findByIdAndAwardId(awardId = awardId, imageId = imageId) ?: run {
+			throw ImageNotFoundException()
+		}
+		awardImageRepository.delete(userImageEntity)
+		return userImageEntity.toImage()
 	}
 
 }

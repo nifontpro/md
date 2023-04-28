@@ -14,4 +14,5 @@ interface AwardService {
 	fun deleteById(awardId: Long)
 	suspend fun addImageToS3(awardId: Long, fileData: FileData): BaseImage
 	suspend fun addImageToDb(awardId: Long, baseImage: BaseImage): BaseImage
+	suspend fun deleteImage(awardId: Long, imageId: Long): BaseImage
 }

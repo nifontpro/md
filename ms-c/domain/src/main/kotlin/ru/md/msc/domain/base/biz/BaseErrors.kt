@@ -25,6 +25,16 @@ fun BaseContext.imageNotFoundError() {
 	)
 }
 
+fun BaseContext.addImageError() {
+	fail(
+		errorDb(
+			repository = "image",
+			violationCode = "image add",
+			description = "Ошибка добавления изображения"
+		)
+	)
+}
+
 fun BaseContext.updateImageError() {
 	fail(
 		errorDb(

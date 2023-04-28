@@ -30,7 +30,7 @@ abstract class BaseContext(
 	var fileData: FileData = FileData(),
 	var baseImage: BaseImage = BaseImage(),
 	var baseImages: List<BaseImage> = emptyList(),
-	var deleteBaseImageOnFailing: Boolean = false,
+	var deleteImageOnFailing: Boolean = false,
 
 	var orders: List<BaseOrder> = emptyList(),
 	var orderFields: List<String> = emptyList(),

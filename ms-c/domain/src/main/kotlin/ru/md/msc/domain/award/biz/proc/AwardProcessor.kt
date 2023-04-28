@@ -82,11 +82,11 @@ class AwardProcessor(
 				}
 			}
 
-			operation("Обновление изображения", AwardCommand.IMG_UPDATE) {
+			operation("Удаление изображения", AwardCommand.IMG_DELETE) {
 				validateImageId("Проверка imageId")
-				worker("Получение id сущности") { deptId = fileData.entityId }
-				validateAdminDeptLevel()
-//				updateDeptImage("Обновляем картинку")
+				validateAdminAccessToAwardChain()
+				deleteAwardImageFromDb("Удаляем изображение из БД")
+				deleteBaseImageFromS3("Удаляем изображения из s3")
 			}
 
 			finishOperation()

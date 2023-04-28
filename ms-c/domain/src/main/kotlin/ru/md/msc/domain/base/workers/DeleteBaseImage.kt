@@ -13,7 +13,7 @@ import ru.md.msc.domain.base.biz.ContextState
  */
 fun <T : BaseContext> ICorChainDsl<T>.deleteBaseImageFromS3(title: String) = worker {
 	this.title = title
-	on { state == ContextState.RUNNING || deleteBaseImageOnFailing }
+	on { state == ContextState.RUNNING || deleteImageOnFailing }
 	handle {
 
 		CoroutineScope(Dispatchers.IO).launch {
