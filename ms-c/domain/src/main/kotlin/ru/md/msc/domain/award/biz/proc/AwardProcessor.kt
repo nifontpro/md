@@ -14,7 +14,9 @@ import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.IBaseProcessor
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
+import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
+import ru.md.msc.domain.base.validate.validateSortedFields
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
 import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
@@ -62,6 +64,15 @@ class AwardProcessor(
 			operation("Получить по id", AwardCommand.GET_BY_ID_DETAILS) {
 				validateAdminAccessToAwardChain()
 				getAwardByIdDetails("Получаем детальную награду")
+			}
+
+			operation("Получить награды в отделе", AwardCommand.GET_BY_DEPT) {
+				validateDeptId("Проверяем deptId")
+				worker("Допустимые поля сортировки") { orderFields = listOf("name", "type", "startDate", "endDate") }
+				validateSortedFields("Проверка списка полей сортировки")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptLevel("Проверка доступа к отделу")
+				getAwardsByDept("Получаем награды из отдела")
 			}
 
 			operation("Удалить награду", AwardCommand.DELETE) {

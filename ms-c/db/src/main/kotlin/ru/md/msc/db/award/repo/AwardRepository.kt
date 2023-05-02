@@ -1,5 +1,6 @@
 package ru.md.msc.db.award.repo
 
+import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
@@ -15,4 +16,6 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 	@Modifying
 	@Query("delete from AwardEntity a where a.id = :awardId")
 	override fun deleteById(awardId: Long)
+
+	fun findByDeptId(deptId: Long, sort: Sort): List<AwardEntity>
 }

@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.msc.db.award.model.image.AwardImageEntity
+import ru.md.msc.db.award.model.mapper.toAward
 import ru.md.msc.db.award.model.mapper.toAwardDetails
 import ru.md.msc.db.award.model.mapper.toAwardDetailsEntity
 import ru.md.msc.db.award.model.mapper.toAwardLazy
@@ -11,11 +12,13 @@ import ru.md.msc.db.award.repo.AwardDetailsRepository
 import ru.md.msc.db.award.repo.AwardImageRepository
 import ru.md.msc.db.award.repo.AwardRepository
 import ru.md.msc.db.base.mapper.toImage
+import ru.md.msc.db.base.mapper.toSort
 import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.ImageNotFoundException
+import ru.md.msc.domain.base.model.BaseOrder
 import ru.md.msc.domain.image.model.BaseImage
 import java.time.LocalDateTime
 
@@ -56,6 +59,11 @@ class AwardServiceImpl(
 	override fun findById(awardId: Long): AwardDetails {
 		val awardDetailsEntity = awardDetailsRepository.findByIdOrNull(awardId) ?: throw AwardNotFoundException()
 		return awardDetailsEntity.toAwardDetails()
+	}
+
+	override fun findByDeptId(deptId: Long, orders: List<BaseOrder>): List<Award> {
+		val awards = awardRepository.findByDeptId(deptId = deptId, sort = orders.toSort())
+		return awards.map { it.toAward() }
 	}
 
 	override fun findDeptIdByAwardId(awardId: Long): Long {

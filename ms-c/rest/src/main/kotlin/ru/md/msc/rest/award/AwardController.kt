@@ -8,8 +8,10 @@ import ru.md.msc.domain.award.biz.proc.AwardProcessor
 import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.rest.award.mappers.fromTransport
 import ru.md.msc.rest.award.mappers.toTransportAwardDetails
+import ru.md.msc.rest.award.mappers.toTransportAwards
 import ru.md.msc.rest.award.model.request.*
 import ru.md.msc.rest.award.model.response.AwardDetailsResponse
+import ru.md.msc.rest.award.model.response.AwardResponse
 import ru.md.msc.rest.base.*
 import ru.md.msc.rest.base.mappers.toTransportBaseImage
 import ru.md.msc.rest.utils.JwtUtils
@@ -60,6 +62,20 @@ class AwardController(
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportAwardDetails() }
+		)
+	}
+
+	@PostMapping("get_dept")
+	private suspend fun getAwardByDept(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetAwardsByDeptRequest
+	): BaseResponse<List<AwardResponse>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = awardProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportAwards() }
 		)
 	}
 

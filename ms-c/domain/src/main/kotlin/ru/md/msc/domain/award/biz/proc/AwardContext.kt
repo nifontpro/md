@@ -19,7 +19,7 @@ enum class AwardCommand : IBaseCommand {
 	DELETE,
 	UPDATE,
 	GET_BY_ID_DETAILS,
+	GET_BY_DEPT,
 	IMG_ADD,
-	IMG_UPDATE,
 	IMG_DELETE,
 }

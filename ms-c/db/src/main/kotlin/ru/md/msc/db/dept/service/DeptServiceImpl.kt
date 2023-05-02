@@ -1,11 +1,10 @@
 package ru.md.msc.db.dept.service
 
 import jakarta.transaction.Transactional
-import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.msc.db.base.mapper.toImage
-import ru.md.msc.db.base.mapper.toOrder
+import ru.md.msc.db.base.mapper.toSort
 import ru.md.msc.db.dept.model.image.DeptImageEntity
 import ru.md.msc.db.dept.model.mappers.toDept
 import ru.md.msc.db.dept.model.mappers.toDeptDetails
@@ -69,8 +68,7 @@ class DeptServiceImpl(
 
 	override fun findSubTreeDepts(deptId: Long, orders: List<BaseOrder>): List<Dept> {
 		val ids = deptRepository.subTreeIds(deptId = deptId)
-		val sort = Sort.by(orders.map { it.toOrder() })
-		val depts = deptRepository.findByIdIn(ids = ids, sort = sort)
+		val depts = deptRepository.findByIdIn(ids = ids, sort = orders.toSort())
 		return depts.map { it.toDept() }
 	}
 

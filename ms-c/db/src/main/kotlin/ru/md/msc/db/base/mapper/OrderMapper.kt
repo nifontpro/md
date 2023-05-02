@@ -11,3 +11,5 @@ fun BaseOrder.toOrder() = Sort.Order(
 	},
 	field
 )
+
+fun List<BaseOrder>.toSort(): Sort = Sort.by(this.map { it.toOrder() })

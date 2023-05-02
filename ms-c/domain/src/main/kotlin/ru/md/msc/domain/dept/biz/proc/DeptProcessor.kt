@@ -50,7 +50,7 @@ class DeptProcessor(
 
 			operation("Получить поддерево отделов", DeptCommand.GET_DEPTS_TREE) {
 				worker("Допустимые поля сортировки") { orderFields = listOf("parentId", "name", "classname") }
-				validateSortedFields("Проверка списка сортировки")
+				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				getSubtreeDepts("Получаем поддерево отделов")
 			}

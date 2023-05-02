@@ -54,6 +54,13 @@ fun AwardContext.fromTransport(request: GetAwardByIdRequest) {
 	award = Award(id = request.awardId)
 }
 
+fun AwardContext.fromTransport(request: GetAwardsByDeptRequest) {
+	command = AwardCommand.GET_BY_DEPT
+	authId = request.authId
+	deptId = request.deptId
+	orders = request.orders
+}
+
 fun AwardContext.fromTransport(request: DeleteAwardRequest) {
 	command = AwardCommand.DELETE
 	authId = request.authId
