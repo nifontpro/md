@@ -99,7 +99,9 @@ class AwardServiceImpl(
 	 * Сохраняем действие с наградой
 	 */
 	override fun sendActivity(activity: Activity): Activity {
-		val activities = activityRepository.findByUserIdAndAwardId(userId = activity.user.id, awardId = activity.award.id)
+		val activities = activityRepository.findByUserIdAndAwardId(
+			userId = activity.user?.id ?: 0, awardId = activity.award?.id ?: 0
+		)
 		activities.forEach {
 			if (it.activ) {
 				if (it.actionType == activity.actionType) {
@@ -113,7 +115,7 @@ class AwardServiceImpl(
 		return activityEntity.toActivity()
 	}
 
-	override fun getActivAwardByUser(userId: Long): List<Activity> {
+	override fun findActivAwardByUser(userId: Long): List<Activity> {
 		val activities = activityRepository.findByUserId(userId = userId)
 		return activities.map { it.toActivityOnlyAward() }
 	}

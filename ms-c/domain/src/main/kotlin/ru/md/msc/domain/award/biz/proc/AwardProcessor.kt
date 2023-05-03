@@ -105,6 +105,13 @@ class AwardProcessor(
 				addAwardAction("Добавляем операцию в активность")
 			}
 
+			operation("Получить активные награды сотрудника", AwardCommand.GET_ACTIVE_AWARD_BY_USER) {
+				validateUserId("Проверка userId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				// Проверка прав !!!
+				getActiveAwardsByUser("Получаем награды сотрудника")
+			}
+
 			finishOperation()
 		}.build()
 

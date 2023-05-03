@@ -23,5 +23,15 @@ fun AwardContext.getAwardError() {
 	)
 }
 
+fun AwardContext.getActivityError() {
+	fail(
+		errorDb(
+			repository = "activity",
+			violationCode = "get error",
+			description = "Ошибка получения активности награды"
+		)
+	)
+}
+
 class AwardNotFoundException(message: String = "") : RuntimeException(message)
 class AlreadyActionException(message: String = "") : RuntimeException(message)

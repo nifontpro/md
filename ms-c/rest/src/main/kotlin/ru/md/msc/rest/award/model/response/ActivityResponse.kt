@@ -1,13 +1,13 @@
-package ru.md.msc.domain.award.model
+package ru.md.msc.rest.award.model.response
 
+import ru.md.msc.domain.award.model.ActionType
 import ru.md.msc.domain.user.model.User
-import java.time.LocalDateTime
 
-data class Activity(
+data class ActivityResponse(
 	val id: Long = 0,
-	val date: LocalDateTime? = null,
+	val date: Long? = null,
 	val user: User? = null,
-	val award: Award? = null,
+	val award: AwardResponse? = null,
 	val actionType: ActionType = ActionType.UNDEF,
 	val activ: Boolean = true,
 	val deptId: Long = 0,

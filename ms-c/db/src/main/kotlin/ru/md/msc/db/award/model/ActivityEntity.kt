@@ -13,7 +13,7 @@ class ActivityEntity(
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	var id: Long? = null,
 
-	var date: LocalDateTime = LocalDateTime.now(),
+	var date: LocalDateTime? = null,
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "user_id")

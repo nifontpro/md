@@ -75,10 +75,16 @@ fun AwardContext.fromTransport(request: DeleteAwardImageRequest) {
 	imageId = request.imageId
 }
 
-fun AwardContext.fromTransport(request: AwardUserRequest) {
+fun AwardContext.fromTransport(request: SendActionRequest) {
 	command = AwardCommand.ADD_ACTION
 	authId = request.authId
 	awardId = request.awardId
 	userId = request.userId
 	actionType = request.actionType
+}
+
+fun AwardContext.fromTransport(request: GetActivAwardByUserRequest) {
+	command = AwardCommand.GET_ACTIVE_AWARD_BY_USER
+	authId = request.authId
+	userId = request.userId
 }

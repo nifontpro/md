@@ -12,9 +12,11 @@ class AwardContext : BaseContext() {
 	var award: Award = Award()
 	var awardDetails: AwardDetails = AwardDetails()
 	var awards: List<Award> = emptyList()
+	var activity: Activity = Activity()
+	var activities: List<Activity> = emptyList()
+
 	var awardId: Long = 0
 	var userDeptId: Long = 0
-	var activity: Activity = Activity()
 	var actionType: ActionType = ActionType.UNDEF
 
 	lateinit var awardService: AwardService
@@ -28,5 +30,6 @@ enum class AwardCommand : IBaseCommand {
 	GET_BY_DEPT,
 	IMG_ADD,
 	IMG_DELETE,
-	ADD_ACTION
+	ADD_ACTION,
+	GET_ACTIVE_AWARD_BY_USER
 }

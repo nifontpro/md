@@ -31,8 +31,8 @@ fun ActivityEntity.toActivityOnlyAward() = Activity(
 fun Activity.toActivityEntity(create: Boolean = false) = ActivityEntity(
 	id = if (create) null else id,
 	date = date,
-	user = user.toUserEntity(),
-	award = award.toAwardEntity(),
+	user = user?.toUserEntity(),
+	award = award?.toAwardEntity(),
 	actionType = actionType,
 	activ = activ,
 	deptId = deptId,

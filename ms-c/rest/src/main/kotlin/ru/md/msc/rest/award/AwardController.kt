@@ -5,13 +5,10 @@ import org.springframework.web.multipart.MultipartFile
 import ru.md.msc.domain.award.biz.proc.AwardCommand
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.biz.proc.AwardProcessor
-import ru.md.msc.domain.award.model.Activity
 import ru.md.msc.domain.image.model.BaseImage
-import ru.md.msc.rest.award.mappers.fromTransport
-import ru.md.msc.rest.award.mappers.toTransportActivity
-import ru.md.msc.rest.award.mappers.toTransportAwardDetails
-import ru.md.msc.rest.award.mappers.toTransportAwards
+import ru.md.msc.rest.award.mappers.*
 import ru.md.msc.rest.award.model.request.*
+import ru.md.msc.rest.award.model.response.ActivityResponse
 import ru.md.msc.rest.award.model.response.AwardDetailsResponse
 import ru.md.msc.rest.award.model.response.AwardResponse
 import ru.md.msc.rest.base.*
@@ -128,17 +125,31 @@ class AwardController(
 		)
 	}
 
-	@PostMapping("award_user")
-	private suspend fun awardUser(
+	@PostMapping("action")
+	private suspend fun sendAction(
 		@RequestHeader(name = AUTH) bearerToken: String,
-		@RequestBody request: AwardUserRequest
-	): BaseResponse<Activity> {
+		@RequestBody request: SendActionRequest
+	): BaseResponse<ActivityResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = awardProcessor,
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportActivity() }
+		)
+	}
+
+	@PostMapping("get_user")
+	private suspend fun getActivAwardByUser(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetActivAwardByUserRequest
+	): BaseResponse<List<ActivityResponse>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = awardProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportActivities() }
 		)
 	}
 
