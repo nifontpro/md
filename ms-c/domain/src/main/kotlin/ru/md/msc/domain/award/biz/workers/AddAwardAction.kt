@@ -4,6 +4,7 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.proc.AlreadyActionException
 import ru.md.msc.domain.award.biz.proc.AwardContext
+import ru.md.msc.domain.award.model.ActionType
 import ru.md.msc.domain.award.model.Activity
 import ru.md.msc.domain.base.biz.ContextState
 import ru.md.msc.domain.base.helper.ContextError
@@ -24,11 +25,13 @@ fun ICorChainDsl<AwardContext>.addAwardAction(title: String) = worker {
 			award = award,
 			date = LocalDateTime.now(),
 			actionType = actionType,
-			activ = true
+			activ = actionType == ActionType.NOMINEE || actionType == ActionType.AWARD,
+			deptId = userDeptId,
+			authId = authId
 		)
 
 		try {
-			activity = awardService.awardUser(activity = newActivity)
+			activity = awardService.sendActivity(activity = newActivity)
 		} catch (e: AlreadyActionException) {
 			fail(
 				errorDb(

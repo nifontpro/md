@@ -9,4 +9,7 @@ import ru.md.msc.db.award.model.ActivityEntity
 interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	@Query("from ActivityEntity a where a.user.id = :userId and a.award.id = :awardId")
 	fun findByUserIdAndAwardId(userId: Long, awardId: Long): List<ActivityEntity>
+
+	@Query("from ActivityEntity a where a.user.id = :userId and a.activ = true")
+	fun findByUserId(userId: Long): List<ActivityEntity>
 }

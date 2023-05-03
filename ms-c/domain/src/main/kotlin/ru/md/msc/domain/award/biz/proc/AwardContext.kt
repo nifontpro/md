@@ -13,6 +13,7 @@ class AwardContext : BaseContext() {
 	var awardDetails: AwardDetails = AwardDetails()
 	var awards: List<Award> = emptyList()
 	var awardId: Long = 0
+	var userDeptId: Long = 0
 	var activity: Activity = Activity()
 	var actionType: ActionType = ActionType.UNDEF
 

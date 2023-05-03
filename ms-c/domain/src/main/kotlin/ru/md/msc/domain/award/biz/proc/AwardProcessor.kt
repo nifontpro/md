@@ -92,9 +92,10 @@ class AwardProcessor(
 				deleteBaseImageFromS3("Удаляем изображение из s3")
 			}
 
-			operation("Добавить команду в активность награждения", AwardCommand.ADD_ACTION) {
+			operation("Добавить действие в активность награждения", AwardCommand.ADD_ACTION) {
 				validateUserId("Проверка userId")
 				validateAwardId("Проверяем awardId")
+				validateActionType("Проверяем тип действия")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				getAwardById("Получаем награду")
 				validateAwardPeriod("Проверяем период период действия награды")

@@ -9,5 +9,7 @@ data class Activity(
 	val user: User = User(),
 	val award: Award = Award(),
 	val actionType: ActionType = ActionType.UNDEF,
-	val activ: Boolean = true
+	val activ: Boolean = true,
+	val deptId: Long = 0,
+	val authId: Long = 0,
 )

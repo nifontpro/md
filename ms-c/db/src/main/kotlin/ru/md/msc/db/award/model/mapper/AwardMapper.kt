@@ -17,6 +17,16 @@ fun AwardEntity.toAward() = Award(
 	images = images.map { it.toImage() }
 )
 
+fun AwardEntity.toAwardOnlyImages() = Award(
+	id = id ?: 0,
+	name = name,
+	type = type,
+	startDate = startDate,
+	endDate = endDate,
+	dept = Dept(id = dept?.id ?: 0),
+	images = images.map { it.toImage() }
+)
+
 fun AwardEntity.toAwardLazy() = Award(
 	id = id ?: 0,
 	name = name,

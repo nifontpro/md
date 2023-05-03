@@ -27,17 +27,24 @@ class ActivityEntity(
 	var actionType: ActionType = ActionType.UNDEF,
 
 	@Column(name = "is_activ")
-	var activ: Boolean = true
+	var activ: Boolean = true,
 
-) {
+	@Column(name = "dept_id")
+	var deptId: Long = 0,
+
+	@Column(name = "auth_id")
+	var authId: Long = 0,
+
+	) {
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true
 		if (other == null || javaClass != other.javaClass) return false
 		val activityEntity = other as ActivityEntity
-		return id == activityEntity.id && date == activityEntity.date && actionType == activityEntity.actionType && activ == activityEntity.activ
+		return id == activityEntity.id && date == activityEntity.date && actionType == activityEntity.actionType
+				&& activ == activityEntity.activ && deptId == activityEntity.deptId && authId == activityEntity.authId
 	}
 
 	override fun hashCode(): Int {
-		return Objects.hash(id, date, actionType, activ)
+		return Objects.hash(id, date, actionType, activ, deptId, authId)
 	}
 }

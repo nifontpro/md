@@ -96,10 +96,9 @@ class AwardServiceImpl(
 	}
 
 	/**
-	 * Награждаем сотрудника
+	 * Сохраняем действие с наградой
 	 */
-	override fun awardUser(activity: Activity): Activity {
-		//Проверка попадания в период номинации
+	override fun sendActivity(activity: Activity): Activity {
 		val activities = activityRepository.findByUserIdAndAwardId(userId = activity.user.id, awardId = activity.award.id)
 		activities.forEach {
 			if (it.activ) {
@@ -112,6 +111,11 @@ class AwardServiceImpl(
 		val activityEntity = activity.toActivityEntity(create = true)
 		activityRepository.save(activityEntity)
 		return activityEntity.toActivity()
+	}
+
+	override fun getActivAwardByUser(userId: Long): List<Activity> {
+		val activities = activityRepository.findByUserId(userId = userId)
+		return activities.map { it.toActivityOnlyAward() }
 	}
 
 }

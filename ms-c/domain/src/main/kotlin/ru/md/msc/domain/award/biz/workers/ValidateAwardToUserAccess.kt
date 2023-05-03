@@ -24,7 +24,7 @@ fun ICorChainDsl<AwardContext>.validateAwardToUserAccess(title: String) = worker
 
 	handle {
 
-		val userDeptId = try {
+		userDeptId = try {
 			userService.findDeptIdByUserId(userId = userId)
 		} catch (e: UserNotFoundException) {
 			userNotFoundError()
@@ -33,9 +33,6 @@ fun ICorChainDsl<AwardContext>.validateAwardToUserAccess(title: String) = worker
 			getUserError()
 			return@handle
 		}
-
-		println("Award deptId: $deptId")
-		println("User deptId: $userDeptId")
 
 		// deptId - отдел награды
 		if (deptId == userDeptId) return@handle

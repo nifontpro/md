@@ -13,7 +13,19 @@ fun ActivityEntity.toActivity() = Activity(
 	user = user?.toUser() ?: User(),
 	award = award?.toAward() ?: Award(),
 	actionType = actionType,
-	activ = activ
+	activ = activ,
+	deptId = deptId,
+	authId = authId
+)
+
+fun ActivityEntity.toActivityOnlyAward() = Activity(
+	id = id ?: 0,
+	date = date,
+	award = award?.toAwardOnlyImages() ?: Award(),
+	actionType = actionType,
+	activ = activ,
+	deptId = deptId,
+	authId = authId
 )
 
 fun Activity.toActivityEntity(create: Boolean = false) = ActivityEntity(
@@ -22,5 +34,7 @@ fun Activity.toActivityEntity(create: Boolean = false) = ActivityEntity(
 	user = user.toUserEntity(),
 	award = award.toAwardEntity(),
 	actionType = actionType,
-	activ = activ
+	activ = activ,
+	deptId = deptId,
+	authId = authId
 )
