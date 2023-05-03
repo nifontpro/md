@@ -1,5 +1,7 @@
 package ru.md.msc.domain.award.biz.proc
 
+import ru.md.msc.domain.award.model.ActionType
+import ru.md.msc.domain.award.model.Activity
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.award.service.AwardService
@@ -10,6 +12,9 @@ class AwardContext : BaseContext() {
 	var award: Award = Award()
 	var awardDetails: AwardDetails = AwardDetails()
 	var awards: List<Award> = emptyList()
+	var awardId: Long = 0
+	var activity: Activity = Activity()
+	var actionType: ActionType = ActionType.UNDEF
 
 	lateinit var awardService: AwardService
 }
@@ -22,4 +27,5 @@ enum class AwardCommand : IBaseCommand {
 	GET_BY_DEPT,
 	IMG_ADD,
 	IMG_DELETE,
+	ADD_ACTION
 }

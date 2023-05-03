@@ -4,7 +4,7 @@ import ru.md.msc.domain.base.biz.BaseContext
 import ru.md.msc.domain.base.helper.errorDb
 import ru.md.msc.domain.base.helper.fail
 
-fun UserContext.userNotFoundError() {
+fun BaseContext.userNotFoundError() {
 	fail(
 		errorDb(
 			repository = "user",

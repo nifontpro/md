@@ -14,7 +14,7 @@ fun ICorChainDsl<AwardContext>.addAwardImageToDb(title: String) = worker {
 	handle {
 
 		try {
-			baseImage = awardService.addImage(awardId = award.id, baseImage = baseImage)
+			baseImage = awardService.addImage(awardId = awardId, baseImage = baseImage)
 		} catch (e: Exception) {
 			log.error(e.message)
 			deleteImageOnFailing = true

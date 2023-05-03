@@ -5,8 +5,10 @@ import org.springframework.web.multipart.MultipartFile
 import ru.md.msc.domain.award.biz.proc.AwardCommand
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.biz.proc.AwardProcessor
+import ru.md.msc.domain.award.model.Activity
 import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.rest.award.mappers.fromTransport
+import ru.md.msc.rest.award.mappers.toTransportActivity
 import ru.md.msc.rest.award.mappers.toTransportAwardDetails
 import ru.md.msc.rest.award.mappers.toTransportAwards
 import ru.md.msc.rest.award.model.request.*
@@ -123,6 +125,20 @@ class AwardController(
 			baseRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportBaseImage() }
+		)
+	}
+
+	@PostMapping("award_user")
+	private suspend fun awardUser(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: AwardUserRequest
+	): BaseResponse<Activity> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = awardProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportActivity() }
 		)
 	}
 

@@ -21,7 +21,6 @@ import ru.md.msc.db.user.repo.UserRepository
 import ru.md.msc.domain.base.biz.ImageNotFoundException
 import ru.md.msc.domain.dept.model.DeptType
 import ru.md.msc.domain.image.model.BaseImage
-import ru.md.msc.domain.image.repository.S3Repository
 import ru.md.msc.domain.user.biz.proc.UserNotFoundException
 import ru.md.msc.domain.user.model.RoleUser
 import ru.md.msc.domain.user.model.User
@@ -39,7 +38,6 @@ class UserServiceImpl(
 	private val userDetailsRepository: UserDetailsRepository,
 	private val roleRepository: RoleRepository,
 	private val deptDetailsRepository: DeptDetailsRepository,
-	private val s3Repository: S3Repository,
 	private val userImageRepository: UserImageRepository,
 ) : UserService {
 
@@ -165,6 +163,10 @@ class UserServiceImpl(
 		}
 		userImageRepository.delete(userImageEntity)
 		return userImageEntity.toImage()
+	}
+
+	override fun findDeptIdByUserId(userId: Long): Long {
+		return userRepository.finDeptId(userId = userId) ?: throw UserNotFoundException()
 	}
 
 //	companion object {

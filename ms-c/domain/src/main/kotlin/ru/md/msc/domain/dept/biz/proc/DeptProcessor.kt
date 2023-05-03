@@ -9,12 +9,9 @@ import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateSortedFields
+import ru.md.msc.domain.base.workers.*
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
-import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
-import ru.md.msc.domain.base.workers.finishOperation
-import ru.md.msc.domain.base.workers.initStatus
-import ru.md.msc.domain.base.workers.operation
 import ru.md.msc.domain.dept.biz.validate.validateDeptName
 import ru.md.msc.domain.dept.biz.workers.*
 import ru.md.msc.domain.dept.service.DeptService
@@ -73,6 +70,8 @@ class DeptProcessor(
 				validateAdminDeptLevelChain()
 				getDeptDetailsById("Получаем отдел")
 				deleteDept("Удаляем отдел")
+				worker("Подготовка к удалению изображений") { baseImages = deptDetails.dept.images }
+				deleteBaseImagesFromS3("Удаляем все изображения")
 			}
 
 			operation("Добавление изображения", DeptCommand.IMG_ADD) {

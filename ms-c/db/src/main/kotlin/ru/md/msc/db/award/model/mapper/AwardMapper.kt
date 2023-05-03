@@ -1,6 +1,7 @@
 package ru.md.msc.db.award.model.mapper
 
 import ru.md.msc.db.award.model.AwardEntity
+import ru.md.msc.db.base.mapper.toImage
 import ru.md.msc.db.dept.model.mappers.toDept
 import ru.md.msc.db.dept.model.mappers.toDeptEntity
 import ru.md.msc.domain.award.model.Award
@@ -13,6 +14,7 @@ fun AwardEntity.toAward() = Award(
 	startDate = startDate,
 	endDate = endDate,
 	dept = dept?.toDept() ?: Dept(),
+	images = images.map { it.toImage() }
 )
 
 fun AwardEntity.toAwardLazy() = Award(

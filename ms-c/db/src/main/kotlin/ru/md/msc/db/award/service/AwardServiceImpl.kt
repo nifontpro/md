@@ -4,16 +4,16 @@ import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.msc.db.award.model.image.AwardImageEntity
-import ru.md.msc.db.award.model.mapper.toAward
-import ru.md.msc.db.award.model.mapper.toAwardDetails
-import ru.md.msc.db.award.model.mapper.toAwardDetailsEntity
-import ru.md.msc.db.award.model.mapper.toAwardLazy
+import ru.md.msc.db.award.model.mapper.*
+import ru.md.msc.db.award.repo.ActivityRepository
 import ru.md.msc.db.award.repo.AwardDetailsRepository
 import ru.md.msc.db.award.repo.AwardImageRepository
 import ru.md.msc.db.award.repo.AwardRepository
 import ru.md.msc.db.base.mapper.toImage
 import ru.md.msc.db.base.mapper.toSort
+import ru.md.msc.domain.award.biz.proc.AlreadyActionException
 import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
+import ru.md.msc.domain.award.model.Activity
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.award.service.AwardService
@@ -28,6 +28,7 @@ class AwardServiceImpl(
 	private val awardRepository: AwardRepository,
 	private val awardDetailsRepository: AwardDetailsRepository,
 	private val awardImageRepository: AwardImageRepository,
+	private val activityRepository: ActivityRepository,
 ) : AwardService {
 
 	override fun create(awardDetails: AwardDetails): AwardDetails {
@@ -87,11 +88,30 @@ class AwardServiceImpl(
 	}
 
 	override fun deleteImage(awardId: Long, imageId: Long): BaseImage {
-		val userImageEntity = awardImageRepository.findByIdAndAwardId(awardId = awardId, imageId = imageId) ?: run {
+		val awardImageEntity = awardImageRepository.findByIdAndAwardId(awardId = awardId, imageId = imageId) ?: run {
 			throw ImageNotFoundException()
 		}
-		awardImageRepository.delete(userImageEntity)
-		return userImageEntity.toImage()
+		awardImageRepository.delete(awardImageEntity)
+		return awardImageEntity.toImage()
+	}
+
+	/**
+	 * Награждаем сотрудника
+	 */
+	override fun awardUser(activity: Activity): Activity {
+		//Проверка попадания в период номинации
+		val activities = activityRepository.findByUserIdAndAwardId(userId = activity.user.id, awardId = activity.award.id)
+		activities.forEach {
+			if (it.activ) {
+				if (it.actionType == activity.actionType) {
+					throw AlreadyActionException()
+				}
+				it.activ = false
+			}
+		}
+		val activityEntity = activity.toActivityEntity(create = true)
+		activityRepository.save(activityEntity)
+		return activityEntity.toActivity()
 	}
 
 }

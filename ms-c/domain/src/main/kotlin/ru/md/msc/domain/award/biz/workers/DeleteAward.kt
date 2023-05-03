@@ -15,7 +15,7 @@ fun ICorChainDsl<AwardContext>.deleteAward(title: String) = worker {
 	handle {
 
 		try {
-			awardService.deleteById(awardId = award.id)
+			awardService.deleteById(awardId = awardId)
 		} catch (e: Exception) {
 			log.error(e.message)
 			fail(

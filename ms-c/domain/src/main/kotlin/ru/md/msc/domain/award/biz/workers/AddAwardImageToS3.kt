@@ -28,7 +28,7 @@ fun ICorChainDsl<AwardContext>.addAwardImageToS3(title: String) = worker {
 		}
 
 		try {
-			val prefix = "R$rootDeptId/D$deptId/A${award.id}"
+			val prefix = "R$rootDeptId/D$deptId/A$awardId"
 			val imageKey = "$prefix/${fileData.filename}"
 			val imageUrl = s3Repository.putObject(key = imageKey, fileData = fileData) ?: throw Exception()
 			baseImage = BaseImage(imageUrl = imageUrl, imageKey = imageKey, type = ImageType.USER)

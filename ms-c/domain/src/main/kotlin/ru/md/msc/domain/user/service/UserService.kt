@@ -16,4 +16,5 @@ interface UserService {
 	fun findByIdDetails(userId: Long): UserDetails?
 	fun addImage(userId: Long, baseImage: BaseImage): BaseImage
 	fun deleteImage(userId: Long, imageId: Long): BaseImage
+	fun findDeptIdByUserId(userId: Long): Long
 }

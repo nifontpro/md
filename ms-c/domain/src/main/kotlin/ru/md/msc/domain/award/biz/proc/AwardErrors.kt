@@ -24,3 +24,4 @@ fun AwardContext.getAwardError() {
 }
 
 class AwardNotFoundException(message: String = "") : RuntimeException(message)
+class AlreadyActionException(message: String = "") : RuntimeException(message)

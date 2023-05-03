@@ -8,11 +8,11 @@ import ru.md.msc.domain.base.helper.fail
 
 fun ICorChainDsl<AwardContext>.validateAwardId(title: String) = worker {
 	this.title = title
-	on { award.id < 1 }
+	on { awardId < 1 }
 	handle {
 		fail(
 			errorValidation(
-				field = "id",
+				field = "awardId",
 				violationCode = "not valid",
 				description = "Неверный id награды"
 			)

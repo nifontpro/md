@@ -16,7 +16,7 @@ fun ICorChainDsl<AwardContext>.deleteAwardImageFromDb(title: String) = worker {
 	handle {
 
 		try {
-			baseImage = awardService.deleteImage(awardId = award.id, imageId = imageId)
+			baseImage = awardService.deleteImage(awardId = awardId, imageId = imageId)
 		} catch (e: ImageNotFoundException) {
 			imageNotFoundError()
 		} catch (e: Exception) {

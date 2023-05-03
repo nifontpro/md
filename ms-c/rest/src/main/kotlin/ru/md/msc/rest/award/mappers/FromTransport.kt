@@ -32,8 +32,9 @@ fun AwardContext.fromTransport(request: UpdateAwardRequest) {
 	command = AwardCommand.UPDATE
 	authId = request.authId
 
+	awardId = request.awardId
 	award = Award(
-		id = request.awardId,
+		id = awardId,
 		name = request.name,
 		type = request.type,
 		startDate = request.startDate.toLocalDateTimeUTC(),
@@ -51,7 +52,7 @@ fun AwardContext.fromTransport(request: UpdateAwardRequest) {
 fun AwardContext.fromTransport(request: GetAwardByIdRequest) {
 	command = AwardCommand.GET_BY_ID_DETAILS
 	authId = request.authId
-	award = Award(id = request.awardId)
+	awardId = request.awardId
 }
 
 fun AwardContext.fromTransport(request: GetAwardsByDeptRequest) {
@@ -64,12 +65,20 @@ fun AwardContext.fromTransport(request: GetAwardsByDeptRequest) {
 fun AwardContext.fromTransport(request: DeleteAwardRequest) {
 	command = AwardCommand.DELETE
 	authId = request.authId
-	award = Award(id = request.awardId)
+	awardId = request.awardId
 }
 
 fun AwardContext.fromTransport(request: DeleteAwardImageRequest) {
 	command = AwardCommand.IMG_DELETE
 	authId = request.authId
+	awardId = request.awardId
 	imageId = request.imageId
-	award = Award(id = request.awardId)
+}
+
+fun AwardContext.fromTransport(request: AwardUserRequest) {
+	command = AwardCommand.ADD_ACTION
+	authId = request.authId
+	awardId = request.awardId
+	userId = request.userId
+	actionType = request.actionType
 }

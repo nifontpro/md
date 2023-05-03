@@ -1,5 +1,6 @@
 package ru.md.msc.domain.award.service
 
+import ru.md.msc.domain.award.model.Activity
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.base.model.BaseOrder
@@ -15,4 +16,5 @@ interface AwardService {
 	fun addImage(awardId: Long, baseImage: BaseImage): BaseImage
 	fun deleteImage(awardId: Long, imageId: Long): BaseImage
 	fun findByDeptId(deptId: Long, orders: List<BaseOrder> = emptyList()): List<Award>
+	fun awardUser(activity: Activity): Activity
 }
