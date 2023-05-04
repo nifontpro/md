@@ -87,4 +87,12 @@ fun AwardContext.fromTransport(request: GetActivAwardByUserRequest) {
 	command = AwardCommand.GET_ACTIVE_AWARD_BY_USER
 	authId = request.authId
 	userId = request.userId
+	orders = request.orders
+}
+
+fun AwardContext.fromTransport(request: GetActivAwardByDeptRequest) {
+	command = AwardCommand.GET_ACTIVE_AWARD_BY_DEPT
+	authId = request.authId
+	deptId = request.deptId
+	orders = request.orders
 }

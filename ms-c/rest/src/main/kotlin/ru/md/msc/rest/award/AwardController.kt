@@ -139,10 +139,24 @@ class AwardController(
 		)
 	}
 
-	@PostMapping("get_user")
+	@PostMapping("act_user")
 	private suspend fun getActivAwardByUser(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetActivAwardByUserRequest
+	): BaseResponse<List<ActivityResponse>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = awardProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportActivities() }
+		)
+	}
+
+	@PostMapping("act_dept")
+	private suspend fun getActivAwardByDept(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetActivAwardByDeptRequest
 	): BaseResponse<List<ActivityResponse>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(

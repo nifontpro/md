@@ -6,6 +6,16 @@ import ru.md.msc.domain.award.model.ActionType
 import java.time.LocalDateTime
 import java.util.*
 
+@NamedEntityGraph(
+	name = "activityWithAward",
+	attributeNodes = [NamedAttributeNode("award")]
+)
+
+@NamedEntityGraph(
+	name = "activityWithUserAndAward",
+	attributeNodes = [NamedAttributeNode("user"), NamedAttributeNode("award")]
+)
+
 @Entity
 @Table(name = "activity", schema = "md", catalog = "medalist")
 class ActivityEntity(

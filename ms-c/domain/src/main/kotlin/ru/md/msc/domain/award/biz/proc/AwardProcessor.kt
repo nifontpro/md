@@ -107,9 +107,20 @@ class AwardProcessor(
 
 			operation("Получить активные награды сотрудника", AwardCommand.GET_ACTIVE_AWARD_BY_USER) {
 				validateUserId("Проверка userId")
+				setActionByUserValidSortedFields("Устанавливаем допустимые поля сортировки")
+				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				// Проверка прав !!!
 				getActiveAwardsByUser("Получаем награды сотрудника")
+			}
+
+			operation("Получить активные награды в отделе", AwardCommand.GET_ACTIVE_AWARD_BY_DEPT) {
+				validateDeptId("Проверка deptId")
+				setActionByDeptValidSortedFields("Устанавливаем допустимые поля сортировки")
+				validateSortedFields("Проверка списка полей сортировки")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptLevel("Проверка доступа к отделу награды")
+				getActiveAwardsByDept("Получаем награды в отделе")
 			}
 
 			finishOperation()

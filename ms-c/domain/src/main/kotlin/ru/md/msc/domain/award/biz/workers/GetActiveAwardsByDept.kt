@@ -6,7 +6,7 @@ import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.biz.proc.getActivityError
 import ru.md.msc.domain.base.biz.ContextState
 
-fun ICorChainDsl<AwardContext>.getActiveAwardsByUser(title: String) = worker {
+fun ICorChainDsl<AwardContext>.getActiveAwardsByDept(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
@@ -14,7 +14,7 @@ fun ICorChainDsl<AwardContext>.getActiveAwardsByUser(title: String) = worker {
 	handle {
 
 		try {
-			activities = awardService.findActivAwardByUser(userId = userId, orders = orders)
+			activities = awardService.findActivAwardByDept(deptId = deptId, orders = orders)
 		} catch (e: Exception) {
 			getActivityError()
 		}
