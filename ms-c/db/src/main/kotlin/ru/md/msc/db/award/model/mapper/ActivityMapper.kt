@@ -6,13 +6,12 @@ import ru.md.msc.db.user.model.mappers.toUserEntity
 import ru.md.msc.db.user.model.mappers.toUserLazy
 import ru.md.msc.domain.award.model.Activity
 import ru.md.msc.domain.award.model.Award
-import ru.md.msc.domain.user.model.User
 
 fun ActivityEntity.toActivity() = Activity(
 	id = id ?: 0,
 	date = date,
-	user = user?.toUser() ?: User(),
-	award = award?.toAward() ?: Award(),
+	user = user?.toUser(),
+	award = award?.toAward(),
 	actionType = actionType,
 	activ = activ,
 	deptId = deptId,
@@ -22,7 +21,17 @@ fun ActivityEntity.toActivity() = Activity(
 fun ActivityEntity.toActivityOnlyAward() = Activity(
 	id = id ?: 0,
 	date = date,
-	award = award?.toAwardOnlyImages() ?: Award(),
+	award = award?.toAwardOnlyImages(),
+	actionType = actionType,
+	activ = activ,
+	deptId = deptId,
+	authId = authId
+)
+
+fun ActivityEntity.toActivityOnlyUser() = Activity(
+	id = id ?: 0,
+	date = date,
+	user = user?.toUserLazy(),
 	actionType = actionType,
 	activ = activ,
 	deptId = deptId,
@@ -32,7 +41,7 @@ fun ActivityEntity.toActivityOnlyAward() = Activity(
 fun ActivityEntity.toActivityUserLazy() = Activity(
 	id = id ?: 0,
 	date = date,
-	user = user?.toUserLazy() ?: User(),
+	user = user?.toUserLazy(),
 	award = award?.toAwardOnlyImages() ?: Award(),
 	actionType = actionType,
 	activ = activ,

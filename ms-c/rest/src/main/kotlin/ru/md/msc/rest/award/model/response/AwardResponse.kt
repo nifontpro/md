@@ -3,6 +3,7 @@ package ru.md.msc.rest.award.model.response
 import ru.md.msc.domain.award.model.AwardType
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.image.model.BaseImage
+import ru.md.msc.rest.award.mappers.AwardState
 
 data class AwardResponse(
 	val id: Long = 0,
@@ -10,6 +11,7 @@ data class AwardResponse(
 	var type: AwardType = AwardType.UNDEF,
 	var startDate: Long? = null,
 	var endDate: Long? = null,
+	var state: AwardState,
 	var dept: Dept = Dept(),
 	val images: List<BaseImage> = emptyList()
 )

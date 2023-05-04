@@ -20,7 +20,7 @@ class AwardTest(
 
 	@Test
 	fun findActByUser() {
-		val acts = awardService.findActivAwardByUser(userId = 217)
+		val acts = awardService.findActivAwardsByUser(userId = 217)
 		println("Res: $acts")
 	}
 

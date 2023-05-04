@@ -12,6 +12,11 @@ import java.util.*
 )
 
 @NamedEntityGraph(
+	name = "activityWithUser",
+	attributeNodes = [NamedAttributeNode("user")]
+)
+
+@NamedEntityGraph(
 	name = "activityWithUserAndAward",
 	attributeNodes = [NamedAttributeNode("user"), NamedAttributeNode("award")]
 )

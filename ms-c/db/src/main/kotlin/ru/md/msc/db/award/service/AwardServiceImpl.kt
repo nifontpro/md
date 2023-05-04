@@ -115,12 +115,17 @@ class AwardServiceImpl(
 		return activityEntity.toActivity()
 	}
 
-	override fun findActivAwardByUser(userId: Long, orders: List<BaseOrder>): List<Activity> {
+	override fun findActivAwardsByUser(userId: Long, orders: List<BaseOrder>): List<Activity> {
 		val activities = activityRepository.findByUserIdAndActiv(userId = userId, sort = orders.toSort())
 		return activities.map { it.toActivityOnlyAward() }
 	}
 
-	override fun findActivAwardByDept(deptId: Long, orders: List<BaseOrder>): List<Activity> {
+	override fun findUsersByActivAward(awardId: Long, orders: List<BaseOrder>): List<Activity> {
+		val activities = activityRepository.findByAwardIdAndActiv(awardId = awardId, sort = orders.toSort())
+		return activities.map { it.toActivityOnlyUser() }
+	}
+
+	override fun findActivAwardsByDept(deptId: Long, orders: List<BaseOrder>): List<Activity> {
 		val activities = activityRepository.findByDeptIdAndActiv(deptId = deptId, sort = orders.toSort())
 		return activities.map { it.toActivityUserLazy() }
 	}

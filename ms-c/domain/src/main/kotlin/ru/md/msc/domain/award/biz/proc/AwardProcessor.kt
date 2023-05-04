@@ -50,13 +50,13 @@ class AwardProcessor(
 
 			operation("Обновить награду", AwardCommand.UPDATE) {
 				validateMainAwardFieldChain()
-				validateAdminAccessToAwardChain()
+				validateAccessToAwardChain()
 				trimFieldAwardDetails("Очищаем поля")
 				updateAward("Обновляем награду")
 			}
 
 			operation("Получить по id", AwardCommand.GET_BY_ID_DETAILS) {
-				validateAdminAccessToAwardChain()
+				validateAccessToAwardChain()
 				getAwardByIdDetails("Получаем детальную награду")
 			}
 
@@ -70,7 +70,7 @@ class AwardProcessor(
 			}
 
 			operation("Удалить награду", AwardCommand.DELETE) {
-				validateAdminAccessToAwardChain()
+				validateAccessToAwardChain()
 				getAwardByIdDetails("Получаем детальную награду")
 				deleteAward("Удаляем")
 				worker("Подготовка к удалению изображений") { baseImages = awardDetails.award.images }
@@ -79,7 +79,7 @@ class AwardProcessor(
 
 			operation("Добавление изображения", AwardCommand.IMG_ADD) {
 				worker("Получение id сущности") { awardId = fileData.entityId }
-				validateAdminAccessToAwardChain()
+				validateAccessToAwardChain()
 				addAwardImageToS3("Сохраняем изображение в s3")
 				addAwardImageToDb("Сохраняем изображение в БД")
 				deleteS3ImageOnFailingChain()
@@ -87,7 +87,7 @@ class AwardProcessor(
 
 			operation("Удаление изображения", AwardCommand.IMG_DELETE) {
 				validateImageId("Проверка imageId")
-				validateAdminAccessToAwardChain()
+				validateAccessToAwardChain()
 				deleteAwardImageFromDb("Удаляем изображение из БД")
 				deleteBaseImageFromS3("Удаляем изображение из s3")
 			}
@@ -123,6 +123,13 @@ class AwardProcessor(
 				getActiveAwardsByDept("Получаем награды в отделе")
 			}
 
+			operation("Получить сотрудников, награжденных наградой", AwardCommand.GET_USERS_BY_ACTIVE_AWARD) {
+				setActionByAwardValidSortedFields("Устанавливаем допустимые поля сортировки")
+				validateSortedFields("Проверка списка полей сортировки")
+				validateAccessToAwardChain()
+				getUsersByActiveAward("Получаем награды сотрудника")
+			}
+
 			finishOperation()
 		}.build()
 
@@ -132,7 +139,7 @@ class AwardProcessor(
 			validateAwardDates("Проверяем даты")
 		}
 
-		private fun ICorChainDsl<AwardContext>.validateAdminAccessToAwardChain() {
+		private fun ICorChainDsl<AwardContext>.validateAccessToAwardChain() {
 			validateAwardId("Проверяем awardId")
 			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 			findDeptIdByAwardId("Получаем deptId")

@@ -167,4 +167,18 @@ class AwardController(
 		)
 	}
 
+	@PostMapping("act_award")
+	private suspend fun getUserByActivAward(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetUsersByActivAwardRequest
+	): BaseResponse<List<ActivityResponse>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = awardProcessor,
+			baseRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportActivities() }
+		)
+	}
+
 }

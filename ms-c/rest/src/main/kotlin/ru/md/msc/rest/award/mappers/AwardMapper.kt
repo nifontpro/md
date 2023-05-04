@@ -3,6 +3,7 @@ package ru.md.msc.rest.award.mappers
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.base.model.converter.toEpochMilliUTC
 import ru.md.msc.rest.award.model.response.AwardResponse
+import java.time.LocalDateTime
 
 fun Award.toAwardResponse() = AwardResponse(
 	id = id,
@@ -10,6 +11,24 @@ fun Award.toAwardResponse() = AwardResponse(
 	type = type,
 	startDate = startDate.toEpochMilliUTC(),
 	endDate = endDate.toEpochMilliUTC(),
+	state = getState(),
 	dept = dept,
 	images = images
 )
+
+enum class AwardState {
+	FUTURE,
+	NOMINEE,
+	FINISH,
+	ERROR
+}
+
+fun Award.getState(): AwardState {
+	val now = LocalDateTime.now()
+	return when {
+		endDate < startDate -> AwardState.ERROR
+		now >= startDate && now <= endDate -> AwardState.NOMINEE
+		now < startDate -> AwardState.FUTURE
+		else -> AwardState.FINISH
+	}
+}
