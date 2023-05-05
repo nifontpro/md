@@ -35,6 +35,7 @@ class AwardEntity(
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "award_id")
+	@OrderBy("id DESC")
 //	@Fetch(FetchMode.SUBSELECT)
 	val images: List<AwardImageEntity> = emptyList()
 

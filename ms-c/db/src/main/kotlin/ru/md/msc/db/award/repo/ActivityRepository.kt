@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.award.model.ActivityEntity
+import java.time.LocalDateTime
 
 @Repository
 interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
@@ -21,6 +22,27 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	fun findByAwardIdAndActiv(awardId: Long, activ: Boolean = true, sort: Sort): List<ActivityEntity>
 
 	@EntityGraph("activityWithUserAndAward")
-	fun findByDeptIdAndActiv(deptId: Long, activ: Boolean = true, sort: Sort): List<ActivityEntity>
+	fun findByDeptIdAndActiv(
+		deptId: Long,
+		activ: Boolean = true,
+		sort: Sort
+	): List<ActivityEntity>
+
+	@EntityGraph("activityWithUserAndAward")
+	@Query(
+		"""
+		from ActivityEntity a where 
+		a.activ = true and a.deptId = :deptId and
+		(coalesce(:minDate, null) is null or a.date >= :minDate) and
+		(coalesce(:maxDate, null) is null or a.date <= :maxDate)
+	"""
+	)
+	fun findByDeptId(
+		deptId: Long,
+		minDate: LocalDateTime? = null,
+		maxDate: LocalDateTime? = null,
+		sort: Sort = Sort.by(emptyList())
+	): List<ActivityEntity>
+
 
 }

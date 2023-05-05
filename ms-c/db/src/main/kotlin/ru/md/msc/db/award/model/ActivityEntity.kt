@@ -62,4 +62,8 @@ class ActivityEntity(
 	override fun hashCode(): Int {
 		return Objects.hash(id, date, actionType, activ, deptId, authId)
 	}
+
+	override fun toString(): String {
+		return "{Activity(id: $id, date: $date, actionType: $actionType, activ: $activ)}"
+	}
 }
