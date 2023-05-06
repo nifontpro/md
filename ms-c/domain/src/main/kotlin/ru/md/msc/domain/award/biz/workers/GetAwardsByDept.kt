@@ -16,7 +16,7 @@ fun ICorChainDsl<AwardContext>.getAwardsByDept(title: String) = worker {
 	handle {
 
 		try {
-			awards = awardService.findByDeptId(deptId = deptId, orders = orders)
+			awards = awardService.findByDeptId(deptId = deptId, orders = baseQuery.orders)
 		} catch (e: AwardNotFoundException) {
 			awardNotFoundError()
 		} catch (e: Exception) {

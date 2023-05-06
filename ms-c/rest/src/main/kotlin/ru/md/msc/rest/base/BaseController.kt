@@ -9,18 +9,18 @@ import kotlin.reflect.full.createInstance
  */
 suspend inline fun <reified T, reified R, reified C : BaseContext> process(
 	processor: IBaseProcessor<C>,
-	baseRequest: BaseRequest<T>,
+	authRequest: AuthRequest<T>,
 	fromTransport: C.(T) -> Unit,
 	toTransport: C.() -> R
 ): R {
 	val context = C::class.createInstance()
 
-	if (!baseRequest.emailVerified || baseRequest.authEmail.isNullOrBlank()) {
+	if (!authRequest.emailVerified || authRequest.authEmail.isNullOrBlank()) {
 		context.emailNotVerified()
 		return context.toTransport()
 	}
-	context.authEmail = baseRequest.authEmail
-	context.fromTransport(baseRequest.data)
+	context.authEmail = authRequest.authEmail
+	context.fromTransport(authRequest.data)
 	processor.exec(context)
 	return context.toTransport()
 }

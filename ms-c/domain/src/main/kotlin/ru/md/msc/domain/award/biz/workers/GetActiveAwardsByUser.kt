@@ -14,7 +14,7 @@ fun ICorChainDsl<AwardContext>.getActiveAwardsByUser(title: String) = worker {
 	handle {
 
 		try {
-			activities = awardService.findActivAwardsByUser(userId = userId, orders = orders)
+			activities = awardService.findActivAwardsByUser(userId = userId, orders = baseQuery.orders)
 		} catch (e: Exception) {
 			getActivityError()
 		}

@@ -1,8 +1,8 @@
 package ru.md.msc.rest.dept.model.request
 
-import ru.md.msc.domain.base.model.BaseOrder
+import ru.md.msc.rest.base.BaseRequest
 
 data class GetAuthSubtreeDeptsRequest(
 	val authId: Long = 0,
-	val orders: List<BaseOrder> = emptyList()
+	val baseRequest: BaseRequest = BaseRequest()
 )

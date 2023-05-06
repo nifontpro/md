@@ -10,7 +10,7 @@ fun <T : BaseContext> ICorChainDsl<T>.validateSortedFields(title: String) = work
 	this.title = title
 	on { true }
 	handle {
-		orders.forEach { baseOrder ->
+		baseQuery.orders.forEach { baseOrder ->
 			val field = baseOrder.field
 			val fieldNotExist = orderFields.find { field == it } == null
 			if (fieldNotExist) {

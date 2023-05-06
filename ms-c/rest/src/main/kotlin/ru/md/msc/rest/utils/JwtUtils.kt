@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.stereotype.Component
-import ru.md.msc.rest.base.BaseRequest
+import ru.md.msc.rest.base.AuthRequest
 import java.util.*
 import javax.naming.AuthenticationException
 
@@ -37,9 +37,9 @@ class JwtUtils {
 		return mapper.readValue(payload)
 	}
 
-	fun <T> baseRequest(request: T, bearerToken: String): BaseRequest<T> {
+	fun <T> baseRequest(request: T, bearerToken: String): AuthRequest<T> {
 		val authData = decodeBearerJwt(bearerToken)
-		return BaseRequest(
+		return AuthRequest(
 			data = request,
 			authEmail = authData.email,
 			emailVerified = authData.emailVerified

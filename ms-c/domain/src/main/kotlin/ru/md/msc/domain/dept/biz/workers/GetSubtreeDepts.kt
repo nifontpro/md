@@ -14,7 +14,7 @@ fun ICorChainDsl<DeptContext>.getSubtreeDepts(title: String) = worker {
 	handle {
 
 		depts = try {
-			deptService.findSubTreeDepts(deptId = authUser.dept?.id ?: 0, orders = orders)
+			deptService.findSubTreeDepts(deptId = authUser.dept?.id ?: 0, orders = baseQuery.orders)
 		} catch (e: Exception) {
 			getDeptError()
 			return@handle

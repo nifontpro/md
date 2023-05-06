@@ -19,6 +19,7 @@ import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.ImageNotFoundException
 import ru.md.msc.domain.base.model.BaseOrder
+import ru.md.msc.domain.base.model.BaseQuery
 import ru.md.msc.domain.image.model.BaseImage
 import java.time.LocalDateTime
 
@@ -125,8 +126,13 @@ class AwardServiceImpl(
 		return activities.map { it.toActivityOnlyUser() }
 	}
 
-	override fun findActivAwardsByDept(deptId: Long, orders: List<BaseOrder>): List<Activity> {
-		val activities = activityRepository.findByDeptIdAndActiv(deptId = deptId, sort = orders.toSort())
+	override fun findActivAwardsByDept(deptId: Long, baseQuery: BaseQuery): List<Activity> {
+		val activities = activityRepository.findByDeptId(
+			deptId = deptId,
+			minDate = baseQuery.minDate,
+			maxDate = baseQuery.maxDate,
+			sort = baseQuery.orders.toSort()
+		)
 		return activities.map { it.toActivityUserLazy() }
 	}
 

@@ -5,6 +5,7 @@ import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
 import ru.md.msc.domain.dept.model.DeptType
+import ru.md.msc.rest.base.mappers.toBaseQuery
 import ru.md.msc.rest.dept.model.request.*
 
 fun DeptContext.fromTransport(request: CreateDeptRequest) {
@@ -48,7 +49,7 @@ fun DeptContext.fromTransport(request: UpdateDeptRequest) {
 fun DeptContext.fromTransport(request: GetAuthSubtreeDeptsRequest) {
 	command = DeptCommand.GET_DEPTS_TREE
 	authId = request.authId
-	orders = request.orders
+	baseQuery = request.baseRequest.toBaseQuery()
 }
 
 fun DeptContext.fromTransport(request: GetDeptByIdRequest) {

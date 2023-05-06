@@ -32,7 +32,7 @@ class UserController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = userProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportUserDetails() }
 		)
@@ -46,7 +46,7 @@ class UserController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = userProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportUserDetails() }
 		)
@@ -60,7 +60,7 @@ class UserController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = userProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportUserDetails() }
 		)
@@ -74,7 +74,7 @@ class UserController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = userProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportUsers() }
 		)
@@ -88,7 +88,7 @@ class UserController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = userProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportUsers() }
 		)
@@ -102,7 +102,7 @@ class UserController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = userProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportUserDetails() }
 		)
@@ -116,7 +116,7 @@ class UserController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = userProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportUserDetails() }
 		)
@@ -149,7 +149,7 @@ class UserController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = userProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportBaseImage() }
 		)

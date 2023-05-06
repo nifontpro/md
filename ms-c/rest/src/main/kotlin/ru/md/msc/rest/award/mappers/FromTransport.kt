@@ -7,6 +7,7 @@ import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.base.model.converter.toLocalDateTimeUTC
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.rest.award.model.request.*
+import ru.md.msc.rest.base.mappers.toBaseQuery
 
 fun AwardContext.fromTransport(request: CreateAwardRequest) {
 	command = AwardCommand.CREATE
@@ -59,7 +60,7 @@ fun AwardContext.fromTransport(request: GetAwardsByDeptRequest) {
 	command = AwardCommand.GET_BY_DEPT
 	authId = request.authId
 	deptId = request.deptId
-	orders = request.orders
+	baseQuery = request.baseRequest.toBaseQuery()
 }
 
 fun AwardContext.fromTransport(request: DeleteAwardRequest) {
@@ -87,20 +88,20 @@ fun AwardContext.fromTransport(request: GetActivAwardByUserRequest) {
 	command = AwardCommand.GET_ACTIVE_AWARD_BY_USER
 	authId = request.authId
 	userId = request.userId
-	orders = request.orders
+	baseQuery = request.baseRequest.toBaseQuery()
 }
 
 fun AwardContext.fromTransport(request: GetActivAwardByDeptRequest) {
 	command = AwardCommand.GET_ACTIVE_AWARD_BY_DEPT
 	authId = request.authId
 	deptId = request.deptId
-	orders = request.orders
+	baseQuery = request.baseRequest.toBaseQuery()
 }
 
 fun AwardContext.fromTransport(request: GetUsersByActivAwardRequest) {
 	command = AwardCommand.GET_USERS_BY_ACTIVE_AWARD
 	authId = request.authId
 	awardId = request.awardId
-	orders = request.orders
+	baseQuery = request.baseRequest.toBaseQuery()
 }
 

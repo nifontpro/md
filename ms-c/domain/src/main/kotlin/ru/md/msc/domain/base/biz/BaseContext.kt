@@ -3,7 +3,7 @@ package ru.md.msc.domain.base.biz
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import ru.md.msc.domain.base.helper.ContextError
-import ru.md.msc.domain.base.model.BaseOrder
+import ru.md.msc.domain.base.model.BaseQuery
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.domain.image.model.FileData
@@ -32,8 +32,8 @@ abstract class BaseContext(
 	var baseImages: List<BaseImage> = emptyList(),
 	var deleteImageOnFailing: Boolean = false,
 
-	var orders: List<BaseOrder> = emptyList(),
-	var orderFields: List<String> = emptyList(),
+	var baseQuery: BaseQuery = BaseQuery(),
+	var orderFields: List<String> = emptyList(), // Допустимые поля для сортировки
 
 	) {
 	lateinit var userService: UserService

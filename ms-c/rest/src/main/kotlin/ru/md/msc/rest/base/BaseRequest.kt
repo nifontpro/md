@@ -1,9 +1,9 @@
 package ru.md.msc.rest.base
 
-const val AUTH = "Authorization"
+import ru.md.msc.domain.base.model.BaseOrder
 
-data class BaseRequest<out T>(
-	val data: T,
-	val authEmail: String? = null,
-	val emailVerified: Boolean = false
+data class BaseRequest(
+	val orders: List<BaseOrder> = emptyList(),
+	val minDate: Long? = null,
+	val maxDate: Long? = null,
 )

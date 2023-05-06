@@ -31,7 +31,7 @@ class DeptController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = deptProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportDeptDetails() }
 		)
@@ -45,7 +45,7 @@ class DeptController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = deptProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportDeptDetails() }
 		)
@@ -59,7 +59,7 @@ class DeptController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = deptProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportDepts() }
 		)
@@ -73,7 +73,7 @@ class DeptController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = deptProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportDeptDetails() }
 		)
@@ -87,7 +87,7 @@ class DeptController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = deptProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportDeptDetails() }
 		)
@@ -120,7 +120,7 @@ class DeptController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = deptProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportBaseImage() }
 		)

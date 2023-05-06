@@ -30,7 +30,7 @@ class AwardController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = awardProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportAwardDetails() }
 		)
@@ -44,7 +44,7 @@ class AwardController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = awardProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportAwardDetails() }
 		)
@@ -58,7 +58,7 @@ class AwardController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = awardProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportAwardDetails() }
 		)
@@ -72,7 +72,7 @@ class AwardController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = awardProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportAwards() }
 		)
@@ -86,7 +86,7 @@ class AwardController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = awardProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportAwardDetails() }
 		)
@@ -119,7 +119,7 @@ class AwardController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = awardProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportBaseImage() }
 		)
@@ -133,7 +133,7 @@ class AwardController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = awardProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportActivity() }
 		)
@@ -147,7 +147,7 @@ class AwardController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = awardProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportActivities() }
 		)
@@ -161,7 +161,7 @@ class AwardController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = awardProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportActivities() }
 		)
@@ -175,7 +175,7 @@ class AwardController(
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = awardProcessor,
-			baseRequest = baseRequest,
+			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportActivities() }
 		)
