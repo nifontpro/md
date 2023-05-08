@@ -143,7 +143,11 @@ class UserServiceImpl(
 		val pageSize = baseQuery.pageSize ?: throw MustPageableException()
 		val deptsIds = deptRepository.subTreeIds(deptId = deptId)
 		val pageable = PageRequest.of(page, pageSize, baseQuery.orders.toSort())
-		val res = userRepository.findByDeptIdIn(deptsIds = deptsIds, pageable = pageable)
+		val res = userRepository.findByDeptIdInAndLastnameLikeIgnoreCase(
+			deptsIds = deptsIds,
+			lastname = baseQuery.filter?.let { "$it%" } ?: "%",
+			pageable = pageable
+		)
 		return res.toPageResult { it.toUser() }
 	}
 

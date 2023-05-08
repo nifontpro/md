@@ -19,7 +19,7 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 	fun findByDeptId(deptId: Long): List<UserEntity>
 
 	@EntityGraph("withDept")
-	fun findByDeptIdIn(deptsIds: List<Long>, pageable: Pageable): Page<UserEntity>
+	fun findByDeptIdInAndLastnameLikeIgnoreCase(deptsIds: List<Long>, lastname: String, pageable: Pageable): Page<UserEntity>
 
 	@Modifying
 	@Query("delete from UserEntity u where u.id = :userId")
