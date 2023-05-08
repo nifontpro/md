@@ -1,5 +1,7 @@
 package ru.md.msc.domain.user.service
 
+import ru.md.msc.domain.base.model.BaseQuery
+import ru.md.msc.domain.base.model.PageResult
 import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
@@ -17,4 +19,5 @@ interface UserService {
 	fun addImage(userId: Long, baseImage: BaseImage): BaseImage
 	fun deleteImage(userId: Long, imageId: Long): BaseImage
 	fun findDeptIdByUserId(userId: Long): Long
+	fun findBySubDepts(deptId: Long, baseQuery: BaseQuery): PageResult<User>
 }

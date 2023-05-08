@@ -1,5 +1,7 @@
 package ru.md.msc.db.user.repo
 
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
@@ -15,6 +17,9 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 	fun findByAuthEmailIgnoreCase(authEmail: String): List<UserEntity>
 
 	fun findByDeptId(deptId: Long): List<UserEntity>
+
+	@EntityGraph("withDept")
+	fun findByDeptIdIn(deptsIds: List<Long>, pageable: Pageable): Page<UserEntity>
 
 	@Modifying
 	@Query("delete from UserEntity u where u.id = :userId")

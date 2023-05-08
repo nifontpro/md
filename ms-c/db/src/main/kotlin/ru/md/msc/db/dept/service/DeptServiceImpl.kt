@@ -66,6 +66,13 @@ class DeptServiceImpl(
 		return deptRepository.checkUserChild(userId = userId, upId = upId)
 	}
 
+	/**
+	 * Получить ids всех элементов поддерева отделов, включая вершину
+	 */
+	override fun findSubTreeIds(deptId: Long) : List<Long> {
+		return deptRepository.subTreeIds(deptId = deptId)
+	}
+
 	override fun findSubTreeDepts(deptId: Long, orders: List<BaseOrder>): List<Dept> {
 		val ids = deptRepository.subTreeIds(deptId = deptId)
 		val depts = deptRepository.findByIdIn(ids = ids, sort = orders.toSort())

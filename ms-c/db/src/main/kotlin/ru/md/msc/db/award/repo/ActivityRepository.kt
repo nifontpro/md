@@ -21,12 +21,12 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	@EntityGraph("activityWithUser")
 	fun findByAwardIdAndActiv(awardId: Long, activ: Boolean = true, sort: Sort): List<ActivityEntity>
 
-	@EntityGraph("activityWithUserAndAward")
+/*	@EntityGraph("activityWithUserAndAward")
 	fun findByDeptIdAndActiv(
 		deptId: Long,
 		activ: Boolean = true,
 		sort: Sort
-	): List<ActivityEntity>
+	): List<ActivityEntity>*/
 
 	@EntityGraph("activityWithUserAndAward")
 	@Query(
@@ -43,6 +43,5 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		maxDate: LocalDateTime? = null,
 		sort: Sort = Sort.by(emptyList())
 	): List<ActivityEntity>
-
 
 }

@@ -25,6 +25,7 @@ enum class UserCommand : IBaseCommand {
 	CREATE_OWNER,
 	GET_PROFILES,
 	GET_BY_DEPT,
+	GET_BY_SUB_DEPTS,
 	GET_BY_ID_DETAILS,
 	DELETE,
 	IMG_ADD,

@@ -4,6 +4,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import ru.md.msc.domain.base.helper.ContextError
 import ru.md.msc.domain.base.model.BaseQuery
+import ru.md.msc.domain.base.model.PageInfo
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.domain.image.model.FileData
@@ -17,6 +18,7 @@ abstract class BaseContext(
 	var state: ContextState = ContextState.NONE,
 	var command: IBaseCommand = BaseCommand.NONE,
 	val errors: MutableList<ContextError> = mutableListOf(),
+	var pageInfo: PageInfo? = null,
 
 	var authEmail: String = "",
 	var authId: Long = 0,
@@ -35,7 +37,7 @@ abstract class BaseContext(
 	var baseQuery: BaseQuery = BaseQuery(),
 	var orderFields: List<String> = emptyList(), // Допустимые поля для сортировки
 
-	) {
+) {
 	lateinit var userService: UserService
 	lateinit var deptService: DeptService
 	lateinit var s3Repository: S3Repository

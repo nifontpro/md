@@ -1,4 +1,4 @@
-package ru.md.msc.domain.award.biz.workers
+package ru.md.msc.domain.award.biz.workers.sort
 
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker

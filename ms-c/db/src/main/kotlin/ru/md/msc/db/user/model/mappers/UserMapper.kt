@@ -18,7 +18,7 @@ fun User.toUserEntity(create: Boolean = false) = UserEntity(
 	post = post,
 )
 
-// Для ленивой загрузки без отделов
+// Для ленивой загрузки только с ролями
 fun UserEntity.toUserOnlyRoles() = User(
 	id = id ?: 0,
 	dept = Dept(id = dept?.id ?: 0),
@@ -31,7 +31,7 @@ fun UserEntity.toUserOnlyRoles() = User(
 	roles = roles.map { it.roleUser }.toSet(),
 )
 
-// Для ленивой загрузки без отделов
+// Для ленивой загрузки без отделов и ролей
 fun UserEntity.toUserLazy() = User(
 	id = id ?: 0,
 	dept = Dept(id = dept?.id ?: 0),
@@ -46,6 +46,18 @@ fun UserEntity.toUserLazy() = User(
 fun UserEntity.toUser() = User(
 	id = id ?: 0,
 	dept = dept?.toDept(),
+	authEmail = authEmail,
+	firstname = firstname,
+	patronymic = patronymic,
+	lastname = lastname,
+	gender = gender,
+	post = post,
+	roles = roles.map { it.roleUser }.toSet(),
+	images = images.map { it.toImage() }
+)
+
+fun UserEntity.toUserWithoutDept() = User(
+	id = id ?: 0,
 	authEmail = authEmail,
 	firstname = firstname,
 	patronymic = patronymic,

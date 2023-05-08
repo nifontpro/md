@@ -81,9 +81,23 @@ class UserController(
 	}
 
 	@PostMapping("get_by_dept")
-	private suspend fun getProfiles(
+	private suspend fun getByDept(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetUsersByDeptRequest
+	): BaseResponse<List<User>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = userProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportUsers() }
+		)
+	}
+
+	@PostMapping("get_by_subdepts")
+	private suspend fun getBySubDepts(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetUsersBySubDeptsRequest
 	): BaseResponse<List<User>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(

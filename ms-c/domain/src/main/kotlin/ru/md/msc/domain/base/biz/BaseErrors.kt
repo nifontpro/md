@@ -35,16 +35,6 @@ fun BaseContext.addImageError() {
 	)
 }
 
-fun BaseContext.updateImageError() {
-	fail(
-		errorDb(
-			repository = "image",
-			violationCode = "image update",
-			description = "Ошибка обновления изображения"
-		)
-	)
-}
-
 fun BaseContext.deleteImageError() {
 	fail(
 		errorDb(
@@ -65,4 +55,15 @@ fun BaseContext.s3Error() {
 	)
 }
 
+fun BaseContext.mustPageableError() {
+	fail(
+		errorDb(
+			repository = "base",
+			violationCode = "pageable",
+			description = "Для этого метода обязательны параметры пагинации"
+		)
+	)
+}
+
 class ImageNotFoundException(message: String = "") : RuntimeException(message)
+class MustPageableException(message: String = "") : RuntimeException(message)

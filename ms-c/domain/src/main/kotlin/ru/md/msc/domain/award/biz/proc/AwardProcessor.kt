@@ -6,6 +6,9 @@ import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.validate.*
 import ru.md.msc.domain.award.biz.workers.*
+import ru.md.msc.domain.award.biz.workers.sort.setActionByAwardValidSortedFields
+import ru.md.msc.domain.award.biz.workers.sort.setActionByDeptValidSortedFields
+import ru.md.msc.domain.award.biz.workers.sort.setActionByUserValidSortedFields
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.IBaseProcessor
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail

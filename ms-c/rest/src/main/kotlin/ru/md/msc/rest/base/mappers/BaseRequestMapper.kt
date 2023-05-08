@@ -5,7 +5,10 @@ import ru.md.msc.domain.base.model.converter.toLocalDateTimeUTC
 import ru.md.msc.rest.base.BaseRequest
 
 fun BaseRequest.toBaseQuery() = BaseQuery(
-	orders = orders,
+	page = page,
+	pageSize = pageSize,
+	filter = filter,
 	minDate = minDate?.toLocalDateTimeUTC(),
 	maxDate = maxDate?.toLocalDateTimeUTC(),
+	orders = orders,
 )

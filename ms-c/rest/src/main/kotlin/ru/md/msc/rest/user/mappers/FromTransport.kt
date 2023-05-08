@@ -5,6 +5,7 @@ import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
+import ru.md.msc.rest.base.mappers.toBaseQuery
 import ru.md.msc.rest.user.model.request.*
 
 fun UserContext.fromTransport(request: CreateOwnerRequest) {
@@ -78,6 +79,13 @@ fun UserContext.fromTransport(request: GetUsersByDeptRequest) {
 	command = UserCommand.GET_BY_DEPT
 	authId = request.authId
 	deptId = request.deptId
+}
+
+fun UserContext.fromTransport(request: GetUsersBySubDeptsRequest) {
+	command = UserCommand.GET_BY_SUB_DEPTS
+	authId = request.authId
+	deptId = request.deptId
+	baseQuery = request.baseRequest.toBaseQuery()
 }
 
 fun UserContext.fromTransport(request: GetUserByIdRequest) {

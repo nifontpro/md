@@ -6,22 +6,21 @@ import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.IBaseProcessor
+import ru.md.msc.domain.base.validate.*
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptDownLevel
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.db.validateAuthUserLevel
-import ru.md.msc.domain.base.validate.validateAdminRole
-import ru.md.msc.domain.base.validate.validateDeptId
-import ru.md.msc.domain.base.validate.validateImageId
-import ru.md.msc.domain.base.validate.validateUserId
 import ru.md.msc.domain.base.workers.*
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
+import ru.md.msc.domain.base.workers.chain.validateRequiredPageParamsChain
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.image.repository.S3Repository
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
 import ru.md.msc.domain.user.biz.validate.validateCreateUserRoles
 import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
 import ru.md.msc.domain.user.biz.workers.*
+import ru.md.msc.domain.user.biz.workers.sort.setUsersBySubdeptsValidSortedFields
 import ru.md.msc.domain.user.service.UserService
 
 @Component
@@ -93,6 +92,15 @@ class UserProcessor(
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAuthDeptLevel("Проверка доступа к отделу")
 				getUsersByDept("Получаем сотрудников")
+			}
+
+			operation("Получение сотрудников всех подотделов", UserCommand.GET_BY_SUB_DEPTS) {
+				validateRequiredPageParamsChain()
+				setUsersBySubdeptsValidSortedFields("Устанавливаем допустимые поля сортировки")
+				validateSortedFields("Проверка списка полей сортировки")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptLevel("Проверка доступа к отделу")
+				getUsersBySubDepts("Получаем сотрудников подотделов")
 			}
 
 			operation("Получение профиля сотрудника", UserCommand.GET_BY_ID_DETAILS) {
