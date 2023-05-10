@@ -1,5 +1,6 @@
 package ru.md.msc.rest.user.mappers
 
+import ru.md.msc.domain.base.model.BaseQuery
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
@@ -79,13 +80,14 @@ fun UserContext.fromTransport(request: GetUsersByDeptRequest) {
 	command = UserCommand.GET_BY_DEPT
 	authId = request.authId
 	deptId = request.deptId
+	baseQuery = request.baseRequest?.toBaseQuery() ?: BaseQuery()
 }
 
 fun UserContext.fromTransport(request: GetUsersBySubDeptsRequest) {
 	command = UserCommand.GET_BY_SUB_DEPTS
 	authId = request.authId
 	deptId = request.deptId
-	baseQuery = request.baseRequest.toBaseQuery()
+	baseQuery = request.baseRequest?.toBaseQuery() ?: BaseQuery()
 }
 
 fun UserContext.fromTransport(request: GetUserByIdRequest) {

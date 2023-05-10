@@ -1,26 +1,28 @@
 package ru.md.msc.db.user.service
 
 import jakarta.transaction.Transactional
-import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.msc.db.base.mapper.toImage
+import ru.md.msc.db.base.mapper.toPageRequest
 import ru.md.msc.db.base.mapper.toPageResult
-import ru.md.msc.db.base.mapper.toSort
+import ru.md.msc.db.base.mapper.toSearch
 import ru.md.msc.db.dept.model.DeptDetailsEntity
 import ru.md.msc.db.dept.model.DeptEntity
 import ru.md.msc.db.dept.repo.DeptDetailsRepository
 import ru.md.msc.db.dept.repo.DeptRepository
 import ru.md.msc.db.user.model.UserDetailsEntity
 import ru.md.msc.db.user.model.image.UserImageEntity
-import ru.md.msc.db.user.model.mappers.*
+import ru.md.msc.db.user.model.mappers.toUser
+import ru.md.msc.db.user.model.mappers.toUserDetails
+import ru.md.msc.db.user.model.mappers.toUserDetailsEntity
+import ru.md.msc.db.user.model.mappers.toUserOnlyRoles
 import ru.md.msc.db.user.model.role.RoleEntity
 import ru.md.msc.db.user.repo.RoleRepository
 import ru.md.msc.db.user.repo.UserDetailsRepository
 import ru.md.msc.db.user.repo.UserImageRepository
 import ru.md.msc.db.user.repo.UserRepository
 import ru.md.msc.domain.base.biz.ImageNotFoundException
-import ru.md.msc.domain.base.biz.MustPageableException
 import ru.md.msc.domain.base.model.BaseQuery
 import ru.md.msc.domain.base.model.PageResult
 import ru.md.msc.domain.dept.model.DeptType
@@ -132,21 +134,23 @@ class UserServiceImpl(
 		}
 	}
 
-	override fun findByDeptId(deptId: Long): List<User> {
-		return userRepository.findByDeptId(deptId = deptId).map {
-			it.toUserWithoutDept()
-		}
+	override fun findByDeptId(deptId: Long, baseQuery: BaseQuery): PageResult<User> {
+		val pageRequest = baseQuery.toPageRequest()
+		val res = userRepository.findByDeptIdAndLastnameLikeIgnoreCase(
+			deptId = deptId,
+			lastname = baseQuery.filter.toSearch(),
+			pageable = pageRequest
+		)
+		return res.toPageResult { it.toUser() }
 	}
 
 	override fun findBySubDepts(deptId: Long, baseQuery: BaseQuery): PageResult<User> {
-		val page = baseQuery.page ?: throw MustPageableException()
-		val pageSize = baseQuery.pageSize ?: throw MustPageableException()
+		val pageRequest = baseQuery.toPageRequest()
 		val deptsIds = deptRepository.subTreeIds(deptId = deptId)
-		val pageable = PageRequest.of(page, pageSize, baseQuery.orders.toSort())
 		val res = userRepository.findByDeptIdInAndLastnameLikeIgnoreCase(
 			deptsIds = deptsIds,
-			lastname = baseQuery.filter?.let { "$it%" } ?: "%",
-			pageable = pageable
+			lastname = baseQuery.filter.toSearch(),
+			pageable = pageRequest
 		)
 		return res.toPageResult { it.toUser() }
 	}

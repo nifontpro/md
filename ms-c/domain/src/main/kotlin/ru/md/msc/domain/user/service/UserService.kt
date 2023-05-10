@@ -14,10 +14,10 @@ interface UserService {
 	fun doesOwnerWithEmailExist(email: String): Boolean
 	fun findById(userId: Long): User?
 	fun findByAuthEmailWithDept(authEmail: String): List<User>
-	fun findByDeptId(deptId: Long): List<User>
 	fun findByIdDetails(userId: Long): UserDetails?
 	fun addImage(userId: Long, baseImage: BaseImage): BaseImage
 	fun deleteImage(userId: Long, imageId: Long): BaseImage
 	fun findDeptIdByUserId(userId: Long): Long
 	fun findBySubDepts(deptId: Long, baseQuery: BaseQuery): PageResult<User>
+	fun findByDeptId(deptId: Long, baseQuery: BaseQuery): PageResult<User>
 }

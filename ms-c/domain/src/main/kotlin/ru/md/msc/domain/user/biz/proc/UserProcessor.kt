@@ -21,6 +21,7 @@ import ru.md.msc.domain.user.biz.validate.validateCreateUserRoles
 import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
 import ru.md.msc.domain.user.biz.workers.*
 import ru.md.msc.domain.user.biz.workers.sort.setUsersBySubdeptsValidSortedFields
+import ru.md.msc.domain.user.biz.workers.sort.setUsersValidSortedFields
 import ru.md.msc.domain.user.service.UserService
 
 @Component
@@ -89,6 +90,9 @@ class UserProcessor(
 			}
 
 			operation("Получение сотрудников отдела", UserCommand.GET_BY_DEPT) {
+				validateRequiredPageParamsChain()
+				setUsersValidSortedFields("Устанавливаем допустимые поля сортировки")
+				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAuthDeptLevel("Проверка доступа к отделу")
 				getUsersByDept("Получаем сотрудников")

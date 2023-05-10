@@ -16,10 +16,14 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 	@EntityGraph("withDept")
 	fun findByAuthEmailIgnoreCase(authEmail: String): List<UserEntity>
 
-	fun findByDeptId(deptId: Long): List<UserEntity>
+	fun findByDeptIdAndLastnameLikeIgnoreCase(deptId: Long, lastname: String, pageable: Pageable): Page<UserEntity>
 
 	@EntityGraph("withDept")
-	fun findByDeptIdInAndLastnameLikeIgnoreCase(deptsIds: List<Long>, lastname: String, pageable: Pageable): Page<UserEntity>
+	fun findByDeptIdInAndLastnameLikeIgnoreCase(
+		deptsIds: List<Long>,
+		lastname: String,
+		pageable: Pageable
+	): Page<UserEntity>
 
 	@Modifying
 	@Query("delete from UserEntity u where u.id = :userId")

@@ -125,6 +125,10 @@ class AwardController(
 		)
 	}
 
+	/**
+	 * Отправить действие actionType с определенно наградой awardId
+	 * для сотрудника userId
+	 */
 	@PostMapping("action")
 	private suspend fun sendAction(
 		@RequestHeader(name = AUTH) bearerToken: String,
@@ -139,6 +143,15 @@ class AwardController(
 		)
 	}
 
+	/**
+	 * Получить активные награждения сотрудника userId
+	 * baseRequest:
+	 * Допустимые поля для сортировки:
+	 *      "date",
+	 * 			"actionType",
+	 * 			"award.name",
+	 * 			"award.type"
+	 */
 	@PostMapping("act_user")
 	private suspend fun getActivAwardByUser(
 		@RequestHeader(name = AUTH) bearerToken: String,
@@ -153,6 +166,21 @@ class AwardController(
 		)
 	}
 
+	/**
+	 * Получить активные награждения в отделе deptId
+	 * baseRequest:
+	 * Допустимые поля для сортировки:
+	 *      "date",
+	 * 			"actionType",
+	 * 			"user.firstname",
+	 * 			"user.lastname",
+	 * 			"user.patronymic",
+	 * 			"user.post",
+	 * 			"award.name",
+	 * 			"award.type"
+	 *
+	 *  minDate, maxDate - ограничения по дате событий, необязательны
+	 */
 	@PostMapping("act_dept")
 	private suspend fun getActivAwardByDept(
 		@RequestHeader(name = AUTH) bearerToken: String,
@@ -166,6 +194,18 @@ class AwardController(
 			toTransport = { toTransportActivities() }
 		)
 	}
+
+	/**
+	 * Получить сотрудников, награжденных наградой awardId
+	 * baseRequest:
+	 * Допустимые поля для сортировки:
+	 *      "date",
+	 * 			"actionType",
+	 * 			"user.firstname",
+	 * 			"user.lastname",
+	 * 			"user.patronymic",
+	 * 			"user.post",
+	 */
 
 	@PostMapping("act_award")
 	private suspend fun getUserByActivAward(

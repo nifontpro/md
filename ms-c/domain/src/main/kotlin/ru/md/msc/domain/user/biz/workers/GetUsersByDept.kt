@@ -3,6 +3,7 @@ package ru.md.msc.domain.user.biz.workers
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.ContextState
+import ru.md.msc.domain.base.workers.pageFun
 import ru.md.msc.domain.user.biz.proc.getUserError
 import ru.md.msc.domain.user.biz.proc.UserContext
 
@@ -13,11 +14,10 @@ fun ICorChainDsl<UserContext>.getUsersByDept(title: String) = worker {
 
 	handle {
 
-		users = try {
-			userService.findByDeptId(deptId = deptId)
+		try {
+			users = pageFun { userService.findByDeptId(deptId = deptId, baseQuery = baseQuery) }
 		} catch (e: Exception) {
 			getUserError()
-			return@handle
 		}
 	}
 }
