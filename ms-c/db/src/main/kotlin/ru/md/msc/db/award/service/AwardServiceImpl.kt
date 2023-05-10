@@ -80,6 +80,7 @@ class AwardServiceImpl(
 			deptsIds = deptsIds,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
+			filter = baseQuery.filter?.let { "$it%" },
 			pageable = pageRequest
 		)
 		return awards.toPageResult { it.toAward() }

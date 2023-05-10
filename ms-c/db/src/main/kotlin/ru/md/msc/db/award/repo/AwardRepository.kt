@@ -29,7 +29,7 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		"""
 		from AwardEntity a where 
 		a.dept.id in :deptsIds and 
-		(
+		((
 			a.type = 'P' and 
 			a.startDate <= NOW() and (coalesce(:minDate, null) is null or a.startDate >= :minDate) and
 			a.endDate >= NOW() and (coalesce(:maxDate, null) is null or a.endDate <= :maxDate)
@@ -37,13 +37,16 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 			a.type = 'S' and
 			(coalesce(:minDate, null) is null or a.startDate >= :minDate) and 
 			(coalesce(:maxDate, null) is null or a.endDate <= :maxDate)
-		)
+		)) and 
+		((:filter is null) or (upper(a.name) like upper(:filter) escape '\'))
+		
 	"""
-	)
+	) // escape '\'
 	fun findByDeptIdIn(
 		deptsIds: List<Long>,
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
+		filter: String? = null,
 		pageable: Pageable
 	): Page<AwardEntity>
 }

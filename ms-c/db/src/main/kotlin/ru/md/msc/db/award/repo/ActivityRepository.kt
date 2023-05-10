@@ -23,13 +23,6 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	@EntityGraph("activityWithUser")
 	fun findByAwardIdAndActiv(awardId: Long, activ: Boolean = true, sort: Sort): List<ActivityEntity>
 
-	/*	@EntityGraph("activityWithUserAndAward")
-		fun findByDeptIdAndActiv(
-			deptId: Long,
-			activ: Boolean = true,
-			sort: Sort
-		): List<ActivityEntity>*/
-
 	@EntityGraph("activityWithUserAndAward")
 	@Query(
 		"""
