@@ -8,7 +8,7 @@ import ru.md.msc.domain.base.helper.fail
 
 fun <T : BaseContext> ICorChainDsl<T>.validatePageNumber(title: String) = worker {
 	this.title = title
-	on { baseQuery.page?.let { it < 0 } ?: false }
+	on { baseQuery.page < 0 }
 	handle {
 		fail(
 			errorValidation(

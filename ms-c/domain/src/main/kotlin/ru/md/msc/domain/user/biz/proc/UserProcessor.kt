@@ -13,7 +13,7 @@ import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.db.validateAuthUserLevel
 import ru.md.msc.domain.base.workers.*
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
-import ru.md.msc.domain.base.workers.chain.validateRequiredPageParamsChain
+import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.image.repository.S3Repository
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
@@ -90,7 +90,7 @@ class UserProcessor(
 			}
 
 			operation("Получение сотрудников отдела", UserCommand.GET_BY_DEPT) {
-				validateRequiredPageParamsChain()
+				validatePageParamsChain()
 				setUsersValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
@@ -99,7 +99,7 @@ class UserProcessor(
 			}
 
 			operation("Получение сотрудников всех подотделов", UserCommand.GET_BY_SUB_DEPTS) {
-				validateRequiredPageParamsChain()
+				validatePageParamsChain()
 				setUsersBySubdeptsValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")

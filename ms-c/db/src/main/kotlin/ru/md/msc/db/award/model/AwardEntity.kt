@@ -7,6 +7,11 @@ import ru.md.msc.domain.award.model.AwardType
 import java.time.LocalDateTime
 import java.util.*
 
+@NamedEntityGraph(
+	name = "awardWithDept",
+	attributeNodes = [NamedAttributeNode("dept")]
+)
+
 @Entity
 @Table(name = "award", schema = "md", catalog = "medalist")
 class AwardEntity(

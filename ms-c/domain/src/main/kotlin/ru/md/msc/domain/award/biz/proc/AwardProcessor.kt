@@ -9,6 +9,7 @@ import ru.md.msc.domain.award.biz.workers.*
 import ru.md.msc.domain.award.biz.workers.sort.setActionByAwardValidSortedFields
 import ru.md.msc.domain.award.biz.workers.sort.setActionByDeptValidSortedFields
 import ru.md.msc.domain.award.biz.workers.sort.setActionByUserValidSortedFields
+import ru.md.msc.domain.award.biz.workers.sort.setAwardWithDeptValidSortedFields
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.IBaseProcessor
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
@@ -20,6 +21,7 @@ import ru.md.msc.domain.base.validate.validateUserId
 import ru.md.msc.domain.base.workers.*
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
+import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.image.repository.S3Repository
 import ru.md.msc.domain.user.service.UserService
@@ -119,6 +121,7 @@ class AwardProcessor(
 
 			operation("Получить активные награды в отделе", AwardCommand.GET_ACTIVE_AWARD_BY_DEPT) {
 				validateDeptId("Проверка deptId")
+				validatePageParamsChain()
 				setActionByDeptValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
@@ -131,6 +134,14 @@ class AwardProcessor(
 				validateSortedFields("Проверка списка полей сортировки")
 				validateAccessToAwardChain()
 				getUsersByActiveAward("Получаем награды сотрудника")
+			}
+
+			operation("Получить доступные для награждения медали", AwardCommand.GET_ADMIN_AVAILABLE) {
+				validatePageParamsChain()
+				setAwardWithDeptValidSortedFields("Устанавливаем допустимые поля сортировки")
+				validateSortedFields("Проверка списка полей сортировки")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				getAvailableAwardsBySubdepts("Получаем доступные награды")
 			}
 
 			finishOperation()

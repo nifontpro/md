@@ -78,6 +78,20 @@ class AwardController(
 		)
 	}
 
+	@PostMapping("get_subdepts")
+	private suspend fun getAwardBySubDept(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetAwardsBySubDeptsRequest
+	): BaseResponse<List<AwardResponse>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = awardProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportAwards() }
+		)
+	}
+
 	@PostMapping("delete")
 	private suspend fun delete(
 		@RequestHeader(name = AUTH) bearerToken: String,

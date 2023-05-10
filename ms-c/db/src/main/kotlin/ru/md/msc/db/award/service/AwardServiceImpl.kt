@@ -10,7 +10,10 @@ import ru.md.msc.db.award.repo.AwardDetailsRepository
 import ru.md.msc.db.award.repo.AwardImageRepository
 import ru.md.msc.db.award.repo.AwardRepository
 import ru.md.msc.db.base.mapper.toImage
+import ru.md.msc.db.base.mapper.toPageRequest
+import ru.md.msc.db.base.mapper.toPageResult
 import ru.md.msc.db.base.mapper.toSort
+import ru.md.msc.db.dept.repo.DeptRepository
 import ru.md.msc.domain.award.biz.proc.AlreadyActionException
 import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
 import ru.md.msc.domain.award.model.Activity
@@ -20,6 +23,7 @@ import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.ImageNotFoundException
 import ru.md.msc.domain.base.model.BaseOrder
 import ru.md.msc.domain.base.model.BaseQuery
+import ru.md.msc.domain.base.model.PageResult
 import ru.md.msc.domain.image.model.BaseImage
 import java.time.LocalDateTime
 
@@ -30,6 +34,7 @@ class AwardServiceImpl(
 	private val awardDetailsRepository: AwardDetailsRepository,
 	private val awardImageRepository: AwardImageRepository,
 	private val activityRepository: ActivityRepository,
+	private val deptRepository: DeptRepository,
 ) : AwardService {
 
 	override fun create(awardDetails: AwardDetails): AwardDetails {
@@ -66,6 +71,18 @@ class AwardServiceImpl(
 	override fun findByDeptId(deptId: Long, orders: List<BaseOrder>): List<Award> {
 		val awards = awardRepository.findByDeptId(deptId = deptId, sort = orders.toSort())
 		return awards.map { it.toAward() }
+	}
+
+	override fun findBySubDept(deptId: Long, baseQuery: BaseQuery): PageResult<Award> {
+		val pageRequest = baseQuery.toPageRequest()
+		val deptsIds = deptRepository.subTreeIds(deptId = deptId)
+		val awards = awardRepository.findByDeptIdIn(
+			deptsIds = deptsIds,
+			minDate = baseQuery.minDate,
+			maxDate = baseQuery.maxDate,
+			pageable = pageRequest
+		)
+		return awards.toPageResult { it.toAward() }
 	}
 
 	override fun findDeptIdByAwardId(awardId: Long): Long {
@@ -126,14 +143,15 @@ class AwardServiceImpl(
 		return activities.map { it.toActivityOnlyUser() }
 	}
 
-	override fun findActivAwardsByDept(deptId: Long, baseQuery: BaseQuery): List<Activity> {
-		val activities = activityRepository.findByDeptId(
+	override fun findActivAwardsByDept(deptId: Long, baseQuery: BaseQuery): PageResult<Activity> {
+		val pageRequest = baseQuery.toPageRequest()
+		val activities = activityRepository.findByDeptIdPage(
 			deptId = deptId,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
-			sort = baseQuery.orders.toSort()
+			pageable = pageRequest
 		)
-		return activities.map { it.toActivityUserLazy() }
+		return activities.toPageResult { it.toActivityUserLazy() }
 	}
 
 }

@@ -1,5 +1,7 @@
 package ru.md.msc.db.award.repo
 
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
@@ -21,12 +23,12 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	@EntityGraph("activityWithUser")
 	fun findByAwardIdAndActiv(awardId: Long, activ: Boolean = true, sort: Sort): List<ActivityEntity>
 
-/*	@EntityGraph("activityWithUserAndAward")
-	fun findByDeptIdAndActiv(
-		deptId: Long,
-		activ: Boolean = true,
-		sort: Sort
-	): List<ActivityEntity>*/
+	/*	@EntityGraph("activityWithUserAndAward")
+		fun findByDeptIdAndActiv(
+			deptId: Long,
+			activ: Boolean = true,
+			sort: Sort
+		): List<ActivityEntity>*/
 
 	@EntityGraph("activityWithUserAndAward")
 	@Query(
@@ -37,11 +39,11 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		(coalesce(:maxDate, null) is null or a.date <= :maxDate)
 	"""
 	)
-	fun findByDeptId(
+	fun findByDeptIdPage(
 		deptId: Long,
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
-		sort: Sort = Sort.by(emptyList())
-	): List<ActivityEntity>
+		pageable: Pageable
+	): Page<ActivityEntity>
 
 }

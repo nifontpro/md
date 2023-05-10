@@ -63,6 +63,12 @@ fun AwardContext.fromTransport(request: GetAwardsByDeptRequest) {
 	baseQuery = request.baseRequest.toBaseQuery()
 }
 
+fun AwardContext.fromTransport(request: GetAwardsBySubDeptsRequest) {
+	command = AwardCommand.GET_ADMIN_AVAILABLE
+	authId = request.authId
+	baseQuery = request.baseRequest.toBaseQuery()
+}
+
 fun AwardContext.fromTransport(request: DeleteAwardRequest) {
 	command = AwardCommand.DELETE
 	authId = request.authId

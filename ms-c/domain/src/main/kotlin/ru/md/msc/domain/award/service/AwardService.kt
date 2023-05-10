@@ -5,6 +5,7 @@ import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.base.model.BaseOrder
 import ru.md.msc.domain.base.model.BaseQuery
+import ru.md.msc.domain.base.model.PageResult
 import ru.md.msc.domain.image.model.BaseImage
 
 interface AwardService {
@@ -19,6 +20,7 @@ interface AwardService {
 	fun findByDeptId(deptId: Long, orders: List<BaseOrder> = emptyList()): List<Award>
 	fun sendActivity(activity: Activity): Activity
 	fun findActivAwardsByUser(userId: Long, orders: List<BaseOrder> = emptyList()): List<Activity>
-	fun findActivAwardsByDept(deptId: Long, baseQuery: BaseQuery): List<Activity>
+	fun findActivAwardsByDept(deptId: Long, baseQuery: BaseQuery): PageResult<Activity>
 	fun findUsersByActivAward(awardId: Long, orders: List<BaseOrder>): List<Activity>
+	fun findBySubDept(deptId: Long, baseQuery: BaseQuery): PageResult<Award>
 }
