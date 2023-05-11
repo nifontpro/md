@@ -21,13 +21,6 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 	override fun deleteById(awardId: Long)
 
 	/*
-		from AwardEntity a where
-		a.dept.id = :deptId and
-		((:name is null) or (upper(a.name) like upper(:name) escape '\')) and
-		((:state is null) or (:state = md.award_state(a.startDate, a.endDate)))
-	 */
-
-	/*
 		select a from md.award a where
 		a.dept_id = :deptId and
 		((:name is null) or (upper(a.name) like upper(:name) escape '\')) and
@@ -38,9 +31,9 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 	@Query(
 		"""
 		from AwardEntity a where 
-		a.dept.id = :deptId and
+		a.dept.id = :deptId and 
 		((:name is null) or (upper(a.name) like upper(:name) escape '\')) and 
-		((:state is null) or (:state = md.award_state(a.startDate, a.endDate)))
+		((:state is null) or (:state = award_state(a.startDate, a.endDate)))
 		"""
 	)
 	fun findByDeptId(
@@ -49,9 +42,6 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		state: String? = null,
 		pageable: Pageable
 	): Page<AwardEntity>
-
-	@EntityGraph("awardWithDept")
-	fun findByDeptIdAndNameLikeIgnoreCase(deptId: Long, name: String, pageable: Pageable): Page<AwardEntity>
 
 	@EntityGraph("awardWithDept")
 	@Query(
