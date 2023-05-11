@@ -9,16 +9,14 @@ import ru.md.msc.db.award.repo.ActivityRepository
 import ru.md.msc.db.award.repo.AwardDetailsRepository
 import ru.md.msc.db.award.repo.AwardImageRepository
 import ru.md.msc.db.award.repo.AwardRepository
-import ru.md.msc.db.base.mapper.toImage
-import ru.md.msc.db.base.mapper.toPageRequest
-import ru.md.msc.db.base.mapper.toPageResult
-import ru.md.msc.db.base.mapper.toSort
+import ru.md.msc.db.base.mapper.*
 import ru.md.msc.db.dept.repo.DeptRepository
 import ru.md.msc.domain.award.biz.proc.AlreadyActionException
 import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
 import ru.md.msc.domain.award.model.Activity
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.model.AwardDetails
+import ru.md.msc.domain.award.model.AwardState
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.ImageNotFoundException
 import ru.md.msc.domain.base.model.BaseOrder
@@ -68,9 +66,16 @@ class AwardServiceImpl(
 		return awardDetailsEntity.toAwardDetails()
 	}
 
-	override fun findByDeptId(deptId: Long, orders: List<BaseOrder>): List<Award> {
-		val awards = awardRepository.findByDeptId(deptId = deptId, sort = orders.toSort())
-		return awards.map { it.toAward() }
+	override fun findByDeptId(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award> {
+		val state = awardState?.name
+		println("--- STATE: $state")
+		val awards = awardRepository.findByDeptId(
+			deptId = deptId,
+			name = baseQuery.filter.toSearch(),
+			state = state,
+			pageable = baseQuery.toPageRequest()
+		)
+		return awards.toPageResult { it.toAward() }
 	}
 
 	override fun findBySubDept(deptId: Long, baseQuery: BaseQuery): PageResult<Award> {

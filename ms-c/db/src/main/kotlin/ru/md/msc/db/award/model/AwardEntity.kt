@@ -14,6 +14,7 @@ import java.util.*
 
 @Entity
 @Table(name = "award", schema = "md", catalog = "medalist")
+
 class AwardEntity(
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

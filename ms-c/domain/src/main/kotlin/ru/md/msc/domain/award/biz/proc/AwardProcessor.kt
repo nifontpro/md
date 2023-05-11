@@ -67,6 +67,7 @@ class AwardProcessor(
 
 			operation("Получить награды в отделе", AwardCommand.GET_BY_DEPT) {
 				validateDeptId("Проверяем deptId")
+				validatePageParamsChain()
 				worker("Допустимые поля сортировки") { orderFields = listOf("name", "type", "startDate", "endDate") }
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")

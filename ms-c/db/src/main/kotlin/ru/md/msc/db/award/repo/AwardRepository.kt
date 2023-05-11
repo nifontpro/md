@@ -2,7 +2,6 @@ package ru.md.msc.db.award.repo
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
@@ -21,8 +20,38 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 	@Query("delete from AwardEntity a where a.id = :awardId")
 	override fun deleteById(awardId: Long)
 
+	/*
+		from AwardEntity a where
+		a.dept.id = :deptId and
+		((:name is null) or (upper(a.name) like upper(:name) escape '\')) and
+		((:state is null) or (:state = md.award_state(a.startDate, a.endDate)))
+	 */
+
+	/*
+		select a from md.award a where
+		a.dept_id = :deptId and
+		((:name is null) or (upper(a.name) like upper(:name) escape '\')) and
+		((:state is null) or (:state = md.award_state(a.start_date, a.end_date)))
+		""", nativeQuery = true
+	 */
 	@EntityGraph("awardWithDept")
-	fun findByDeptId(deptId: Long, sort: Sort): List<AwardEntity>
+	@Query(
+		"""
+		from AwardEntity a where 
+		a.dept.id = :deptId and
+		((:name is null) or (upper(a.name) like upper(:name) escape '\')) and 
+		((:state is null) or (:state = md.award_state(a.startDate, a.endDate)))
+		"""
+	)
+	fun findByDeptId(
+		deptId: Long,
+		name: String? = null,
+		state: String? = null,
+		pageable: Pageable
+	): Page<AwardEntity>
+
+	@EntityGraph("awardWithDept")
+	fun findByDeptIdAndNameLikeIgnoreCase(deptId: Long, name: String, pageable: Pageable): Page<AwardEntity>
 
 	@EntityGraph("awardWithDept")
 	@Query(
@@ -41,7 +70,7 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		((:filter is null) or (upper(a.name) like upper(:filter) escape '\'))
 		
 	"""
-	) // escape '\'
+	)
 	fun findByDeptIdIn(
 		deptsIds: List<Long>,
 		minDate: LocalDateTime? = null,

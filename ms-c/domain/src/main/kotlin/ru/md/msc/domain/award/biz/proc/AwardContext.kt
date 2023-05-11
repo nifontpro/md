@@ -1,9 +1,6 @@
 package ru.md.msc.domain.award.biz.proc
 
-import ru.md.msc.domain.award.model.ActionType
-import ru.md.msc.domain.award.model.Activity
-import ru.md.msc.domain.award.model.Award
-import ru.md.msc.domain.award.model.AwardDetails
+import ru.md.msc.domain.award.model.*
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.BaseContext
 import ru.md.msc.domain.base.biz.IBaseCommand
@@ -18,6 +15,7 @@ class AwardContext : BaseContext() {
 	var awardId: Long = 0
 	var userDeptId: Long = 0
 	var actionType: ActionType = ActionType.UNDEF
+	var awardState: AwardState? = null
 
 	lateinit var awardService: AwardService
 }
