@@ -12,14 +12,13 @@ fun ICorChainDsl<UserContext>.addUserImageToDb(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-
-		try {
-			baseImage = userService.addImage(userId = userId, baseImage = baseImage)
-		} catch (e: Exception) {
-			log.error(e.message)
-			deleteImageOnFailing = true
-			addImageError()
-		}
-
+		baseImage = userService.addImage(userId = userId, baseImage = baseImage)
 	}
+
+	except {
+		log.error(it.message)
+		deleteImageOnFailing = true
+		addImageError()
+	}
+
 }

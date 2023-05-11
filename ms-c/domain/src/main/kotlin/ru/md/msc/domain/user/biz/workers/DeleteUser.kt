@@ -13,18 +13,18 @@ fun ICorChainDsl<UserContext>.deleteUser(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-
-		try {
-			userService.deleteById(userId)
-		} catch (e: Exception) {
-			log.error(e.message)
-			fail(
-				errorDb(
-					repository = "user",
-					violationCode = "delete",
-					description = "Ошибка при удалении сотрудника, возможно у него есть награждения"
-				)
-			)
-		}
+		userService.deleteById(userId)
 	}
+
+	except {
+		log.error(it.message)
+		fail(
+			errorDb(
+				repository = "user",
+				violationCode = "delete",
+				description = "Ошибка при удалении сотрудника, возможно у него есть награждения"
+			)
+		)
+	}
+
 }

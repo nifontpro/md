@@ -29,11 +29,13 @@ fun ICorChainDsl<AwardContext>.addAwardAction(title: String) = worker {
 			deptId = userDeptId,
 			authId = authId
 		)
+		activity = awardService.sendActivity(activity = newActivity)
+	}
 
-		try {
-			activity = awardService.sendActivity(activity = newActivity)
-		} catch (e: AlreadyActionException) {
-			fail(
+	except {
+		log.error(it.message)
+		when (it) {
+			is AlreadyActionException -> fail(
 				errorDb(
 					repository = "award",
 					violationCode = "already action",
@@ -41,9 +43,8 @@ fun ICorChainDsl<AwardContext>.addAwardAction(title: String) = worker {
 					level = ContextError.Levels.INFO,
 				)
 			)
-		} catch (e: Exception) {
-			log.error(e.message)
-			fail(
+
+			else -> fail(
 				errorDb(
 					repository = "award",
 					violationCode = "award user",
@@ -52,4 +53,5 @@ fun ICorChainDsl<AwardContext>.addAwardAction(title: String) = worker {
 			)
 		}
 	}
+
 }

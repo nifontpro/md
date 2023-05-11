@@ -13,18 +13,16 @@ fun ICorChainDsl<AwardContext>.updateAward(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
+		awardDetails = awardService.update(awardDetails = awardDetails)
+	}
 
-		try {
-			awardDetails = awardService.update(awardDetails = awardDetails)
-		} catch (e: Exception) {
-			fail(
-				errorDb(
-					repository = "award",
-					violationCode = "update",
-					description = "Ошибка обновления награды"
-				)
+	except {
+		fail(
+			errorDb(
+				repository = "award",
+				violationCode = "update",
+				description = "Ошибка обновления награды"
 			)
-		}
-
+		)
 	}
 }

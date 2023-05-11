@@ -14,15 +14,14 @@ fun ICorChainDsl<DeptContext>.deleteDeptImageFromDb(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
+		baseImage = deptService.deleteImage(deptId = deptId, imageId = imageId)
+	}
 
-		try {
-			baseImage = deptService.deleteImage(deptId = deptId, imageId = imageId)
-		} catch (e: ImageNotFoundException) {
-			imageNotFoundError()
-		} catch (e: Exception) {
-			log.info(e.message)
-			deleteImageError()
+	except {
+		log.error(it.message)
+		when (it) {
+			is ImageNotFoundException -> imageNotFoundError()
+			else -> deleteImageError()
 		}
-
 	}
 }

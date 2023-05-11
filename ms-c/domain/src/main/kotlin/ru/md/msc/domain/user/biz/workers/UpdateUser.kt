@@ -13,17 +13,18 @@ fun ICorChainDsl<UserContext>.updateUser(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-
-		try {
-			userDetails = userService.update(userDetails = userDetails, isAuthUserHasAdminRole = isAuthUserHasAdminRole)
-		} catch (e: Exception) {
-			fail(
-				errorDb(
-					repository = "user",
-					violationCode = "create",
-					description = "Ошибка обновления профиля сотрудника"
-				)
-			)
-		}
+		userDetails = userService.update(userDetails = userDetails, isAuthUserHasAdminRole = isAuthUserHasAdminRole)
 	}
+
+	except {
+		log.error(it.message)
+		fail(
+			errorDb(
+				repository = "user",
+				violationCode = "create",
+				description = "Ошибка обновления профиля сотрудника"
+			)
+		)
+	}
+
 }

@@ -13,19 +13,15 @@ fun ICorChainDsl<DeptContext>.getDeptDetailsById(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-
-		val deptDetailsNull = try {
-			deptService.findByIdDetails(deptId = deptId)
-		} catch (e: Exception) {
-			getDeptError()
+		deptDetails = deptService.findByIdDetails(deptId = deptId) ?: run {
+			deptNotFound()
 			return@handle
 		}
-
-		if (deptDetailsNull == null) {
-			deptNotFound()
-		} else {
-			deptDetails = deptDetailsNull
-		}
-
 	}
+
+	except {
+		log.error(it.message)
+		getDeptError()
+	}
+
 }

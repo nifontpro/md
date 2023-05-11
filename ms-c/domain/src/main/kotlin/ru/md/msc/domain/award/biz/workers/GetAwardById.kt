@@ -14,14 +14,14 @@ fun ICorChainDsl<AwardContext>.getAwardById(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
+		award = awardService.findByIdLazy(awardId = awardId)
+	}
 
-		try {
-			award = awardService.findByIdLazy(awardId = awardId)
-		} catch (e: AwardNotFoundException) {
-			awardNotFoundError()
-		} catch (e: Exception) {
-			getAwardError()
+	except {
+		log.error(it.message)
+		when (it) {
+			is AwardNotFoundException -> awardNotFoundError()
+			else -> getAwardError()
 		}
-
 	}
 }

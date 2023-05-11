@@ -13,19 +13,17 @@ fun ICorChainDsl<DeptContext>.createDept(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
+		deptDetails = deptService.create(deptDetails)
+	}
 
-		deptDetails = try {
-			deptService.create(deptDetails)
-		} catch (e: Exception) {
-			fail(
-				errorDb(
-					repository = "dept",
-					violationCode = "dept create",
-					description = "Ошибка создания отдела"
-				)
+	except {
+		log.error(it.message)
+		fail(
+			errorDb(
+				repository = "dept",
+				violationCode = "dept create",
+				description = "Ошибка создания отдела"
 			)
-			return@handle
-		}
-
+		)
 	}
 }

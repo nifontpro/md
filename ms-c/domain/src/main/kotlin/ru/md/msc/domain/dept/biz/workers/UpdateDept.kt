@@ -13,18 +13,18 @@ fun ICorChainDsl<DeptContext>.updateDept(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-
-		try {
-			deptDetails = deptService.update(deptDetails = deptDetails)
-		} catch (e: Exception) {
-			log.info(e.message)
-			fail(
-				errorDb(
-					repository = "dept",
-					violationCode = "update",
-					description = "Ошибка обновления профиля отдела"
-				)
-			)
-		}
+		deptDetails = deptService.update(deptDetails = deptDetails)
 	}
+
+	except {
+		log.error(it.message)
+		fail(
+			errorDb(
+				repository = "dept",
+				violationCode = "update",
+				description = "Ошибка обновления профиля отдела"
+			)
+		)
+	}
+
 }

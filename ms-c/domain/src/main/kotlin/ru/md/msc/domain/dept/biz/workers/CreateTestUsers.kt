@@ -2,6 +2,9 @@ package ru.md.msc.domain.dept.biz.workers
 
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
+import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
+import ru.md.msc.domain.award.biz.proc.awardNotFoundError
+import ru.md.msc.domain.award.biz.proc.getAwardError
 import ru.md.msc.domain.base.biz.ContextState
 import ru.md.msc.domain.base.helper.errorDb
 import ru.md.msc.domain.base.helper.fail
@@ -37,19 +40,18 @@ fun ICorChainDsl<DeptContext>.createTestUsers(title: String) = worker {
 				address = "РФ",
 				description = "Для теста"
 			)
-
-			try {
-				userService.create(userDetails)
-			} catch (e: Exception) {
-				fail(
-					errorDb(
-						repository = "user",
-						violationCode = "user create",
-						description = "Ошибка создания тестового сотрудника"
-					)
-				)
-				return@handle
-			}
+			userService.create(userDetails)
 		}
+	}
+
+	except {
+		log.error(it.message)
+		fail(
+			errorDb(
+				repository = "user",
+				violationCode = "user create",
+				description = "Ошибка создания тестового сотрудника"
+			)
+		)
 	}
 }

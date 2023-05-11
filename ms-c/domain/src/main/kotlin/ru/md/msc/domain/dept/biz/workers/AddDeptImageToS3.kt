@@ -23,6 +23,7 @@ fun ICorChainDsl<DeptContext>.addDeptImageToS3(title: String) = worker {
 				return@handle
 			}
 		} catch (e: Exception) {
+			log.info(e.message)
 			getDeptError()
 			return@handle
 		}

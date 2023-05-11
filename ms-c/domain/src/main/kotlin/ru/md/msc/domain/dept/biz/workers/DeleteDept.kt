@@ -13,18 +13,18 @@ fun ICorChainDsl<DeptContext>.deleteDept(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-
-		try {
-			deptService.deleteById(deptId = deptId)
-		} catch (e: Exception) {
-			log.info(e.message)
-			fail(
-				errorDb(
-					repository = "dept",
-					violationCode = "delete",
-					description = "Удаление отдела невозможно"
-				)
-			)
-		}
+		deptService.deleteById(deptId = deptId)
 	}
+
+	except {
+		log.error(it.message)
+		fail(
+			errorDb(
+				repository = "dept",
+				violationCode = "delete",
+				description = "Удаление отдела невозможно"
+			)
+		)
+	}
+
 }

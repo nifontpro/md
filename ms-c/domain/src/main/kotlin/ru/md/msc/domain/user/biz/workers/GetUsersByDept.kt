@@ -4,8 +4,8 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.ContextState
 import ru.md.msc.domain.base.workers.pageFun
-import ru.md.msc.domain.user.biz.proc.getUserError
 import ru.md.msc.domain.user.biz.proc.UserContext
+import ru.md.msc.domain.user.biz.proc.getUserError
 
 fun ICorChainDsl<UserContext>.getUsersByDept(title: String) = worker {
 
@@ -13,11 +13,12 @@ fun ICorChainDsl<UserContext>.getUsersByDept(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-
-		try {
-			users = pageFun { userService.findByDeptId(deptId = deptId, baseQuery = baseQuery) }
-		} catch (e: Exception) {
-			getUserError()
-		}
+		users = pageFun { userService.findByDeptId(deptId = deptId, baseQuery = baseQuery) }
 	}
+
+	except {
+		log.error(it.message)
+		getUserError()
+	}
+
 }

@@ -12,13 +12,12 @@ fun ICorChainDsl<DeptContext>.addDeptImageToDb(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
+		baseImage = deptService.addImage(deptId = deptId, baseImage = baseImage)
+	}
 
-		try {
-			baseImage = deptService.addImage(deptId = deptId, baseImage = baseImage)
-		} catch (e: Exception) {
-			log.info(e.message)
-			deleteImageOnFailing = true
-			addImageError()
-		}
+	except {
+		log.error(it.message)
+		deleteImageOnFailing = true
+		addImageError()
 	}
 }

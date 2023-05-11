@@ -14,14 +14,14 @@ fun ICorChainDsl<AwardContext>.getAwardByIdDetails(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-
-		try {
-			awardDetails = awardService.findById(awardId = awardId)
-		} catch (e: AwardNotFoundException) {
-			awardNotFoundError()
-		} catch (e: Exception) {
-			getAwardError()
-		}
-
+		awardDetails = awardService.findById(awardId = awardId)
 	}
+
+	except {
+		when (it) {
+			is AwardNotFoundException -> awardNotFoundError()
+			else -> getAwardError()
+		}
+	}
+
 }

@@ -13,18 +13,16 @@ fun ICorChainDsl<AwardContext>.createAward(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-
-		try {
 			awardDetails = awardService.create(awardDetails = awardDetails)
-		} catch (e: Exception) {
-			fail(
-				errorDb(
-					repository = "award",
-					violationCode = "create",
-					description = "Ошибка создания награды"
-				)
-			)
-		}
+	}
 
+	except {
+		fail(
+			errorDb(
+				repository = "award",
+				violationCode = "create",
+				description = "Ошибка создания награды"
+			)
+		)
 	}
 }

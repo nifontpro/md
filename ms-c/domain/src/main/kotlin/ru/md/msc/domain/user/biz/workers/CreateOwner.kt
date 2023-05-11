@@ -14,21 +14,20 @@ fun ICorChainDsl<UserContext>.createOwner(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-
 		val userRoles = setOf(RoleUser.OWNER, RoleUser.ADMIN)
 		userDetails = userDetails.copy(user = user.copy(roles = userRoles))
-
-		userDetails = try {
-			userService.createOwner(userDetails)
-		} catch (e: Exception) {
-			fail(
-				errorDb(
-					repository = "user",
-					violationCode = "owner create",
-					description = "Ошибка создания профиля владельца"
-				)
-			)
-			return@handle
-		}
+		userDetails = userService.createOwner(userDetails)
 	}
+
+	except {
+		log.error(it.message)
+		fail(
+			errorDb(
+				repository = "user",
+				violationCode = "owner create",
+				description = "Ошибка создания профиля владельца"
+			)
+		)
+	}
+
 }

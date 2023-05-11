@@ -13,18 +13,17 @@ fun ICorChainDsl<AwardContext>.deleteAward(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
+		awardService.deleteById(awardId = awardId)
+	}
 
-		try {
-			awardService.deleteById(awardId = awardId)
-		} catch (e: Exception) {
-			log.error(e.message)
-			fail(
-				errorDb(
-					repository = "award",
-					violationCode = "delete",
-					description = "Ошибка при удалении награды, возможно ею награжден сотрудник"
-				)
+	except {
+		log.error(it.message)
+		fail(
+			errorDb(
+				repository = "award",
+				violationCode = "delete",
+				description = "Ошибка при удалении награды, возможно ею награжден сотрудник"
 			)
-		}
+		)
 	}
 }

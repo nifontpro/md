@@ -20,13 +20,6 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 	@Query("delete from AwardEntity a where a.id = :awardId")
 	override fun deleteById(awardId: Long)
 
-	/*
-		select a from md.award a where
-		a.dept_id = :deptId and
-		((:name is null) or (upper(a.name) like upper(:name) escape '\')) and
-		((:state is null) or (:state = md.award_state(a.start_date, a.end_date)))
-		""", nativeQuery = true
-	 */
 	@EntityGraph("awardWithDept")
 	@Query(
 		"""
