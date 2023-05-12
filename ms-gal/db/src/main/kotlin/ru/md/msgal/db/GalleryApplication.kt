@@ -6,8 +6,8 @@ import org.springframework.context.annotation.ComponentScan
 
 @SpringBootApplication
 @ComponentScan(basePackages = ["ru.md.msgal"])
-class ClientApplication
+class GalleryApplication
 
 fun main(args: Array<String>) {
-	runApplication<ClientApplication>(*args)
+	runApplication<GalleryApplication>(*args)
 }

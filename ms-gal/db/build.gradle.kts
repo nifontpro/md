@@ -28,9 +28,8 @@ val sshAntTask = configurations.create("sshAntTask")
 extra["springCloudVersion"] = springCloudVersion
 
 dependencies {
-    implementation(project(":ms-c:domain"))
-    implementation(project(":ms-c:rest"))
-    implementation(project(":ms-c:s3"))
+    implementation(project(":ms-gal:domain"))
+    implementation(project(":ms-gal:rest"))
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
