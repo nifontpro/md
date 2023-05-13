@@ -22,7 +22,7 @@ class SpringSecurityConfig {
 		jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(KCRoleConverter())
 
 		http.authorizeHttpRequests()
-			.requestMatchers("/user/test").permitAll()
+//			.requestMatchers("/user/d").permitAll()
 			.requestMatchers("/user/**").hasRole("user")
 			.requestMatchers("/admin/**").hasRole("admin")
 			.anyRequest().hasRole("user")

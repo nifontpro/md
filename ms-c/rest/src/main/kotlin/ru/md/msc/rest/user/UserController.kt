@@ -22,7 +22,17 @@ import java.security.Principal
 class UserController(
 	private val userProcessor: UserProcessor,
 	private val jwtUtils: JwtUtils,
+	private val userClient: UserWebClientBuilder
 ) {
+
+	@PostMapping("t1")
+	suspend fun t1(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody body: RS,
+	): Any {
+		println(bearerToken)
+		return userClient.getUserData(uri = "/user/d", body = body, accessToken = bearerToken)
+	}
 
 	@PostMapping("create_owner")
 	private suspend fun createOwner(
@@ -171,6 +181,15 @@ class UserController(
 
 	@PostMapping("data")
 	suspend fun getData(
+		@RequestBody body: RS? = null,
+		principal: Principal,
+	): RS {
+		val usedMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576
+		return RS(res = "User data valid, body: ${body?.res}, used: $usedMb Mb, ${principal.name}")
+	}
+
+	@PostMapping("d")
+	suspend fun getD(
 		@RequestBody body: RS? = null,
 		principal: Principal,
 	): RS {
