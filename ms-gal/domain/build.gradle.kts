@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     implementation(project(":cor"))
+    implementation(project(":base:base_domain"))
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
