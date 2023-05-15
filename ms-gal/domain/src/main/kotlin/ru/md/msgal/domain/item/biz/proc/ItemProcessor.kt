@@ -2,10 +2,10 @@ package ru.md.msgal.domain.item.biz.proc
 
 import org.springframework.stereotype.Component
 import ru.md.base_domain.biz.proc.IBaseProcessor
+import ru.md.base_domain.biz.workers.finishOperation
+import ru.md.base_domain.biz.workers.initStatus
+import ru.md.base_domain.biz.workers.operation
 import ru.md.cor.rootChain
-import ru.md.msgal.domain.base.workers.finishOperation
-import ru.md.msgal.domain.base.workers.initStatus
-import ru.md.msgal.domain.base.workers.operation
 import ru.md.msgal.domain.item.service.ItemService
 
 @Component

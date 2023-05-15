@@ -55,15 +55,4 @@ fun BaseClientContext.s3Error() {
 	)
 }
 
-fun BaseClientContext.mustPageableError() {
-	fail(
-		errorDb(
-			repository = "base",
-			violationCode = "pageable",
-			description = "Для этого метода обязательны параметры пагинации"
-		)
-	)
-}
-
 class ImageNotFoundException(message: String = "") : RuntimeException(message)
-class MustPageableException(message: String = "") : RuntimeException(message)

@@ -4,6 +4,9 @@ import org.springframework.stereotype.Component
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.base_domain.biz.proc.IBaseProcessor
+import ru.md.base_domain.biz.workers.finishOperation
+import ru.md.base_domain.biz.workers.initStatus
+import ru.md.base_domain.biz.workers.operation
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateDeptId
@@ -39,6 +42,7 @@ class DeptProcessor(
 			operation("Создать отдел", DeptCommand.CREATE) {
 				validateDeptName("Проверяем имя отдела")
 				worker("Для проверки доступа к какому отделу") { deptId = dept.parentId }
+				validateDeptId("Проверка deptId")
 				validateAdminDeptLevelChain()
 				trimFieldDeptDetails("Очищаем поля")
 				createDept("Создаем отдел")

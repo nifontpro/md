@@ -2,11 +2,14 @@ package ru.md.msgal.domain.folder.biz.proc
 
 import org.springframework.stereotype.Component
 import ru.md.base_domain.biz.proc.IBaseProcessor
+import ru.md.base_domain.biz.workers.finishOperation
+import ru.md.base_domain.biz.workers.initStatus
+import ru.md.base_domain.biz.workers.operation
 import ru.md.cor.rootChain
-import ru.md.msgal.domain.base.workers.finishOperation
-import ru.md.msgal.domain.base.workers.initStatus
-import ru.md.msgal.domain.base.workers.operation
+import ru.md.msgal.domain.folder.biz.validate.validateFolderName
+import ru.md.msgal.domain.folder.biz.validate.validateParentFolderId
 import ru.md.msgal.domain.folder.biz.workers.createFolder
+import ru.md.msgal.domain.folder.biz.workers.trimFieldFolder
 import ru.md.msgal.domain.folder.service.FolderService
 
 @Component
@@ -24,6 +27,9 @@ class FolderProcessor(
 			initStatus()
 
 			operation("Создать папку", FolderCommand.CREATE) {
+				validateFolderName("Проверка имени папки")
+				validateParentFolderId("Проверяем parentId")
+				trimFieldFolder("Очищаем поля папки")
 				createFolder("Создаем папку")
 			}
 

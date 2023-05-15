@@ -6,6 +6,8 @@ import ru.md.base_domain.biz.proc.BaseContext
 
 abstract class BaseGalleryContext(
 
+	var folderId: Long = 0,
+
 //	var baseImage: BaseImage = BaseImage(),
 //	var baseImages: List<BaseImage> = emptyList(),
 //	var deleteImageOnFailing: Boolean = false,

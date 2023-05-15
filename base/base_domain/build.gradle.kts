@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-//	implementation(kotlin("stdlib-common"))
+	implementation(project(":cor"))
 }

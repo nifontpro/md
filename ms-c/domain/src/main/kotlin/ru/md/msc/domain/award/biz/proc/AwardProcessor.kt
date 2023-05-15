@@ -12,6 +12,9 @@ import ru.md.msc.domain.award.biz.workers.sort.setActionByUserValidSortedFields
 import ru.md.msc.domain.award.biz.workers.sort.setAwardWithDeptValidSortedFields
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.base_domain.biz.proc.IBaseProcessor
+import ru.md.base_domain.biz.workers.finishOperation
+import ru.md.base_domain.biz.workers.initStatus
+import ru.md.base_domain.biz.workers.operation
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateDeptId

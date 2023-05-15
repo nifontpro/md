@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package ru.md.msgal.domain.folder.biz.proc
 
 import ru.md.base_domain.biz.proc.IBaseCommand
@@ -8,7 +10,6 @@ import ru.md.msgal.domain.folder.service.FolderService
 class FolderContext : BaseGalleryContext() {
 	var folder: Folder = Folder()
 	var folders: List<Folder> = emptyList()
-	var folderId: Long = 0
 	lateinit var folderService: FolderService
 }
 

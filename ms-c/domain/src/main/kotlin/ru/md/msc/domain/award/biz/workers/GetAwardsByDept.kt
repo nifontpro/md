@@ -5,7 +5,7 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.biz.proc.getAwardError
-import ru.md.msc.domain.base.workers.pageFun
+import ru.md.base_domain.biz.helper.pageFun
 
 fun ICorChainDsl<AwardContext>.getAwardsByDept(title: String) = worker {
 

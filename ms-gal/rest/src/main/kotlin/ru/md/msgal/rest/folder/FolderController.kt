@@ -8,10 +8,10 @@ import ru.md.base_rest.model.BaseResponse
 import ru.md.base_rest.process
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msgal.domain.folder.biz.proc.FolderProcessor
-import ru.md.msgal.domain.folder.model.Folder
 import ru.md.msgal.rest.folder.mappers.fromTransport
 import ru.md.msgal.rest.folder.mappers.toTransportFolder
 import ru.md.msgal.rest.folder.model.request.CreateFolderRequest
+import ru.md.msgal.rest.folder.model.response.FolderResponse
 
 @RestController
 @RequestMapping("folder")
@@ -24,7 +24,7 @@ class FolderController(
 	private suspend fun create(
 		@RequestBody request: CreateFolderRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
-	): BaseResponse<Folder> {
+	): BaseResponse<FolderResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return process(
 			processor = folderProcessor,
