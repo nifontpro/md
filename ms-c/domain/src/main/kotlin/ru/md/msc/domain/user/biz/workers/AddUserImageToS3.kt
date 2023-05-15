@@ -1,13 +1,13 @@
 package ru.md.msc.domain.user.biz.workers
 
+import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_domain.image.model.ImageType
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.ContextState
 import ru.md.msc.domain.base.biz.s3Error
 import ru.md.msc.domain.dept.biz.proc.deptNotFound
 import ru.md.msc.domain.dept.biz.proc.getDeptError
-import ru.md.msc.domain.image.model.BaseImage
-import ru.md.msc.domain.image.model.ImageType
 import ru.md.msc.domain.user.biz.proc.UserContext
 
 fun ICorChainDsl<UserContext>.addUserImageToS3(title: String) = worker {

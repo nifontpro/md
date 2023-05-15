@@ -12,8 +12,8 @@ fun FolderEntity.toFolder() = Folder(
 	updatedAt = updatedAt
 )
 
-fun Folder.toFolderEntity() = FolderEntity(
-	id = id,
+fun Folder.toFolderEntity(create: Boolean = false) = FolderEntity(
+	id = if (create) null else id,
 	parentId = parentId,
 	name = name,
 	description = description,

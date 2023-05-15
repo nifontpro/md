@@ -1,9 +1,9 @@
 package ru.md.msc.rest.award.model.response
 
+import ru.md.base_domain.image.model.BaseImage
 import ru.md.msc.domain.award.model.AwardState
 import ru.md.msc.domain.award.model.AwardType
 import ru.md.msc.domain.dept.model.Dept
-import ru.md.msc.domain.image.model.BaseImage
 
 data class AwardResponse(
 	val id: Long = 0,

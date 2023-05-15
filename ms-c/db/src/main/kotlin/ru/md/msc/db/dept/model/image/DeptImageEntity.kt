@@ -1,8 +1,8 @@
 package ru.md.msc.db.dept.model.image
 
 import jakarta.persistence.*
-import ru.md.msc.domain.image.model.IBaseImage
-import ru.md.msc.domain.image.model.ImageType
+import ru.md.base_domain.image.model.IBaseImage
+import ru.md.base_domain.image.model.ImageType
 import java.time.LocalDateTime
 import java.util.*
 

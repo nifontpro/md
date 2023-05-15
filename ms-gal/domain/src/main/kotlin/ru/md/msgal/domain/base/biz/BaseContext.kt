@@ -2,6 +2,7 @@ package ru.md.msgal.domain.base.biz
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import ru.md.base_domain.model.PageInfo
 import ru.md.msgal.domain.base.helper.ContextError
 
 interface IBaseCommand
@@ -10,6 +11,8 @@ abstract class BaseContext(
 	var state: ContextState = ContextState.NONE,
 	var command: IBaseCommand = BaseCommand.NONE,
 	val errors: MutableList<ContextError> = mutableListOf(),
+
+	var pageInfo: PageInfo? = null,
 
 	var authEmail: String = "",
 

@@ -1,8 +1,8 @@
 package ru.md.msc.domain.user.service
 
-import ru.md.msc.domain.base.model.BaseQuery
-import ru.md.msc.domain.base.model.PageResult
-import ru.md.msc.domain.image.model.BaseImage
+import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_domain.model.BaseQuery
+import ru.md.base_domain.model.PageResult
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
 

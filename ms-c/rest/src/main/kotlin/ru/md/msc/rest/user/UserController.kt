@@ -2,7 +2,7 @@ package ru.md.msc.rest.user
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import ru.md.msc.domain.image.model.BaseImage
+import ru.md.base_domain.image.model.BaseImage
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor

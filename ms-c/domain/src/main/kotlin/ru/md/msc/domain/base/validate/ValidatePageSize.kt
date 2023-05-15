@@ -1,9 +1,9 @@
 package ru.md.msc.domain.base.validate
 
+import ru.md.base_domain.model.MAX_PAGE_SIZE
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.BaseContext
-import ru.md.msc.domain.base.biz.MAX_PAGE_SIZE
 import ru.md.msc.domain.base.helper.errorValidation
 import ru.md.msc.domain.base.helper.fail
 

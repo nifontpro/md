@@ -1,13 +1,13 @@
 package ru.md.msc.domain.award.service
 
+import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_domain.model.BaseOrder
+import ru.md.base_domain.model.BaseQuery
+import ru.md.base_domain.model.PageResult
 import ru.md.msc.domain.award.model.Activity
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.award.model.AwardState
-import ru.md.msc.domain.base.model.BaseOrder
-import ru.md.msc.domain.base.model.BaseQuery
-import ru.md.msc.domain.base.model.PageResult
-import ru.md.msc.domain.image.model.BaseImage
 
 interface AwardService {
 	fun create(awardDetails: AwardDetails): AwardDetails

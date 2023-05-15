@@ -13,6 +13,7 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":base:base_domain"))
     implementation(project(":ms-c:domain"))
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

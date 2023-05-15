@@ -4,9 +4,9 @@ import com.amazonaws.services.s3.AmazonS3
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.stereotype.Repository
-import ru.md.msc.domain.image.model.FileData
-import ru.md.msc.domain.image.model.IBaseImage
-import ru.md.msc.domain.image.model.ImageType
+import ru.md.base_domain.image.model.FileData
+import ru.md.base_domain.image.model.IBaseImage
+import ru.md.base_domain.image.model.ImageType
 import ru.md.msc.domain.image.repository.S3Repository
 import java.io.File
 
@@ -39,9 +39,9 @@ class S3RepositoryImpl(
 	}
 
 	override suspend fun deleteBaseImage(entity: IBaseImage) {
-			if (entity.type == ImageType.USER) {
-				deleteObject(entity.imageKey)
-			}
+		if (entity.type == ImageType.USER) {
+			deleteObject(entity.imageKey)
+		}
 	}
 
 	/**

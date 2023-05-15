@@ -1,6 +1,6 @@
 package ru.md.msc.rest.base
 
-import ru.md.msc.domain.base.model.BaseOrder
+import ru.md.base_domain.model.BaseOrder
 
 data class BaseRequest(
 	val page: Int? = null,

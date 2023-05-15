@@ -1,6 +1,6 @@
 package ru.md.msc.domain.dept.model
 
-import ru.md.msc.domain.image.model.BaseImage
+import ru.md.base_domain.image.model.BaseImage
 
 data class Dept(
 	val id: Long = 0,

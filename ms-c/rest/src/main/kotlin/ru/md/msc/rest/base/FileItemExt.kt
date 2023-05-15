@@ -1,7 +1,7 @@
 package ru.md.msc.rest.base
 
 import org.springframework.web.multipart.MultipartFile
-import ru.md.msc.domain.image.model.FileData
+import ru.md.base_domain.image.model.FileData
 import java.io.File
 import java.util.*
 

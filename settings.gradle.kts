@@ -29,8 +29,8 @@ include("ms-c:rest")
 include("ms-c:s3")
 
 include("base")
-include("base:rest")
-include("base:dom")
+include("base:base_db")
+include("base:base_domain")
 
 include("ms-gal")
 include("ms-gal:db")

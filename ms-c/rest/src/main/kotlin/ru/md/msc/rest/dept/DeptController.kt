@@ -2,11 +2,11 @@ package ru.md.msc.rest.dept
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import ru.md.base_domain.image.model.BaseImage
 import ru.md.msc.domain.dept.biz.proc.DeptCommand
 import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.domain.dept.biz.proc.DeptProcessor
 import ru.md.msc.domain.dept.model.Dept
-import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.rest.base.*
 import ru.md.msc.rest.base.mappers.toTransportBaseImage
 import ru.md.msc.rest.dept.mappers.fromTransport

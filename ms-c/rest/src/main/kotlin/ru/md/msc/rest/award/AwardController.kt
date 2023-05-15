@@ -2,10 +2,11 @@ package ru.md.msc.rest.award
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import ru.md.base_domain.image.model.BaseImage
+import ru.md.msc.rest.base.AUTH
 import ru.md.msc.domain.award.biz.proc.AwardCommand
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.biz.proc.AwardProcessor
-import ru.md.msc.domain.image.model.BaseImage
 import ru.md.msc.rest.award.mappers.*
 import ru.md.msc.rest.award.model.request.*
 import ru.md.msc.rest.award.model.response.ActivityResponse

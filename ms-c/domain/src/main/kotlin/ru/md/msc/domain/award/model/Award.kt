@@ -1,7 +1,7 @@
 package ru.md.msc.domain.award.model
 
+import ru.md.base_domain.image.model.BaseImage
 import ru.md.msc.domain.dept.model.Dept
-import ru.md.msc.domain.image.model.BaseImage
 import java.time.LocalDateTime
 
 data class Award(

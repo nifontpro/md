@@ -1,7 +1,7 @@
 package ru.md.msc.domain.image.repository
 
-import ru.md.msc.domain.image.model.FileData
-import ru.md.msc.domain.image.model.IBaseImage
+import ru.md.base_domain.image.model.FileData
+import ru.md.base_domain.image.model.IBaseImage
 
 interface S3Repository {
 	suspend fun available(): Boolean

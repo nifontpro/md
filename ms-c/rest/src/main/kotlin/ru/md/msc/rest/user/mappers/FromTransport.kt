@@ -1,6 +1,6 @@
 package ru.md.msc.rest.user.mappers
 
-import ru.md.msc.domain.base.model.BaseQuery
+import ru.md.base_domain.model.BaseQuery
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext

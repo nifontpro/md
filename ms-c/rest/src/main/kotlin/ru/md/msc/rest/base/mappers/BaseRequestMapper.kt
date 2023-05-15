@@ -1,8 +1,8 @@
 package ru.md.msc.rest.base.mappers
 
-import ru.md.msc.domain.base.biz.DEFAULT_PAGE_SIZE
-import ru.md.msc.domain.base.model.BaseQuery
-import ru.md.msc.domain.base.model.converter.toLocalDateTimeUTC
+import ru.md.base_domain.model.BaseQuery
+import ru.md.base_domain.model.DEFAULT_PAGE_SIZE
+import ru.md.base_domain.model.converter.toLocalDateTimeUTC
 import ru.md.msc.rest.base.BaseRequest
 
 fun BaseRequest.toBaseQuery() = BaseQuery(

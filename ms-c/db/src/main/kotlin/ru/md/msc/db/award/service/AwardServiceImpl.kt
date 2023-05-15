@@ -3,13 +3,17 @@ package ru.md.msc.db.award.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import ru.md.base_db.mapper.*
+import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_domain.model.BaseOrder
+import ru.md.base_domain.model.BaseQuery
+import ru.md.base_domain.model.PageResult
 import ru.md.msc.db.award.model.image.AwardImageEntity
 import ru.md.msc.db.award.model.mapper.*
 import ru.md.msc.db.award.repo.ActivityRepository
 import ru.md.msc.db.award.repo.AwardDetailsRepository
 import ru.md.msc.db.award.repo.AwardImageRepository
 import ru.md.msc.db.award.repo.AwardRepository
-import ru.md.msc.db.base.mapper.*
 import ru.md.msc.db.dept.repo.DeptRepository
 import ru.md.msc.domain.award.biz.proc.AlreadyActionException
 import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
@@ -19,10 +23,6 @@ import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.award.model.AwardState
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.ImageNotFoundException
-import ru.md.msc.domain.base.model.BaseOrder
-import ru.md.msc.domain.base.model.BaseQuery
-import ru.md.msc.domain.base.model.PageResult
-import ru.md.msc.domain.image.model.BaseImage
 import java.time.LocalDateTime
 
 @Service

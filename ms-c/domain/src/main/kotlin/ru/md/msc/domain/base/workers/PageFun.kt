@@ -1,7 +1,7 @@
 package ru.md.msc.domain.base.workers
 
+import ru.md.base_domain.model.PageResult
 import ru.md.msc.domain.base.biz.BaseContext
-import ru.md.msc.domain.base.model.PageResult
 
 /**
  * Функция вызывает функцию репозитория с пагинацией, получает список данных

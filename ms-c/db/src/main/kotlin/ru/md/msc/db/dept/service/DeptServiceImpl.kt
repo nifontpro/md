@@ -3,8 +3,11 @@ package ru.md.msc.db.dept.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import ru.md.msc.db.base.mapper.toImage
-import ru.md.msc.db.base.mapper.toSort
+import ru.md.base_db.mapper.toImage
+import ru.md.base_db.mapper.toSort
+import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_domain.image.model.ImageType
+import ru.md.base_domain.model.BaseOrder
 import ru.md.msc.db.dept.model.image.DeptImageEntity
 import ru.md.msc.db.dept.model.mappers.toDept
 import ru.md.msc.db.dept.model.mappers.toDeptDetails
@@ -13,13 +16,10 @@ import ru.md.msc.db.dept.repo.DeptDetailsRepository
 import ru.md.msc.db.dept.repo.DeptImageRepository
 import ru.md.msc.db.dept.repo.DeptRepository
 import ru.md.msc.domain.base.biz.ImageNotFoundException
-import ru.md.msc.domain.base.model.BaseOrder
 import ru.md.msc.domain.dept.biz.proc.DeptNotFoundException
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
 import ru.md.msc.domain.dept.service.DeptService
-import ru.md.msc.domain.image.model.BaseImage
-import ru.md.msc.domain.image.model.ImageType
 import java.time.LocalDateTime
 
 @Service

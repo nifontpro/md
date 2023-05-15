@@ -1,9 +1,9 @@
 package ru.md.msc.rest.base
 
+import ru.md.base_domain.model.PageInfo
 import ru.md.msc.domain.base.biz.BaseContext
 import ru.md.msc.domain.base.biz.ContextState
 import ru.md.msc.domain.base.helper.ContextError
-import ru.md.msc.domain.base.model.PageInfo
 
 data class BaseResponse<out T>(
 	val data: T? = null,

@@ -1,9 +1,9 @@
 package ru.md.msc.domain.dept.service
 
-import ru.md.msc.domain.base.model.BaseOrder
+import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_domain.model.BaseOrder
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
-import ru.md.msc.domain.image.model.BaseImage
 
 interface DeptService {
 	fun create(deptDetails: DeptDetails): DeptDetails
