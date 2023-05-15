@@ -25,8 +25,9 @@ class SpringSecurityConfig {
 		http.authorizeHttpRequests()
 //			.requestMatchers("/user/d").permitAll()
 			.requestMatchers("/item/**").hasRole("user")
-			.requestMatchers("/folder/**").hasRole("admin")
-			.anyRequest().hasRole("user")
+//			.requestMatchers("/folder/**").hasRole("admin")
+			.requestMatchers("/folder/**").hasRole("user")
+//			.anyRequest().hasRole("user")
 			.and() // добавляем новые настройки, не связанные с предыдущими
 			.csrf().disable()
 //			.cors()// Разрешает запросы типа OPTIONS
