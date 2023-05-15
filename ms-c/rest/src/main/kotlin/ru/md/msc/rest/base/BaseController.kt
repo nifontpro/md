@@ -1,13 +1,13 @@
 package ru.md.msc.rest.base
 
-import ru.md.msc.domain.base.biz.BaseContext
-import ru.md.msc.domain.base.biz.IBaseProcessor
+import ru.md.msc.domain.base.biz.BaseClientContext
+import ru.md.base_domain.biz.proc.IBaseProcessor
 import kotlin.reflect.full.createInstance
 
 /**
  * Функционал запрос-ответ сервера с применением бизнес-логики с авторизацией
  */
-suspend inline fun <reified T, reified R, reified C : BaseContext> process(
+suspend inline fun <reified T, reified R, reified C : BaseClientContext> process(
 	processor: IBaseProcessor<C>,
 	authRequest: AuthRequest<T>,
 	fromTransport: C.(T) -> Unit,

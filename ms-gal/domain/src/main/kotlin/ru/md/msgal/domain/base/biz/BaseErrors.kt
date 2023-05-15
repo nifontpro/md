@@ -1,12 +1,12 @@
 package ru.md.msgal.domain.base.biz
 
-import ru.md.msgal.domain.base.helper.ContextError
-import ru.md.msgal.domain.base.helper.errorDb
-import ru.md.msgal.domain.base.helper.errorUnauthorized
-import ru.md.msgal.domain.base.helper.fail
+import ru.md.base_domain.biz.helper.ContextError
+import ru.md.base_domain.biz.helper.errorDb
+import ru.md.base_domain.biz.helper.errorUnauthorized
+import ru.md.base_domain.biz.helper.fail
 
 
-fun BaseContext.notValidAuthIdError() {
+fun BaseGalleryContext.notValidAuthIdError() {
 	fail(
 		errorUnauthorized(
 			message = "Неверный authId",
@@ -14,7 +14,7 @@ fun BaseContext.notValidAuthIdError() {
 	)
 }
 
-fun BaseContext.imageNotFoundError() {
+fun BaseGalleryContext.imageNotFoundError() {
 	fail(
 		errorDb(
 			repository = "image",
@@ -25,7 +25,7 @@ fun BaseContext.imageNotFoundError() {
 	)
 }
 
-fun BaseContext.addImageError() {
+fun BaseGalleryContext.addImageError() {
 	fail(
 		errorDb(
 			repository = "image",
@@ -35,7 +35,7 @@ fun BaseContext.addImageError() {
 	)
 }
 
-fun BaseContext.deleteImageError() {
+fun BaseGalleryContext.deleteImageError() {
 	fail(
 		errorDb(
 			repository = "image",
@@ -45,7 +45,7 @@ fun BaseContext.deleteImageError() {
 	)
 }
 
-fun BaseContext.s3Error() {
+fun BaseGalleryContext.s3Error() {
 	fail(
 		errorDb(
 			repository = "s3",
@@ -55,7 +55,7 @@ fun BaseContext.s3Error() {
 	)
 }
 
-fun BaseContext.mustPageableError() {
+fun BaseGalleryContext.mustPageableError() {
 	fail(
 		errorDb(
 			repository = "base",

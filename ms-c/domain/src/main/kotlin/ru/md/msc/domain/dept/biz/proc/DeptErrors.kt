@@ -1,11 +1,11 @@
 package ru.md.msc.domain.dept.biz.proc
 
-import ru.md.msc.domain.base.biz.BaseContext
-import ru.md.msc.domain.base.helper.errorDb
-import ru.md.msc.domain.base.helper.errorUnauthorized
-import ru.md.msc.domain.base.helper.fail
+import ru.md.msc.domain.base.biz.BaseClientContext
+import ru.md.base_domain.biz.helper.errorDb
+import ru.md.base_domain.biz.helper.errorUnauthorized
+import ru.md.base_domain.biz.helper.fail
 
-fun BaseContext.deptNotFound() {
+fun BaseClientContext.deptNotFound() {
 	fail(
 		errorDb(
 			repository = "dept",
@@ -15,7 +15,7 @@ fun BaseContext.deptNotFound() {
 	)
 }
 
-fun BaseContext.getDeptError() {
+fun BaseClientContext.getDeptError() {
 	fail(
 		errorDb(
 			repository = "dept",
@@ -25,7 +25,7 @@ fun BaseContext.getDeptError() {
 	)
 }
 
-fun BaseContext.getDeptAuthIOError() {
+fun BaseClientContext.getDeptAuthIOError() {
 	fail(
 		errorDb(
 			repository = "dept",
@@ -35,7 +35,7 @@ fun BaseContext.getDeptAuthIOError() {
 	)
 }
 
-fun BaseContext.deptAuthError() {
+fun BaseClientContext.deptAuthError() {
 	fail(
 		errorUnauthorized(
 			role = "dept",

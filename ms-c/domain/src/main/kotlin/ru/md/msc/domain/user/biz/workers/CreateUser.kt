@@ -1,13 +1,10 @@
 package ru.md.msc.domain.user.biz.workers
 
+import ru.md.base_domain.biz.helper.errorDb
+import ru.md.base_domain.biz.helper.fail
+import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
-import ru.md.msc.domain.award.biz.proc.awardNotFoundError
-import ru.md.msc.domain.award.biz.proc.getAwardError
-import ru.md.msc.domain.base.biz.ContextState
-import ru.md.msc.domain.base.helper.errorDb
-import ru.md.msc.domain.base.helper.fail
 import ru.md.msc.domain.user.biz.proc.UserContext
 
 fun ICorChainDsl<UserContext>.createUser(title: String) = worker {
@@ -16,7 +13,7 @@ fun ICorChainDsl<UserContext>.createUser(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-		userDetails =userService.create(userDetails = userDetails)
+		userDetails = userService.create(userDetails = userDetails)
 	}
 
 	except {

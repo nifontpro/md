@@ -1,11 +1,11 @@
 package ru.md.msgal.domain.folder.biz.proc
 
-import ru.md.msgal.domain.base.biz.BaseContext
+import ru.md.msgal.domain.base.biz.BaseGalleryContext
 import ru.md.msgal.domain.base.biz.IBaseCommand
 import ru.md.msgal.domain.folder.model.Folder
 import ru.md.msgal.domain.folder.service.FolderService
 
-class FolderContext : BaseContext() {
+class FolderContext : BaseGalleryContext() {
 	var folder: Folder = Folder()
 	var folders: List<Folder> = emptyList()
 	var folderId: Long = 0

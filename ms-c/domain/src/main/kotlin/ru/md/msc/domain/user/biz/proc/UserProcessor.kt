@@ -5,7 +5,7 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
-import ru.md.msc.domain.base.biz.IBaseProcessor
+import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.msc.domain.base.validate.*
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptDownLevel

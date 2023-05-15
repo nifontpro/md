@@ -1,11 +1,11 @@
 package ru.md.msc.domain.award.biz.workers
 
+import ru.md.base_domain.biz.helper.errorUnauthorized
+import ru.md.base_domain.biz.helper.fail
+import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.proc.AwardContext
-import ru.md.msc.domain.base.biz.ContextState
-import ru.md.msc.domain.base.helper.errorUnauthorized
-import ru.md.msc.domain.base.helper.fail
 import ru.md.msc.domain.dept.biz.proc.getDeptAuthIOError
 import ru.md.msc.domain.user.biz.proc.UserNotFoundException
 import ru.md.msc.domain.user.biz.proc.getUserError

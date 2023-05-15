@@ -1,11 +1,11 @@
 package ru.md.msc.domain.award.biz.proc
 
+import ru.md.base_domain.biz.proc.IBaseCommand
 import ru.md.msc.domain.award.model.*
 import ru.md.msc.domain.award.service.AwardService
-import ru.md.msc.domain.base.biz.BaseContext
-import ru.md.msc.domain.base.biz.IBaseCommand
+import ru.md.msc.domain.base.biz.BaseClientContext
 
-class AwardContext : BaseContext() {
+class AwardContext : BaseClientContext() {
 	var award: Award = Award()
 	var awardDetails: AwardDetails = AwardDetails()
 	var awards: List<Award> = emptyList()

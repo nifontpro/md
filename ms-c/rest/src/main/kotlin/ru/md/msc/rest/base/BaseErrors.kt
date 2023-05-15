@@ -1,10 +1,10 @@
 package ru.md.msc.rest.base
 
-import ru.md.msc.domain.base.biz.BaseContext
-import ru.md.msc.domain.base.biz.ContextState
-import ru.md.msc.domain.base.helper.ContextError
+import ru.md.base_domain.biz.proc.ContextState
+import ru.md.msc.domain.base.biz.BaseClientContext
+import ru.md.base_domain.biz.helper.ContextError
 
-fun <C : BaseContext> C.emailNotVerified() {
+fun <C : BaseClientContext> C.emailNotVerified() {
 	state = ContextState.FAILING
 	errors.add(
 		ContextError(
@@ -17,7 +17,7 @@ fun <C : BaseContext> C.emailNotVerified() {
 	)
 }
 
-fun <C : BaseContext> C.fileSaveError() {
+fun <C : BaseClientContext> C.fileSaveError() {
 	state = ContextState.FAILING
 	errors.add(
 		ContextError(

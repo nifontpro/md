@@ -3,15 +3,15 @@ package ru.md.msc.domain.base.workers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.base.biz.BaseContext
-import ru.md.msc.domain.base.biz.ContextState
+import ru.md.msc.domain.base.biz.BaseClientContext
 
 /**
  * Асинхронное удаление объекта из s3
  */
-fun <T : BaseContext> ICorChainDsl<T>.deleteBaseImageFromS3(title: String) = worker {
+fun <T : BaseClientContext> ICorChainDsl<T>.deleteBaseImageFromS3(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING || deleteImageOnFailing }
 	handle {

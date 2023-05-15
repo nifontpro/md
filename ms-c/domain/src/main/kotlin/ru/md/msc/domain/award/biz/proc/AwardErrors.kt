@@ -1,7 +1,7 @@
 package ru.md.msc.domain.award.biz.proc
 
-import ru.md.msc.domain.base.helper.errorDb
-import ru.md.msc.domain.base.helper.fail
+import ru.md.base_domain.biz.helper.errorDb
+import ru.md.base_domain.biz.helper.fail
 
 fun AwardContext.awardNotFoundError() {
 	fail(

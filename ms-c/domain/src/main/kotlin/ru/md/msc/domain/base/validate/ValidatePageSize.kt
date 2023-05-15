@@ -3,11 +3,11 @@ package ru.md.msc.domain.base.validate
 import ru.md.base_domain.model.MAX_PAGE_SIZE
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.base.biz.BaseContext
-import ru.md.msc.domain.base.helper.errorValidation
-import ru.md.msc.domain.base.helper.fail
+import ru.md.msc.domain.base.biz.BaseClientContext
+import ru.md.base_domain.biz.helper.errorValidation
+import ru.md.base_domain.biz.helper.fail
 
-fun <T : BaseContext> ICorChainDsl<T>.validatePageSize(title: String) = worker {
+fun <T : BaseClientContext> ICorChainDsl<T>.validatePageSize(title: String) = worker {
 	this.title = title
 	on { baseQuery.pageSize < 1 || baseQuery.pageSize > MAX_PAGE_SIZE }
 	handle {

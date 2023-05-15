@@ -1,11 +1,11 @@
 package ru.md.msc.domain.award.biz.workers
 
+import ru.md.base_domain.biz.helper.errorDb
+import ru.md.base_domain.biz.helper.fail
+import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.proc.AwardContext
-import ru.md.msc.domain.base.biz.ContextState
-import ru.md.msc.domain.base.helper.errorDb
-import ru.md.msc.domain.base.helper.fail
 
 fun ICorChainDsl<AwardContext>.updateAward(title: String) = worker {
 

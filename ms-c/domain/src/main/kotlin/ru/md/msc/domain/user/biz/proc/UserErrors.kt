@@ -1,10 +1,10 @@
 package ru.md.msc.domain.user.biz.proc
 
-import ru.md.msc.domain.base.biz.BaseContext
-import ru.md.msc.domain.base.helper.errorDb
-import ru.md.msc.domain.base.helper.fail
+import ru.md.msc.domain.base.biz.BaseClientContext
+import ru.md.base_domain.biz.helper.errorDb
+import ru.md.base_domain.biz.helper.fail
 
-fun BaseContext.userNotFoundError() {
+fun BaseClientContext.userNotFoundError() {
 	fail(
 		errorDb(
 			repository = "user",
@@ -14,7 +14,7 @@ fun BaseContext.userNotFoundError() {
 	)
 }
 
-fun BaseContext.getUserError() {
+fun BaseClientContext.getUserError() {
 	fail(
 		errorDb(
 			repository = "user",

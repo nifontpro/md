@@ -1,15 +1,15 @@
 package ru.md.msc.domain.award.biz.workers
 
+import ru.md.base_domain.biz.helper.ContextError
+import ru.md.base_domain.biz.helper.errorDb
+import ru.md.base_domain.biz.helper.fail
+import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.proc.AlreadyActionException
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.model.ActionType
 import ru.md.msc.domain.award.model.Activity
-import ru.md.msc.domain.base.biz.ContextState
-import ru.md.msc.domain.base.helper.ContextError
-import ru.md.msc.domain.base.helper.errorDb
-import ru.md.msc.domain.base.helper.fail
 import ru.md.msc.domain.user.model.User
 import java.time.LocalDateTime
 

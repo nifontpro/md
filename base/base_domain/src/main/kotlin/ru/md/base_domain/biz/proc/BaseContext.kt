@@ -1,33 +1,24 @@
-package ru.md.msgal.domain.base.biz
+package ru.md.base_domain.biz.proc
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import ru.md.base_domain.biz.helper.ContextError
+import ru.md.base_domain.image.model.FileData
+import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageInfo
-import ru.md.msgal.domain.base.helper.ContextError
-
-interface IBaseCommand
 
 abstract class BaseContext(
 	var state: ContextState = ContextState.NONE,
 	var command: IBaseCommand = BaseCommand.NONE,
 	val errors: MutableList<ContextError> = mutableListOf(),
 
-	var pageInfo: PageInfo? = null,
-
 	var authEmail: String = "",
-
-//	var fileData: FileData = FileData(),
-//	var baseImage: BaseImage = BaseImage(),
-//	var baseImages: List<BaseImage> = emptyList(),
-	var deleteImageOnFailing: Boolean = false,
-
-//	var baseQuery: BaseQuery = BaseQuery(),
+	var fileData: FileData = FileData(),
+	var pageInfo: PageInfo? = null,
+	var baseQuery: BaseQuery = BaseQuery(),
 	var orderFields: List<String> = emptyList(), // Допустимые поля для сортировки
 
-) {
+)
 
-	val log: Logger = LoggerFactory.getLogger(BaseContext::class.java)
-}
+interface IBaseCommand
 
 enum class BaseCommand : IBaseCommand {
 	NONE

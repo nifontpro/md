@@ -1,13 +1,10 @@
 package ru.md.msc.domain.dept.biz.workers
 
+import ru.md.base_domain.biz.helper.errorDb
+import ru.md.base_domain.biz.helper.fail
+import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
-import ru.md.msc.domain.award.biz.proc.awardNotFoundError
-import ru.md.msc.domain.award.biz.proc.getAwardError
-import ru.md.msc.domain.base.biz.ContextState
-import ru.md.msc.domain.base.helper.errorDb
-import ru.md.msc.domain.base.helper.fail
 import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.user.model.Gender

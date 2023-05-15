@@ -1,9 +1,9 @@
 package ru.md.msgal.rest.base
 
+import ru.md.base_domain.biz.helper.ContextError
+import ru.md.base_domain.biz.proc.ContextState
 import ru.md.base_domain.model.PageInfo
-import ru.md.msgal.domain.base.biz.BaseContext
-import ru.md.msgal.domain.base.biz.ContextState
-import ru.md.msgal.domain.base.helper.ContextError
+import ru.md.msgal.domain.base.biz.BaseGalleryContext
 
 data class BaseResponse<out T>(
 	val data: T? = null,
@@ -19,7 +19,7 @@ data class BaseResponse<out T>(
 	}
 }
 
-fun <T> BaseContext.baseResponse(data: T): BaseResponse<T> {
+fun <T> BaseGalleryContext.baseResponse(data: T): BaseResponse<T> {
 	return if (state == ContextState.FINISHING) {
 		BaseResponse.success(data = data, pageInfo = pageInfo)
 	} else {

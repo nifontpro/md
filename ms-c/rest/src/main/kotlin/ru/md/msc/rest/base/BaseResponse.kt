@@ -1,9 +1,9 @@
 package ru.md.msc.rest.base
 
 import ru.md.base_domain.model.PageInfo
-import ru.md.msc.domain.base.biz.BaseContext
-import ru.md.msc.domain.base.biz.ContextState
-import ru.md.msc.domain.base.helper.ContextError
+import ru.md.msc.domain.base.biz.BaseClientContext
+import ru.md.base_domain.biz.helper.ContextError
+import ru.md.base_domain.biz.proc.ContextState
 
 data class BaseResponse<out T>(
 	val data: T? = null,
@@ -19,7 +19,7 @@ data class BaseResponse<out T>(
 	}
 }
 
-fun <T> BaseContext.baseResponse(data: T): BaseResponse<T> {
+fun <T> BaseClientContext.baseResponse(data: T): BaseResponse<T> {
 	return if (state == ContextState.FINISHING) {
 		BaseResponse.success(data = data, pageInfo = pageInfo)
 	} else {

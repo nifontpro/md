@@ -1,17 +1,17 @@
 package ru.md.msc.domain.base.validate.db
 
+import ru.md.base_domain.biz.helper.errorDb
+import ru.md.base_domain.biz.helper.errorUnauthorized
+import ru.md.base_domain.biz.helper.fail
+import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.base.biz.BaseContext
-import ru.md.msc.domain.base.biz.ContextState
-import ru.md.msc.domain.base.helper.errorDb
-import ru.md.msc.domain.base.helper.errorUnauthorized
-import ru.md.msc.domain.base.helper.fail
+import ru.md.msc.domain.base.biz.BaseClientContext
 
 /**
  * Проверка доступа администратора к сотруднику
  */
-fun <T : BaseContext> ICorChainDsl<T>.validateAuthUserLevel(title: String) = worker {
+fun <T : BaseClientContext> ICorChainDsl<T>.validateAuthUserLevel(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
 	handle {

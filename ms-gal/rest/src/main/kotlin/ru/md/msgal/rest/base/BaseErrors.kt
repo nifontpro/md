@@ -1,10 +1,10 @@
 package ru.md.msgal.rest.base
 
-import ru.md.msgal.domain.base.biz.BaseContext
-import ru.md.msgal.domain.base.biz.ContextState
-import ru.md.msgal.domain.base.helper.ContextError
+import ru.md.base_domain.biz.helper.ContextError
+import ru.md.base_domain.biz.proc.ContextState
+import ru.md.msgal.domain.base.biz.BaseGalleryContext
 
-fun <C : BaseContext> C.emailNotVerified() {
+fun <C : BaseGalleryContext> C.emailNotVerified() {
 	state = ContextState.FAILING
 	errors.add(
 		ContextError(
@@ -17,7 +17,7 @@ fun <C : BaseContext> C.emailNotVerified() {
 	)
 }
 
-fun <C : BaseContext> C.fileSaveError() {
+fun <C : BaseGalleryContext> C.fileSaveError() {
 	state = ContextState.FAILING
 	errors.add(
 		ContextError(
