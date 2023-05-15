@@ -1,11 +1,11 @@
 package ru.md.msc.rest.dept.mappers
 
+import ru.md.base_rest.model.mapper.toBaseQuery
 import ru.md.msc.domain.dept.biz.proc.DeptCommand
 import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
 import ru.md.msc.domain.dept.model.DeptType
-import ru.md.msc.rest.base.mappers.toBaseQuery
 import ru.md.msc.rest.dept.model.request.*
 
 fun DeptContext.fromTransport(request: CreateDeptRequest) {

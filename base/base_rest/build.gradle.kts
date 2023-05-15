@@ -3,5 +3,6 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-common"))
+    implementation(project(":base:base_domain"))
+//    implementation(kotlin("stdlib-common"))
 }

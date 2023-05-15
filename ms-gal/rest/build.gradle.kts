@@ -18,6 +18,7 @@ dependencies {
     implementation(project(":cor"))
 
     implementation(project(":base:base_domain"))
+    implementation(project(":base:base_rest"))
 
     implementation(project(":ms-gal:domain"))
 

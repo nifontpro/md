@@ -31,6 +31,7 @@ include("ms-c:s3")
 include("base")
 include("base:base_db")
 include("base:base_domain")
+include("base:base_rest")
 
 include("ms-gal")
 include("ms-gal:db")

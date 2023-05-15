@@ -1,12 +1,12 @@
 package ru.md.msc.rest.user.mappers
 
 import ru.md.base_domain.model.BaseQuery
+import ru.md.base_rest.model.mapper.toBaseQuery
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
-import ru.md.msc.rest.base.mappers.toBaseQuery
 import ru.md.msc.rest.user.model.request.*
 
 fun UserContext.fromTransport(request: CreateOwnerRequest) {

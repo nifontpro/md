@@ -1,7 +1,7 @@
 package ru.md.msc.rest.award.model.request
 
+import ru.md.base_rest.model.BaseRequest
 import ru.md.msc.domain.award.model.AwardState
-import ru.md.msc.rest.base.BaseRequest
 
 data class GetAwardsByDeptRequest(
 	val authId: Long = 0,
