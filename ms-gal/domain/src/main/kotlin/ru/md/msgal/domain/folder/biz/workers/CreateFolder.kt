@@ -1,10 +1,10 @@
 package ru.md.msgal.domain.folder.biz.workers
 
+import ru.md.base_domain.biz.helper.errorDb
+import ru.md.base_domain.biz.helper.fail
+import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msgal.domain.base.biz.ContextState
-import ru.md.msgal.domain.base.helper.errorDb
-import ru.md.msgal.domain.base.helper.fail
 import ru.md.msgal.domain.folder.biz.proc.FolderContext
 
 fun ICorChainDsl<FolderContext>.createFolder(title: String) = worker {

@@ -4,8 +4,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import ru.md.base_domain.biz.proc.BaseContext
 
-interface IBaseCommand
-
 abstract class BaseGalleryContext(
 
 //	var baseImage: BaseImage = BaseImage(),

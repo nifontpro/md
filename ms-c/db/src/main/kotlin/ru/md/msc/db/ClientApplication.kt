@@ -5,7 +5,7 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.ComponentScan
 
 @SpringBootApplication
-@ComponentScan(basePackages = ["ru.md.msc"])
+@ComponentScan(basePackages = ["ru.md.msc", "ru.md.base_rest"])
 class ClientApplication
 
 fun main(args: Array<String>) {

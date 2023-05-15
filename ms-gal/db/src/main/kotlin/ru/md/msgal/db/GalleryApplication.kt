@@ -5,7 +5,7 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.ComponentScan
 
 @SpringBootApplication
-@ComponentScan(basePackages = ["ru.md.msgal"])
+@ComponentScan(basePackages = ["ru.md.msgal", "ru.md.base_rest"])
 class GalleryApplication
 
 fun main(args: Array<String>) {

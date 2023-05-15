@@ -1,10 +1,10 @@
-package ru.md.msgal.rest.base
+package ru.md.base_rest
 
-import ru.md.base_domain.biz.helper.ContextError
 import ru.md.base_domain.biz.proc.ContextState
-import ru.md.msgal.domain.base.biz.BaseGalleryContext
+import ru.md.base_domain.biz.helper.ContextError
+import ru.md.base_domain.biz.proc.BaseContext
 
-fun <C : BaseGalleryContext> C.emailNotVerified() {
+fun <C : BaseContext> C.emailNotVerified() {
 	state = ContextState.FAILING
 	errors.add(
 		ContextError(
@@ -17,7 +17,7 @@ fun <C : BaseGalleryContext> C.emailNotVerified() {
 	)
 }
 
-fun <C : BaseGalleryContext> C.fileSaveError() {
+fun <C : BaseContext> C.fileSaveError() {
 	state = ContextState.FAILING
 	errors.add(
 		ContextError(
@@ -29,3 +29,5 @@ fun <C : BaseGalleryContext> C.fileSaveError() {
 		)
 	)
 }
+
+fun String.toLongOr0(): Long = this.toLongOrNull() ?: 0

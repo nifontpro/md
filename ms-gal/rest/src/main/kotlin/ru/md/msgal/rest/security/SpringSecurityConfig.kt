@@ -1,4 +1,4 @@
-package ru.md.msc.rest.security
+package ru.md.msgal.rest.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -24,8 +24,8 @@ class SpringSecurityConfig {
 
 		http.authorizeHttpRequests()
 //			.requestMatchers("/user/d").permitAll()
-			.requestMatchers("/user/**").hasRole("user")
-			.requestMatchers("/admin/**").hasRole("admin")
+			.requestMatchers("/item/**").hasRole("user")
+			.requestMatchers("/folder/**").hasRole("admin")
 			.anyRequest().hasRole("user")
 			.and() // добавляем новые настройки, не связанные с предыдущими
 			.csrf().disable()

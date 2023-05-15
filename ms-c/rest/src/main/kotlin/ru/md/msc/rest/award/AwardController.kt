@@ -3,7 +3,11 @@ package ru.md.msc.rest.award
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.image.model.BaseImage
-import ru.md.msc.rest.base.AUTH
+import ru.md.base_rest.imageProcess
+import ru.md.base_rest.process
+import ru.md.base_rest.toLongOr0
+import ru.md.base_rest.model.AUTH
+import ru.md.base_rest.model.BaseResponse
 import ru.md.msc.domain.award.biz.proc.AwardCommand
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.biz.proc.AwardProcessor
@@ -14,7 +18,7 @@ import ru.md.msc.rest.award.model.response.AwardDetailsResponse
 import ru.md.msc.rest.award.model.response.AwardResponse
 import ru.md.msc.rest.base.*
 import ru.md.msc.rest.base.mappers.toTransportBaseImage
-import ru.md.msc.rest.utils.JwtUtils
+import ru.md.base_rest.utils.JwtUtils
 
 @RestController
 @RequestMapping("award")

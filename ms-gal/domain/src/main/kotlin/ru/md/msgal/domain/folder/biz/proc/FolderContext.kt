@@ -1,7 +1,7 @@
 package ru.md.msgal.domain.folder.biz.proc
 
+import ru.md.base_domain.biz.proc.IBaseCommand
 import ru.md.msgal.domain.base.biz.BaseGalleryContext
-import ru.md.msgal.domain.base.biz.IBaseCommand
 import ru.md.msgal.domain.folder.model.Folder
 import ru.md.msgal.domain.folder.service.FolderService
 

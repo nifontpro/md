@@ -1,4 +1,4 @@
-package ru.md.msgal.rest.base
+package ru.md.base_rest.model
 
 const val AUTH = "Authorization"
 

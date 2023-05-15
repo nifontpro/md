@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class MsmGatewayApplication
+class GatewayApplication
 
 fun main(args: Array<String>) {
-	runApplication<MsmGatewayApplication>(*args)
+	runApplication<GatewayApplication>(*args)
 }

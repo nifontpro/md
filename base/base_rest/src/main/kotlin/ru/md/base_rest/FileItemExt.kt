@@ -1,7 +1,8 @@
-package ru.md.msc.rest.base
+package ru.md.base_rest
 
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.image.model.FileData
+import ru.md.base_rest.model.LOCAL_FOLDER
 import java.io.File
 import java.util.*
 
