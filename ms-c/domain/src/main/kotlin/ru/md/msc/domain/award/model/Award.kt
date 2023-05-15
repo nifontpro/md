@@ -10,6 +10,7 @@ data class Award(
 	val type: AwardType = AwardType.UNDEF,
 	val startDate: LocalDateTime = LocalDateTime.now(),
 	val endDate: LocalDateTime = LocalDateTime.now(),
+	val state: AwardState = AwardState.ERROR,
 	val dept: Dept = Dept(),
 	val images: List<BaseImage> = emptyList()
 )

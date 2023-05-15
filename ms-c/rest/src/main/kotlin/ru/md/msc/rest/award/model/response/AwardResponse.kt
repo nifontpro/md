@@ -7,11 +7,11 @@ import ru.md.msc.domain.image.model.BaseImage
 
 data class AwardResponse(
 	val id: Long = 0,
-	var name: String = "",
-	var type: AwardType = AwardType.UNDEF,
-	var startDate: Long? = null,
-	var endDate: Long? = null,
-	var state: AwardState,
-	var dept: Dept = Dept(),
+	val name: String = "",
+	val type: AwardType = AwardType.UNDEF,
+	val startDate: Long? = null,
+	val endDate: Long? = null,
+	val state: AwardState,
+	val dept: Dept = Dept(),
 	val images: List<BaseImage> = emptyList()
 )

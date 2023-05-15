@@ -1,8 +1,10 @@
 package ru.md.msc.db.award.model
 
 import jakarta.persistence.*
+import org.hibernate.annotations.Formula
 import ru.md.msc.db.award.model.image.AwardImageEntity
 import ru.md.msc.db.dept.model.DeptEntity
+import ru.md.msc.domain.award.model.AwardState
 import ru.md.msc.domain.award.model.AwardType
 import java.time.LocalDateTime
 import java.util.*
@@ -24,12 +26,14 @@ class AwardEntity(
 	@Column(name = "type_code")
 	var type: AwardType = AwardType.UNDEF,
 
-
 	@Column(name = "start_date")
 	var startDate: LocalDateTime = LocalDateTime.now(),
 
 	@Column(name = "end_date")
 	var endDate: LocalDateTime = LocalDateTime.now(),
+
+	@Formula("award_state(start_date, end_date)")
+	val state: AwardState = AwardState.ERROR,
 
 //	@OneToOne(mappedBy = "award", fetch = FetchType.LAZY, optional = false)
 //	val details: AwardDetailsEntity? = null,

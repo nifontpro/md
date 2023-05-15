@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.award.model.AwardEntity
+import ru.md.msc.domain.award.model.AwardState
 import java.time.LocalDateTime
 
 @Repository
@@ -20,19 +21,20 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 	@Query("delete from AwardEntity a where a.id = :awardId")
 	override fun deleteById(awardId: Long)
 
+	// ((:state is null) or (:state = award_state(a.startDate, a.endDate)))
 	@EntityGraph("awardWithDept")
 	@Query(
 		"""
 		from AwardEntity a where 
 		a.dept.id = :deptId and 
 		((:name is null) or (upper(a.name) like upper(:name) escape '\')) and 
-		((:state is null) or (:state = award_state(a.startDate, a.endDate)))
+		((:state is null) or (:state = a.state))
 		"""
 	)
 	fun findByDeptId(
 		deptId: Long,
 		name: String? = null,
-		state: String? = null,
+		state: AwardState? = null,
 		pageable: Pageable
 	): Page<AwardEntity>
 

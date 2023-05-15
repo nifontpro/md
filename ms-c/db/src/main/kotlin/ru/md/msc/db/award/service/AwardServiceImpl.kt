@@ -67,12 +67,10 @@ class AwardServiceImpl(
 	}
 
 	override fun findByDeptId(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award> {
-		val state = awardState?.name
-		println("--- STATE: $state")
 		val awards = awardRepository.findByDeptId(
 			deptId = deptId,
 			name = baseQuery.filter.toSearch(),
-			state = state,
+			state = awardState,
 			pageable = baseQuery.toPageRequest()
 		)
 		return awards.toPageResult { it.toAward() }
