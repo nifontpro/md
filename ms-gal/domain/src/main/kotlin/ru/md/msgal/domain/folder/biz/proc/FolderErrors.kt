@@ -23,4 +23,4 @@ fun FolderContext.getFolderError() {
 	)
 }
 
-class FolderNotFoundException(message: String = "") : RuntimeException(message)
+class FolderNotFoundException(message: String = "Папка не найдена") : RuntimeException(message)
