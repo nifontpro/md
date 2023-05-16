@@ -12,8 +12,7 @@ import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.User
-import ru.md.msc.rest.base.*
-import ru.md.msc.rest.base.mappers.toTransportBaseImage
+import ru.md.base_rest.model.mapper.toTransportBaseImage
 import ru.md.msc.rest.user.mappers.fromTransport
 import ru.md.msc.rest.user.mappers.toTransportUserDetails
 import ru.md.msc.rest.user.mappers.toTransportUsers

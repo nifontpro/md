@@ -8,3 +8,8 @@ import ru.md.msgal.rest.folder.model.response.FolderResponse
 fun FolderContext.toTransportFolder(): BaseResponse<FolderResponse> {
 	return baseResponse(folder.toFolderResponse())
 }
+
+fun FolderContext.toTransportFolders(): BaseResponse<List<FolderResponse>> {
+	return baseResponse(folders.map { it.toFolderResponse() })
+}
+

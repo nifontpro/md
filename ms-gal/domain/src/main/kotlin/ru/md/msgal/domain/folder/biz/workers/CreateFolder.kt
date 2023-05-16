@@ -6,7 +6,6 @@ import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msgal.domain.folder.biz.proc.FolderContext
-import java.time.LocalDateTime
 
 fun ICorChainDsl<FolderContext>.createFolder(title: String) = worker {
 
@@ -14,7 +13,7 @@ fun ICorChainDsl<FolderContext>.createFolder(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-		folder = folderService.create(folder.copy(createdAt = LocalDateTime.now()))
+		folder = folderService.create(folder = folder)
 	}
 
 	except {

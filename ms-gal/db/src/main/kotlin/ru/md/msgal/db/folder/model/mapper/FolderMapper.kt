@@ -2,6 +2,7 @@ package ru.md.msgal.db.folder.model.mapper
 
 import ru.md.msgal.db.folder.model.FolderEntity
 import ru.md.msgal.domain.folder.model.Folder
+import java.time.LocalDateTime
 
 fun FolderEntity.toFolder() = Folder(
 	id = id ?: 0,
@@ -17,6 +18,6 @@ fun Folder.toFolderEntity(create: Boolean = false) = FolderEntity(
 	parentId = parentId,
 	name = name,
 	description = description,
-	createdAt = createdAt,
-	updatedAt = updatedAt
+	createdAt = if (create) LocalDateTime.now() else createdAt,
+	updatedAt = if (create) null else updatedAt
 )

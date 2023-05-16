@@ -1,5 +1,3 @@
-@file:Suppress("unused")
-
 package ru.md.msgal.domain.folder.biz.proc
 
 import ru.md.base_domain.biz.proc.IBaseCommand
@@ -17,5 +15,5 @@ enum class FolderCommand : IBaseCommand {
 	CREATE,
 	DELETE,
 	UPDATE,
-	GET_BY_ID_DETAILS,
+	GET_ALL,
 }

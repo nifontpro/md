@@ -28,6 +28,9 @@ val sshAntTask = configurations.create("sshAntTask")
 extra["springCloudVersion"] = springCloudVersion
 
 dependencies {
+    implementation(project(":base:base_db"))
+    implementation(project(":base:base_domain"))
+
     implementation(project(":ms-gal:domain"))
     implementation(project(":ms-gal:rest"))
 

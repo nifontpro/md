@@ -6,20 +6,19 @@ import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_rest.imageProcess
 import ru.md.base_rest.model.AUTH
 import ru.md.base_rest.model.BaseResponse
+import ru.md.base_rest.model.mapper.toTransportBaseImage
 import ru.md.base_rest.process
 import ru.md.base_rest.toLongOr0
+import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.dept.biz.proc.DeptCommand
 import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.domain.dept.biz.proc.DeptProcessor
 import ru.md.msc.domain.dept.model.Dept
-import ru.md.msc.rest.base.*
-import ru.md.msc.rest.base.mappers.toTransportBaseImage
 import ru.md.msc.rest.dept.mappers.fromTransport
 import ru.md.msc.rest.dept.mappers.toTransportDeptDetails
 import ru.md.msc.rest.dept.mappers.toTransportDepts
 import ru.md.msc.rest.dept.model.request.*
 import ru.md.msc.rest.dept.model.response.DeptDetailsResponse
-import ru.md.base_rest.utils.JwtUtils
 
 @RestController
 @RequestMapping("dept")
