@@ -1,6 +1,7 @@
 package ru.md.msgal.db.item.service
 
 import jakarta.transaction.Transactional
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.base_db.mapper.toPageRequest
 import ru.md.base_db.mapper.toPageResult
@@ -9,6 +10,7 @@ import ru.md.base_domain.model.PageResult
 import ru.md.msgal.db.item.model.mapper.toItem
 import ru.md.msgal.db.item.model.mapper.toItemEntity
 import ru.md.msgal.db.item.repo.ItemRepository
+import ru.md.msgal.domain.item.biz.proc.ItemNotFoundException
 import ru.md.msgal.domain.item.model.Item
 import ru.md.msgal.domain.item.service.ItemService
 
@@ -27,6 +29,11 @@ class ItemServiceImpl(
 	override fun getByFolderId(folderId: Long, baseQuery: BaseQuery): PageResult<Item> {
 		val items = itemRepository.findByFolderId(folderId = folderId, pageable = baseQuery.toPageRequest())
 		return items.toPageResult { it.toItem() }
+	}
+
+	override fun getById(itemId: Long): Item {
+		val itemEntity = itemRepository.findByIdOrNull(id = itemId) ?: throw ItemNotFoundException()
+		return itemEntity.toItem()
 	}
 
 }

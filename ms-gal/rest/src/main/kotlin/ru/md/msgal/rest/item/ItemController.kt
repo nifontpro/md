@@ -10,7 +10,9 @@ import ru.md.base_rest.utils.JwtUtils
 import ru.md.msgal.domain.item.biz.proc.ItemProcessor
 import ru.md.msgal.domain.item.model.Item
 import ru.md.msgal.rest.item.mappers.fromTransport
+import ru.md.msgal.rest.item.mappers.toTransportItem
 import ru.md.msgal.rest.item.mappers.toTransportItems
+import ru.md.msgal.rest.item.model.request.GetItemByIdRequest
 import ru.md.msgal.rest.item.model.request.GetItemsByFolderRequest
 import ru.md.msgal.rest.item.model.response.ItemResponse
 
@@ -59,6 +61,20 @@ class ItemController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportItems() }
+		)
+	}
+
+	@PostMapping("get_id")
+	private suspend fun getItemById(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetItemByIdRequest
+	): BaseResponse<ItemResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return process(
+			processor = itemProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportItem() }
 		)
 	}
 }

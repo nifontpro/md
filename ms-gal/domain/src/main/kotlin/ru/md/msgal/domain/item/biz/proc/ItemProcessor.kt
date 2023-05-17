@@ -11,6 +11,7 @@ import ru.md.cor.worker
 import ru.md.msgal.domain.base.validate.validateFolderExist
 import ru.md.msgal.domain.base.validate.validateFolderId
 import ru.md.msgal.domain.folder.service.FolderService
+import ru.md.msgal.domain.item.biz.validate.validateItemId
 import ru.md.msgal.domain.item.biz.validate.validateItemName
 import ru.md.msgal.domain.item.biz.workers.*
 import ru.md.msgal.domain.item.service.ItemService
@@ -49,6 +50,11 @@ class ItemProcessor(
 				worker("Допустимые поля сортировки") { orderFields = listOf("name", "createdAt") }
 				validateSortedFields("Проверка списка полей сортировки")
 				getItemsByFolderId("Получаем объекты")
+			}
+
+			operation("Получить объект", ItemCommand.GET_BY_ID) {
+				validateItemId("Проверяем itemId")
+				getItemById("Получаем объект")
 			}
 
 			finishOperation()
