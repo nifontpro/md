@@ -22,7 +22,7 @@ class ItemController(
 		@RequestPart("file") file: MultipartFile,
 		@RequestPart("folderId") folderId: String,
 		@RequestPart("name") name: String,
-		@RequestPart("description") description: String,
+		@RequestPart("description") description: String?,
 	): BaseResponse<Item> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		return addItemProc(

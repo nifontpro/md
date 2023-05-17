@@ -7,6 +7,7 @@ import ru.md.base_rest.model.BaseResponse
 import ru.md.base_rest.model.baseResponse
 import ru.md.base_rest.saveFile
 import ru.md.base_rest.utils.AuthData
+import ru.md.msgal.domain.item.biz.proc.ItemCommand
 import ru.md.msgal.domain.item.biz.proc.ItemContext
 import ru.md.msgal.domain.item.biz.proc.ItemProcessor
 import ru.md.msgal.domain.item.model.Item
@@ -18,10 +19,11 @@ suspend fun addItemProc(
 	file: MultipartFile,
 	folderId: Long,
 	name: String,
-	description: String
+	description: String?
 ): BaseResponse<Item> {
 
 	val context = ItemContext()
+	context.command = ItemCommand.CREATE
 
 	if (!authData.emailVerified || authData.email.isBlank()) {
 		context.emailNotVerified()
