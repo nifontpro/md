@@ -1,23 +1,23 @@
-package ru.md.msgal.rest.test
+package ru.md.msc.rest.micro
 
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.awaitBody
 
-const val resourceServerURL = "http://localhost:8765/client"
+const val resourceServerURL = "http://localhost:8765"
 
 @Component
-class UserWebClientBuilder(
+class MicroWebClientBuilder(
 //	@Value("\${resource-server.url}")
 //	private val resourceServerURL: String,
 ) {
 
-	val userClient: WebClient = WebClient.create(resourceServerURL)
+	val msClient: WebClient = WebClient.create(resourceServerURL)
 
 	// https://www.baeldung.com/kotlin/spring-boot-kotlin-coroutines
-	suspend fun getUserData(uri: String, body: Any, accessToken: String): Any {
+	suspend fun getMsData(uri: String, body: Any, accessToken: String): Any {
 
-		return userClient
+		return msClient
 			.post()
 			.uri(uri)
 			.bodyValue(body)
