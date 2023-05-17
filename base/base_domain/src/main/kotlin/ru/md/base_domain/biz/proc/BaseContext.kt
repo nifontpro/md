@@ -15,7 +15,6 @@ abstract class BaseContext(
 	var pageInfo: PageInfo? = null,
 	var baseQuery: BaseQuery = BaseQuery(),
 	var orderFields: List<String> = emptyList(), // Допустимые поля для сортировки
-
 )
 
 interface IBaseCommand

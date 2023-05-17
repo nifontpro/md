@@ -9,10 +9,6 @@ abstract class BaseGalleryContext(
 
 	var folderId: Long = 0,
 
-//	var baseImage: BaseImage = BaseImage(),
-//	var baseImages: List<BaseImage> = emptyList(),
-//	var deleteImageOnFailing: Boolean = false,
-
 ) : BaseContext() {
 	lateinit var folderService: FolderService
 	open val log: Logger = LoggerFactory.getLogger(BaseGalleryContext::class.java)
