@@ -2,7 +2,7 @@ package ru.md.msgal.domain.item.model
 
 import java.time.LocalDateTime
 
-class Item(
+data class Item(
 	val id: Long = 0,
 	val folderId: Long = 0,
 	val name: String = "",

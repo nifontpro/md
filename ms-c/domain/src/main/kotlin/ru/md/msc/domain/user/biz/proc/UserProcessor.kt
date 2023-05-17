@@ -18,7 +18,7 @@ import ru.md.msc.domain.base.workers.*
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
 import ru.md.msc.domain.dept.service.DeptService
-import ru.md.msc.domain.image.repository.S3Repository
+import ru.md.msc.domain.s3.repository.S3Repository
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
 import ru.md.msc.domain.user.biz.validate.validateCreateUserRoles
 import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty

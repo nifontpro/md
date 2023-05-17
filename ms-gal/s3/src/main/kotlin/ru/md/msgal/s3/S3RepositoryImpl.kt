@@ -1,13 +1,11 @@
-package ru.md.msc.s3.repository
+package ru.md.msgal.s3
 
 import com.amazonaws.services.s3.AmazonS3
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.stereotype.Repository
 import ru.md.base_domain.image.model.FileData
-import ru.md.base_domain.image.model.IBaseImage
-import ru.md.base_domain.image.model.ImageType
-import ru.md.msc.domain.s3.repository.S3Repository
+import ru.md.msgal.domain.s3.repository.S3Repository
 import java.io.File
 
 @Repository
@@ -34,25 +32,4 @@ class S3RepositoryImpl(
 		}
 	}
 
-	override suspend fun deleteBaseImage(entity: IBaseImage) {
-		if (entity.type == ImageType.USER) {
-			deleteObject(entity.imageKey)
-		}
-	}
-
-	/**
-	 * Проверка доступности хранилища
-	 */
-	override suspend fun available(): Boolean {
-		return try {
-			withContext(Dispatchers.IO) {
-				s3.listBuckets().map {
-					println(it.name)
-					it.name
-				}.contains(Constants.S3_BUCKET_NAME)
-			}
-		} catch (e: Exception) {
-			false
-		}
-	}
 }

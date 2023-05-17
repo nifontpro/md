@@ -4,7 +4,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import ru.md.base_domain.biz.proc.BaseContext
 import ru.md.msc.domain.dept.service.DeptService
-import ru.md.msc.domain.image.repository.S3Repository
+import ru.md.msc.domain.s3.repository.S3Repository
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.service.UserService
 

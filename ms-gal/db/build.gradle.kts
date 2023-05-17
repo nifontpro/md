@@ -30,9 +30,11 @@ extra["springCloudVersion"] = springCloudVersion
 dependencies {
     implementation(project(":base:base_db"))
     implementation(project(":base:base_domain"))
+    implementation(project(":base:base_rest"))
 
     implementation(project(":ms-gal:domain"))
     implementation(project(":ms-gal:rest"))
+    implementation(project(":ms-gal:s3"))
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-webflux")

@@ -1,8 +1,7 @@
-package ru.md.msgal.rest
+package ru.md.msgal.rest.test
 
 import org.springframework.web.bind.annotation.*
-
-const val AUTH = "Authorization"
+import ru.md.base_rest.model.AUTH
 
 @RestController
 @RequestMapping("test")

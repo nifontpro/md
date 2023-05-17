@@ -6,7 +6,7 @@ import ru.md.base_rest.model.LOCAL_FOLDER
 import java.io.File
 import java.util.*
 
-fun saveFile(multipartFile: MultipartFile, entityId: Long): FileData? {
+fun saveFile(multipartFile: MultipartFile, entityId: Long = 0): FileData? {
 	val fileBytes = multipartFile.bytes
 	val fileSize = multipartFile.size
 	if (fileBytes.isEmpty()) return null

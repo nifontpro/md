@@ -1,4 +1,4 @@
-package ru.md.msgal.rest
+package ru.md.msgal.rest.test
 
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient

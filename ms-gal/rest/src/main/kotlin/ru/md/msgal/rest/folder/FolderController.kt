@@ -17,7 +17,6 @@ import ru.md.msgal.rest.folder.model.response.FolderResponse
 
 @RestController
 @RequestMapping("folder")
-@Suppress("SpringJavaInjectionPointsAutowiringInspection")
 class FolderController(
 	private val folderProcessor: FolderProcessor,
 	private val jwtUtils: JwtUtils,
