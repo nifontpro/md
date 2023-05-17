@@ -8,4 +8,5 @@ interface FolderService {
 	fun update(folder: Folder): Folder
 	fun delete(folderId: Long): Folder
 	fun getAll(orders: List<BaseOrder>): List<Folder>
+	fun doesFolderExist(folderId: Long): Boolean
 }

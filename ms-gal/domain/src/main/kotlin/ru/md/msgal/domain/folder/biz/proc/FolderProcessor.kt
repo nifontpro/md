@@ -6,6 +6,8 @@ import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
 import ru.md.cor.rootChain
+import ru.md.cor.worker
+import ru.md.msgal.domain.base.validate.validateFolderExist
 import ru.md.msgal.domain.base.validate.validateFolderId
 import ru.md.msgal.domain.folder.biz.validate.validateFolderName
 import ru.md.msgal.domain.folder.biz.validate.validateParentFolderId
@@ -23,12 +25,14 @@ class FolderProcessor(
 
 	companion object {
 
-		private val businessChain = rootChain {
+		private val businessChain = rootChain<FolderContext> {
 			initStatus()
 
 			operation("Создать папку", FolderCommand.CREATE) {
 				validateFolderName("Проверка имени папки")
 				validateParentFolderId("Проверяем parentId")
+				worker("Подготовка") { folderId = folder.parentId }
+				validateFolderExist("Проверяем наличие папки")
 				trimFieldFolder("Очищаем поля папки")
 				createFolder("Создаем папку")
 			}

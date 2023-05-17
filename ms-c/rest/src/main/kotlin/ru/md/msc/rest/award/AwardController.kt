@@ -3,10 +3,10 @@ package ru.md.msc.rest.award
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.image.model.BaseImage
-import ru.md.base_rest.imageProcess
+import ru.md.msc.rest.base.imageProcess
 import ru.md.base_rest.model.AUTH
 import ru.md.base_rest.model.BaseResponse
-import ru.md.base_rest.model.mapper.toTransportBaseImage
+import ru.md.msc.rest.base.toTransportBaseImage
 import ru.md.base_rest.process
 import ru.md.base_rest.toLongOr0
 import ru.md.base_rest.utils.JwtUtils

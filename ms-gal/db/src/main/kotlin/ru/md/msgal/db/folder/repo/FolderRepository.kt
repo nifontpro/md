@@ -10,4 +10,6 @@ interface FolderRepository : JpaRepository<FolderEntity, Long> {
 
 	override fun findAll(sort: Sort): List<FolderEntity>
 
+	fun countById(folderId: Long): Long
+
 }

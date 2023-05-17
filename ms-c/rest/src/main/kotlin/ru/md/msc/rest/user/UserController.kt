@@ -3,7 +3,7 @@ package ru.md.msc.rest.user
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.image.model.BaseImage
-import ru.md.base_rest.imageProcess
+import ru.md.msc.rest.base.imageProcess
 import ru.md.base_rest.model.AUTH
 import ru.md.base_rest.model.BaseResponse
 import ru.md.base_rest.process
@@ -12,7 +12,7 @@ import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.User
-import ru.md.base_rest.model.mapper.toTransportBaseImage
+import ru.md.msc.rest.base.toTransportBaseImage
 import ru.md.msc.rest.user.mappers.fromTransport
 import ru.md.msc.rest.user.mappers.toTransportUserDetails
 import ru.md.msc.rest.user.mappers.toTransportUsers

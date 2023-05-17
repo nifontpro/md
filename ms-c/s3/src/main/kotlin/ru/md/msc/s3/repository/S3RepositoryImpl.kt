@@ -3,6 +3,8 @@ package ru.md.msc.s3.repository
 import com.amazonaws.services.s3.AmazonS3
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
 import ru.md.base_domain.image.model.FileData
 import ru.md.base_domain.image.model.IBaseImage
@@ -15,6 +17,8 @@ class S3RepositoryImpl(
 	private val s3: AmazonS3
 ) : S3Repository {
 
+	val log: Logger = LoggerFactory.getLogger(S3RepositoryImpl::class.java)
+
 	override suspend fun putObject(key: String, fileData: FileData): String? {
 		return try {
 			withContext(Dispatchers.IO) {
@@ -23,7 +27,7 @@ class S3RepositoryImpl(
 				s3.getUrl(Constants.S3_BUCKET_NAME, key).toExternalForm()
 			}
 		} catch (e: Exception) {
-			println(e.message)
+			log.error(e.message)
 			null
 		}
 	}
@@ -47,7 +51,6 @@ class S3RepositoryImpl(
 		return try {
 			withContext(Dispatchers.IO) {
 				s3.listBuckets().map {
-					println(it.name)
 					it.name
 				}.contains(Constants.S3_BUCKET_NAME)
 			}

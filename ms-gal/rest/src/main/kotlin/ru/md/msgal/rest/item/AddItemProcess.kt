@@ -47,6 +47,5 @@ suspend fun addItemProc(
 	itemProcessor.exec(context)
 
 	File(fileData.url).delete()
-
 	return context.baseResponse(data = context.item)
 }

@@ -46,4 +46,8 @@ class FolderServiceImpl(
 		return folders.map { it.toFolder() }
 	}
 
+	override fun doesFolderExist(folderId: Long): Boolean {
+		return folderRepository.countById(folderId) > 0
+	}
+
 }

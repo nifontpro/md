@@ -20,7 +20,7 @@ fun errorValidation(
 	description: String,
 	level: ContextError.Levels = ContextError.Levels.INFO,
 ) = ContextError(
-	code = "validation-$field-$violationCode",
+	code = "validation-$field:$violationCode",
 	field = field,
 	group = "validation",
 	message = description,
@@ -33,7 +33,7 @@ fun errorDb(
 	description: String,
 	level: ContextError.Levels = ContextError.Levels.ERROR,
 ) = ContextError(
-	code = "db-$repository-$violationCode",
+	code = "db-$repository:$violationCode",
 	field = repository,
 	group = "db",
 	message = "БД: $description",
@@ -52,6 +52,7 @@ fun errorUnauthorized(
 	level = level,
 )
 
+@Suppress("unused")
 fun otherError(
 	description: String,
 	field: String,
