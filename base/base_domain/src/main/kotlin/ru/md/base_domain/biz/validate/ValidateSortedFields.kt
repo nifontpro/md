@@ -1,12 +1,12 @@
-package ru.md.msc.domain.base.validate
+package ru.md.base_domain.biz.validate
 
-import ru.md.cor.ICorChainDsl
-import ru.md.cor.worker
-import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.base_domain.biz.helper.errorValidation
 import ru.md.base_domain.biz.helper.fail
+import ru.md.base_domain.biz.proc.BaseContext
+import ru.md.cor.ICorChainDsl
+import ru.md.cor.worker
 
-fun <T : BaseClientContext> ICorChainDsl<T>.validateSortedFields(title: String) = worker {
+fun <T : BaseContext> ICorChainDsl<T>.validateSortedFields(title: String) = worker {
 	this.title = title
 	on { true }
 	handle {

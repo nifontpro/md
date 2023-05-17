@@ -2,6 +2,7 @@ package ru.md.msgal.domain.folder.biz.proc
 
 import org.springframework.stereotype.Component
 import ru.md.base_domain.biz.proc.IBaseProcessor
+import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
@@ -50,6 +51,8 @@ class FolderProcessor(
 			}
 
 			operation("Получить все папки", FolderCommand.GET_ALL) {
+				worker("Допустимые поля сортировки") { orderFields = listOf("parentId", "name", "createdAt") }
+				validateSortedFields("Проверка списка полей сортировки")
 				getAllFolders("Получаем все папки")
 			}
 

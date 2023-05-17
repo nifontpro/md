@@ -17,7 +17,6 @@ fun ICorChainDsl<ItemContext>.addItemImageToS3(title: String) = worker {
 			val prefix = "F$folderId"
 			val imageKey = "$prefix/${fileData.filename}"
 			val imageUrl = s3Repository.putObject(key = imageKey, fileData = fileData) ?: throw Exception()
-//			baseImage = BaseImage(imageUrl = imageUrl, imageKey = imageKey, type = ImageType.USER)
 			item = item.copy(
 				imageUrl = imageUrl,
 				imageKey = imageKey

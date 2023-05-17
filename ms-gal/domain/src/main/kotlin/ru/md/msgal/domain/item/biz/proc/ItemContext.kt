@@ -26,4 +26,5 @@ enum class ItemCommand : IBaseCommand {
 	CREATE,
 	DELETE,
 	UPDATE,
+	GET_BY_FOLDER
 }

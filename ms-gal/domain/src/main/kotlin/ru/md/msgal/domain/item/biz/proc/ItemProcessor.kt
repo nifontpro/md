@@ -2,18 +2,17 @@ package ru.md.msgal.domain.item.biz.proc
 
 import org.springframework.stereotype.Component
 import ru.md.base_domain.biz.proc.IBaseProcessor
+import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
 import ru.md.cor.rootChain
+import ru.md.cor.worker
 import ru.md.msgal.domain.base.validate.validateFolderExist
 import ru.md.msgal.domain.base.validate.validateFolderId
 import ru.md.msgal.domain.folder.service.FolderService
 import ru.md.msgal.domain.item.biz.validate.validateItemName
-import ru.md.msgal.domain.item.biz.workers.addItemImageToDb
-import ru.md.msgal.domain.item.biz.workers.addItemImageToS3
-import ru.md.msgal.domain.item.biz.workers.deleteItemImageFromS3
-import ru.md.msgal.domain.item.biz.workers.trimFieldItem
+import ru.md.msgal.domain.item.biz.workers.*
 import ru.md.msgal.domain.item.service.ItemService
 import ru.md.msgal.domain.s3.repository.S3Repository
 
@@ -32,10 +31,10 @@ class ItemProcessor(
 
 	companion object {
 
-		private val businessChain = rootChain {
+		private val businessChain = rootChain<ItemContext> {
 			initStatus()
 
-			operation("Создать элемент галереи", ItemCommand.CREATE) {
+			operation("Создать объект галереи", ItemCommand.CREATE) {
 				validateFolderId("Проверка folderId")
 				validateItemName("Проверка имени объекта")
 				validateFolderExist("Проверяем наличие папки")
@@ -43,6 +42,13 @@ class ItemProcessor(
 				addItemImageToS3("Добавляем изображение в s3")
 				addItemImageToDb("Добавляем изображение в БД")
 				deleteItemImageFromS3("Удаляем изображение из s3 в случае ошибки записи в БД")
+			}
+
+			operation("Получить объекты из папки", ItemCommand.GET_BY_FOLDER) {
+				validateFolderId("Проверка folderId")
+				worker("Допустимые поля сортировки") { orderFields = listOf("name", "createdAt") }
+				validateSortedFields("Проверка списка полей сортировки")
+				getItemsByFolderId("Получаем объекты")
 			}
 
 			finishOperation()

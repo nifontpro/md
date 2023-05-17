@@ -19,7 +19,7 @@ import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
-import ru.md.msc.domain.base.validate.validateSortedFields
+import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.msc.domain.base.validate.validateUserId
 import ru.md.msc.domain.base.workers.*
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
