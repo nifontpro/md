@@ -25,7 +25,7 @@ class SpringSecurityConfig {
 		http.authorizeHttpRequests()
 //			.requestMatchers("/user/d").permitAll()
 			.requestMatchers("/item/**").hasRole("user")
-			.requestMatchers("/micro/**").hasRole("micro")
+			.requestMatchers("/micro/**").hasAnyRole("micro", "user")
 			.requestMatchers("/folder/**").hasRole("user")
 			.anyRequest().hasRole("user")
 			.and() // добавляем новые настройки, не связанные с предыдущими

@@ -1,5 +1,6 @@
 package ru.md.msc.rest.micro
 
+import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.awaitBody
@@ -22,10 +23,10 @@ class MicroWebClientBuilder(
 			.uri(uri)
 			.bodyValue(body)
 			.headers {
-				it.set("Authorization", accessToken)
-//				it.addAll(HttpHeaders().apply {
-//					setBearerAuth(accessToken)
-//				})
+//				it.set("Authorization", accessToken)
+				it.addAll(HttpHeaders().apply {
+					setBearerAuth(accessToken)
+				})
 			}
 			.retrieve()
 			.awaitBody()

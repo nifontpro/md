@@ -25,7 +25,7 @@ class SpringSecurityConfig {
 		http.authorizeHttpRequests()
 //			.requestMatchers("/user/d").permitAll()
 			.requestMatchers("/user/**").hasRole("user")
-			.requestMatchers("/admin/**").hasRole("admin")
+			.requestMatchers("/t/**").permitAll()
 			.anyRequest().hasRole("user")
 			.and() // добавляем новые настройки, не связанные с предыдущими
 			.csrf().disable()
