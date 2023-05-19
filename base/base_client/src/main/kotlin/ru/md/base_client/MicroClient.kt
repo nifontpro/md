@@ -22,7 +22,7 @@ import ru.md.base_domain.rest.BaseResponse
  */
 
 @Component
-class MicroClientImpl(
+class MicroClient(
 	@Value("\${resource-server.url}") private val resourceServerURL: String,
 	@Value("\${keycloak.url}") private val keycloakUrl: String,
 	@Value("\${keycloak.credentials.secret}") private val clientSecret: String,
@@ -101,7 +101,7 @@ class MicroClientImpl(
 	}
 
 	companion object {
-		val log: Logger = LoggerFactory.getLogger(MicroClientImpl::class.java)
+		val log: Logger = LoggerFactory.getLogger(MicroClient::class.java)
 	}
 
 }

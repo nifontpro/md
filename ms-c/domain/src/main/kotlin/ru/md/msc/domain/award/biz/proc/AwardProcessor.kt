@@ -1,7 +1,7 @@
 package ru.md.msc.domain.award.biz.proc
 
 import org.springframework.stereotype.Component
-import ru.md.base_client.MicroClientImpl
+import ru.md.base_client.MicroClient
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.base_domain.biz.workers.finishOperation
@@ -37,7 +37,7 @@ class AwardProcessor(
 	private val deptService: DeptService,
 	private val awardService: AwardService,
 	private val s3Repository: S3Repository,
-	private val microClient: MicroClientImpl
+	private val microClient: MicroClient
 ) : IBaseProcessor<AwardContext> {
 
 	override suspend fun exec(ctx: AwardContext) = businessChain.exec(ctx.also {
