@@ -5,6 +5,8 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.base_db.mapper.*
 import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_domain.image.model.ImageType
+import ru.md.base_domain.item.SmallItem
 import ru.md.base_domain.model.BaseOrder
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
@@ -103,6 +105,17 @@ class AwardServiceImpl(
 			imageUrl = baseImage.imageUrl,
 			imageKey = baseImage.imageKey,
 			type = baseImage.type,
+			createdAt = LocalDateTime.now()
+		)
+		awardImageRepository.save(awardImageEntity)
+		return awardImageEntity.toImage()
+	}
+
+	override fun addGalleryImage(awardId: Long, smallItem: SmallItem): BaseImage {
+		val awardImageEntity = AwardImageEntity(
+			awardId = awardId,
+			imageUrl = smallItem.imageUrl,
+			type = ImageType.SYSTEM,
 			createdAt = LocalDateTime.now()
 		)
 		awardImageRepository.save(awardImageEntity)

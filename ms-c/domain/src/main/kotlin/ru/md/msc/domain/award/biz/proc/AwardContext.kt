@@ -1,6 +1,7 @@
 package ru.md.msc.domain.award.biz.proc
 
 import ru.md.base_domain.biz.proc.IBaseCommand
+import ru.md.base_domain.item.SmallItem
 import ru.md.msc.domain.award.model.*
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.BaseClientContext
@@ -16,6 +17,7 @@ class AwardContext : BaseClientContext() {
 	var userDeptId: Long = 0
 	var actionType: ActionType = ActionType.UNDEF
 	var awardState: AwardState? = null
+	var smallItem: SmallItem = SmallItem()
 
 	lateinit var awardService: AwardService
 }

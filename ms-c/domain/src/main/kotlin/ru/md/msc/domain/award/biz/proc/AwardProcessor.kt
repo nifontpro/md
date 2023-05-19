@@ -1,12 +1,12 @@
 package ru.md.msc.domain.award.biz.proc
 
 import org.springframework.stereotype.Component
-import ru.md.base_client.MicroClient
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
+import ru.md.base_domain.client.MicroClient
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.rootChain
 import ru.md.cor.worker
@@ -94,7 +94,7 @@ class AwardProcessor(
 				worker("Получение id сущности") { awardId = fileData.entityId }
 				validateAccessToAwardChain()
 				addAwardImageToS3("Сохраняем изображение в s3")
-				addAwardImageToDb("Сохраняем изображение в БД")
+				addAwardImageToDb("Сохраняем ссылки на изображение в БД")
 				deleteS3ImageOnFailingChain()
 			}
 
@@ -103,7 +103,7 @@ class AwardProcessor(
 				validateImageId("Проверка imageId")
 				validateAccessToAwardChain()
 				getGalleryItemByClient("Получаем объект галереи из мс")
-
+				addAwardGalleryImageToDb("Сохраняем ссылки на изображение в БД")
 			}
 
 			operation("Удаление изображения", AwardCommand.IMG_DELETE) {

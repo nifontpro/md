@@ -72,7 +72,7 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-val jarFileName = "client.jar"
+val jarFileName = "gallery.jar"
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
     this.archiveFileName.set(jarFileName)
 }
@@ -94,7 +94,7 @@ val remoteUrl = "nmedalist.ru"
 val myFolder = System.getenv("MY_FOLDER") ?: "~"
 val patchKey = "$myFolder/Deploy/serverkey"
 
-task("remote-client") {
+task("remote-gallery") {
     dependsOn("bootJar")
     ant.withGroovyBuilder {
         doLast {
@@ -105,7 +105,7 @@ task("remote-client") {
             try {
                 "scp"(
                     "file" to file("build/libs/$jarFileName"),
-                    "todir" to "$user@$host:~/v1/md/client",
+                    "todir" to "$user@$host:~/v1/md/gallery",
                     "keyfile" to key,
                     "trust" to true,
                     "knownhosts" to knownHosts

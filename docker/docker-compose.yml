@@ -37,14 +37,30 @@ services:
     env_file:
       - ./.db-env
       - ./.s3-env
+      - ./.kc-env
     container_name: client
     image: md/client:1
+
+  gallery:
+    build: gallery/.
+    restart: always
+    depends_on:
+      - server
+    networks:
+      - net
+    env_file:
+      - ./.db-env
+      - ./.s3-env
+    container_name: gallery
+    image: md/gallery:1
+
 
   gateway:
     build: gateway/.
     restart: always
     depends_on:
       - client
+      - gallery
     networks:
       - net
     ports:

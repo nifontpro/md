@@ -1,6 +1,7 @@
 package ru.md.msc.domain.award.service
 
 import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_domain.item.SmallItem
 import ru.md.base_domain.model.BaseOrder
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
@@ -24,4 +25,5 @@ interface AwardService {
 	fun findUsersByActivAward(awardId: Long, orders: List<BaseOrder>): List<Activity>
 	fun findBySubDept(deptId: Long, baseQuery: BaseQuery): PageResult<Award>
 	fun findByDeptId(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award>
+	fun addGalleryImage(awardId: Long, smallItem: SmallItem): BaseImage
 }

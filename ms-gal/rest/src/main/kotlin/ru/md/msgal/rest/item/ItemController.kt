@@ -3,7 +3,6 @@ package ru.md.msgal.rest.item
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.item.GalleryItem
-import ru.md.base_domain.item.SmallItem
 import ru.md.base_domain.item.request.GetItemByIdRequest
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_rest.authProcess
@@ -14,7 +13,7 @@ import ru.md.base_rest.utils.JwtUtils
 import ru.md.msgal.domain.item.biz.proc.ItemProcessor
 import ru.md.msgal.rest.item.mappers.fromTransport
 import ru.md.msgal.rest.item.mappers.toTransportItems
-import ru.md.msgal.rest.item.mappers.toTransportSmallItem
+import ru.md.msgal.rest.item.mappers.toTransportSmallItemJson
 import ru.md.msgal.rest.item.model.request.GetItemsByFolderRequest
 import ru.md.msgal.rest.item.model.response.ItemResponse
 
@@ -69,12 +68,12 @@ class ItemController(
 	@PostMapping("get_id")
 	private suspend fun getItemById(
 		@RequestBody request: GetItemByIdRequest
-	): BaseResponse<SmallItem> {
+	): BaseResponse<String> {
 		return process(
 			processor = itemProcessor,
 			request = request,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportSmallItem() }
+			toTransport = { toTransportSmallItemJson() }
 		)
 	}
 
