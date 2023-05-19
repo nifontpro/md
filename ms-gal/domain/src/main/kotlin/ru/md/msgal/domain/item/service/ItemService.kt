@@ -2,10 +2,10 @@ package ru.md.msgal.domain.item.service
 
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
-import ru.md.msgal.domain.item.model.Item
+import ru.md.base_domain.item.GalleryItem
 
 interface ItemService {
-	fun create(item: Item): Item
-	fun getByFolderId(folderId: Long, baseQuery: BaseQuery): PageResult<Item>
-	fun getById(itemId: Long): Item
+	fun create(galleryItem: GalleryItem): GalleryItem
+	fun getByFolderId(folderId: Long, baseQuery: BaseQuery): PageResult<GalleryItem>
+	fun getById(itemId: Long): GalleryItem
 }

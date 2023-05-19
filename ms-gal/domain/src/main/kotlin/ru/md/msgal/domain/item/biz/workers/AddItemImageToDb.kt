@@ -14,7 +14,7 @@ fun ICorChainDsl<ItemContext>.addItemImageToDb(title: String) = worker {
 	handle {
 
 		try {
-			item = itemService.create(item = item)
+			item = itemService.create(galleryItem = item)
 		} catch (e: Exception) {
 			log.error(e.message)
 			deleteImageOnFailing = true

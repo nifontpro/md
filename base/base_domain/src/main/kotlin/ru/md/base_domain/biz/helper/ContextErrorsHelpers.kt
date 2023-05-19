@@ -52,7 +52,6 @@ fun errorUnauthorized(
 	level = level,
 )
 
-@Suppress("unused")
 fun otherError(
 	description: String,
 	field: String,

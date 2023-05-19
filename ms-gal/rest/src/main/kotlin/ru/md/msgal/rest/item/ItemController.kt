@@ -2,17 +2,19 @@ package ru.md.msgal.rest.item
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import ru.md.base_domain.item.GalleryItem
+import ru.md.base_domain.item.SmallItem
+import ru.md.base_domain.item.request.GetItemByIdRequest
+import ru.md.base_domain.rest.BaseResponse
+import ru.md.base_rest.authProcess
 import ru.md.base_rest.model.AUTH
-import ru.md.base_rest.model.BaseResponse
 import ru.md.base_rest.process
 import ru.md.base_rest.toLongOr0
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msgal.domain.item.biz.proc.ItemProcessor
-import ru.md.msgal.domain.item.model.Item
 import ru.md.msgal.rest.item.mappers.fromTransport
-import ru.md.msgal.rest.item.mappers.toTransportItem
 import ru.md.msgal.rest.item.mappers.toTransportItems
-import ru.md.msgal.rest.item.model.request.GetItemByIdRequest
+import ru.md.msgal.rest.item.mappers.toTransportSmallItem
 import ru.md.msgal.rest.item.model.request.GetItemsByFolderRequest
 import ru.md.msgal.rest.item.model.response.ItemResponse
 
@@ -30,7 +32,7 @@ class ItemController(
 		@RequestPart("folderId") folderId: String,
 		@RequestPart("name") name: String,
 		@RequestPart("description") description: String?,
-	): BaseResponse<Item> {
+	): BaseResponse<GalleryItem> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		return addItemProc(
 			authData = authData,
@@ -56,7 +58,7 @@ class ItemController(
 		@RequestBody request: GetItemsByFolderRequest
 	): BaseResponse<List<ItemResponse>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = itemProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -66,15 +68,14 @@ class ItemController(
 
 	@PostMapping("get_id")
 	private suspend fun getItemById(
-		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetItemByIdRequest
-	): BaseResponse<ItemResponse> {
-		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+	): BaseResponse<SmallItem> {
 		return process(
 			processor = itemProcessor,
-			authRequest = baseRequest,
+			request = request,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportItem() }
+			toTransport = { toTransportSmallItem() }
 		)
 	}
+
 }

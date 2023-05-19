@@ -1,6 +1,12 @@
 package ru.md.msc.domain.award.biz.proc
 
 import org.springframework.stereotype.Component
+import ru.md.base_client.MicroClientImpl
+import ru.md.base_domain.biz.proc.IBaseProcessor
+import ru.md.base_domain.biz.validate.validateSortedFields
+import ru.md.base_domain.biz.workers.finishOperation
+import ru.md.base_domain.biz.workers.initStatus
+import ru.md.base_domain.biz.workers.operation
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.rootChain
 import ru.md.cor.worker
@@ -11,20 +17,16 @@ import ru.md.msc.domain.award.biz.workers.sort.setActionByDeptValidSortedFields
 import ru.md.msc.domain.award.biz.workers.sort.setActionByUserValidSortedFields
 import ru.md.msc.domain.award.biz.workers.sort.setAwardWithDeptValidSortedFields
 import ru.md.msc.domain.award.service.AwardService
-import ru.md.base_domain.biz.proc.IBaseProcessor
-import ru.md.base_domain.biz.workers.finishOperation
-import ru.md.base_domain.biz.workers.initStatus
-import ru.md.base_domain.biz.workers.operation
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
-import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.msc.domain.base.validate.validateUserId
-import ru.md.msc.domain.base.workers.*
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
 import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
+import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
+import ru.md.msc.domain.base.workers.deleteBaseImagesFromS3
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.s3.repository.S3Repository
 import ru.md.msc.domain.user.service.UserService
@@ -34,7 +36,8 @@ class AwardProcessor(
 	private val userService: UserService,
 	private val deptService: DeptService,
 	private val awardService: AwardService,
-	private val s3Repository: S3Repository
+	private val s3Repository: S3Repository,
+	private val microClient: MicroClientImpl
 ) : IBaseProcessor<AwardContext> {
 
 	override suspend fun exec(ctx: AwardContext) = businessChain.exec(ctx.also {
@@ -42,6 +45,7 @@ class AwardProcessor(
 		it.deptService = deptService
 		it.awardService = awardService
 		it.s3Repository = s3Repository
+		it.microClient = microClient
 	})
 
 	companion object {
@@ -92,6 +96,14 @@ class AwardProcessor(
 				addAwardImageToS3("Сохраняем изображение в s3")
 				addAwardImageToDb("Сохраняем изображение в БД")
 				deleteS3ImageOnFailingChain()
+			}
+
+			operation("Добавление изображения из галереи", AwardCommand.IMG_ADD_GALLERY) {
+				validateAwardId("Проверяем awardId")
+				validateImageId("Проверка imageId")
+				validateAccessToAwardChain()
+				getGalleryItemByClient("Получаем объект галереи из мс")
+
 			}
 
 			operation("Удаление изображения", AwardCommand.IMG_DELETE) {

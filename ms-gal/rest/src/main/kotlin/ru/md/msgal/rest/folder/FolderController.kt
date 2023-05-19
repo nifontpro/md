@@ -2,8 +2,8 @@ package ru.md.msgal.rest.folder
 
 import org.springframework.web.bind.annotation.*
 import ru.md.base_rest.model.AUTH
-import ru.md.base_rest.model.BaseResponse
-import ru.md.base_rest.process
+import ru.md.base_domain.rest.BaseResponse
+import ru.md.base_rest.authProcess
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msgal.domain.folder.biz.proc.FolderProcessor
 import ru.md.msgal.rest.folder.mappers.fromTransport
@@ -28,7 +28,7 @@ class FolderController(
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<FolderResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = folderProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -42,7 +42,7 @@ class FolderController(
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<FolderResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = folderProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -56,7 +56,7 @@ class FolderController(
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<FolderResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = folderProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -70,7 +70,7 @@ class FolderController(
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<List<FolderResponse>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = folderProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },

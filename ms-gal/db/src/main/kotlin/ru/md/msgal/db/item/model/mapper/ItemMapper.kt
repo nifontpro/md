@@ -1,10 +1,10 @@
 package ru.md.msgal.db.item.model.mapper
 
 import ru.md.msgal.db.item.model.ItemEntity
-import ru.md.msgal.domain.item.model.Item
+import ru.md.base_domain.item.GalleryItem
 import java.time.LocalDateTime
 
-fun ItemEntity.toItem() = Item(
+fun ItemEntity.toItem() = GalleryItem(
 	id = id ?: 0,
 	folderId = folderId ?: 0,
 	name = name ?: "",
@@ -15,7 +15,7 @@ fun ItemEntity.toItem() = Item(
 	imageKey = imageKey ?: ""
 )
 
-fun Item.toItemEntity(create: Boolean = false) = ItemEntity(
+fun GalleryItem.toItemEntity(create: Boolean = false) = ItemEntity(
 	id = if (create) null else id,
 	folderId = folderId,
 	name = name,

@@ -17,16 +17,11 @@ class SpringSecurityConfig {
 	@Bean
 	fun filterChain(http: HttpSecurity): SecurityFilterChain {
 
-		// конвертер для настройки spring security
 		val jwtAuthenticationConverter = JwtAuthenticationConverter()
-		// подключаем конвертер ролей
 		jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(KCRoleConverter())
 
 		http.authorizeHttpRequests()
-//			.requestMatchers("/user/d").permitAll()
-			.requestMatchers("/item/**").hasRole("user")
-			.requestMatchers("/micro/**").hasAnyRole("micro", "user")
-			.requestMatchers("/folder/**").hasRole("user")
+			.requestMatchers("/item/get_id").hasAnyRole("micro", "user")
 			.anyRequest().hasRole("user")
 			.and() // добавляем новые настройки, не связанные с предыдущими
 			.csrf().disable()

@@ -83,6 +83,14 @@ fun AwardContext.fromTransport(request: DeleteAwardImageRequest) {
 	imageId = request.imageId
 }
 
+fun AwardContext.fromTransport(request: AddAwardImageFromGalleryRequest) {
+	command = AwardCommand.IMG_ADD_GALLERY
+	authId = request.authId
+	awardId = request.awardId
+	imageId = request.itemId
+}
+
+
 fun AwardContext.fromTransport(request: SendActionRequest) {
 	command = AwardCommand.ADD_ACTION
 	authId = request.authId

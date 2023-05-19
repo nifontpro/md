@@ -30,6 +30,7 @@ extra["springCloudVersion"] = springCloudVersion
 dependencies {
 	implementation(project(":base:base_db"))
 	implementation(project(":base:base_domain"))
+	implementation(project(":base:base_client"))
 
 	implementation(project(":ms-c:domain"))
 	implementation(project(":ms-c:rest"))

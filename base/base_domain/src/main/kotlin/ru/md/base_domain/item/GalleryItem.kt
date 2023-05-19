@@ -1,8 +1,8 @@
-package ru.md.msgal.domain.item.model
+package ru.md.base_domain.item
 
 import java.time.LocalDateTime
 
-data class Item(
+data class GalleryItem(
 	val id: Long = 0,
 	val folderId: Long = 0,
 	val name: String = "",
@@ -11,5 +11,4 @@ data class Item(
 	val imageKey: String = "",
 	val createdAt: LocalDateTime? = null,
 	val updatedAt: LocalDateTime? = null,
-
-	)
+)

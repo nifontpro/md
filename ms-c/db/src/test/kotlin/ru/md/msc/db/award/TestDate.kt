@@ -3,8 +3,8 @@ package ru.md.msc.db.award
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
-import ru.md.msc.domain.base.model.converter.toEpochMilliUTC
-import ru.md.msc.domain.base.model.converter.toLocalDateTimeUTC
+import ru.md.base_domain.model.converter.toEpochMilliUTC
+import ru.md.base_domain.model.converter.toLocalDateTimeUTC
 import java.time.LocalDateTime
 
 @SpringBootTest

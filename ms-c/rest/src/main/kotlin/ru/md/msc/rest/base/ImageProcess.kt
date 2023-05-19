@@ -5,8 +5,8 @@ import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_rest.emailNotVerified
 import ru.md.base_rest.fileSaveError
-import ru.md.base_rest.model.BaseResponse
-import ru.md.base_rest.model.baseResponse
+import ru.md.base_domain.rest.BaseResponse
+import ru.md.base_domain.rest.baseResponse
 import ru.md.base_rest.saveFile
 import ru.md.base_rest.utils.AuthData
 import ru.md.msc.domain.base.biz.BaseClientContext

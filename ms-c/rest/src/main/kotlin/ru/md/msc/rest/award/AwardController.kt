@@ -5,9 +5,9 @@ import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.msc.rest.base.imageProcess
 import ru.md.base_rest.model.AUTH
-import ru.md.base_rest.model.BaseResponse
+import ru.md.base_domain.rest.BaseResponse
 import ru.md.msc.rest.base.toTransportBaseImage
-import ru.md.base_rest.process
+import ru.md.base_rest.authProcess
 import ru.md.base_rest.toLongOr0
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.award.biz.proc.AwardCommand
@@ -32,7 +32,7 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<AwardDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = awardProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -46,7 +46,7 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<AwardDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = awardProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -60,7 +60,7 @@ class AwardController(
 		@RequestBody request: GetAwardByIdRequest
 	): BaseResponse<AwardDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = awardProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -82,7 +82,7 @@ class AwardController(
 		@RequestBody request: GetAwardsByDeptRequest
 	): BaseResponse<List<AwardResponse>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = awardProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -113,7 +113,7 @@ class AwardController(
 		@RequestBody request: GetAwardsBySubDeptsRequest
 	): BaseResponse<List<AwardResponse>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = awardProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -127,7 +127,7 @@ class AwardController(
 		@RequestBody request: DeleteAwardRequest
 	): BaseResponse<AwardDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = awardProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -160,7 +160,21 @@ class AwardController(
 		@RequestBody request: DeleteAwardImageRequest
 	): BaseResponse<BaseImage> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
+			processor = awardProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportBaseImage() }
+		)
+	}
+
+	@PostMapping("img_gal")
+	private suspend fun imageAddFromGallery(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: AddAwardImageFromGalleryRequest
+	): BaseResponse<BaseImage> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
 			processor = awardProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -178,7 +192,7 @@ class AwardController(
 		@RequestBody request: SendActionRequest
 	): BaseResponse<ActivityResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = awardProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -201,7 +215,7 @@ class AwardController(
 		@RequestBody request: GetActivAwardByUserRequest
 	): BaseResponse<List<ActivityResponse>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = awardProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -230,7 +244,7 @@ class AwardController(
 		@RequestBody request: GetActivAwardByDeptRequest
 	): BaseResponse<List<ActivityResponse>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = awardProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -256,7 +270,7 @@ class AwardController(
 		@RequestBody request: GetUsersByActivAwardRequest
 	): BaseResponse<List<ActivityResponse>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = awardProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },

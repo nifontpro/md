@@ -2,12 +2,12 @@ package ru.md.base_rest.utils
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import ru.md.base_rest.model.AuthRequest
 import java.util.*
 import javax.naming.AuthenticationException
 
-@Component
+@Service
 class JwtUtils {
 
 	val decoder: Base64.Decoder = Base64.getUrlDecoder()

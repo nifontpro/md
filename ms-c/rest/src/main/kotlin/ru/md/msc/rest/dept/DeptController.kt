@@ -5,9 +5,9 @@ import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.msc.rest.base.imageProcess
 import ru.md.base_rest.model.AUTH
-import ru.md.base_rest.model.BaseResponse
+import ru.md.base_domain.rest.BaseResponse
 import ru.md.msc.rest.base.toTransportBaseImage
-import ru.md.base_rest.process
+import ru.md.base_rest.authProcess
 import ru.md.base_rest.toLongOr0
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.dept.biz.proc.DeptCommand
@@ -33,7 +33,7 @@ class DeptController(
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<DeptDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = deptProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -47,7 +47,7 @@ class DeptController(
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<DeptDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = deptProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -61,7 +61,7 @@ class DeptController(
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<List<Dept>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = deptProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -75,7 +75,7 @@ class DeptController(
 		@RequestBody request: GetDeptByIdRequest
 	): BaseResponse<DeptDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = deptProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -89,7 +89,7 @@ class DeptController(
 		@RequestBody request: DeleteDeptRequest
 	): BaseResponse<DeptDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = deptProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -122,7 +122,7 @@ class DeptController(
 		@RequestBody request: DeleteDeptImageRequest
 	): BaseResponse<BaseImage> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = deptProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },

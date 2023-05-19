@@ -39,3 +39,5 @@ include("ms-gal:domain")
 include("ms-gal:rest")
 include("ms-gal:s3")
 findProject(":ms-gal:s3")?.name = "s3"
+include("base:base_client")
+findProject(":base:base_client")?.name = "base_client"

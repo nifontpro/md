@@ -1,4 +1,4 @@
-package ru.md.msc.rest.micro
+package ru.md.base_client
 
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -14,9 +14,15 @@ import org.springframework.util.MultiValueMap
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
 import org.springframework.web.reactive.function.client.awaitBody
+import ru.md.base_domain.rest.BaseResponse
+
+/**
+ * Компонент для получения данных из других микросервисов
+ * с запросом accessToken из keycloak
+ */
 
 @Component
-class MicroClient(
+class MicroClientImpl(
 	@Value("\${resource-server.url}") private val resourceServerURL: String,
 	@Value("\${keycloak.url}") private val keycloakUrl: String,
 	@Value("\${keycloak.credentials.secret}") private val clientSecret: String,
@@ -29,8 +35,7 @@ class MicroClient(
 	val mutex = Mutex()
 	var token: String? = null
 
-	suspend fun getDataFromMs(uri: String, requestBody: Any): Any {
-		if (token != null) log.info("<accessToken> найден")
+	final suspend inline fun <reified R> getDataFromMs(uri: String, requestBody: Any): BaseResponse<R> {
 		val accessToken = mutex.withLock {
 			token ?: run {
 				val tok = getAccessToken().accessToken
@@ -41,7 +46,7 @@ class MicroClient(
 
 		return try {
 			log.info("Получение данных из мс")
-			getMsData(uri = uri, body = requestBody, accessToken = accessToken)
+			postMsRequest(uri = uri, body = requestBody, accessToken = accessToken)
 		} catch (e: WebClientResponseException) {
 			log.error(e.message)
 			if (e.statusCode == HttpStatus.UNAUTHORIZED) {
@@ -49,7 +54,7 @@ class MicroClient(
 				val authResponse = getAccessToken()
 				token = authResponse.accessToken
 				log.info("Повторный запрос")
-				getMsData(uri = uri, body = requestBody, accessToken = authResponse.accessToken)
+				postMsRequest(uri = uri, body = requestBody, accessToken = authResponse.accessToken)
 			} else {
 				log.error("Ошибка получения данных из мс, статус: ${e.statusCode}")
 				throw e
@@ -57,7 +62,7 @@ class MicroClient(
 		}
 	}
 
-	suspend fun getMsData(uri: String, body: Any, accessToken: String): Any {
+	final suspend inline fun <reified R> postMsRequest(uri: String, body: Any, accessToken: String): BaseResponse<R> {
 		return msClient
 			.post()
 			.uri(uri)
@@ -96,7 +101,7 @@ class MicroClient(
 	}
 
 	companion object {
-		val log: Logger = LoggerFactory.getLogger(MicroClient::class.java)
+		val log: Logger = LoggerFactory.getLogger(MicroClientImpl::class.java)
 	}
 
 }

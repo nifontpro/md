@@ -1,4 +1,4 @@
-package ru.md.msc.rest.micro
+package ru.md.base_client
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty

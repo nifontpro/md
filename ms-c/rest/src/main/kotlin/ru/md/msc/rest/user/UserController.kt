@@ -5,8 +5,8 @@ import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.msc.rest.base.imageProcess
 import ru.md.base_rest.model.AUTH
-import ru.md.base_rest.model.BaseResponse
-import ru.md.base_rest.process
+import ru.md.base_domain.rest.BaseResponse
+import ru.md.base_rest.authProcess
 import ru.md.base_rest.toLongOr0
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
@@ -26,17 +26,7 @@ import java.security.Principal
 class UserController(
 	private val userProcessor: UserProcessor,
 	private val jwtUtils: JwtUtils,
-	private val userClient: UserWebClientBuilder
 ) {
-
-	@PostMapping("t1")
-	suspend fun t1(
-		@RequestHeader(name = AUTH) bearerToken: String,
-		@RequestBody body: RS,
-	): Any {
-		println(bearerToken)
-		return userClient.getUserData(uri = "/user/d", body = body, accessToken = bearerToken)
-	}
 
 	@PostMapping("create_owner")
 	private suspend fun createOwner(
@@ -44,7 +34,7 @@ class UserController(
 		@RequestBody request: CreateOwnerRequest
 	): BaseResponse<UserDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -58,7 +48,7 @@ class UserController(
 		@RequestBody request: CreateUserRequest
 	): BaseResponse<UserDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -72,7 +62,7 @@ class UserController(
 		@RequestBody request: UpdateUserRequest
 	): BaseResponse<UserDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -86,7 +76,7 @@ class UserController(
 		@RequestBody request: GetProfilesRequest
 	): BaseResponse<List<User>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -100,7 +90,7 @@ class UserController(
 		@RequestBody request: GetUsersByDeptRequest
 	): BaseResponse<List<User>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -114,7 +104,7 @@ class UserController(
 		@RequestBody request: GetUsersBySubDeptsRequest
 	): BaseResponse<List<User>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -128,7 +118,7 @@ class UserController(
 		@RequestBody request: DeleteUserRequest
 	): BaseResponse<UserDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -142,7 +132,7 @@ class UserController(
 		@RequestBody request: GetUserByIdRequest
 	): BaseResponse<UserDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
@@ -175,7 +165,7 @@ class UserController(
 		@RequestBody request: DeleteUserImageRequest
 	): BaseResponse<BaseImage> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return process(
+		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },

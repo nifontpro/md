@@ -11,7 +11,7 @@ import ru.md.msgal.db.item.model.mapper.toItem
 import ru.md.msgal.db.item.model.mapper.toItemEntity
 import ru.md.msgal.db.item.repo.ItemRepository
 import ru.md.msgal.domain.item.biz.proc.ItemNotFoundException
-import ru.md.msgal.domain.item.model.Item
+import ru.md.base_domain.item.GalleryItem
 import ru.md.msgal.domain.item.service.ItemService
 
 @Service
@@ -20,18 +20,18 @@ class ItemServiceImpl(
 	private val itemRepository: ItemRepository
 ) : ItemService {
 
-	override fun create(item: Item): Item {
-		val itemEntity = item.toItemEntity(create = true)
+	override fun create(galleryItem: GalleryItem): GalleryItem {
+		val itemEntity = galleryItem.toItemEntity(create = true)
 		itemRepository.save(itemEntity)
 		return itemEntity.toItem()
 	}
 
-	override fun getByFolderId(folderId: Long, baseQuery: BaseQuery): PageResult<Item> {
+	override fun getByFolderId(folderId: Long, baseQuery: BaseQuery): PageResult<GalleryItem> {
 		val items = itemRepository.findByFolderId(folderId = folderId, pageable = baseQuery.toPageRequest())
 		return items.toPageResult { it.toItem() }
 	}
 
-	override fun getById(itemId: Long): Item {
+	override fun getById(itemId: Long): GalleryItem {
 		val itemEntity = itemRepository.findByIdOrNull(id = itemId) ?: throw ItemNotFoundException()
 		return itemEntity.toItem()
 	}

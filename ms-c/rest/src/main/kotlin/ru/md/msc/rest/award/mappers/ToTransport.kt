@@ -4,8 +4,8 @@ import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.rest.award.model.response.ActivityResponse
 import ru.md.msc.rest.award.model.response.AwardDetailsResponse
 import ru.md.msc.rest.award.model.response.AwardResponse
-import ru.md.base_rest.model.BaseResponse
-import ru.md.base_rest.model.baseResponse
+import ru.md.base_domain.rest.BaseResponse
+import ru.md.base_domain.rest.baseResponse
 
 fun AwardContext.toTransportAwardDetails(): BaseResponse<AwardDetailsResponse> {
 	return baseResponse(awardDetails.toAwardDetailsResponse())

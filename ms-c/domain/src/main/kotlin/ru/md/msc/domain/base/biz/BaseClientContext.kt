@@ -2,6 +2,7 @@ package ru.md.msc.domain.base.biz
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import ru.md.base_client.MicroClientImpl
 import ru.md.base_domain.biz.proc.BaseContext
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.msc.domain.dept.service.DeptService
@@ -27,6 +28,7 @@ abstract class BaseClientContext(
 	lateinit var userService: UserService
 	lateinit var deptService: DeptService
 	lateinit var s3Repository: S3Repository
+	lateinit var microClient: MicroClientImpl // Для доступа к другим микросервисам
 
 	val log: Logger = LoggerFactory.getLogger(BaseClientContext::class.java)
 }
