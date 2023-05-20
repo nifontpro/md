@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import ru.md.base_db.mapper.*
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.image.model.ImageType
-import ru.md.base_domain.item.SmallItem
+import ru.md.base_domain.gallery.SmallItem
 import ru.md.base_domain.model.BaseOrder
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult

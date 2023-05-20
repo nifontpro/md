@@ -1,7 +1,7 @@
 package ru.md.msc.domain.award.service
 
 import ru.md.base_domain.image.model.BaseImage
-import ru.md.base_domain.item.SmallItem
+import ru.md.base_domain.gallery.SmallItem
 import ru.md.base_domain.model.BaseOrder
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult

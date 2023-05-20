@@ -4,7 +4,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import ru.md.base_domain.biz.proc.IBaseCommand
 import ru.md.msgal.domain.base.biz.BaseGalleryContext
-import ru.md.base_domain.item.GalleryItem
+import ru.md.base_domain.gallery.GalleryItem
 import ru.md.msgal.domain.item.service.ItemService
 import ru.md.msgal.domain.s3.repository.S3Repository
 
@@ -24,8 +24,6 @@ class ItemContext : BaseGalleryContext() {
 
 enum class ItemCommand : IBaseCommand {
 	CREATE,
-	DELETE,
-	UPDATE,
 	GET_BY_FOLDER,
 	GET_BY_ID,
 }

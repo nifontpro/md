@@ -1,7 +1,7 @@
-package ru.md.base_domain.item.mappers
+package ru.md.base_domain.gallery.mappers
 
-import ru.md.base_domain.item.GalleryItem
-import ru.md.base_domain.item.SmallItem
+import ru.md.base_domain.gallery.GalleryItem
+import ru.md.base_domain.gallery.SmallItem
 
 fun GalleryItem.toSmallItem() = SmallItem(
 	id = id,

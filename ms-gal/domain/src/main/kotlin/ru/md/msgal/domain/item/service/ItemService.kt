@@ -2,7 +2,7 @@ package ru.md.msgal.domain.item.service
 
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
-import ru.md.base_domain.item.GalleryItem
+import ru.md.base_domain.gallery.GalleryItem
 
 interface ItemService {
 	fun create(galleryItem: GalleryItem): GalleryItem

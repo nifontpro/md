@@ -1,7 +1,7 @@
 package ru.md.msgal.rest.item.mappers
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import ru.md.base_domain.item.mappers.toSmallItem
+import ru.md.base_domain.gallery.mappers.toSmallItem
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_domain.rest.baseResponse
 import ru.md.msgal.domain.item.biz.proc.ItemContext

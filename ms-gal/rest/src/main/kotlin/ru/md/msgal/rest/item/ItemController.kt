@@ -2,8 +2,8 @@ package ru.md.msgal.rest.item
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import ru.md.base_domain.item.GalleryItem
-import ru.md.base_domain.item.request.GetItemByIdRequest
+import ru.md.base_domain.gallery.GalleryItem
+import ru.md.base_domain.gallery.request.GetItemByIdRequest
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_rest.authProcess
 import ru.md.base_rest.model.AUTH

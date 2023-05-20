@@ -10,7 +10,7 @@ import ru.md.base_rest.utils.AuthData
 import ru.md.msgal.domain.item.biz.proc.ItemCommand
 import ru.md.msgal.domain.item.biz.proc.ItemContext
 import ru.md.msgal.domain.item.biz.proc.ItemProcessor
-import ru.md.base_domain.item.GalleryItem
+import ru.md.base_domain.gallery.GalleryItem
 import java.io.File
 
 suspend fun addItemProc(

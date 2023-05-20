@@ -64,6 +64,14 @@ class FolderController(
 		)
 	}
 
+	/**
+	 * Получить все дерево папок галереи
+	 * baseRequest:
+	 *    Допустимые поля для сортировки:
+	 *          "parentId",
+	 *          "name",
+	 *          "createdAt",
+	 */
 	@PostMapping("get_all")
 	private suspend fun getAll(
 		@RequestBody request: GetAllFolderRequest,

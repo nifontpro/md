@@ -1,4 +1,4 @@
-package ru.md.base_domain.item
+package ru.md.base_domain.gallery
 
 import java.time.LocalDateTime
 

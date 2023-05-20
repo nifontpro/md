@@ -1,7 +1,7 @@
 package ru.md.msgal.db.item.model.mapper
 
 import ru.md.msgal.db.item.model.ItemEntity
-import ru.md.base_domain.item.GalleryItem
+import ru.md.base_domain.gallery.GalleryItem
 import java.time.LocalDateTime
 
 fun ItemEntity.toItem() = GalleryItem(

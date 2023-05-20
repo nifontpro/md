@@ -1,4 +1,4 @@
-package ru.md.base_domain.item
+package ru.md.base_domain.gallery
 
 data class SmallItem(
 	val id: Long = 0,

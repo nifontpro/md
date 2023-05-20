@@ -17,9 +17,9 @@ class GatewayApplication
 
 fun main(args: Array<String>) {
 	runApplication<GatewayApplication>(*args)
-
 }
 
+// Добавление http для внутренних запросов
 @Configuration
 class HttpToHttpsRedirectConfig {
 	@Autowired

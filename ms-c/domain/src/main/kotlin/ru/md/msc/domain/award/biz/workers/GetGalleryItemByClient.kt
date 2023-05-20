@@ -2,7 +2,7 @@ package ru.md.msc.domain.award.biz.workers
 
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.base_domain.client.getDataFromMs
-import ru.md.base_domain.item.request.GetItemByIdRequest
+import ru.md.base_domain.gallery.request.GetItemByIdRequest
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.proc.AwardContext

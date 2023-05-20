@@ -11,7 +11,7 @@ import ru.md.msgal.db.item.model.mapper.toItem
 import ru.md.msgal.db.item.model.mapper.toItemEntity
 import ru.md.msgal.db.item.repo.ItemRepository
 import ru.md.msgal.domain.item.biz.proc.ItemNotFoundException
-import ru.md.base_domain.item.GalleryItem
+import ru.md.base_domain.gallery.GalleryItem
 import ru.md.msgal.domain.item.service.ItemService
 
 @Service
