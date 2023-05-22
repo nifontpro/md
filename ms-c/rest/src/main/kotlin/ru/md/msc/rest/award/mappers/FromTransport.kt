@@ -120,3 +120,10 @@ fun AwardContext.fromTransport(request: GetUsersByActivAwardRequest) {
 	baseQuery = request.baseRequest.toBaseQuery()
 }
 
+fun AwardContext.fromTransport(request: GetAwardCountByDeptRequest) {
+	command = AwardCommand.COUNT_BY_DEPTS
+	authId = request.authId
+	deptId = request.deptId
+	subdepts = request.subdepts
+}
+

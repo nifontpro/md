@@ -25,6 +25,16 @@ fun AwardContext.getAwardError() {
 	)
 }
 
+fun AwardContext.getAwardCountError() {
+	fail(
+		errorDb(
+			repository = "award",
+			violationCode = "count error",
+			description = "Ошибка получения количества наград"
+		)
+	)
+}
+
 fun AwardContext.getGalleryItemMsError() {
 	fail(
 		otherError(

@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 interface AwardRepository : JpaRepository<AwardEntity, Long> {
 
 	@Query("select a.dept.id from AwardEntity a where a.id = :awardId")
-	fun finDeptId(awardId: Long): Long?
+	fun findDeptId(awardId: Long): Long?
 
 	@Modifying
 	@Query("delete from AwardEntity a where a.id = :awardId")
@@ -63,4 +63,9 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		filter: String? = null,
 		pageable: Pageable
 	): Page<AwardEntity>
+
+	fun countByDeptId(deptId: Long): Long
+
+	fun countByDeptIdIn(deptsIds: List<Long>): Long
+
 }

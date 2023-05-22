@@ -26,4 +26,6 @@ interface AwardService {
 	fun findBySubDept(deptId: Long, baseQuery: BaseQuery): PageResult<Award>
 	fun findByDeptId(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award>
 	fun addGalleryImage(awardId: Long, smallItem: SmallItem): BaseImage
+	fun findCountByDept(deptId: Long): Long
+	fun findCountBySubdepts(deptId: Long): Long
 }

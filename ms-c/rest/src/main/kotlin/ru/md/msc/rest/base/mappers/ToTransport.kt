@@ -1,4 +1,4 @@
-package ru.md.msc.rest.base
+package ru.md.msc.rest.base.mappers
 
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.rest.BaseResponse
@@ -7,4 +7,8 @@ import ru.md.msc.domain.base.biz.BaseClientContext
 
 fun BaseClientContext.toTransportBaseImage(): BaseResponse<BaseImage> {
 	return baseResponse(baseImage)
+}
+
+fun BaseClientContext.toTransportCount(): BaseResponse<Long> {
+	return baseResponse(count)
 }

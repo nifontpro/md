@@ -6,7 +6,7 @@ import ru.md.base_domain.image.model.BaseImage
 import ru.md.msc.rest.base.imageProcess
 import ru.md.base_rest.model.AUTH
 import ru.md.base_domain.rest.BaseResponse
-import ru.md.msc.rest.base.toTransportBaseImage
+import ru.md.msc.rest.base.mappers.toTransportBaseImage
 import ru.md.base_rest.authProcess
 import ru.md.base_rest.toLongOr0
 import ru.md.base_rest.utils.JwtUtils

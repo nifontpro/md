@@ -3,11 +3,9 @@ package ru.md.msc.rest.award
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.image.model.BaseImage
-import ru.md.msc.rest.base.imageProcess
-import ru.md.base_rest.model.AUTH
 import ru.md.base_domain.rest.BaseResponse
-import ru.md.msc.rest.base.toTransportBaseImage
 import ru.md.base_rest.authProcess
+import ru.md.base_rest.model.AUTH
 import ru.md.base_rest.toLongOr0
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.award.biz.proc.AwardCommand
@@ -18,6 +16,9 @@ import ru.md.msc.rest.award.model.request.*
 import ru.md.msc.rest.award.model.response.ActivityResponse
 import ru.md.msc.rest.award.model.response.AwardDetailsResponse
 import ru.md.msc.rest.award.model.response.AwardResponse
+import ru.md.msc.rest.base.imageProcess
+import ru.md.msc.rest.base.mappers.toTransportBaseImage
+import ru.md.msc.rest.base.mappers.toTransportCount
 
 @RestController
 @RequestMapping("award")
@@ -275,6 +276,20 @@ class AwardController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportActivities() }
+		)
+	}
+
+	@PostMapping("count_dep")
+	private suspend fun getAwardCountByDept(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetAwardCountByDeptRequest
+	): BaseResponse<Long> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = awardProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportCount() }
 		)
 	}
 

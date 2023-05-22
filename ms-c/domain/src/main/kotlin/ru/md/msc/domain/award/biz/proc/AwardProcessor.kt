@@ -160,6 +160,13 @@ class AwardProcessor(
 				getAvailableAwardsBySubdepts("Получаем доступные награды")
 			}
 
+			operation("Количество наград в отделе (включая подотделы - опц.)", AwardCommand.COUNT_BY_DEPTS) {
+				validateDeptId("Проверяем deptId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptLevel("Проверка доступа к отделу")
+				getAwardCountByDepts("Получаем количество наград")
+			}
+
 			finishOperation()
 		}.build()
 

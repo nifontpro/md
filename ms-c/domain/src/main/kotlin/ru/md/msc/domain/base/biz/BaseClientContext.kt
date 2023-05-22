@@ -22,6 +22,9 @@ abstract class BaseClientContext(
 	var baseImages: List<BaseImage> = emptyList(),
 	var deleteImageOnFailing: Boolean = false,
 
+	var subdepts: Boolean = false,
+	var count: Long = 0,
+
 	) : BaseContext() {
 
 	lateinit var userService: UserService

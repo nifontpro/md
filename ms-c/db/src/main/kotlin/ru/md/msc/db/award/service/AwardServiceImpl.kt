@@ -4,9 +4,9 @@ import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.base_db.mapper.*
+import ru.md.base_domain.gallery.SmallItem
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.image.model.ImageType
-import ru.md.base_domain.gallery.SmallItem
 import ru.md.base_domain.model.BaseOrder
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
@@ -92,7 +92,7 @@ class AwardServiceImpl(
 	}
 
 	override fun findDeptIdByAwardId(awardId: Long): Long {
-		return awardRepository.finDeptId(awardId = awardId) ?: throw AwardNotFoundException()
+		return awardRepository.findDeptId(awardId = awardId) ?: throw AwardNotFoundException()
 	}
 
 	override fun deleteById(awardId: Long) {
@@ -169,6 +169,15 @@ class AwardServiceImpl(
 			pageable = pageRequest
 		)
 		return activities.toPageResult { it.toActivityUserLazy() }
+	}
+
+	override fun findCountByDept(deptId: Long): Long {
+		return awardRepository.countByDeptId(deptId = deptId)
+	}
+
+	override fun findCountBySubdepts(deptId: Long): Long {
+		val deptsIds = deptRepository.subTreeIds(deptId = deptId)
+		return awardRepository.countByDeptIdIn(deptsIds = deptsIds)
 	}
 
 }
