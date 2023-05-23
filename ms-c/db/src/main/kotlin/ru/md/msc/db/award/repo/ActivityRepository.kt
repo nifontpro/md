@@ -62,10 +62,10 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		"""
 		select new ru.md.msc.domain.dept.model.AllCountByDept(
 				a.deptId,
-				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='A' and 
+				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='A' and
 					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
 				),
-				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='P' and 
+				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='P' and
 					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
 				)
 			)
@@ -77,19 +77,38 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
 	): List<AllCountByDept>
+
 }
+
 /*
-	@Query(
 		"""
 		select new ru.md.msc.domain.dept.model.AllCountByDept(
 				a.deptId,
-				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='A'),
-				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='P')
+				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='A' and
+					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
+				),
+				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='P' and
+					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
+				)
 			)
-			from ActivityEntity a
-			where a.deptId in :deptsIds and
-				(coalesce(:minDate, null) is null or a.date >= :minDate) and
-				(coalesce(:maxDate, null) is null or a.date <= :maxDate)
-			group by a.deptId
+			from ActivityEntity a where a.deptId in :deptsIds	group by a.deptId
 	"""
+		"""
+		select
+				did,
+				(select count (*) from md.activity i where i.dept_id=did and i.is_activ and i.action_code='A' and
+					(coalesce(?2, null) is null or i.date >= ?2) and (coalesce(?3, null) is null or i.date <= ?3)
+				),
+				(select count (*) from md.activity i where i.dept_id=did and i.is_activ and i.action_code='P' and
+					(coalesce(?2, null) is null or i.date >= ?2) and (coalesce(?3, null) is null or i.date <= ?3)
+				)
+				from dep.sub_tree_ids(?1) as did
+	""", nativeQuery = true
+
+	SELECT did,
+		(select count(*) from md.activity i where i.dept_id = did and i.is_activ and i.action_code='A') as award_count,
+		(select count(*) from md.activity i where i.dept_id = did and i.is_activ and i.action_code='P') as nominee_count,
+		(select count(*) from md.activity i where i.dept_id = did and i.is_activ and i.action_code='D') as delete_count
+	from dep.sub_tree_ids(1) as did;
  */
+
