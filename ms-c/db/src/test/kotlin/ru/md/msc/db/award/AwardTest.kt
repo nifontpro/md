@@ -1,15 +1,18 @@
 package ru.md.msc.db.award
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import ru.md.msc.db.award.repo.ActivityRepository
 import ru.md.msc.db.award.repo.AwardRepository
 import ru.md.msc.domain.award.service.AwardService
-import org.junit.jupiter.api.Assertions.assertEquals
+import java.time.LocalDateTime
 
 @SpringBootTest
 class AwardTest(
 	@Autowired private val awardRepository: AwardRepository,
+	@Autowired private val activityRepository: ActivityRepository,
 	@Autowired private val awardService: AwardService,
 ) {
 
@@ -34,6 +37,24 @@ class AwardTest(
 		val c2 = awardRepository.countByDeptIdIn(listOf(81, 87))
 		println("c2 = $c2")
 		assertEquals(c2, c81 + c87)
+	}
+
+	@Test
+	fun actCount() {
+		val res = activityRepository.getActivAwardCountByDept(
+			deptsIds = listOf(81, 87),
+			minDate = LocalDateTime.of(2023, 5, 10, 0, 0, 0)
+		)
+		println(res)
+	}
+
+	@Test
+	fun allActCount() {
+		val res = activityRepository.getAllCountByDept(
+			deptsIds = listOf(81, 87),
+			minDate = LocalDateTime.of(2023, 5, 10, 0, 0, 0)
+		)
+		println(res)
 	}
 
 }

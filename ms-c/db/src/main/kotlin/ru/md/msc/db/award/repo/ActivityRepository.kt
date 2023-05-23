@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.award.model.ActivityEntity
+import ru.md.msc.domain.dept.model.AllCountByDept
+import ru.md.msc.domain.dept.model.CountByDept
 import java.time.LocalDateTime
 
 @Repository
@@ -39,4 +41,55 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		pageable: Pageable
 	): Page<ActivityEntity>
 
+	@Query(
+		"""
+		select new ru.md.msc.domain.dept.model.CountByDept(a.deptId, count(*)) 
+			from ActivityEntity a
+			where a.deptId in :deptsIds and  
+				a.actionType='A' and a.activ and 
+				(coalesce(:minDate, null) is null or a.date >= :minDate) and
+				(coalesce(:maxDate, null) is null or a.date <= :maxDate)
+			group by a.deptId
+	"""
+	)
+	fun getActivAwardCountByDept(
+		deptsIds: List<Long>,
+		minDate: LocalDateTime? = null,
+		maxDate: LocalDateTime? = null,
+	): List<CountByDept>
+
+	@Query(
+		"""
+		select new ru.md.msc.domain.dept.model.AllCountByDept(
+				a.deptId,
+				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='A' and 
+					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
+				),
+				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='P' and 
+					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
+				)
+			)
+			from ActivityEntity a where a.deptId in :deptsIds	group by a.deptId
+	"""
+	)
+	fun getAllCountByDept(
+		deptsIds: List<Long>,
+		minDate: LocalDateTime? = null,
+		maxDate: LocalDateTime? = null,
+	): List<AllCountByDept>
 }
+/*
+	@Query(
+		"""
+		select new ru.md.msc.domain.dept.model.AllCountByDept(
+				a.deptId,
+				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='A'),
+				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='P')
+			)
+			from ActivityEntity a
+			where a.deptId in :deptsIds and
+				(coalesce(:minDate, null) is null or a.date >= :minDate) and
+				(coalesce(:maxDate, null) is null or a.date <= :maxDate)
+			group by a.deptId
+	"""
+ */

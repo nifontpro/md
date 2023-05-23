@@ -27,7 +27,7 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		"""
 		from AwardEntity a where 
 		a.dept.id = :deptId and 
-		((:name is null) or (upper(a.name) like upper(:name) escape '\')) and 
+		((:name is null) or (upper(a.name) like upper(:name))) and 
 		((:state is null) or (:state = a.state))
 		"""
 	)
@@ -44,7 +44,7 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		from AwardEntity a where 
 		a.dept.id in :deptsIds and 
 		((
-			a.type = 'P' and 
+			a.type = 'P'  and 
 			a.startDate <= NOW() and (coalesce(:minDate, null) is null or a.startDate >= :minDate) and
 			a.endDate >= NOW() and (coalesce(:maxDate, null) is null or a.endDate <= :maxDate)
 		) or (
@@ -52,7 +52,7 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 			(coalesce(:minDate, null) is null or a.startDate >= :minDate) and 
 			(coalesce(:maxDate, null) is null or a.endDate <= :maxDate)
 		)) and 
-		((:filter is null) or (upper(a.name) like upper(:filter) escape '\'))
+		((:filter is null) or (upper(a.name) like upper(:filter)))
 		
 	"""
 	)
