@@ -141,6 +141,11 @@ class UserProcessor(
 				deleteBaseImageFromS3("Удаляем изображение из s3")
 			}
 
+			operation("Подсчет количества сотрудников по полам", UserCommand.GENDER_COUNT_BY_DEPTS) {
+				validateDeptId("Проверка deptId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				getGenderCountByDept("Подсчет количества по полам")
+			}
 			finishOperation()
 		}.build()
 

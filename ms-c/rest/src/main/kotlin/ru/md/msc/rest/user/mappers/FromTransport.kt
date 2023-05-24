@@ -108,3 +108,10 @@ fun UserContext.fromTransport(request: DeleteUserImageRequest) {
 	authId = request.userId
 	userId = request.userId
 }
+
+fun UserContext.fromTransport(request: GetGenderCountByDeptRequest) {
+	command = UserCommand.GENDER_COUNT_BY_DEPTS
+	authId = request.authId
+	deptId = request.deptId
+	baseQuery = request.baseRequest?.toBaseQuery() ?: BaseQuery()
+}

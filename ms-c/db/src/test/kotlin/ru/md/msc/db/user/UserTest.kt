@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import ru.md.msc.db.user.repo.UserDetailsRepository
 import ru.md.msc.db.user.repo.UserImageRepository
+import ru.md.msc.db.user.repo.UserRepository
 import ru.md.msc.domain.user.service.UserService
 
 @SpringBootTest
 class UserTest(
 	@Autowired private val userService: UserService,
+	@Autowired private val userRepository: UserRepository,
 	@Autowired private val userImageRepository: UserImageRepository,
 	@Autowired private val userDetailsRepository: UserDetailsRepository
 ) {
@@ -35,6 +37,12 @@ class UserTest(
 		val data = userImageRepository.findByIdAndUserId(imageId = 16, userId = 130)
 		println("Image: $data")
 
+	}
+
+	@Test
+	fun genderCount() {
+		val count = userRepository.genderCount(deptsIds = listOf(81, 87))
+		println(count)
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.user.model.UserEntity
+import ru.md.msc.domain.user.model.GenderCount
 
 
 @Repository
@@ -35,4 +36,17 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 	@Query("select u.dept.id from UserEntity u where u.id = :userId")
 	fun finDeptId(userId: Long): Long?
 
+	/**
+	 * Количество сотрудников по полам в отделах
+	 */
+	@Query(
+		"""
+			select new ru.md.msc.domain.user.model.GenderCount(
+				(select count(*) from UserEntity u where u.dept.id in :deptsIds and u.gender = 'M'),
+				(select count(*) from UserEntity u where u.dept.id in :deptsIds and u.gender = 'F'),
+				(select count(*) from UserEntity u where u.dept.id in :deptsIds and u.gender is null)
+			)
+		"""
+	)
+	fun genderCount(deptsIds: List<Long>): GenderCount
 }

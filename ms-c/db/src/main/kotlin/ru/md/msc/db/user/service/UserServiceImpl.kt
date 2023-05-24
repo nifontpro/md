@@ -28,6 +28,7 @@ import ru.md.msc.db.user.repo.UserRepository
 import ru.md.msc.domain.base.biz.ImageNotFoundException
 import ru.md.msc.domain.dept.model.DeptType
 import ru.md.msc.domain.user.biz.proc.UserNotFoundException
+import ru.md.msc.domain.user.model.GenderCount
 import ru.md.msc.domain.user.model.RoleUser
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
@@ -189,6 +190,15 @@ class UserServiceImpl(
 
 	override fun findDeptIdByUserId(userId: Long): Long {
 		return userRepository.finDeptId(userId = userId) ?: throw UserNotFoundException()
+	}
+
+	override fun getGenderCountByDept(deptId: Long, subdepts: Boolean): GenderCount {
+		val deptsIds = if (subdepts) {
+			deptRepository.subTreeIds(deptId = deptId)
+		} else {
+			listOf(deptId)
+		}
+		return userRepository.genderCount(deptsIds = deptsIds)
 	}
 
 //	companion object {

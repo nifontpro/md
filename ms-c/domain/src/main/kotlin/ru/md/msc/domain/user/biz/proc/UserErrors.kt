@@ -24,4 +24,14 @@ fun BaseClientContext.getUserError() {
 	)
 }
 
+fun UserContext.getUserCountError() {
+	fail(
+		errorDb(
+			repository = "user",
+			violationCode = "count",
+			description = "Ошибка подсчета сотрудников"
+		)
+	)
+}
+
 class UserNotFoundException(message: String = "") : RuntimeException(message)
