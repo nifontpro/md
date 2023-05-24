@@ -280,6 +280,12 @@ class AwardController(
 		)
 	}
 
+	/**
+	 * Получение количества наград в компании
+	 * baseRequest:
+	 *  subdepts - true: включаются все подотделы
+	 *             false: только указанный отдел
+	 */
 	@PostMapping("count_dep")
 	private suspend fun getAwardCountByDept(
 		@RequestHeader(name = AUTH) bearerToken: String,
@@ -294,6 +300,14 @@ class AwardController(
 		)
 	}
 
+	/**
+	 * Получение количества активных награждений (наград у пользователей) разных типов в компании
+	 * baseRequest:
+	 *  subdepts - true: включаются все подотделы
+	 *             false: включаются только ближайшие подотделы (у которых parentId=deptId)
+	 *  minDate, maxDate - необязательны ограничения по дате события
+	 *  Сортировка без выбора по имени отдела
+	 */
 	@PostMapping("count_activ")
 	private suspend fun getActivCountByDept(
 		@RequestHeader(name = AUTH) bearerToken: String,
