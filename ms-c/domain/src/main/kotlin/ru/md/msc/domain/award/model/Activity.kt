@@ -1,5 +1,6 @@
 package ru.md.msc.domain.award.model
 
+import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.user.model.User
 import java.time.LocalDateTime
 
@@ -10,6 +11,6 @@ data class Activity(
 	val award: Award? = null,
 	val actionType: ActionType = ActionType.UNDEF,
 	val activ: Boolean = true,
-	val deptId: Long = 0,
+	val dept: Dept? = null,
 	val authId: Long = 0,
 )

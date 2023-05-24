@@ -11,6 +11,6 @@ fun Activity.toActivityResponse() = ActivityResponse(
 	award = award?.toAwardResponse(),
 	actionType = actionType,
 	activ = activ,
-	deptId = deptId,
+	dept = dept,
 	authId = authId
 )

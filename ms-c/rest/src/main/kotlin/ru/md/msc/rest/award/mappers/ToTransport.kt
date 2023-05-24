@@ -6,6 +6,7 @@ import ru.md.msc.rest.award.model.response.AwardDetailsResponse
 import ru.md.msc.rest.award.model.response.AwardResponse
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_domain.rest.baseResponse
+import ru.md.msc.domain.dept.model.AwardCount
 
 fun AwardContext.toTransportAwardDetails(): BaseResponse<AwardDetailsResponse> {
 	return baseResponse(awardDetails.toAwardDetailsResponse())
@@ -21,4 +22,8 @@ fun AwardContext.toTransportActivity(): BaseResponse<ActivityResponse> {
 
 fun AwardContext.toTransportActivities(): BaseResponse<List<ActivityResponse>> {
 	return baseResponse(activities.map { it.toActivityResponse() })
+}
+
+fun AwardContext.toTransportAwardsCount(): BaseResponse<List<AwardCount>> {
+	return baseResponse(awardsCount)
 }

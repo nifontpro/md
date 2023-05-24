@@ -11,5 +11,6 @@ fun BaseRequest.toBaseQuery() = BaseQuery(
 	filter = filter,
 	minDate = minDate?.toLocalDateTimeUTC(),
 	maxDate = maxDate?.toLocalDateTimeUTC(),
+	subdepts = subdepts,
 	orders = orders,
 )

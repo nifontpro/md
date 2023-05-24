@@ -39,6 +39,12 @@ interface DeptRepository : JpaRepository<DeptEntity, Long> {
 
 	fun findByIdIn(ids: List<Long>, sort: Sort): List<DeptEntity>
 
+	/**
+	 * Получить ids непосредственных (ближних) потомков отдела
+	 */
+	@Query("select d.id from DeptEntity d where d.parentId=:parentId")
+	fun findByParentId(parentId: Long): List<Long>
+
 	@Modifying
 	@Query("delete from DeptEntity d where d.id = :deptId")
 	override fun deleteById(deptId: Long)

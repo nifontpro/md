@@ -9,5 +9,6 @@ data class BaseQuery(
     val filter: String? = null,
     val minDate: LocalDateTime? = null,
     val maxDate: LocalDateTime? = null,
+    val subdepts: Boolean = false,
     val orders: List<BaseOrder> = emptyList(),
 )

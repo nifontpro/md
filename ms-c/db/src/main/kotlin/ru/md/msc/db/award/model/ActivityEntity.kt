@@ -1,6 +1,7 @@
 package ru.md.msc.db.award.model
 
 import jakarta.persistence.*
+import ru.md.msc.db.dept.model.DeptEntity
 import ru.md.msc.db.user.model.UserEntity
 import ru.md.msc.domain.award.model.ActionType
 import java.time.LocalDateTime
@@ -9,6 +10,11 @@ import java.util.*
 @NamedEntityGraph(
 	name = "activityWithAward",
 	attributeNodes = [NamedAttributeNode("award")]
+)
+
+@NamedEntityGraph(
+	name = "activityWithDept",
+	attributeNodes = [NamedAttributeNode("dept")]
 )
 
 @NamedEntityGraph(
@@ -44,8 +50,9 @@ class ActivityEntity(
 	@Column(name = "is_activ")
 	var activ: Boolean = true,
 
-	@Column(name = "dept_id")
-	var deptId: Long = 0,
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "dept_id")
+	var dept: DeptEntity? = null,
 
 	@Column(name = "auth_id")
 	var authId: Long = 0,
@@ -56,11 +63,10 @@ class ActivityEntity(
 		if (other == null || javaClass != other.javaClass) return false
 		val activityEntity = other as ActivityEntity
 		return id == activityEntity.id && date == activityEntity.date && actionType == activityEntity.actionType
-				&& activ == activityEntity.activ && deptId == activityEntity.deptId && authId == activityEntity.authId
 	}
 
 	override fun hashCode(): Int {
-		return Objects.hash(id, date, actionType, activ, deptId, authId)
+		return Objects.hash(id, date, actionType)
 	}
 
 	override fun toString(): String {

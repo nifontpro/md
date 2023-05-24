@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.award.model.ActivityEntity
-import ru.md.msc.domain.dept.model.AllCountByDept
+import ru.md.msc.domain.dept.model.AwardCount
 import ru.md.msc.domain.dept.model.CountByDept
 import java.time.LocalDateTime
 
@@ -29,7 +29,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	@Query(
 		"""
 		from ActivityEntity a where 
-		a.activ = true and a.deptId = :deptId and
+		a.activ = true and a.dept.id = :deptId and
 		(coalesce(:minDate, null) is null or a.date >= :minDate) and
 		(coalesce(:maxDate, null) is null or a.date <= :maxDate)
 	"""
@@ -43,13 +43,13 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 
 	@Query(
 		"""
-		select new ru.md.msc.domain.dept.model.CountByDept(a.deptId, count(*)) 
+		select new ru.md.msc.domain.dept.model.CountByDept(a.dept.id, count(*)) 
 			from ActivityEntity a
-			where a.deptId in :deptsIds and  
+			where a.dept.id in :deptsIds and  
 				a.actionType='A' and a.activ and 
 				(coalesce(:minDate, null) is null or a.date >= :minDate) and
 				(coalesce(:maxDate, null) is null or a.date <= :maxDate)
-			group by a.deptId
+			group by a.dept.id
 	"""
 	)
 	fun getActivAwardCountByDept(
@@ -60,23 +60,25 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 
 	@Query(
 		"""
-		select new ru.md.msc.domain.dept.model.AllCountByDept(
-				a.deptId,
-				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='A' and
+		select new ru.md.msc.domain.dept.model.AwardCount(
+				a.dept.id,
+				(select d.name from DeptEntity d where d.id = a.dept.id) ,
+				(select count (*) from ActivityEntity i where i.dept.id=a.dept.id and i.activ and i.actionType='A' and
 					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
 				),
-				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='P' and
+				(select count (*) from ActivityEntity i where i.dept.id=a.dept.id and i.activ and i.actionType='P' and
 					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
 				)
 			)
-			from ActivityEntity a where a.deptId in :deptsIds	group by a.deptId
+			from ActivityEntity a where a.dept.id in :deptsIds group by a.dept.id order by 2
 	"""
 	)
+	@EntityGraph("activityWithDept")
 	fun getAllCountByDept(
 		deptsIds: List<Long>,
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
-	): List<AllCountByDept>
+	): List<AwardCount>
 
 }
 

@@ -11,6 +11,7 @@ import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.award.biz.proc.AwardCommand
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.biz.proc.AwardProcessor
+import ru.md.msc.domain.dept.model.AwardCount
 import ru.md.msc.rest.award.mappers.*
 import ru.md.msc.rest.award.model.request.*
 import ru.md.msc.rest.award.model.response.ActivityResponse
@@ -290,6 +291,20 @@ class AwardController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportCount() }
+		)
+	}
+
+	@PostMapping("count_activ")
+	private suspend fun getActivCountByDept(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetActivCountByDeptRequest
+	): BaseResponse<List<AwardCount>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = awardProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportAwardsCount() }
 		)
 	}
 

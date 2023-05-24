@@ -5,6 +5,7 @@ import ru.md.base_domain.gallery.SmallItem
 import ru.md.msc.domain.award.model.*
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.BaseClientContext
+import ru.md.msc.domain.dept.model.AwardCount
 
 class AwardContext : BaseClientContext() {
 	var award: Award = Award()
@@ -18,6 +19,8 @@ class AwardContext : BaseClientContext() {
 	var actionType: ActionType = ActionType.UNDEF
 	var awardState: AwardState? = null
 	var smallItem: SmallItem = SmallItem()
+
+	var awardsCount: List<AwardCount> = emptyList()
 
 	lateinit var awardService: AwardService
 }
@@ -36,5 +39,6 @@ enum class AwardCommand : IBaseCommand {
 	GET_ACTIVE_AWARD_BY_DEPT,
 	GET_USERS_BY_ACTIVE_AWARD,
 	GET_ADMIN_AVAILABLE,
-	COUNT_BY_DEPTS
+	COUNT_BY_DEPTS,
+	COUNT_ACTIV,
 }

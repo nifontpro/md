@@ -39,6 +39,12 @@ class DeptTest(
 	}
 
 	@Test
+	fun getNearIds() {
+		val ids = deptRepository.findByParentId(parentId = 1)
+		println("ids: $ids")
+	}
+
+	@Test
 	@Transactional
 	fun delete() {
 		deptRepository.deleteById(90)

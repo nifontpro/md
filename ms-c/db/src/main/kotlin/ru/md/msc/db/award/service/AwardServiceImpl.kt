@@ -25,6 +25,7 @@ import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.award.model.AwardState
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.ImageNotFoundException
+import ru.md.msc.domain.dept.model.AwardCount
 import java.time.LocalDateTime
 
 @Service
@@ -178,6 +179,24 @@ class AwardServiceImpl(
 	override fun findCountBySubdepts(deptId: Long): Long {
 		val deptsIds = deptRepository.subTreeIds(deptId = deptId)
 		return awardRepository.countByDeptIdIn(deptsIds = deptsIds)
+	}
+
+	/**
+	 * Получить все типы награждений в подотделах
+	 * subdepts=true - во всем вложенном дереве
+	 * subdepts=false - в ближних наследниках
+	 */
+	override fun findActiveCountByDepts(deptId: Long, baseQuery: BaseQuery): List<AwardCount> {
+		val deptsIds = if (baseQuery.subdepts) {
+			deptRepository.subTreeIds(deptId = deptId)
+		} else {
+			deptRepository.findByParentId(parentId = deptId)
+		}
+		return activityRepository.getAllCountByDept(
+			deptsIds = deptsIds,
+			minDate = baseQuery.minDate,
+			maxDate = baseQuery.maxDate,
+		)
 	}
 
 }

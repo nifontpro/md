@@ -9,6 +9,7 @@ import ru.md.msc.domain.award.model.Activity
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.domain.award.model.AwardState
+import ru.md.msc.domain.dept.model.AwardCount
 
 interface AwardService {
 	fun create(awardDetails: AwardDetails): AwardDetails
@@ -28,4 +29,5 @@ interface AwardService {
 	fun addGalleryImage(awardId: Long, smallItem: SmallItem): BaseImage
 	fun findCountByDept(deptId: Long): Long
 	fun findCountBySubdepts(deptId: Long): Long
+	fun findActiveCountByDepts(deptId: Long, baseQuery: BaseQuery): List<AwardCount>
 }

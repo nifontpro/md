@@ -167,6 +167,13 @@ class AwardProcessor(
 				getAwardCountByDepts("Получаем количество наград")
 			}
 
+			operation("Количество активных награждений (включая ближние/дальние подотделы)", AwardCommand.COUNT_ACTIV) {
+				validateDeptId("Проверяем deptId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptLevel("Проверка доступа к отделу")
+				getActivCountByDepts("Получаем количество награждений")
+			}
+
 			finishOperation()
 		}.build()
 

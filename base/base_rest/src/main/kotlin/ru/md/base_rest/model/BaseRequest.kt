@@ -9,4 +9,5 @@ data class BaseRequest(
 	val minDate: Long? = null,
 	val maxDate: Long? = null,
 	val orders: List<BaseOrder> = emptyList(),
+	val subdepts: Boolean = false
 )
