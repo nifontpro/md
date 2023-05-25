@@ -1,14 +1,11 @@
 package ru.md.msc.domain.award.service
 
-import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.gallery.SmallItem
+import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.model.BaseOrder
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
-import ru.md.msc.domain.award.model.Activity
-import ru.md.msc.domain.award.model.Award
-import ru.md.msc.domain.award.model.AwardDetails
-import ru.md.msc.domain.award.model.AwardState
+import ru.md.msc.domain.award.model.*
 import ru.md.msc.domain.dept.model.AwardCount
 
 interface AwardService {
@@ -27,7 +24,6 @@ interface AwardService {
 	fun findBySubDept(deptId: Long, baseQuery: BaseQuery): PageResult<Award>
 	fun findByDeptId(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award>
 	fun addGalleryImage(awardId: Long, smallItem: SmallItem): BaseImage
-	fun findCountByDept(deptId: Long): Long
-	fun findCountBySubdepts(deptId: Long): Long
 	fun findActiveCountByDepts(deptId: Long, baseQuery: BaseQuery): List<AwardCount>
+	fun findCountBySubdepts(deptId: Long, baseQuery: BaseQuery): AwardStateCount
 }

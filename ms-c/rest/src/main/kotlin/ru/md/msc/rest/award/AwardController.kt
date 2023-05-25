@@ -11,6 +11,7 @@ import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.award.biz.proc.AwardCommand
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.biz.proc.AwardProcessor
+import ru.md.msc.domain.award.model.AwardStateCount
 import ru.md.msc.domain.dept.model.AwardCount
 import ru.md.msc.rest.award.mappers.*
 import ru.md.msc.rest.award.model.request.*
@@ -19,7 +20,6 @@ import ru.md.msc.rest.award.model.response.AwardDetailsResponse
 import ru.md.msc.rest.award.model.response.AwardResponse
 import ru.md.msc.rest.base.imageProcess
 import ru.md.msc.rest.base.mappers.toTransportBaseImage
-import ru.md.msc.rest.base.mappers.toTransportCount
 
 @RestController
 @RequestMapping("award")
@@ -290,13 +290,13 @@ class AwardController(
 	private suspend fun getAwardCountByDept(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetAwardCountByDeptRequest
-	): BaseResponse<Long> {
+	): BaseResponse<AwardStateCount> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportCount() }
+			toTransport = { toTransportAwardStateCount() }
 		)
 	}
 

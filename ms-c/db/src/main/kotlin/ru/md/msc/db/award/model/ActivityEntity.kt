@@ -70,6 +70,6 @@ class ActivityEntity(
 	}
 
 	override fun toString(): String {
-		return "{Activity(id: $id, date: $date, actionType: $actionType, activ: $activ)}"
+		return "{Activity(id: $id, userId: ${user?.id}, awardId:${award?.id}, date: $date, actionType: $actionType, activ: $activ)}\n"
 	}
 }

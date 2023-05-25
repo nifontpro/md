@@ -12,11 +12,7 @@ fun ICorChainDsl<AwardContext>.getAwardCountByDepts(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-		count = if (baseQuery.subdepts) {
-			awardService.findCountBySubdepts(deptId = deptId)
-		} else {
-			awardService.findCountByDept(deptId = deptId)
-		}
+		awardStateCount = awardService.findCountBySubdepts(deptId = deptId, baseQuery = baseQuery)
 	}
 
 	except {

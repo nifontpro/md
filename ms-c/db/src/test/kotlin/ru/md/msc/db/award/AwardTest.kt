@@ -57,4 +57,13 @@ class AwardTest(
 		println(res)
 	}
 
+	@Test
+	fun countByType() {
+		val deptsIds = listOf<Long>(81, 87)
+		val cc = awardRepository.countByState(deptsIds = deptsIds)
+		println("stateCount: $cc")
+		val count = awardRepository.countByDeptIdIn(deptsIds)
+		assertEquals(count, cc.finish + cc.nominee + cc.future + cc.error)
+	}
+
 }

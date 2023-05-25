@@ -21,6 +21,7 @@ class AwardContext : BaseClientContext() {
 	var smallItem: SmallItem = SmallItem()
 
 	var awardsCount: List<AwardCount> = emptyList()
+	var awardStateCount: AwardStateCount = AwardStateCount()
 
 	lateinit var awardService: AwardService
 }

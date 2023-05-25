@@ -1,23 +1,27 @@
 package ru.md.msc.domain.user.biz.proc
 
 import org.springframework.stereotype.Component
-import ru.md.cor.ICorChainDsl
-import ru.md.cor.chain
-import ru.md.cor.rootChain
-import ru.md.cor.worker
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
-import ru.md.msc.domain.base.validate.*
+import ru.md.cor.ICorChainDsl
+import ru.md.cor.chain
+import ru.md.cor.rootChain
+import ru.md.cor.worker
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptDownLevel
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.db.validateAuthUserLevel
-import ru.md.msc.domain.base.workers.*
+import ru.md.msc.domain.base.validate.validateAdminRole
+import ru.md.msc.domain.base.validate.validateDeptId
+import ru.md.msc.domain.base.validate.validateImageId
+import ru.md.msc.domain.base.validate.validateUserId
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
+import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
+import ru.md.msc.domain.base.workers.deleteBaseImagesFromS3
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.s3.repository.S3Repository
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
@@ -145,6 +149,13 @@ class UserProcessor(
 				validateDeptId("Проверка deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				getGenderCountByDept("Подсчет количества по полам")
+			}
+
+			operation("Подсчет количества сотрудников по полам", UserCommand.GET_WITH_ACTIVITY) {
+				validateDeptId("Проверка deptId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptLevel("Проверка доступа к отделу")
+				getUsersWithActivityByDept("Получаем сотрудников с активностью")
 			}
 			finishOperation()
 		}.build()

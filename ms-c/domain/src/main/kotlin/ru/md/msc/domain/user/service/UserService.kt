@@ -22,4 +22,5 @@ interface UserService {
 	fun findBySubDepts(deptId: Long, baseQuery: BaseQuery): PageResult<User>
 	fun findByDeptId(deptId: Long, baseQuery: BaseQuery): PageResult<User>
 	fun getGenderCountByDept(deptId: Long, subdepts: Boolean): GenderCount
+	fun getUsersWithActivity(deptId: Long, baseQuery: BaseQuery): List<User>
 }

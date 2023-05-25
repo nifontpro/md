@@ -46,8 +46,10 @@ class AwardEntity(
 	@JoinColumn(name = "award_id")
 	@OrderBy("id DESC")
 //	@Fetch(FetchMode.SUBSELECT)
-	val images: List<AwardImageEntity> = emptyList()
+	val images: List<AwardImageEntity> = emptyList(),
 
+//	@OneToMany(mappedBy = "award")
+//	val users: List<UserEntity> = emptyList(),
 ) {
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true

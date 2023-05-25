@@ -5,6 +5,8 @@ import jakarta.persistence.CascadeType
 import jakarta.persistence.OrderBy
 import jakarta.persistence.Table
 import org.hibernate.annotations.*
+import ru.md.msc.db.award.model.ActivityEntity
+import ru.md.msc.db.award.model.AwardEntity
 import ru.md.msc.db.dept.model.DeptEntity
 import ru.md.msc.db.user.model.image.UserImageEntity
 import ru.md.msc.db.user.model.role.RoleEntity
@@ -12,14 +14,26 @@ import ru.md.msc.domain.user.model.Gender
 import java.io.Serializable
 import java.util.*
 
-@Entity
-@Table(name = "user_data", schema = "users", catalog = "medalist")
-
 @NamedEntityGraph(
 	name = "withDept",
 	attributeNodes = [NamedAttributeNode("dept")]
 )
 
+@NamedEntityGraph(
+	name = "withAwards",
+	attributeNodes = [NamedAttributeNode("awards")]
+)
+
+@NamedEntityGraph(
+	name = "withUserActivityWithAward",
+	attributeNodes = [
+		NamedAttributeNode(value = "activities", subgraph = "activityWithAward"),
+	],
+	subgraphs = [NamedSubgraph(name = "activityWithAward", attributeNodes = [NamedAttributeNode("award")])]
+)
+
+@Entity
+@Table(name = "user_data", schema = "users", catalog = "medalist")
 class UserEntity(
 
 	@Id
@@ -53,7 +67,22 @@ class UserEntity(
 	val images: List<UserImageEntity> = emptyList(),
 //	val images: MutableList<UserImageEntity> = mutableListOf(),
 
-	) : Serializable {
+//	@OneToMany(mappedBy ="user", fetch = FetchType.LAZY)
+	@Fetch(FetchMode.SUBSELECT)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+		schema = "md", name = "activity",
+		joinColumns = [JoinColumn(name = "user_id")],
+		inverseJoinColumns = [JoinColumn(name = "award_id")]
+	)
+	val awards: List<AwardEntity> = emptyList(),
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@Fetch(FetchMode.SUBSELECT)
+	@Where(clause = "is_activ=true and action_code='A'")
+	val activities: List<ActivityEntity> = emptyList(),
+
+) : Serializable {
 
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true

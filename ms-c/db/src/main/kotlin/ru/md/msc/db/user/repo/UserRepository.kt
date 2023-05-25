@@ -49,4 +49,7 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 		"""
 	)
 	fun genderCount(deptsIds: List<Long>): GenderCount
+
+	@EntityGraph("withDept")
+	fun findByDeptIdIn(deptsIds: List<Long>): List<UserEntity>
 }

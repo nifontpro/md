@@ -115,3 +115,10 @@ fun UserContext.fromTransport(request: GetGenderCountByDeptRequest) {
 	deptId = request.deptId
 	baseQuery = request.baseRequest?.toBaseQuery() ?: BaseQuery()
 }
+
+fun UserContext.fromTransport(request: GetUsersWithActivityRequest) {
+	command = UserCommand.GET_WITH_ACTIVITY
+	authId = request.authId
+	deptId = request.deptId
+	baseQuery = request.baseRequest?.toBaseQuery() ?: BaseQuery()
+}

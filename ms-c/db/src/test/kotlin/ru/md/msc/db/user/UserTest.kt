@@ -10,6 +10,7 @@ import ru.md.msc.db.user.repo.UserRepository
 import ru.md.msc.domain.user.service.UserService
 
 @SpringBootTest
+@Transactional
 class UserTest(
 	@Autowired private val userService: UserService,
 	@Autowired private val userRepository: UserRepository,
@@ -45,4 +46,15 @@ class UserTest(
 		println(count)
 	}
 
+	@Test
+	fun getUserAwards() {
+		val users = userRepository.findByDeptIdIn(deptsIds = listOf(79, 81))
+		println(users)
+		println(users.count())
+		users.forEach {
+			it.activities.forEach {activity ->
+				println(activity.award)
+			}
+		}
+	}
 }

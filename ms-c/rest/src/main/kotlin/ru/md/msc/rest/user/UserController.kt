@@ -15,12 +15,10 @@ import ru.md.msc.domain.user.model.GenderCount
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.rest.base.imageProcess
 import ru.md.msc.rest.base.mappers.toTransportBaseImage
-import ru.md.msc.rest.user.mappers.fromTransport
-import ru.md.msc.rest.user.mappers.toTransportGenderCount
-import ru.md.msc.rest.user.mappers.toTransportUserDetails
-import ru.md.msc.rest.user.mappers.toTransportUsers
+import ru.md.msc.rest.user.mappers.*
 import ru.md.msc.rest.user.model.request.*
 import ru.md.msc.rest.user.model.response.UserDetailsResponse
+import ru.md.msc.rest.user.model.response.UserResponse
 import java.security.Principal
 
 @RestController
@@ -186,6 +184,20 @@ class UserController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportGenderCount() }
+		)
+	}
+
+	@PostMapping("get_act")
+	private suspend fun getWithActivity(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetUsersWithActivityRequest
+	): BaseResponse<List<UserResponse>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = userProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportUsersResponse() }
 		)
 	}
 

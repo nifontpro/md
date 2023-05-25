@@ -19,10 +19,7 @@ import ru.md.msc.db.award.repo.AwardRepository
 import ru.md.msc.db.dept.repo.DeptRepository
 import ru.md.msc.domain.award.biz.proc.AlreadyActionException
 import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
-import ru.md.msc.domain.award.model.Activity
-import ru.md.msc.domain.award.model.Award
-import ru.md.msc.domain.award.model.AwardDetails
-import ru.md.msc.domain.award.model.AwardState
+import ru.md.msc.domain.award.model.*
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.ImageNotFoundException
 import ru.md.msc.domain.dept.model.AwardCount
@@ -172,13 +169,9 @@ class AwardServiceImpl(
 		return activities.toPageResult { it.toActivityUserLazy() }
 	}
 
-	override fun findCountByDept(deptId: Long): Long {
-		return awardRepository.countByDeptId(deptId = deptId)
-	}
-
-	override fun findCountBySubdepts(deptId: Long): Long {
-		val deptsIds = deptRepository.subTreeIds(deptId = deptId)
-		return awardRepository.countByDeptIdIn(deptsIds = deptsIds)
+	override fun findCountBySubdepts(deptId: Long, baseQuery: BaseQuery): AwardStateCount {
+		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
+		return awardRepository.countByState(deptsIds = deptsIds)
 	}
 
 	/**
@@ -187,16 +180,31 @@ class AwardServiceImpl(
 	 * subdepts=false - в ближних наследниках
 	 */
 	override fun findActiveCountByDepts(deptId: Long, baseQuery: BaseQuery): List<AwardCount> {
-		val deptsIds = if (baseQuery.subdepts) {
-			deptRepository.subTreeIds(deptId = deptId)
-		} else {
-			deptRepository.findByParentId(parentId = deptId)
-		}
+		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts, nearSub = true)
 		return activityRepository.getAllCountByDept(
 			deptsIds = deptsIds,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 		)
+	}
+
+	/**
+	 * Получение списка отделов от текущей вершины дерева
+	 * subdepts = true - все дерево подотделов
+	 * subdepts = false:
+	 *    nearSub = false (default) - только вершина
+	 *            = true - непосредственные потомки
+	 */
+	private fun getDepts(deptId: Long, subdepts: Boolean, nearSub: Boolean = false): List<Long> {
+		return if (subdepts) {
+			deptRepository.subTreeIds(deptId = deptId)
+		} else {
+			if (nearSub) {
+				deptRepository.findByParentId(parentId = deptId)
+			} else {
+				listOf(deptId)
+			}
+		}
 	}
 
 }

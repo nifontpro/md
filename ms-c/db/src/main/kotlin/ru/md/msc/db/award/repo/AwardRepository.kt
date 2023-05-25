@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.award.model.AwardEntity
 import ru.md.msc.domain.award.model.AwardState
+import ru.md.msc.domain.award.model.AwardStateCount
 import java.time.LocalDateTime
 
 @Repository
@@ -67,5 +68,18 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 	fun countByDeptId(deptId: Long): Long
 
 	fun countByDeptIdIn(deptsIds: List<Long>): Long
+
+	@Query(
+		"""select new ru.md.msc.domain.award.model.AwardStateCount(
+		(select count (*) from AwardEntity a where a.dept.id in :deptsIds and a.state='FINISH'),
+		(select count (*) from AwardEntity a where a.dept.id in :deptsIds and a.state='NOMINEE'),
+		(select count (*) from AwardEntity a where a.dept.id in :deptsIds and a.state='FUTURE'),
+		(select count (*) from AwardEntity a where a.dept.id in :deptsIds and a.state='ERROR')
+		)
+	"""
+	)
+	fun countByState(
+		deptsIds: List<Long>,
+	): AwardStateCount
 
 }

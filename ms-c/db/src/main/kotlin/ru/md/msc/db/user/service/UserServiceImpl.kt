@@ -16,10 +16,7 @@ import ru.md.msc.db.dept.repo.DeptDetailsRepository
 import ru.md.msc.db.dept.repo.DeptRepository
 import ru.md.msc.db.user.model.UserDetailsEntity
 import ru.md.msc.db.user.model.image.UserImageEntity
-import ru.md.msc.db.user.model.mappers.toUser
-import ru.md.msc.db.user.model.mappers.toUserDetails
-import ru.md.msc.db.user.model.mappers.toUserDetailsEntity
-import ru.md.msc.db.user.model.mappers.toUserOnlyRoles
+import ru.md.msc.db.user.model.mappers.*
 import ru.md.msc.db.user.model.role.RoleEntity
 import ru.md.msc.db.user.repo.RoleRepository
 import ru.md.msc.db.user.repo.UserDetailsRepository
@@ -199,6 +196,15 @@ class UserServiceImpl(
 			listOf(deptId)
 		}
 		return userRepository.genderCount(deptsIds = deptsIds)
+	}
+
+	override fun getUsersWithActivity(deptId: Long, baseQuery: BaseQuery): List<User> {
+		val deptsIds = if (baseQuery.subdepts) {
+			deptRepository.subTreeIds(deptId = deptId)
+		} else {
+			listOf(deptId)
+		}
+		return userRepository.findByDeptIdIn(deptsIds = deptsIds).map { it.toUserActivity() }
 	}
 
 //	companion object {
