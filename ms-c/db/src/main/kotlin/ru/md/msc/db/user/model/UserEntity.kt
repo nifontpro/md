@@ -75,6 +75,7 @@ class UserEntity(
 		joinColumns = [JoinColumn(name = "user_id")],
 		inverseJoinColumns = [JoinColumn(name = "award_id")]
 	)
+	@WhereJoinTable(clause = "is_activ=true and action_code='A'")
 	val awards: List<AwardEntity> = emptyList(),
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

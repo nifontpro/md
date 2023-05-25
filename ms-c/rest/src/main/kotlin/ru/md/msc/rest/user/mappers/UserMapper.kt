@@ -2,6 +2,7 @@ package ru.md.msc.rest.user.mappers
 
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.rest.award.mappers.toActivityResponse
+import ru.md.msc.rest.award.mappers.toAwardResponse
 import ru.md.msc.rest.user.model.response.UserResponse
 
 fun User.toUserResponse() = UserResponse(
@@ -15,5 +16,6 @@ fun User.toUserResponse() = UserResponse(
 	post = post,
 	roles = roles,
 	images = images,
-	activities = activities.map { it.toActivityResponse() }
+	activities = activities.map { it.toActivityResponse() },
+	awards = awards.map { it.toAwardResponse() }
 )

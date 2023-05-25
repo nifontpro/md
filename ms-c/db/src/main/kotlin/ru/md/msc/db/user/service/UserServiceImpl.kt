@@ -207,6 +207,15 @@ class UserServiceImpl(
 		return userRepository.findByDeptIdIn(deptsIds = deptsIds).map { it.toUserActivity() }
 	}
 
+	override fun getUsersWithAward(deptId: Long, baseQuery: BaseQuery): List<User> {
+		val deptsIds = if (baseQuery.subdepts) {
+			deptRepository.subTreeIds(deptId = deptId)
+		} else {
+			listOf(deptId)
+		}
+		return userRepository.findByDeptIdIn(deptsIds = deptsIds).map { it.toUserAward() }
+	}
+
 //	companion object {
 //		val log: Logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
 //	}

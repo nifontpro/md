@@ -201,6 +201,20 @@ class UserController(
 		)
 	}
 
+	@PostMapping("get_awards")
+	private suspend fun getWithAwards(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetUsersWithAwardsRequest
+	): BaseResponse<List<UserResponse>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = userProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportUsersResponse() }
+		)
+	}
+
 
 	@PostMapping("data")
 	suspend fun getData(

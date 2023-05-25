@@ -122,3 +122,10 @@ fun UserContext.fromTransport(request: GetUsersWithActivityRequest) {
 	deptId = request.deptId
 	baseQuery = request.baseRequest?.toBaseQuery() ?: BaseQuery()
 }
+
+fun UserContext.fromTransport(request: GetUsersWithAwardsRequest) {
+	command = UserCommand.GET_WITH_AWARDS
+	authId = request.authId
+	deptId = request.deptId
+	baseQuery = request.baseRequest?.toBaseQuery() ?: BaseQuery()
+}

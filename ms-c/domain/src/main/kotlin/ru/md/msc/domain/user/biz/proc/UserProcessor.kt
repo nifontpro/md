@@ -151,11 +151,18 @@ class UserProcessor(
 				getGenderCountByDept("Подсчет количества по полам")
 			}
 
-			operation("Подсчет количества сотрудников по полам", UserCommand.GET_WITH_ACTIVITY) {
+			operation("Сотрудники с активностью", UserCommand.GET_WITH_ACTIVITY) {
 				validateDeptId("Проверка deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAuthDeptLevel("Проверка доступа к отделу")
 				getUsersWithActivityByDept("Получаем сотрудников с активностью")
+			}
+
+			operation("Сотрудники с наградами", UserCommand.GET_WITH_AWARDS) {
+				validateDeptId("Проверка deptId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptLevel("Проверка доступа к отделу")
+				getUsersWithAwardsByDept("Получаем сотрудников с активностью")
 			}
 			finishOperation()
 		}.build()

@@ -13,6 +13,11 @@ fun DeptEntity.toDept() = Dept(
 	images = images.map { it.toImage() }
 )
 
+fun DeptEntity.toDeptOnlyName() = Dept(
+	id = id ?: 0,
+	name = name,
+)
+
 fun Dept.toDeptEntity(create: Boolean = false) = DeptEntity(
 	id = if (create) null else id,
 	parentId = parentId,

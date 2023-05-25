@@ -2,6 +2,7 @@ package ru.md.msc.domain.user.model
 
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.msc.domain.award.model.Activity
+import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.dept.model.Dept
 import java.util.Collections.emptySet
 
@@ -16,5 +17,6 @@ data class User(
 	val post: String? = null,
 	val roles: Set<RoleUser> = emptySet(),
 	val images: List<BaseImage> = emptyList(),
-	val activities: List<Activity> = emptyList()
+	val activities: List<Activity> = emptyList(),
+	val awards: List<Award> = emptyList(),
 )

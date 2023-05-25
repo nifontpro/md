@@ -47,13 +47,25 @@ class UserTest(
 	}
 
 	@Test
-	fun getUserAwards() {
+	fun getUserActivity() {
 		val users = userRepository.findByDeptIdIn(deptsIds = listOf(79, 81))
 		println(users)
 		println(users.count())
 		users.forEach {
 			it.activities.forEach {activity ->
 				println(activity.award)
+			}
+		}
+	}
+
+	@Test
+	fun getUserAwards() {
+		val users = userRepository.findByDeptIdIn(deptsIds = listOf(79, 81))
+		println(users)
+		println(users.count())
+		users.forEach {
+			it.awards.forEach { awardEntity ->
+				println(awardEntity)
 			}
 		}
 	}

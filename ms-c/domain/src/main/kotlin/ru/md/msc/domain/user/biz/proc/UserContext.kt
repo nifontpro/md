@@ -33,4 +33,5 @@ enum class UserCommand : IBaseCommand {
 	IMG_DELETE,
 	GENDER_COUNT_BY_DEPTS,
 	GET_WITH_ACTIVITY,
+	GET_WITH_AWARDS,
 }
