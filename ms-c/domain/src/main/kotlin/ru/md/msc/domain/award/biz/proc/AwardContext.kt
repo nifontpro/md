@@ -42,4 +42,5 @@ enum class AwardCommand : IBaseCommand {
 	GET_ADMIN_AVAILABLE,
 	COUNT_BY_DEPTS,
 	COUNT_ACTIV,
+	COUNT_ACTIV_ROOT,
 }

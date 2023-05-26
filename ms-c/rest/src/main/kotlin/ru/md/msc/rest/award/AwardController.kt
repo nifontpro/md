@@ -322,4 +322,18 @@ class AwardController(
 		)
 	}
 
+	@PostMapping("count_activ_root")
+	private suspend fun getActivCountByRootDept(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetActivCountByRootDeptRequest
+	): BaseResponse<List<AwardCount>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = awardProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportAwardsCount() }
+		)
+	}
+
 }

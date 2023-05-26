@@ -27,6 +27,7 @@ import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
 import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
 import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.deleteBaseImagesFromS3
+import ru.md.msc.domain.base.workers.getRootDeptId
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.s3.repository.S3Repository
 import ru.md.msc.domain.user.service.UserService
@@ -171,6 +172,15 @@ class AwardProcessor(
 				validateDeptId("Проверяем deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAuthDeptLevel("Проверка доступа к отделу")
+				getActivCountByDepts("Получаем количество награждений")
+			}
+
+			operation("Количество активных награждений от корневого отдела", AwardCommand.COUNT_ACTIV_ROOT) {
+				validateDeptId("Проверяем deptId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptLevel("Проверка доступа к отделу")
+				getRootDeptId("Получаем корневой отдел")
+				worker("Подготовка") { deptId = rootDeptId }
 				getActivCountByDepts("Получаем количество награждений")
 			}
 
