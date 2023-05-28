@@ -176,9 +176,10 @@ class AwardProcessor(
 			}
 
 			operation("Количество активных награждений от корневого отдела", AwardCommand.COUNT_ACTIV_ROOT) {
-				validateDeptId("Проверяем deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+//				validateAuthDeptLevel("Проверка доступа к отделу")
+				worker("Подготовка") { deptId = authUser.dept?.id ?: 0}
+				validateDeptId("Проверяем deptId")
 				getRootDeptId("Получаем корневой отдел")
 				worker("Подготовка") { deptId = rootDeptId }
 				getActivCountByDepts("Получаем количество награждений")
