@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.java
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {

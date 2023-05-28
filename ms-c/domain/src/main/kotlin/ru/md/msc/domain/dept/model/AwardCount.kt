@@ -6,3 +6,11 @@ data class AwardCount(
 	val awardCount: Long = 0,
 	val nomineeCount: Long = 0,
 )
+
+interface IAwardCount {
+	fun getDeptId(): Long
+	fun getDeptName(): String
+	fun getAwardCount(): Long
+	fun getNomineeCount(): Long
+
+}

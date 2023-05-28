@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository
 import ru.md.msc.db.award.model.ActivityEntity
 import ru.md.msc.domain.dept.model.AwardCount
 import ru.md.msc.domain.dept.model.CountByDept
+import ru.md.msc.domain.dept.model.IAwardCount
 import java.time.LocalDateTime
 
 @Repository
@@ -79,6 +80,31 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
 	): List<AwardCount>
+
+	@Query(
+		"""
+		select 
+				a.dept_id as deptId,
+				(select d.name from dep.dept d where d.id = a.dept_id) as deptName,
+				(select count (*) from md.activity i where i.dept_id=a.dept_id and i.is_activ and i.action_code='A' and
+					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
+				) as awardCount,
+				(select count (*) from md.activity i where i.dept_id=a.dept_id and i.is_activ and i.action_code='P' and
+					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
+				) as nomineeCount
+			from md.activity as a where a.dept_id in :deptsIds group by a.dept_id
+	""",
+		countQuery = """
+			select count(*) from md.activity as a where a.dept_id in :deptsIds group by a.dept_id
+		""",
+		nativeQuery = true,
+	)
+	fun getAllCountByDeptNative(
+		deptsIds: List<Long>,
+		minDate: LocalDateTime? = null,
+		maxDate: LocalDateTime? = null,
+		pageable: Pageable
+	): Page<IAwardCount>
 
 }
 

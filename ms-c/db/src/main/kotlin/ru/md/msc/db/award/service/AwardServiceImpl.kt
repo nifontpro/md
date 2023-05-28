@@ -16,6 +16,7 @@ import ru.md.msc.db.award.repo.ActivityRepository
 import ru.md.msc.db.award.repo.AwardDetailsRepository
 import ru.md.msc.db.award.repo.AwardImageRepository
 import ru.md.msc.db.award.repo.AwardRepository
+import ru.md.msc.db.award.repo.mappers.toAwardCount
 import ru.md.msc.db.dept.repo.DeptRepository
 import ru.md.msc.domain.award.biz.proc.AlreadyActionException
 import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
@@ -186,6 +187,17 @@ class AwardServiceImpl(
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 		)
+	}
+
+	override fun findActiveCountByDeptsNative(deptId: Long, baseQuery: BaseQuery): PageResult<AwardCount> {
+		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts, nearSub = true)
+		val count = activityRepository.getAllCountByDeptNative(
+			deptsIds = deptsIds,
+			minDate = baseQuery.minDate,
+			maxDate = baseQuery.maxDate,
+			pageable = baseQuery.toPageRequestNative()
+		)
+		return count.toPageResult { it.toAwardCount() }
 	}
 
 	/**

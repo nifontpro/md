@@ -26,4 +26,5 @@ interface AwardService {
 	fun addGalleryImage(awardId: Long, smallItem: SmallItem): BaseImage
 	fun findActiveCountByDepts(deptId: Long, baseQuery: BaseQuery): List<AwardCount>
 	fun findCountBySubdepts(deptId: Long, baseQuery: BaseQuery): AwardStateCount
+	fun findActiveCountByDeptsNative(deptId: Long, baseQuery: BaseQuery): PageResult<AwardCount>
 }
