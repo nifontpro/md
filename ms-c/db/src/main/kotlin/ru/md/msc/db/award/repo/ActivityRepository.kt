@@ -6,6 +6,7 @@ import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.award.model.ActivityEntity
 import ru.md.msc.domain.dept.model.AwardCount
@@ -83,7 +84,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 
 	@Query(
 		"""
-		select 
+		select
 				a.dept_id as deptId,
 				(select d.name from dep.dept d where d.id = a.dept_id) as deptName,
 				(select count (*) from md.activity i where i.dept_id=a.dept_id and i.is_activ and i.action_code='A' and
@@ -100,9 +101,9 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		nativeQuery = true,
 	)
 	fun getAllCountByDeptNative(
-		deptsIds: List<Long>,
-		minDate: LocalDateTime? = null,
-		maxDate: LocalDateTime? = null,
+		@Param("deptsIds") deptsIds: List<Long>,
+		@Param("minDate") minDate: LocalDateTime? = null,
+		@Param("maxDate") maxDate: LocalDateTime? = null,
 		pageable: Pageable
 	): Page<IAwardCount>
 
@@ -110,33 +111,16 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 
 /*
 		"""
-		select new ru.md.msc.domain.dept.model.AllCountByDept(
-				a.deptId,
-				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='A' and
-					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
-				),
-				(select count (*) from ActivityEntity i where i.deptId=a.deptId and i.activ and i.actionType='P' and
-					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
-				)
-			)
-			from ActivityEntity a where a.deptId in :deptsIds	group by a.deptId
-	"""
-		"""
 		select
-				did,
-				(select count (*) from md.activity i where i.dept_id=did and i.is_activ and i.action_code='A' and
+				a.dept_id as deptId,
+				(select d.name from dep.dept d where d.id = a.dept_id) as deptName,
+				(select count (*) from md.activity i where i.dept_id=a.dept_id and i.is_activ and i.action_code='A' and
 					(coalesce(?2, null) is null or i.date >= ?2) and (coalesce(?3, null) is null or i.date <= ?3)
-				),
-				(select count (*) from md.activity i where i.dept_id=did and i.is_activ and i.action_code='P' and
+				) as awardCount,
+				(select count (*) from md.activity i where i.dept_id=a.dept_id and i.is_activ and i.action_code='P' and
 					(coalesce(?2, null) is null or i.date >= ?2) and (coalesce(?3, null) is null or i.date <= ?3)
-				)
-				from dep.sub_tree_ids(?1) as did
-	""", nativeQuery = true
-
-	SELECT did,
-		(select count(*) from md.activity i where i.dept_id = did and i.is_activ and i.action_code='A') as award_count,
-		(select count(*) from md.activity i where i.dept_id = did and i.is_activ and i.action_code='P') as nominee_count,
-		(select count(*) from md.activity i where i.dept_id = did and i.is_activ and i.action_code='D') as delete_count
-	from dep.sub_tree_ids(1) as did;
+				) as nomineeCount
+			from md.activity as a where a.dept_id in ?1 group by a.dept_id
+	""",
  */
 

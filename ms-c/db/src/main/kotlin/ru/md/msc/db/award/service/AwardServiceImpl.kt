@@ -195,7 +195,7 @@ class AwardServiceImpl(
 			deptsIds = deptsIds,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
-			pageable = baseQuery.toPageRequestNative()
+			pageable = baseQuery.toPageRequest()
 		)
 		return count.toPageResult { it.toAwardCount() }
 	}

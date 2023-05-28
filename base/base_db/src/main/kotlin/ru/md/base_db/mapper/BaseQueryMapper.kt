@@ -9,10 +9,10 @@ fun BaseQuery.toPageRequest(): PageRequest {
 	return PageRequest.of(page, pageSize, orders.toSort())
 }
 
-fun BaseQuery.toPageRequestNative(): PageRequest {
-	val page = page
-	val pageSize = pageSize
-	return PageRequest.of(page, pageSize, orders.toSortUnsafe())
-}
+//fun BaseQuery.toPageRequestNative(): PageRequest {
+//	val page = page
+//	val pageSize = pageSize
+//	return PageRequest.of(page, pageSize, orders.toSortUnsafe())
+//}
 
 fun String?.toSearch(): String = this?.let { "$it%" } ?: "%"
