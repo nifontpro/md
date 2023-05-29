@@ -185,6 +185,13 @@ class AwardProcessor(
 				getActivCountByDepts("Получаем количество награждений")
 			}
 
+			operation("Количество сотрудников с наградами и без", AwardCommand.COUNT_USER_AWARD_WW) {
+				validateDeptId("Проверяем deptId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptLevel("Проверка доступа к отделу")
+				getUserAwardWWCountByDepts("Получаем количество сотрудников с наградами и без")
+			}
+
 			finishOperation()
 		}.build()
 

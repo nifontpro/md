@@ -6,12 +6,12 @@ import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
-import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.award.model.ActivityEntity
-import ru.md.msc.domain.dept.model.AwardCount
+import ru.md.msc.domain.award.model.AwardCount
 import ru.md.msc.domain.dept.model.CountByDept
-import ru.md.msc.domain.dept.model.IAwardCount
+import ru.md.msc.domain.award.model.IAwardCount
+import ru.md.msc.domain.award.model.WWAwardCount
 import java.time.LocalDateTime
 
 @Repository
@@ -62,7 +62,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 
 	@Query(
 		"""
-		select new ru.md.msc.domain.dept.model.AwardCount(
+		select new ru.md.msc.domain.award.model.AwardCount(
 				a.dept.id,
 				(select d.name from DeptEntity d where d.id = a.dept.id) ,
 				(select count (*) from ActivityEntity i where i.dept.id=a.dept.id and i.activ and i.actionType='A' and
@@ -82,6 +82,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		maxDate: LocalDateTime? = null,
 	): List<AwardCount>
 
+	@Suppress("SqlRedundantCodeInCoalesce")
 	@Query(
 		"""
 		select
@@ -96,31 +97,56 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 			from md.activity as a where a.dept_id in :deptsIds group by a.dept_id
 	""",
 		countQuery = """
-			select count(*) from md.activity as a where a.dept_id in :deptsIds group by a.dept_id
+			select count(*) from md.activity as a where a.dept_id in (:deptsIds) group by a.dept_id
 		""",
 		nativeQuery = true,
 	)
-	fun getAllCountByDeptNative(
-		@Param("deptsIds") deptsIds: List<Long>,
-		@Param("minDate") minDate: LocalDateTime? = null,
-		@Param("maxDate") maxDate: LocalDateTime? = null,
+	fun getGroupAwardCountByDept(
+		deptsIds: List<Long>,
+		minDate: LocalDateTime? = null,
+		maxDate: LocalDateTime? = null,
 		pageable: Pageable
 	): Page<IAwardCount>
 
+	@Query("""
+		select new ru.md.msc.domain.award.model.AwardCount(
+			0,
+			'depts',
+			(select count (*) from ActivityEntity a where a.dept.id in :deptsIds and a.activ and a.actionType='A' and
+				(coalesce(:minDate, null) is null or a.date >= :minDate) and (coalesce(:maxDate, null) is null or a.date <= :maxDate)
+			),
+			(select count (*) from ActivityEntity a where a.dept.id in :deptsIds and a.activ and a.actionType='P' and
+				(coalesce(:minDate, null) is null or a.date >= :minDate) and (coalesce(:maxDate, null) is null or a.date <= :maxDate)
+			)
+		)
+	""")
+	fun getSumAwardCountByDepts(
+		deptsIds: List<Long>,
+		minDate: LocalDateTime? = null,
+		maxDate: LocalDateTime? = null,
+	): AwardCount
+
+	/**
+	 * Количество сотрудников имеющих и не имеющих награды
+	 */
+	@Query("""
+		select new ru.md.msc.domain.award.model.WWAwardCount(
+			(select count(u.id) from UserEntity u where u.dept.id in (:deptsIds) and 
+				(select count(*) from ActivityEntity a where a.activ and a.actionType='A' and a.user.id=u.id and 
+					(coalesce(:minDate, null) is null or a.date >= :minDate) and (coalesce(:maxDate, null) is null or a.date <= :maxDate)
+				)>1
+			),
+			(select count(u.id) from UserEntity u where u.dept.id in (:deptsIds) and 
+				(select count(*) from ActivityEntity a where a.activ and a.actionType='A' and a.user.id=u.id and 
+					(coalesce(:minDate, null) is null or a.date >= :minDate) and (coalesce(:maxDate, null) is null or a.date <= :maxDate)
+				)<1
+			)
+		)
+	""")
+	fun getWWAwardCount(
+		deptsIds: List<Long>,
+		minDate: LocalDateTime? = null,
+		maxDate: LocalDateTime? = null,
+	): WWAwardCount
+
 }
-
-/*
-		"""
-		select
-				a.dept_id as deptId,
-				(select d.name from dep.dept d where d.id = a.dept_id) as deptName,
-				(select count (*) from md.activity i where i.dept_id=a.dept_id and i.is_activ and i.action_code='A' and
-					(coalesce(?2, null) is null or i.date >= ?2) and (coalesce(?3, null) is null or i.date <= ?3)
-				) as awardCount,
-				(select count (*) from md.activity i where i.dept_id=a.dept_id and i.is_activ and i.action_code='P' and
-					(coalesce(?2, null) is null or i.date >= ?2) and (coalesce(?3, null) is null or i.date <= ?3)
-				) as nomineeCount
-			from md.activity as a where a.dept_id in ?1 group by a.dept_id
-	""",
- */
-

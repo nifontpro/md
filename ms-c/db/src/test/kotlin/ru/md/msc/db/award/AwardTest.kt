@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import ru.md.base_db.mapper.toPageRequest
+import ru.md.base_domain.model.BaseOrder
 import ru.md.base_domain.model.BaseQuery
 import ru.md.msc.db.award.repo.ActivityRepository
-import ru.md.base_domain.model.BaseOrder
 import ru.md.msc.db.award.repo.AwardRepository
 import ru.md.msc.db.award.repo.mappers.toAwardCount
 import ru.md.msc.db.dept.repo.DeptRepository
@@ -64,7 +64,7 @@ class AwardTest(
 			pageSize = 3,
 			orders = listOf(BaseOrder(field = "deptId"))
 		)
-		val res = activityRepository.getAllCountByDeptNative(
+		val res = activityRepository.getGroupAwardCountByDept(
 			deptsIds = deptIds,
 			minDate = LocalDateTime.of(2023, 5, 10, 0, 0, 0),
 //			minDate = Timestamp.valueOf(LocalDateTime.of(2023, 5, 10, 0, 0, 0)),
@@ -76,11 +76,20 @@ class AwardTest(
 
 	@Test
 	fun countByType() {
-		val deptsIds = listOf<Long>(81, 87)
+		val deptsIds = listOf<Long>(81)
 		val cc = awardRepository.countByState(deptsIds = deptsIds)
 		println("stateCount: $cc")
 		val count = awardRepository.countByDeptIdIn(deptsIds)
 		assertEquals(count, cc.finish + cc.nominee + cc.future + cc.error)
+	}
+
+	@Test
+	fun wwAwardCount() {
+		val deptsIds = listOf<Long>(81)
+		val count = activityRepository.getWWAwardCount(
+			deptsIds = deptsIds
+		)
+		println(count)
 	}
 
 }

@@ -11,8 +11,9 @@ import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.award.biz.proc.AwardCommand
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.biz.proc.AwardProcessor
+import ru.md.msc.domain.award.model.AwardCount
 import ru.md.msc.domain.award.model.AwardStateCount
-import ru.md.msc.domain.dept.model.AwardCount
+import ru.md.msc.domain.award.model.WWAwardCount
 import ru.md.msc.rest.award.mappers.*
 import ru.md.msc.rest.award.model.request.*
 import ru.md.msc.rest.award.model.response.ActivityResponse
@@ -338,6 +339,28 @@ class AwardController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportAwardsCount() }
+		)
+	}
+
+	/**
+	 * Получение количества сотрудников с наградами и без них
+	 * deptId - корневой отдел
+	 * baseRequest:
+	 *  subdepts - true: включаются все подотделы
+	 *             false: включаются только указанный отдел
+	 *  minDate, maxDate - (необязательны) ограничения по дате события для подсчета количества наград
+	 */
+	@PostMapping("count_user_ww")
+	private suspend fun getUserAwardWWCount(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetUsersWWAwardCountByDeptRequest
+	): BaseResponse<WWAwardCount> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = awardProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportWWAwardsCount() }
 		)
 	}
 

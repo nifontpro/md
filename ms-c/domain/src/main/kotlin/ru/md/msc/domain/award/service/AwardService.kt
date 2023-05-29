@@ -6,7 +6,7 @@ import ru.md.base_domain.model.BaseOrder
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
 import ru.md.msc.domain.award.model.*
-import ru.md.msc.domain.dept.model.AwardCount
+import ru.md.msc.domain.award.model.AwardCount
 
 interface AwardService {
 	fun create(awardDetails: AwardDetails): AwardDetails
@@ -27,4 +27,5 @@ interface AwardService {
 	fun findActiveCountByDepts(deptId: Long, baseQuery: BaseQuery): List<AwardCount>
 	fun findCountBySubdepts(deptId: Long, baseQuery: BaseQuery): AwardStateCount
 	fun findActiveCountByDeptsNative(deptId: Long, baseQuery: BaseQuery): PageResult<AwardCount>
+	fun getWWAwardCount(deptId: Long, baseQuery: BaseQuery): WWAwardCount
 }

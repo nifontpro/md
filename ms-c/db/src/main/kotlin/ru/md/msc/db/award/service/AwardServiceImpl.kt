@@ -23,7 +23,6 @@ import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
 import ru.md.msc.domain.award.model.*
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.ImageNotFoundException
-import ru.md.msc.domain.dept.model.AwardCount
 import java.time.LocalDateTime
 
 @Service
@@ -191,13 +190,22 @@ class AwardServiceImpl(
 
 	override fun findActiveCountByDeptsNative(deptId: Long, baseQuery: BaseQuery): PageResult<AwardCount> {
 		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts, nearSub = true)
-		val count = activityRepository.getAllCountByDeptNative(
+		val count = activityRepository.getGroupAwardCountByDept(
 			deptsIds = deptsIds,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 			pageable = baseQuery.toPageRequest()
 		)
 		return count.toPageResult { it.toAwardCount() }
+	}
+
+	override fun getWWAwardCount(deptId: Long, baseQuery: BaseQuery): WWAwardCount {
+		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
+		return activityRepository.getWWAwardCount(
+			deptsIds = deptsIds,
+			minDate = baseQuery.minDate,
+			maxDate = baseQuery.maxDate,
+		)
 	}
 
 	/**

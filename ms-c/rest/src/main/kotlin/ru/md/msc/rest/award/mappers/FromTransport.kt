@@ -140,3 +140,10 @@ fun AwardContext.fromTransport(request: GetActivCountByRootDeptRequest) {
 	baseQuery = request.baseRequest.toBaseQuery()
 }
 
+fun AwardContext.fromTransport(request: GetUsersWWAwardCountByDeptRequest) {
+	command = AwardCommand.COUNT_USER_AWARD_WW
+	authId = request.authId
+	deptId = request.deptId
+	baseQuery = request.baseRequest.toBaseQuery()
+}
+

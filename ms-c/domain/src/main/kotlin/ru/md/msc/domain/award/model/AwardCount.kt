@@ -1,4 +1,4 @@
-package ru.md.msc.domain.dept.model
+package ru.md.msc.domain.award.model
 
 data class AwardCount(
 	val deptId: Long = 0,
