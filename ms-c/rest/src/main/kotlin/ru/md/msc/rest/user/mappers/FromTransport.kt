@@ -129,3 +129,15 @@ fun UserContext.fromTransport(request: GetUsersWithAwardsRequest) {
 	deptId = request.deptId
 	baseQuery = request.baseRequest?.toBaseQuery() ?: BaseQuery()
 }
+
+fun UserContext.fromTransport(request: GetUsersWithAwardCountRequest) {
+	command = UserCommand.GET_WITH_AWARD_COUNT
+	authId = request.authId
+	deptId = request.deptId
+	baseQuery = request.baseRequest?.toBaseQuery() ?: BaseQuery()
+}
+
+@Suppress("UNUSED_PARAMETER")
+fun UserContext.fromTransport(request: SetMainUserImagesRequest) {
+	command = UserCommand.SET_MAIN_IMG
+}

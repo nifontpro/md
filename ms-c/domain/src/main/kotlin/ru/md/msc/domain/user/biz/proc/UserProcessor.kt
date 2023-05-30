@@ -30,6 +30,7 @@ import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
 import ru.md.msc.domain.user.biz.workers.*
 import ru.md.msc.domain.user.biz.workers.sort.setUsersBySubdeptsValidSortedFields
 import ru.md.msc.domain.user.biz.workers.sort.setUsersValidSortedFields
+import ru.md.msc.domain.user.biz.workers.sort.setUsersWithAwardCountValidSortedFields
 import ru.md.msc.domain.user.service.UserService
 
 @Component
@@ -134,6 +135,7 @@ class UserProcessor(
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				addUserImageToS3("Сохраняем изображение в s3")
 				addUserImageToDb("Сохраняем изображение в БД")
+				updateUserMainImage("Обновление основного изображения")
 				deleteS3ImageOnFailingChain()
 			}
 
@@ -143,6 +145,7 @@ class UserProcessor(
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				deleteUserImageFromDb("Удаляем изображение из БД")
 				deleteBaseImageFromS3("Удаляем изображение из s3")
+				updateUserMainImage("Обновление основного изображения")
 			}
 
 			operation("Подсчет количества сотрудников по полам", UserCommand.GENDER_COUNT_BY_DEPTS) {
@@ -162,8 +165,22 @@ class UserProcessor(
 				validateDeptId("Проверка deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAuthDeptLevel("Проверка доступа к отделу")
-				getUsersWithAwardsByDept("Получаем сотрудников с активностью")
+				getUsersWithAwardsByDept("Получаем сотрудников с наградами")
 			}
+
+			operation("Сотрудники с наградами", UserCommand.GET_WITH_AWARD_COUNT) {
+				validateDeptId("Проверка deptId")
+				setUsersWithAwardCountValidSortedFields("Устанавливаем допустимые поля сортировки")
+				validateSortedFields("Проверка списка полей сортировки")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptLevel("Проверка доступа к отделу")
+				getUsersWithAwardCountByDept("Получаем сотрудников с количеством наград")
+			}
+
+			operation("Установить главные изображения у всех", UserCommand.SET_MAIN_IMG) {
+				setMainImagesForUsers("Устанавливаем главные изображения для всех сотрудников")
+			}
+
 			finishOperation()
 		}.build()
 

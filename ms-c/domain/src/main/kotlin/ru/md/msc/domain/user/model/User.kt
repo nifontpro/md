@@ -17,6 +17,8 @@ data class User(
 	val post: String? = null,
 	val roles: Set<RoleUser> = emptySet(),
 	val images: List<BaseImage> = emptyList(),
+	val mainImg: String? = null,
 	val activities: List<Activity> = emptyList(),
 	val awards: List<Award> = emptyList(),
+	val awardCount: Long = 0,
 )

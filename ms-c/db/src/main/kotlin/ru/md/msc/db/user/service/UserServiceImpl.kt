@@ -185,6 +185,32 @@ class UserServiceImpl(
 		return userImageEntity.toImage()
 	}
 
+	override fun setMainImage(userId: Long): BaseImage? {
+		val userEntity = userRepository.findByIdOrNull(userId) ?: throw UserNotFoundException()
+		val images = userEntity.images
+		var userImageEntity = images.firstOrNull() ?: run {
+			userEntity.mainImg = null
+			return null
+		}
+
+		images.forEach {
+			if (it.createdAt > userImageEntity.createdAt) {
+				userImageEntity = it
+			}
+		}
+		userEntity.mainImg = userImageEntity.imageUrl
+		return userImageEntity.toImage()
+	}
+
+	override fun updateAllUserImg() {
+		val users = userRepository.findAll()
+		users.forEach {
+			val id = it.id ?: return@forEach
+			val img = setMainImage(id)
+			println(img)
+		}
+	}
+
 	override fun findDeptIdByUserId(userId: Long): Long {
 		return userRepository.finDeptId(userId = userId) ?: throw UserNotFoundException()
 	}
@@ -214,6 +240,21 @@ class UserServiceImpl(
 			listOf(deptId)
 		}
 		return userRepository.findByDeptIdIn(deptsIds = deptsIds).map { it.toUserAward() }
+	}
+
+	override fun getUsersWithAwardCount(deptId: Long, baseQuery: BaseQuery): PageResult<User> {
+		val deptsIds = if (baseQuery.subdepts) {
+			deptRepository.subTreeIds(deptId = deptId)
+		} else {
+			listOf(deptId)
+		}
+		val users = userRepository.findUsersWithAwardCount(
+			deptsIds = deptsIds,
+			minDate = baseQuery.minDate,
+			maxDate = baseQuery.maxDate,
+			pageable = baseQuery.toPageRequest()
+		)
+		return users.toPageResult { it.toUser() }
 	}
 
 //	companion object {

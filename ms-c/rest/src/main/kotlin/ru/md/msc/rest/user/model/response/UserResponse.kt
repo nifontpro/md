@@ -21,4 +21,5 @@ data class UserResponse(
 	val images: List<BaseImage> = emptyList(),
 	val activities: List<ActivityResponse> = emptyList(),
 	val awards: List<AwardResponse> = emptyList(),
+	val awardCount: Long = 0,
 )

@@ -47,6 +47,9 @@ class UserEntity(
 	var lastname: String? = null,
 	var post: String? = null,
 
+	@Column(name = "main_img")
+	var mainImg: String? = null,
+
 	@Column(name = "gender_code")
 	var gender: Gender = Gender.UNDEF,
 
@@ -83,7 +86,7 @@ class UserEntity(
 	@Where(clause = "is_activ=true and action_code='A'")
 	val activities: List<ActivityEntity> = emptyList(),
 
-) : Serializable {
+	) : Serializable {
 
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true

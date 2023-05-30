@@ -108,6 +108,9 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		pageable: Pageable
 	): Page<IAwardCount>
 
+	/**
+	 * Количество наград и номинаций по отделам за период
+	 */
 	@Query("""
 		select new ru.md.msc.domain.award.model.AwardCount(
 			0,

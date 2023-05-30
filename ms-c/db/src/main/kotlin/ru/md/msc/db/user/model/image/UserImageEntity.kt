@@ -27,7 +27,7 @@ class UserImageEntity(
 	override val main: Boolean = false,
 
 	@Column(name = "created_at")
-	override val createdAt: LocalDateTime? = null,
+	override val createdAt: LocalDateTime = LocalDateTime.now(),
 
 	@Column(name = "user_id")
 	var userId: Long? = null,

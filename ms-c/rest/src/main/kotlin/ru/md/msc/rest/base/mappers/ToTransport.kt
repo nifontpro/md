@@ -8,3 +8,7 @@ import ru.md.msc.domain.base.biz.BaseClientContext
 fun BaseClientContext.toTransportBaseImage(): BaseResponse<BaseImage> {
 	return baseResponse(baseImage)
 }
+
+fun BaseClientContext.toTransportUnit(): BaseResponse<Unit> {
+	return baseResponse(Unit)
+}

@@ -24,4 +24,7 @@ interface UserService {
 	fun getGenderCountByDept(deptId: Long, subdepts: Boolean): GenderCount
 	fun getUsersWithActivity(deptId: Long, baseQuery: BaseQuery): List<User>
 	fun getUsersWithAward(deptId: Long, baseQuery: BaseQuery): List<User>
+	fun setMainImage(userId: Long): BaseImage?
+	fun updateAllUserImg()
+	fun getUsersWithAwardCount(deptId: Long, baseQuery: BaseQuery): PageResult<User>
 }

@@ -15,6 +15,7 @@ import ru.md.msc.domain.user.model.GenderCount
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.rest.base.imageProcess
 import ru.md.msc.rest.base.mappers.toTransportBaseImage
+import ru.md.msc.rest.base.mappers.toTransportUnit
 import ru.md.msc.rest.user.mappers.*
 import ru.md.msc.rest.user.model.request.*
 import ru.md.msc.rest.user.model.response.UserDetailsResponse
@@ -187,7 +188,7 @@ class UserController(
 		)
 	}
 
-	@PostMapping("get_act")
+	@PostMapping("get_act_na")
 	private suspend fun getWithActivity(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetUsersWithActivityRequest
@@ -201,7 +202,7 @@ class UserController(
 		)
 	}
 
-	@PostMapping("get_awards")
+	@PostMapping("get_awards_na")
 	private suspend fun getWithAwards(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetUsersWithAwardsRequest
@@ -212,6 +213,37 @@ class UserController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportUsersResponse() }
+		)
+	}
+
+	@PostMapping("get_award_count")
+	private suspend fun getWithAwardCount(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetUsersWithAwardCountRequest
+	): BaseResponse<List<UserResponse>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = userProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportUsersResponse() }
+		)
+	}
+
+	/**
+	 * !!!! Set ADMIN role
+	 */
+	@PostMapping("admin/img")
+	private suspend fun setMainImages(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: SetMainUserImagesRequest
+	): BaseResponse<Unit> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = userProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportUnit() }
 		)
 	}
 
