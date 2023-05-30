@@ -216,6 +216,22 @@ class UserController(
 		)
 	}
 
+	/**
+	 * Получить сотрудников с количеством награждений
+	 * baseRequest:
+	 *  subdepts - отдел или все подотделы
+	 *  Параметры пагинации page, pageSize - необязательны, по умолчанию 0 и 100 соответственно
+	 *  minDate <= activity.startDate (отсутствует - без min ограничения)
+	 *  maxDate >= activity.endDate (отсутствует - без max ограничения) - для подсчета наград за период
+	 *  Допустимые поля для сортировки:
+	 *      "firstname",
+	 *      "patronymic",
+	 *      "lastname",
+	 *      "post",
+	 *      "(awardCount)",
+	 *      "(deptName)",
+	 *      "(classname)",
+	 */
 	@PostMapping("get_award_count")
 	private suspend fun getWithAwardCount(
 		@RequestHeader(name = AUTH) bearerToken: String,
