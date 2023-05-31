@@ -1,18 +1,18 @@
-package ru.md.msc.domain.user.biz.workers
+package ru.md.msc.domain.award.biz.workers
 
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
+import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.base.biz.updateMainImageError
-import ru.md.msc.domain.user.biz.proc.UserContext
 
-fun ICorChainDsl<UserContext>.updateUserMainImage(title: String) = worker {
+fun ICorChainDsl<AwardContext>.updateAwardMainImage(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
 
 	handle {
-		userService.setMainImage(userId = userId)
+		awardService.setMainImage(awardId = awardId)
 	}
 
 	except {

@@ -21,6 +21,7 @@ import ru.md.msc.rest.award.model.response.AwardDetailsResponse
 import ru.md.msc.rest.award.model.response.AwardResponse
 import ru.md.msc.rest.base.imageProcess
 import ru.md.msc.rest.base.mappers.toTransportBaseImage
+import ru.md.msc.rest.base.mappers.toTransportUnit
 
 @RestController
 @RequestMapping("award")
@@ -361,6 +362,23 @@ class AwardController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportWWAwardsCount() }
+		)
+	}
+
+	/**
+	 * !!!! Set ADMIN role
+	 */
+	@PostMapping("admin/img")
+	private suspend fun setMainImages(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: SetMainAwardImagesRequest
+	): BaseResponse<Unit> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = awardProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportUnit() }
 		)
 	}
 

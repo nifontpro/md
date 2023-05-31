@@ -147,3 +147,8 @@ fun AwardContext.fromTransport(request: GetUsersWWAwardCountByDeptRequest) {
 	baseQuery = request.baseRequest.toBaseQuery()
 }
 
+@Suppress("UNUSED_PARAMETER")
+fun AwardContext.fromTransport(request: SetMainAwardImagesRequest) {
+	command = AwardCommand.SET_MAIN_IMG
+}
+

@@ -27,7 +27,7 @@ class AwardImageEntity(
 	override val main: Boolean = false,
 
 	@Column(name = "created_at")
-	override val createdAt: LocalDateTime? = null,
+	override val createdAt: LocalDateTime = LocalDateTime.now(),
 
 //	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 //	@JoinColumn(name = "user_id")

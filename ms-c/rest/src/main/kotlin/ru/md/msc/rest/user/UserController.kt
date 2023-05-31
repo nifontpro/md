@@ -273,14 +273,14 @@ class UserController(
 		return RS(res = "User data valid, body: ${body?.res}, used: $usedMb Mb, ${principal.name}")
 	}
 
-	@PostMapping("d")
-	suspend fun getD(
-		@RequestBody body: RS? = null,
-		principal: Principal,
-	): RS {
-		val usedMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576
-		return RS(res = "User data valid, body: ${body?.res}, used: $usedMb Mb, ${principal.name}")
-	}
+//	@PostMapping("d")
+//	suspend fun getD(
+//		@RequestBody body: RS? = null,
+//		principal: Principal,
+//	): RS {
+//		val usedMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576
+//		return RS(res = "User data valid, body: ${body?.res}, used: $usedMb Mb, ${principal.name}")
+//	}
 
 }
 

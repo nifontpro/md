@@ -17,9 +17,10 @@ data class UserResponse(
 	val authEmail: String? = null,
 	val gender: Gender = Gender.UNDEF,
 	val post: String? = null,
+	val awardCount: Long = 0,
+	val mainImg: String? = null,
 	val roles: Set<RoleUser> = Collections.emptySet(),
 	val images: List<BaseImage> = emptyList(),
 	val activities: List<ActivityResponse> = emptyList(),
 	val awards: List<AwardResponse> = emptyList(),
-	val awardCount: Long = 0,
 )

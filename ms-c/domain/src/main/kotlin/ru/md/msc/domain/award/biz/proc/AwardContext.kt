@@ -45,4 +45,5 @@ enum class AwardCommand : IBaseCommand {
 	COUNT_ACTIV,
 	COUNT_ACTIV_ROOT,
 	COUNT_USER_AWARD_WW,
+	SET_MAIN_IMG
 }

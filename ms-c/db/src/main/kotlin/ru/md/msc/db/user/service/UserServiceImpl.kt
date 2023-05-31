@@ -139,7 +139,7 @@ class UserServiceImpl(
 			lastname = baseQuery.filter.toSearch(),
 			pageable = pageRequest
 		)
-		return res.toPageResult { it.toUser() }
+		return res.toPageResult { it.toUserLazy() }
 	}
 
 	override fun findBySubDepts(deptId: Long, baseQuery: BaseQuery): PageResult<User> {
@@ -150,7 +150,7 @@ class UserServiceImpl(
 			lastname = baseQuery.filter.toSearch(),
 			pageable = pageRequest
 		)
-		return res.toPageResult { it.toUser() }
+		return res.toPageResult { it.toUserWithDeptOnly() }
 	}
 
 	override fun findById(userId: Long): User? {

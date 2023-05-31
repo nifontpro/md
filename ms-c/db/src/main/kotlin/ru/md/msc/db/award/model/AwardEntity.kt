@@ -23,6 +23,9 @@ class AwardEntity(
 
 	var name: String = "",
 
+	@Column(name = "main_img")
+	var mainImg: String? = null,
+
 	@Column(name = "type_code")
 	var type: AwardType = AwardType.UNDEF,
 

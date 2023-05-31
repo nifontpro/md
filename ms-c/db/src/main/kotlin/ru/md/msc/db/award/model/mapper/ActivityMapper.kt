@@ -23,7 +23,7 @@ fun ActivityEntity.toActivity() = Activity(
 fun ActivityEntity.toActivityOnlyAward() = Activity(
 	id = id ?: 0,
 	date = date,
-	award = award?.toAwardOnlyImages(),
+	award = award?.toAwardLazy(),
 	actionType = actionType,
 	activ = activ,
 	dept = Dept(id = dept?.id ?: 0),
@@ -44,7 +44,7 @@ fun ActivityEntity.toActivityUserLazy() = Activity(
 	id = id ?: 0,
 	date = date,
 	user = user?.toUserLazy(),
-	award = award?.toAwardOnlyImages() ?: Award(),
+	award = award?.toAwardLazy() ?: Award(),
 	actionType = actionType,
 	activ = activ,
 	dept = Dept(id = dept?.id ?: 0),

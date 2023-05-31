@@ -96,6 +96,7 @@ class AwardProcessor(
 				validateAccessToAwardChain()
 				addAwardImageToS3("Сохраняем изображение в s3")
 				addAwardImageToDb("Сохраняем ссылки на изображение в БД")
+				updateAwardMainImage("Обновление основного изображения")
 				deleteS3ImageOnFailingChain()
 			}
 
@@ -105,6 +106,7 @@ class AwardProcessor(
 				validateAccessToAwardChain()
 				getGalleryItemByClient("Получаем объект галереи из мс")
 				addAwardGalleryImageToDb("Сохраняем ссылки на изображение в БД")
+				updateAwardMainImage("Обновление основного изображения")
 			}
 
 			operation("Удаление изображения", AwardCommand.IMG_DELETE) {
@@ -112,6 +114,7 @@ class AwardProcessor(
 				validateAccessToAwardChain()
 				deleteAwardImageFromDb("Удаляем изображение из БД")
 				deleteBaseImageFromS3("Удаляем изображение из s3")
+				updateAwardMainImage("Обновление основного изображения")
 			}
 
 			operation("Добавить действие в активность награждения", AwardCommand.ADD_ACTION) {
@@ -190,6 +193,10 @@ class AwardProcessor(
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAuthDeptLevel("Проверка доступа к отделу")
 				getUserAwardWWCountByDepts("Получаем количество сотрудников с наградами и без")
+			}
+
+			operation("Установить главные изображения у всех", AwardCommand.SET_MAIN_IMG) {
+				setMainImagesForAwards("Устанавливаем главные изображения")
 			}
 
 			finishOperation()

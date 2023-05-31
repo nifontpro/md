@@ -8,6 +8,7 @@ fun Award.toAwardResponse() = AwardResponse(
 	id = id,
 	name = name,
 	type = type,
+	mainImg = mainImg,
 	startDate = startDate.toEpochMilliUTC(),
 	endDate = endDate.toEpochMilliUTC(),
 	state = state,

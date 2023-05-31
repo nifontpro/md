@@ -45,6 +45,16 @@ fun BaseClientContext.deleteImageError() {
 	)
 }
 
+fun BaseClientContext.updateMainImageError() {
+	fail(
+		errorDb(
+			repository = "image",
+			violationCode = "update main image",
+			description = "Ошибка обновления основного изображения"
+		)
+	)
+}
+
 fun BaseClientContext.s3Error() {
 	fail(
 		errorDb(

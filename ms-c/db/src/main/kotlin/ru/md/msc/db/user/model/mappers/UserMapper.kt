@@ -48,6 +48,18 @@ fun UserEntity.toUserLazy() = User(
 	mainImg = mainImg,
 )
 
+fun UserEntity.toUserWithDeptOnly() = User(
+	id = id ?: 0,
+	dept = dept?.toDept(),
+	authEmail = authEmail,
+	firstname = firstname,
+	patronymic = patronymic,
+	lastname = lastname,
+	gender = gender,
+	post = post,
+	mainImg = mainImg,
+)
+
 fun UserEntity.toUser() = User(
 	id = id ?: 0,
 	dept = dept?.toDept(),
@@ -88,17 +100,4 @@ fun UserEntity.toUserAward() = User(
 	mainImg = mainImg,
 	images = images.map { it.toImage() },
 	awards = awards.map { it.toAwardOnlyImages() }
-)
-
-fun UserEntity.toUserWithoutDept() = User(
-	id = id ?: 0,
-	authEmail = authEmail,
-	firstname = firstname,
-	patronymic = patronymic,
-	lastname = lastname,
-	gender = gender,
-	post = post,
-	mainImg = mainImg,
-	roles = roles.map { it.roleUser }.toSet(),
-	images = images.map { it.toImage() }
 )

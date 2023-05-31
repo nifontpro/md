@@ -73,7 +73,7 @@ class AwardServiceImpl(
 			state = awardState,
 			pageable = baseQuery.toPageRequest()
 		)
-		return awards.toPageResult { it.toAward() }
+		return awards.toPageResult { it.toAwardLazy() }
 	}
 
 	override fun findBySubDept(deptId: Long, baseQuery: BaseQuery): PageResult<Award> {
@@ -86,7 +86,7 @@ class AwardServiceImpl(
 			filter = baseQuery.filter?.let { "$it%" },
 			pageable = pageRequest
 		)
-		return awards.toPageResult { it.toAward() }
+		return awards.toPageResult { it.toAwardOnlyDept() }
 	}
 
 	override fun findDeptIdByAwardId(awardId: Long): Long {
@@ -224,6 +224,32 @@ class AwardServiceImpl(
 			} else {
 				listOf(deptId)
 			}
+		}
+	}
+
+	override fun setMainImage(awardId: Long): BaseImage? {
+		val awardEntity = awardRepository.findByIdOrNull(awardId) ?: throw AwardNotFoundException()
+		val images = awardEntity.images
+		var awardImageEntity = images.firstOrNull() ?: run {
+			awardEntity.mainImg = null
+			return null
+		}
+
+		images.forEach {
+			if (it.createdAt > awardImageEntity.createdAt) {
+				awardImageEntity = it
+			}
+		}
+		awardEntity.mainImg = awardImageEntity.imageUrl
+		return awardImageEntity.toImage()
+	}
+
+	override fun updateAllAwardImg() {
+		val awards = awardRepository.findAll()
+		awards.forEach {
+			val id = it.id ?: return@forEach
+			val img = setMainImage(id)
+			println(img)
 		}
 	}
 

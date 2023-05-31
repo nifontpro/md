@@ -28,4 +28,6 @@ interface AwardService {
 	fun findCountBySubdepts(deptId: Long, baseQuery: BaseQuery): AwardStateCount
 	fun findActiveCountByDeptsNative(deptId: Long, baseQuery: BaseQuery): PageResult<AwardCount>
 	fun getWWAwardCount(deptId: Long, baseQuery: BaseQuery): WWAwardCount
+	fun setMainImage(awardId: Long): BaseImage?
+	fun updateAllAwardImg()
 }
