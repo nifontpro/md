@@ -18,17 +18,11 @@ import ru.md.msc.db.user.model.UserDetailsEntity
 import ru.md.msc.db.user.model.image.UserImageEntity
 import ru.md.msc.db.user.model.mappers.*
 import ru.md.msc.db.user.model.role.RoleEntity
-import ru.md.msc.db.user.repo.RoleRepository
-import ru.md.msc.db.user.repo.UserDetailsRepository
-import ru.md.msc.db.user.repo.UserImageRepository
-import ru.md.msc.db.user.repo.UserRepository
+import ru.md.msc.db.user.repo.*
 import ru.md.msc.domain.base.biz.ImageNotFoundException
 import ru.md.msc.domain.dept.model.DeptType
 import ru.md.msc.domain.user.biz.proc.UserNotFoundException
-import ru.md.msc.domain.user.model.GenderCount
-import ru.md.msc.domain.user.model.RoleUser
-import ru.md.msc.domain.user.model.User
-import ru.md.msc.domain.user.model.UserDetails
+import ru.md.msc.domain.user.model.*
 import ru.md.msc.domain.user.service.UserService
 import java.time.LocalDateTime
 
@@ -44,6 +38,7 @@ class UserServiceImpl(
 	private val deptRepository: DeptRepository,
 	private val deptDetailsRepository: DeptDetailsRepository,
 	private val userImageRepository: UserImageRepository,
+	private val userSettingsRepository: UserSettingsRepository
 ) : UserService {
 
 	/**
@@ -255,6 +250,16 @@ class UserServiceImpl(
 			pageable = baseQuery.toPageRequest()
 		)
 		return users.toPageResult { it.toUser() }
+	}
+
+	override fun saveSettings(userSettings: UserSettings): UserSettings {
+		val userSettingsEntity = userSettings.toUserSettingsEntity()
+		userSettingsRepository.save(userSettingsEntity)
+		return userSettingsEntity.toUserSettings()
+	}
+
+	override fun getSettings(userId: Long): UserSettings? {
+		return userSettingsRepository.findByIdOrNull(userId)?.toUserSettings()
 	}
 
 //	companion object {

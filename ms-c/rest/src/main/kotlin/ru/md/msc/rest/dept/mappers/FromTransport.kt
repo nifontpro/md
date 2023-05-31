@@ -70,3 +70,8 @@ fun DeptContext.fromTransport(request: DeleteDeptImageRequest) {
 	deptId = request.deptId
 	imageId = request.imageId
 }
+
+@Suppress("UNUSED_PARAMETER")
+fun DeptContext.fromTransport(request: SetMainDeptImagesRequest) {
+	command = DeptCommand.SET_MAIN_IMG
+}

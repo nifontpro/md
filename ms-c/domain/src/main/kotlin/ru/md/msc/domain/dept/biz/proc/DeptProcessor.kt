@@ -1,20 +1,21 @@
 package ru.md.msc.domain.dept.biz.proc
 
 import org.springframework.stereotype.Component
-import ru.md.cor.rootChain
-import ru.md.cor.worker
 import ru.md.base_domain.biz.proc.IBaseProcessor
+import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
+import ru.md.cor.rootChain
+import ru.md.cor.worker
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
-import ru.md.base_domain.biz.validate.validateSortedFields
-import ru.md.msc.domain.base.workers.*
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
+import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
+import ru.md.msc.domain.base.workers.deleteBaseImagesFromS3
 import ru.md.msc.domain.dept.biz.validate.validateDeptName
 import ru.md.msc.domain.dept.biz.workers.*
 import ru.md.msc.domain.dept.service.DeptService
@@ -83,6 +84,7 @@ class DeptProcessor(
 				validateAdminDeptLevelChain()
 				addDeptImageToS3("Сохраняем изображение в s3")
 				addDeptImageToDb("Добавляем картинку в БД")
+				updateDeptMainImage("Обновление основного изображения")
 				deleteS3ImageOnFailingChain()
 			}
 
@@ -91,6 +93,11 @@ class DeptProcessor(
 				validateAdminDeptLevelChain()
 				deleteDeptImageFromDb("Удаляем изображение")
 				deleteBaseImageFromS3("Удаляем изображение из s3")
+				updateDeptMainImage("Обновление основного изображения")
+			}
+
+			operation("Установить главные изображения у всех", DeptCommand.SET_MAIN_IMG) {
+				setMainImagesForDepts("Устанавливаем главные изображения")
 			}
 
 			finishOperation()

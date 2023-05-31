@@ -13,6 +13,7 @@ import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.GenderCount
 import ru.md.msc.domain.user.model.User
+import ru.md.msc.domain.user.model.UserSettings
 import ru.md.msc.rest.base.imageProcess
 import ru.md.msc.rest.base.mappers.toTransportBaseImage
 import ru.md.msc.rest.base.mappers.toTransportUnit
@@ -246,6 +247,34 @@ class UserController(
 		)
 	}
 
+	@PostMapping("save_settings")
+	private suspend fun saveUserSettings(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: SaveUserSettingsRequest
+	): BaseResponse<UserSettings> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = userProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportUserSettings() }
+		)
+	}
+
+	@PostMapping("get_settings")
+	private suspend fun getUserSettings(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetUserSettingsRequest
+	): BaseResponse<UserSettings> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = userProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportUserSettings() }
+		)
+	}
+
 	/**
 	 * !!!! Set ADMIN role
 	 */
@@ -272,15 +301,6 @@ class UserController(
 		val usedMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576
 		return RS(res = "User data valid, body: ${body?.res}, used: $usedMb Mb, ${principal.name}")
 	}
-
-//	@PostMapping("d")
-//	suspend fun getD(
-//		@RequestBody body: RS? = null,
-//		principal: Principal,
-//	): RS {
-//		val usedMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576
-//		return RS(res = "User data valid, body: ${body?.res}, used: $usedMb Mb, ${principal.name}")
-//	}
 
 }
 

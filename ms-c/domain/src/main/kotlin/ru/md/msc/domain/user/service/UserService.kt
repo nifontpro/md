@@ -6,6 +6,7 @@ import ru.md.base_domain.model.PageResult
 import ru.md.msc.domain.user.model.GenderCount
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
+import ru.md.msc.domain.user.model.UserSettings
 
 interface UserService {
 	fun createOwner(userDetails: UserDetails): UserDetails
@@ -27,4 +28,6 @@ interface UserService {
 	fun setMainImage(userId: Long): BaseImage?
 	fun updateAllUserImg()
 	fun getUsersWithAwardCount(deptId: Long, baseQuery: BaseQuery): PageResult<User>
+	fun saveSettings(userSettings: UserSettings): UserSettings
+	fun getSettings(userId: Long): UserSettings?
 }

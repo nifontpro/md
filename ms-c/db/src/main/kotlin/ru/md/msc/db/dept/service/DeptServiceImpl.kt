@@ -9,9 +9,9 @@ import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.image.model.ImageType
 import ru.md.base_domain.model.BaseOrder
 import ru.md.msc.db.dept.model.image.DeptImageEntity
-import ru.md.msc.db.dept.model.mappers.toDept
 import ru.md.msc.db.dept.model.mappers.toDeptDetails
 import ru.md.msc.db.dept.model.mappers.toDeptDetailsEntity
+import ru.md.msc.db.dept.model.mappers.toDeptLazy
 import ru.md.msc.db.dept.repo.DeptDetailsRepository
 import ru.md.msc.db.dept.repo.DeptImageRepository
 import ru.md.msc.db.dept.repo.DeptRepository
@@ -69,14 +69,14 @@ class DeptServiceImpl(
 	/**
 	 * Получить ids всех элементов поддерева отделов, включая вершину
 	 */
-	override fun findSubTreeIds(deptId: Long) : List<Long> {
+	override fun findSubTreeIds(deptId: Long): List<Long> {
 		return deptRepository.subTreeIds(deptId = deptId)
 	}
 
 	override fun findSubTreeDepts(deptId: Long, orders: List<BaseOrder>): List<Dept> {
 		val ids = deptRepository.subTreeIds(deptId = deptId)
 		val depts = deptRepository.findByIdIn(ids = ids, sort = orders.toSort())
-		return depts.map { it.toDept() }
+		return depts.map { it.toDeptLazy() }
 	}
 
 	override fun findByIdDetails(deptId: Long): DeptDetails? {
@@ -112,6 +112,32 @@ class DeptServiceImpl(
 		}
 		deptImageRepository.delete(deptImageEntity)
 		return deptImageEntity.toImage()
+	}
+
+	override fun setMainImage(deptId: Long): BaseImage? {
+		val deptEntity = deptRepository.findByIdOrNull(deptId) ?: throw DeptNotFoundException()
+		val images = deptEntity.images
+		var deptImageEntity = images.firstOrNull() ?: run {
+			deptEntity.mainImg = null
+			return null
+		}
+
+		images.forEach {
+			if (it.createdAt > deptImageEntity.createdAt) {
+				deptImageEntity = it
+			}
+		}
+		deptEntity.mainImg = deptImageEntity.imageUrl
+		return deptImageEntity.toImage()
+	}
+
+	override fun updateAllDeptImg() {
+		val depts = deptRepository.findAll()
+		depts.forEach {
+			val id = it.id ?: return@forEach
+			val img = setMainImage(id)
+			println(img)
+		}
 	}
 
 }

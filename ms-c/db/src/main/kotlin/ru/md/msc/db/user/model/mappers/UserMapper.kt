@@ -5,7 +5,7 @@ import ru.md.msc.db.award.model.mapper.toActivityOnlyAward
 import ru.md.msc.db.award.model.mapper.toAwardOnlyImages
 import ru.md.msc.db.dept.model.mappers.toDept
 import ru.md.msc.db.dept.model.mappers.toDeptEntity
-import ru.md.msc.db.dept.model.mappers.toDeptOnlyName
+import ru.md.msc.db.dept.model.mappers.toDeptLazy
 import ru.md.msc.db.user.model.UserEntity
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.user.model.User
@@ -76,7 +76,7 @@ fun UserEntity.toUser() = User(
 
 fun UserEntity.toUserActivity() = User(
 	id = id ?: 0,
-	dept = dept?.toDeptOnlyName(),
+	dept = dept?.toDeptLazy(),
 	authEmail = authEmail,
 	firstname = firstname,
 	patronymic = patronymic,
@@ -90,7 +90,7 @@ fun UserEntity.toUserActivity() = User(
 
 fun UserEntity.toUserAward() = User(
 	id = id ?: 0,
-	dept = dept?.toDeptOnlyName(),
+	dept = dept?.toDeptLazy(),
 	authEmail = authEmail,
 	firstname = firstname,
 	patronymic = patronymic,

@@ -6,16 +6,21 @@ import ru.md.msc.domain.dept.model.Dept
 
 fun DeptEntity.toDept() = Dept(
 	id = id ?: 0,
-	parentId = parentId,
+	parentId = parentId ?: 0,
 	name = name,
 	classname = classname,
 	type = type,
+	mainImg = mainImg,
 	images = images.map { it.toImage() }
 )
 
-fun DeptEntity.toDeptOnlyName() = Dept(
+fun DeptEntity.toDeptLazy() = Dept(
 	id = id ?: 0,
+	parentId = parentId ?: 0,
 	name = name,
+	classname = classname,
+	type = type,
+	mainImg = mainImg,
 )
 
 fun Dept.toDeptEntity(create: Boolean = false) = DeptEntity(

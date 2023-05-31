@@ -7,6 +7,7 @@ import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
+import ru.md.msc.domain.user.model.UserSettings
 import ru.md.msc.rest.user.model.request.*
 
 fun UserContext.fromTransport(request: CreateOwnerRequest) {
@@ -140,4 +141,21 @@ fun UserContext.fromTransport(request: GetUsersWithAwardCountRequest) {
 @Suppress("UNUSED_PARAMETER")
 fun UserContext.fromTransport(request: SetMainUserImagesRequest) {
 	command = UserCommand.SET_MAIN_IMG
+}
+
+fun UserContext.fromTransport(request: SaveUserSettingsRequest) {
+	command = UserCommand.SAVE_SETTINGS
+	userId = request.userId
+	authId = userId
+	userSettings = UserSettings(
+		userId = userId,
+		showOnboarding = request.showOnboarding,
+		pageOnboarding = request.pageOnboarding
+	)
+}
+
+fun UserContext.fromTransport(request: GetUserSettingsRequest) {
+	command = UserCommand.GET_SETTINGS
+	userId = request.userId
+	authId = userId
 }

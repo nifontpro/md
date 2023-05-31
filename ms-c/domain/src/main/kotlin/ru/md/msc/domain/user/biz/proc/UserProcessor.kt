@@ -181,6 +181,18 @@ class UserProcessor(
 				setMainImagesForUsers("Устанавливаем главные изображения для всех сотрудников")
 			}
 
+			operation("Сохранить настройки", UserCommand.SAVE_SETTINGS) {
+				validateUserId("Проверка userId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				saveUserSettings("Сохраняем настройки")
+			}
+
+			operation("Получить настройки", UserCommand.GET_SETTINGS) {
+				validateUserId("Проверка userId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				getUserSettings("Получаем настройки")
+			}
+
 			finishOperation()
 		}.build()
 

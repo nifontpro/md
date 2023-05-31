@@ -3,17 +3,18 @@ package ru.md.msc.rest.dept
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.image.model.BaseImage
-import ru.md.msc.rest.base.imageProcess
-import ru.md.base_rest.model.AUTH
 import ru.md.base_domain.rest.BaseResponse
-import ru.md.msc.rest.base.mappers.toTransportBaseImage
 import ru.md.base_rest.authProcess
+import ru.md.base_rest.model.AUTH
 import ru.md.base_rest.toLongOr0
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.dept.biz.proc.DeptCommand
 import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.domain.dept.biz.proc.DeptProcessor
 import ru.md.msc.domain.dept.model.Dept
+import ru.md.msc.rest.base.imageProcess
+import ru.md.msc.rest.base.mappers.toTransportBaseImage
+import ru.md.msc.rest.base.mappers.toTransportUnit
 import ru.md.msc.rest.dept.mappers.fromTransport
 import ru.md.msc.rest.dept.mappers.toTransportDeptDetails
 import ru.md.msc.rest.dept.mappers.toTransportDepts
@@ -127,6 +128,23 @@ class DeptController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportBaseImage() }
+		)
+	}
+
+	/**
+	 * !!!! Set ADMIN role
+	 */
+	@PostMapping("admin/img")
+	private suspend fun setMainImages(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: SetMainDeptImagesRequest
+	): BaseResponse<Unit> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = deptProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportUnit() }
 		)
 	}
 

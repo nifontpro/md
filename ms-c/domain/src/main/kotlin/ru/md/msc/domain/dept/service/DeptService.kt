@@ -17,4 +17,6 @@ interface DeptService {
 	fun deleteImage(deptId: Long, imageId: Long): BaseImage
 	fun getRootId(deptId: Long): Long?
 	fun findSubTreeIds(deptId: Long): List<Long>
+	fun updateAllDeptImg()
+	fun setMainImage(deptId: Long): BaseImage?
 }

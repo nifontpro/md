@@ -16,9 +16,12 @@ class DeptEntity(
 	val id: Long? = null,
 
 	@Column(name = "parent_id")
-	val parentId: Long = 0, // Если будет получение ROOT - исправить на nullable
+	val parentId: Long? = null,
 	var name: String = "",
 	var classname: String? = null,
+
+	@Column(name = "main_img")
+	var mainImg: String? = null,
 
 	@Column(name = "code")
 	val type: DeptType = DeptType.UNDEF,
