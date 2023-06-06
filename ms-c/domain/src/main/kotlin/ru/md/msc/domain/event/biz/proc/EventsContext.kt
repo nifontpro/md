@@ -7,6 +7,7 @@ import ru.md.msc.domain.event.service.EventService
 
 class EventsContext : BaseClientContext() {
 	var baseEvent: BaseEvent = BaseEvent()
+	var events: List<BaseEvent> = emptyList()
 
 	lateinit var eventService: EventService
 }
@@ -14,4 +15,5 @@ class EventsContext : BaseClientContext() {
 enum class EventCommand : IBaseCommand {
 	ADD_USER_EVENT,
 	ADD_DEPT_EVENT,
+	GET_EVENTS,
 }

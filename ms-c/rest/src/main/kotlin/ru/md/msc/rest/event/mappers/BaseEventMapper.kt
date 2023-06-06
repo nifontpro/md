@@ -7,6 +7,7 @@ import ru.md.msc.rest.event.model.response.BaseEventResponse
 fun BaseEvent.toBaseEventResponse() = BaseEventResponse(
 	id = id,
 	eventDate = eventDate.toEpochMilliUTC(),
+	days =days,
 	eventName = eventName,
 	entityName = entityName,
 	imageUrl = imageUrl,

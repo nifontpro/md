@@ -8,3 +8,7 @@ import ru.md.msc.rest.event.model.response.BaseEventResponse
 fun EventsContext.toTransportBaseEvent(): BaseResponse<BaseEventResponse> {
 	return baseResponse(baseEvent.toBaseEventResponse())
 }
+
+fun EventsContext.toTransportBaseEvents(): BaseResponse<List<BaseEventResponse>> {
+	return baseResponse(events.map { it.toBaseEventResponse() })
+}

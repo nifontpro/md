@@ -12,5 +12,4 @@ interface IAwardCount {
 	fun getDeptName(): String
 	fun getAwardCount(): Long
 	fun getNomineeCount(): Long
-
 }

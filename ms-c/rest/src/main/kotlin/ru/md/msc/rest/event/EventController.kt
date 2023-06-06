@@ -8,7 +8,10 @@ import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.event.biz.proc.EventProcessor
 import ru.md.msc.rest.event.mappers.fromTransport
 import ru.md.msc.rest.event.mappers.toTransportBaseEvent
+import ru.md.msc.rest.event.mappers.toTransportBaseEvents
+import ru.md.msc.rest.event.model.request.AddDeptEventRequest
 import ru.md.msc.rest.event.model.request.AddUserEventRequest
+import ru.md.msc.rest.event.model.request.GetAllEventsRequest
 import ru.md.msc.rest.event.model.response.BaseEventResponse
 
 @RestController
@@ -29,6 +32,34 @@ class EventController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportBaseEvent() }
+		)
+	}
+
+	@PostMapping("add_dept")
+	private suspend fun addDeptEvent(
+		@RequestBody request: AddDeptEventRequest,
+		@RequestHeader(name = AUTH) bearerToken: String
+	): BaseResponse<BaseEventResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = eventProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportBaseEvent() }
+		)
+	}
+
+	@PostMapping("get_all")
+	private suspend fun getEvents(
+		@RequestBody request: GetAllEventsRequest,
+		@RequestHeader(name = AUTH) bearerToken: String
+	): BaseResponse<List<BaseEventResponse>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = eventProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportBaseEvents() }
 		)
 	}
 
