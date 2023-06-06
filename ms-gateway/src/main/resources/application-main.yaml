@@ -1,0 +1,36 @@
+server:
+  port: 8765
+
+logging:
+  pattern:
+    console: "%d{HH:mm:ss} %highlight(%-5level) %cyan(%logger{35}) - %msg %n"
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
+
+spring:
+  application:
+    name: gateway
+
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+
+      discovery:
+        locator:
+          # позволяет перенаправление
+          enabled: true
+          # включение игнорирования регистра названий микросервисов
+          lower-case-service-id: true
+      default-filters:
+        - RewritePath=/api/v1/.*?/(?<remaining>.*), /$\{remaining}
+      routes:
+        - predicates:
+            - Path=/api/v1/client/**
+          uri: lb://client
+        - predicates:
+            - Path=/api/v1/gateway/**
+          uri: lb://gateway

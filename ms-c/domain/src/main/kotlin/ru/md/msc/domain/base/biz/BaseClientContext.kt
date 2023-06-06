@@ -18,6 +18,9 @@ abstract class BaseClientContext(
 	var deptId: Long = 0,
 	var rootDeptId: Long = 0,
 
+	var modifyUser: User = User(),
+	var isModifyUserHasAdminRole: Boolean = false,
+
 	var imageId: Long = 0,
 	var baseImage: BaseImage = BaseImage(),
 	var baseImages: List<BaseImage> = emptyList(),

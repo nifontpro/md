@@ -6,20 +6,17 @@ import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
-import ru.md.cor.ICorChainDsl
 import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
-import ru.md.msc.domain.base.validate.db.validateAuthDeptDownLevel
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.db.validateAuthUserLevel
 import ru.md.msc.domain.base.validate.validateAdminRole
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId
-import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
-import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
+import ru.md.msc.domain.base.workers.chain.*
 import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.deleteBaseImagesFromS3
 import ru.md.msc.domain.dept.service.DeptService
@@ -70,15 +67,10 @@ class UserProcessor(
 			}
 
 			operation("Обновление профиля сотрудника", UserCommand.UPDATE) {
+				validateUserId("Проверка userId")
 				validateUserFirstnameEmpty("Проверка имени пользователя")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-
-				chain {
-					on { userId != authUser.id } // Если запрос не собственного профиля:
-					findModifyUserAndGetRolesAndDeptId("Получаем профиль для обновления")
-					validateAdminModifyUserByRoleChain() // Тогда должны быть права Администратора
-				}
-
+				validateSameAndAdminModifyUser() // Проверка модификации собственного профиля или Администратором
 				trimFieldUserDetails("Очищаем поля")
 				updateUser("Обновляем профиль сотрудника")
 			}
@@ -195,24 +187,6 @@ class UserProcessor(
 
 			finishOperation()
 		}.build()
-
-		/**
-		 * Проверка доступа авторизованного пользователя с правами Администратора
-		 * к созданию/обновлению/удалению профиля сотрудника в зависимости от его роли.
-		 * Администратор имеет право над сотрудниками в своем и нижестоящих отделах
-		 * и имеет право над Администраторами нижестоящих отделов
-		 */
-		private fun ICorChainDsl<UserContext>.validateAdminModifyUserByRoleChain() {
-			validateAdminRole("Проверка наличия прав Администратора")
-			chain {
-				on { !isModifyUserHasAdminRole } // Обновляемый без прав ADMIN
-				validateAuthDeptLevel("Проверка доступа к отделу")
-			}
-			chain {
-				on { isModifyUserHasAdminRole } // Обновляемый имеет роль ADMIN
-				validateAuthDeptDownLevel("Проверка доступа к нижестоящему отделу")
-			}
-		}
 
 	}
 }

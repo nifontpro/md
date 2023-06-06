@@ -1,0 +1,11 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://server:8761/eureka
+
+server:
+  ssl:
+    enabled: true
+    certificate: /etc/ssl/nmedalist.crt
+    certificate-private-key: /etc/ssl/nmedalist.key
+    trust-certificate: /etc/ssl/ca.crt

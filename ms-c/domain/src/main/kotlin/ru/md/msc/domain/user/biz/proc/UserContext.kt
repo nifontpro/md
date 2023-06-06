@@ -10,8 +10,6 @@ class UserContext : BaseClientContext() {
 	var users: List<User> = emptyList()
 	var notValidRole: RoleUser? = null
 
-	var modifyUser: User = User()
-	var isModifyUserHasAdminRole: Boolean = false
 	var genderCount: GenderCount = GenderCount()
 	var userSettings: UserSettings = UserSettings()
 
