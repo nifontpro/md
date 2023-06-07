@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.event.model.DeptEventEntity
 import ru.md.msc.db.event.model.IBaseEvent
+import ru.md.msc.db.event.model.IShortEvent
 
 @Repository
 interface DeptEventRepository : JpaRepository<DeptEventEntity, Long> {
@@ -107,4 +108,17 @@ select (select count(*)
 		deptsIds: List<Long>,
 		pageable: Pageable
 	): Page<IBaseEvent>
+
+	@Query(
+		"""
+		select 
+			e.id,
+			e.event_date eventDate,
+			(extract(DOY FROM e.event_date)) days,
+			e.name eventName
+		 from env.dept_event e where e.dept_id=:deptId
+	""",
+		nativeQuery = true
+	)
+	fun findByDeptId(deptId: Long): List<IShortEvent>
 }

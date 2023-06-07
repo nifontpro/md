@@ -10,9 +10,11 @@ import ru.md.msc.db.dept.repo.DeptRepository
 import ru.md.msc.db.event.model.DeptEventEntity
 import ru.md.msc.db.event.model.UserEventEntity
 import ru.md.msc.db.event.model.mappers.toBaseEvent
+import ru.md.msc.db.event.model.mappers.toShortEvent
 import ru.md.msc.db.event.repo.DeptEventRepository
 import ru.md.msc.db.event.repo.UserEventRepository
 import ru.md.msc.domain.event.model.BaseEvent
+import ru.md.msc.domain.event.model.ShortEvent
 import ru.md.msc.domain.event.service.EventService
 
 @Service
@@ -67,6 +69,16 @@ class EventServiceImpl(
 				listOf(deptId)
 			}
 		}
+	}
+
+	override fun getEventsByUser(userId: Long): List<ShortEvent> {
+		return userEventRepository.findByUserId(userId = userId)
+			.map { it.toShortEvent() }
+	}
+
+	override fun getEventsByDept(deptId: Long): List<ShortEvent> {
+		return deptEventRepository.findByDeptId(deptId = deptId)
+			.map { it.toShortEvent() }
 	}
 
 }

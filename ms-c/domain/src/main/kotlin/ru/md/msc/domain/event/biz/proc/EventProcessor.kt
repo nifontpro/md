@@ -13,9 +13,7 @@ import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateUserId
 import ru.md.msc.domain.base.workers.chain.validateSameAndAdminModifyUser
 import ru.md.msc.domain.dept.service.DeptService
-import ru.md.msc.domain.event.biz.workers.addDeptEvent
-import ru.md.msc.domain.event.biz.workers.addUserEvent
-import ru.md.msc.domain.event.biz.workers.getEvents
+import ru.md.msc.domain.event.biz.workers.*
 import ru.md.msc.domain.event.service.EventService
 import ru.md.msc.domain.user.service.UserService
 
@@ -51,12 +49,24 @@ class EventProcessor(
 				addDeptEvent("Добавляем событие отдела")
 			}
 
-			operation("Получить события", EventCommand.GET_EVENTS) {
+			operation("Получить события", EventCommand.GET_ALL_EVENTS) {
 				validateDeptId("Проверка deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAuthDeptLevel("Проверка доступа к отделу")
 				worker("Очищаем список сортировки") { baseQuery = baseQuery.copy(orders = emptyList()) }
-				getEvents("Получаем события")
+				getAllEvents("Получаем события")
+			}
+
+			operation("Получить события сотрудника", EventCommand.GET_USER_EVENTS) {
+				validateUserId("Проверка userId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				getUserEvents("Получаем события сотрудника")
+			}
+
+			operation("Получить события отдела", EventCommand.GET_DEPT_EVENTS) {
+				validateDeptId("Проверка deptId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				getDeptEvents("Получаем события отдела")
 			}
 
 			finishOperation()
