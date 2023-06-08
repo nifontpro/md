@@ -21,6 +21,9 @@ class EventController(
 	private val jwtUtils: JwtUtils,
 ) {
 
+	/**
+	 * Добавить событие сотрудника
+	 */
 	@PostMapping("add_user")
 	private suspend fun addUserEvent(
 		@RequestBody request: AddUserEventRequest,
@@ -35,6 +38,9 @@ class EventController(
 		)
 	}
 
+	/**
+	 * Добавить событие отдела
+	 */
 	@PostMapping("add_dept")
 	private suspend fun addDeptEvent(
 		@RequestBody request: AddDeptEventRequest,
@@ -69,6 +75,9 @@ class EventController(
 		)
 	}
 
+	/**
+	 * Получить события сотрудника
+	 */
 	@PostMapping("get_user")
 	private suspend fun getUserEvents(
 		@RequestBody request: GetUserEventsRequest,
@@ -83,6 +92,9 @@ class EventController(
 		)
 	}
 
+	/**
+	 * Получить события отдела
+	 */
 	@PostMapping("get_dept")
 	private suspend fun getDeptEvents(
 		@RequestBody request: GetDeptEventsRequest,
@@ -97,6 +109,9 @@ class EventController(
 		)
 	}
 
+	/**
+	 * Удалить событие сотрудника
+	 */
 	@PostMapping("delete_user")
 	private suspend fun deleteUserEvent(
 		@RequestBody request: DeleteUserEventRequest,
@@ -111,6 +126,9 @@ class EventController(
 		)
 	}
 
+	/**
+	 * Удалить событие отдела
+	 */
 	@PostMapping("delete_dept")
 	private suspend fun deleteUserEvent(
 		@RequestBody request: DeleteDeptEventRequest,
