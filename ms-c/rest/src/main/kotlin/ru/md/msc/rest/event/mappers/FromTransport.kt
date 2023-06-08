@@ -45,3 +45,15 @@ fun EventsContext.fromTransport(request: GetDeptEventsRequest) {
 	authId = request.authId
 	deptId = request.deptId
 }
+
+fun EventsContext.fromTransport(request: DeleteUserEventRequest) {
+	command = EventCommand.DELETE_USER_EVENT
+	authId = request.authId
+	eventId = request.eventId
+}
+
+fun EventsContext.fromTransport(request: DeleteDeptEventRequest) {
+	command = EventCommand.DELETE_DEPT_EVENT
+	authId = request.authId
+	eventId = request.eventId
+}

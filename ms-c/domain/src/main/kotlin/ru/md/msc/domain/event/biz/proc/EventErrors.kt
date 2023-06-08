@@ -23,4 +23,14 @@ fun EventsContext.getEventsError() {
 	)
 }
 
+fun EventsContext.deleteEventError() {
+	fail(
+		errorDb(
+			repository = "event",
+			violationCode = "delete",
+			description = "Ошибка удаления события"
+		)
+	)
+}
+
 class EventNotFoundException(message: String = "") : RuntimeException(message)

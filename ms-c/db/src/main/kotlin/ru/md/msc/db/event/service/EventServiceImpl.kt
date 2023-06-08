@@ -1,6 +1,7 @@
 package ru.md.msc.db.event.service
 
 import jakarta.transaction.Transactional
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.base_db.mapper.toPageRequest
 import ru.md.base_db.mapper.toPageResult
@@ -13,6 +14,7 @@ import ru.md.msc.db.event.model.mappers.toBaseEvent
 import ru.md.msc.db.event.model.mappers.toShortEvent
 import ru.md.msc.db.event.repo.DeptEventRepository
 import ru.md.msc.db.event.repo.UserEventRepository
+import ru.md.msc.domain.event.biz.proc.EventNotFoundException
 import ru.md.msc.domain.event.model.BaseEvent
 import ru.md.msc.domain.event.model.ShortEvent
 import ru.md.msc.domain.event.service.EventService
@@ -79,6 +81,24 @@ class EventServiceImpl(
 	override fun getEventsByDept(deptId: Long): List<ShortEvent> {
 		return deptEventRepository.findByDeptId(deptId = deptId)
 			.map { it.toShortEvent() }
+	}
+
+	override fun getUserEventById(eventId: Long): BaseEvent {
+		val eventEntity = userEventRepository.findByIdOrNull(eventId) ?: throw EventNotFoundException()
+		return eventEntity.toBaseEvent()
+	}
+
+	override fun getDeptEventById(eventId: Long): BaseEvent {
+		val eventEntity = deptEventRepository.findByIdOrNull(eventId) ?: throw EventNotFoundException()
+		return eventEntity.toBaseEvent()
+	}
+
+	override fun deleteUserEventById(eventId: Long) {
+		userEventRepository.deleteById(eventId)
+	}
+
+	override fun deleteDeptEventById(eventId: Long) {
+		deptEventRepository.deleteById(eventId)
 	}
 
 }

@@ -10,6 +10,7 @@ class EventsContext : BaseClientContext() {
 	var baseEvent: BaseEvent = BaseEvent()
 	var events: List<BaseEvent> = emptyList()
 	var shortEvents: List<ShortEvent> = emptyList()
+	var eventId: Long = 0
 
 	lateinit var eventService: EventService
 }
@@ -20,4 +21,7 @@ enum class EventCommand : IBaseCommand {
 	GET_ALL_EVENTS,
 	GET_USER_EVENTS,
 	GET_DEPT_EVENTS,
+	DELETE_USER_EVENT,
+	DELETE_DEPT_EVENT,
+
 }

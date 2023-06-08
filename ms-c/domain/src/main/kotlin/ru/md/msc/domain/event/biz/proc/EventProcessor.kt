@@ -13,6 +13,7 @@ import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateUserId
 import ru.md.msc.domain.base.workers.chain.validateSameAndAdminModifyUser
 import ru.md.msc.domain.dept.service.DeptService
+import ru.md.msc.domain.event.biz.validate.validateEventId
 import ru.md.msc.domain.event.biz.workers.*
 import ru.md.msc.domain.event.service.EventService
 import ru.md.msc.domain.user.service.UserService
@@ -67,6 +68,26 @@ class EventProcessor(
 				validateDeptId("Проверка deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				getDeptEvents("Получаем события отдела")
+			}
+
+			operation("Удалить событие сотрудника", EventCommand.DELETE_USER_EVENT) {
+				validateEventId("Проверка eventId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				getUserEventById("Получаем событие сотрудника по Id")
+				worker("Подготовка userId") { userId = baseEvent.userId }
+				validateUserId("Проверка userId")
+				validateSameAndAdminModifyUser() // Проверка модификации собственного профиля или Администратором
+				deleteUserEvent("Удаляем событие сотрудника")
+			}
+
+			operation("Удалить событие отдела", EventCommand.DELETE_DEPT_EVENT) {
+				validateEventId("Проверка eventId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				getDeptEventById("Получаем событие сотрудника по Id")
+				worker("Подготовка deptId") { deptId = baseEvent.deptId }
+				validateDeptId("Проверка deptId")
+				validateAuthDeptLevel("Проверка доступа к отделу")
+				deleteDeptEvent("Удаляем событие отдела")
 			}
 
 			finishOperation()

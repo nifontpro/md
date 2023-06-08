@@ -11,4 +11,8 @@ interface EventService {
 	fun getEvents(deptId: Long, baseQuery: BaseQuery): PageResult<BaseEvent>
 	fun getEventsByUser(userId: Long): List<ShortEvent>
 	fun getEventsByDept(deptId: Long): List<ShortEvent>
+	fun deleteUserEventById(eventId: Long)
+	fun getUserEventById(eventId: Long): BaseEvent
+	fun getDeptEventById(eventId: Long): BaseEvent
+	fun deleteDeptEventById(eventId: Long)
 }

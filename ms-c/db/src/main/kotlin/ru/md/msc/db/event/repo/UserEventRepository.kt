@@ -21,4 +21,5 @@ interface UserEventRepository : JpaRepository<UserEventEntity, Long> {
 		nativeQuery = true
 	)
 	fun findByUserId(userId: Long): List<IShortEvent>
+
 }

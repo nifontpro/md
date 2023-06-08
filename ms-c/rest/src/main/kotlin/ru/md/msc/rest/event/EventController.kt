@@ -97,4 +97,32 @@ class EventController(
 		)
 	}
 
+	@PostMapping("delete_user")
+	private suspend fun deleteUserEvent(
+		@RequestBody request: DeleteUserEventRequest,
+		@RequestHeader(name = AUTH) bearerToken: String
+	): BaseResponse<BaseEventResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = eventProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportBaseEvent() }
+		)
+	}
+
+	@PostMapping("delete_dept")
+	private suspend fun deleteUserEvent(
+		@RequestBody request: DeleteDeptEventRequest,
+		@RequestHeader(name = AUTH) bearerToken: String
+	): BaseResponse<BaseEventResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = eventProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportBaseEvent() }
+		)
+	}
+
 }
