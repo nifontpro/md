@@ -207,7 +207,7 @@ class UserServiceImpl(
 	}
 
 	override fun findDeptIdByUserId(userId: Long): Long {
-		return userRepository.finDeptId(userId = userId) ?: throw UserNotFoundException()
+		return userRepository.findDeptId(userId = userId) ?: throw UserNotFoundException()
 	}
 
 	override fun getGenderCountByDept(deptId: Long, subdepts: Boolean): GenderCount {

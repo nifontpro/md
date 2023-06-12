@@ -36,7 +36,7 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 	 * Найти id отдела сотрудника
 	 */
 	@Query("select u.dept.id from UserEntity u where u.id = :userId")
-	fun finDeptId(userId: Long): Long?
+	fun findDeptId(userId: Long): Long?
 
 	/**
 	 * Количество сотрудников по полам в отделах

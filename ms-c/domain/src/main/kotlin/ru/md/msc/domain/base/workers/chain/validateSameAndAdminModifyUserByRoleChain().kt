@@ -3,6 +3,7 @@ package ru.md.msc.domain.base.workers.chain
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.chain
 import ru.md.msc.domain.base.biz.BaseClientContext
+import ru.md.msc.domain.base.workers.findModifyUserAndGetRolesAndDeptId
 
 /**
  * Проверка доступа к обновлению собственного профиля, а также

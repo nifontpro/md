@@ -19,6 +19,7 @@ import ru.md.msc.domain.base.validate.validateUserId
 import ru.md.msc.domain.base.workers.chain.*
 import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.deleteBaseImagesFromS3
+import ru.md.msc.domain.base.workers.findModifyUserAndGetRolesAndDeptId
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.s3.repository.S3Repository
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist

@@ -1,4 +1,4 @@
-package ru.md.msc.domain.base.workers.chain
+package ru.md.msc.domain.base.workers
 
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
