@@ -45,13 +45,15 @@ fun ICorChainDsl<AwardContext>.addAwardAction(title: String) = worker {
 				)
 			)
 
-			else -> fail(
-				errorDb(
-					repository = "award",
-					violationCode = "award user",
-					description = "Ошибка награждения сотрудника"
+			else -> {
+				fail(
+					errorDb(
+						repository = "award",
+						violationCode = actionType.name.lowercase(),
+						description = actionType.message
+					)
 				)
-			)
+			}
 		}
 	}
 

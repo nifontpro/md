@@ -13,7 +13,6 @@ data class UserMsg (
 	val imageUrl: String? = null,
 )
 
-@Suppress("unused")
 enum class MessageType(val code: String) {
 	NONE("N"),
 	SYSTEM("S"),

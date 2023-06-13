@@ -12,6 +12,7 @@ import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.validate.*
 import ru.md.msc.domain.award.biz.workers.*
+import ru.md.msc.domain.award.biz.workers.message.prepareSendActionMessageToUser
 import ru.md.msc.domain.award.biz.workers.sort.setActionByAwardValidSortedFields
 import ru.md.msc.domain.award.biz.workers.sort.setActionByDeptValidSortedFields
 import ru.md.msc.domain.award.biz.workers.sort.setActionByUserValidSortedFields
@@ -22,6 +23,7 @@ import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId
+import ru.md.msc.domain.base.workers.msg.sendMessage
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
 import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
@@ -29,6 +31,7 @@ import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.deleteBaseImagesFromS3
 import ru.md.msc.domain.base.workers.getRootDeptId
 import ru.md.msc.domain.dept.service.DeptService
+import ru.md.msc.domain.message.service.MessageService
 import ru.md.msc.domain.s3.repository.S3Repository
 import ru.md.msc.domain.user.service.UserService
 
@@ -38,7 +41,8 @@ class AwardProcessor(
 	private val deptService: DeptService,
 	private val awardService: AwardService,
 	private val s3Repository: S3Repository,
-	private val microClient: MicroClient
+	private val microClient: MicroClient,
+	private val messageService: MessageService,
 ) : IBaseProcessor<AwardContext> {
 
 	override suspend fun exec(ctx: AwardContext) = businessChain.exec(ctx.also {
@@ -47,6 +51,7 @@ class AwardProcessor(
 		it.awardService = awardService
 		it.s3Repository = s3Repository
 		it.microClient = microClient
+		it.messageService = messageService
 	})
 
 	companion object {
@@ -128,6 +133,8 @@ class AwardProcessor(
 				validateAuthDeptLevel("Проверка доступа к отделу награды")
 				validateAwardToUserAccess("Проверка доступности (по дереву отделов) награждения сотрудника этой наградой")
 				addAwardAction("Добавляем операцию в активность")
+				prepareSendActionMessageToUser("Подготовка к отправке сообщения")
+				sendMessage("Отправляем сообщение")
 			}
 
 			operation("Получить активные награды сотрудника", AwardCommand.GET_ACTIVE_AWARD_BY_USER) {

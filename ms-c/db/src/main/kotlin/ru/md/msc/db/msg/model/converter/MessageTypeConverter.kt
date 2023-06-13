@@ -1,4 +1,4 @@
-package ru.md.msc.db.message.model.converter
+package ru.md.msc.db.msg.model.converter
 
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter

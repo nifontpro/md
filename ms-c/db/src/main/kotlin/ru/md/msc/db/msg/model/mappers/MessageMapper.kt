@@ -1,6 +1,6 @@
-package ru.md.msc.db.message.model.mappers
+package ru.md.msc.db.msg.model.mappers
 
-import ru.md.msc.db.message.model.UserMsgEntity
+import ru.md.msc.db.msg.model.UserMsgEntity
 import ru.md.msc.domain.message.model.UserMsg
 
 fun UserMsgEntity.toUserMsg() = UserMsg(

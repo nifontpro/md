@@ -4,7 +4,7 @@ import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.base_domain.biz.helper.errorDb
 import ru.md.base_domain.biz.helper.fail
 
-fun BaseClientContext.messageNotFoundError() {
+fun MessageContext.messageNotFoundError() {
 	fail(
 		errorDb(
 			repository = "message",
@@ -14,7 +14,7 @@ fun BaseClientContext.messageNotFoundError() {
 	)
 }
 
-fun BaseClientContext.getMessageError() {
+fun MessageContext.getMessageError() {
 	fail(
 		errorDb(
 			repository = "message",
@@ -24,12 +24,22 @@ fun BaseClientContext.getMessageError() {
 	)
 }
 
-fun BaseClientContext.updateMessageError() {
+fun MessageContext.updateMessageError() {
 	fail(
 		errorDb(
 			repository = "message",
 			violationCode = "modify",
 			description = "Ошибка изменения сообщения"
+		)
+	)
+}
+
+fun BaseClientContext.sendMessageError() {
+	fail(
+		errorDb(
+			repository = "message",
+			violationCode = "send",
+			description = "Ошибка отправки сообщения сотруднику"
 		)
 	)
 }

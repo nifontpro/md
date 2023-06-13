@@ -1,4 +1,4 @@
-package ru.md.msc.db.message.model
+package ru.md.msc.db.msg.model
 
 import jakarta.persistence.*
 import ru.md.msc.domain.message.model.MessageType

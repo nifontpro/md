@@ -1,11 +1,11 @@
-package ru.md.msc.db.message.service
+package ru.md.msc.db.msg.service
 
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import ru.md.msc.db.message.model.mappers.toUserMsg
-import ru.md.msc.db.message.model.mappers.toUserMsgEntity
-import ru.md.msc.db.message.repo.MessageRepository
+import ru.md.msc.db.msg.model.mappers.toUserMsg
+import ru.md.msc.db.msg.model.mappers.toUserMsgEntity
+import ru.md.msc.db.msg.repo.MessageRepository
 import ru.md.msc.domain.message.biz.proc.MessageNotFoundException
 import ru.md.msc.domain.message.model.UserMsg
 import ru.md.msc.domain.message.service.MessageService
