@@ -5,6 +5,7 @@ data class UpdateDeptRequest(
 	val deptId: Long = 0,
 	val name: String = "",
 	val classname: String? = null,
+	val topLevel: Boolean = false,
 	val address: String? = null,
 	val email: String? = null,
 	val phone: String? = null,

@@ -19,4 +19,5 @@ interface DeptService {
 	fun findSubTreeIds(deptId: Long): List<Long>
 	fun updateAllDeptImg()
 	fun setMainImage(deptId: Long): BaseImage?
+	fun getTopLevelTreeDepts(deptId: Long, orders: List<BaseOrder>): List<Dept>
 }

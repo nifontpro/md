@@ -37,6 +37,12 @@ interface DeptRepository : JpaRepository<DeptEntity, Long> {
 	@Procedure(procedureName = "dep.get_root_id")
 	fun getRootId(deptId: Long): Long?
 
+	/**
+	 * Получить отдел верхнего уровня просмотра (top-level) от текущего [deptId]
+	 */
+	@Procedure(procedureName = "dep.get_top_level_id")
+	fun getTopLevelId(deptId: Long): Long?
+
 	fun findByIdIn(ids: List<Long>, sort: Sort): List<DeptEntity>
 
 	/**

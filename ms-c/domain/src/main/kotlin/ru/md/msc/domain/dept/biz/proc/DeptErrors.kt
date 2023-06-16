@@ -15,6 +15,16 @@ fun BaseClientContext.deptNotFound() {
 	)
 }
 
+fun BaseClientContext.topLevelDeptNotFound() {
+	fail(
+		errorDb(
+			repository = "dept",
+			violationCode = "top level not found",
+			description = "Отдел верхнего уровня не найден"
+		)
+	)
+}
+
 fun BaseClientContext.getDeptError() {
 	fail(
 		errorDb(
@@ -45,3 +55,4 @@ fun BaseClientContext.deptAuthError() {
 }
 
 class DeptNotFoundException(message: String = "") : RuntimeException(message)
+class TopLevelDeptNotFoundException(message: String = "") : RuntimeException(message)

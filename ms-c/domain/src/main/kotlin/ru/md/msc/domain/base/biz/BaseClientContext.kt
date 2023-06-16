@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory
 import ru.md.base_domain.biz.proc.BaseContext
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.msc.domain.dept.service.DeptService
-import ru.md.msc.domain.message.model.UserMsg
-import ru.md.msc.domain.message.service.MessageService
+import ru.md.msc.domain.msg.model.UserMsg
+import ru.md.msc.domain.msg.service.MessageService
 import ru.md.msc.domain.s3.repository.S3Repository
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.service.UserService
@@ -28,7 +28,8 @@ abstract class BaseClientContext(
 	var baseImages: List<BaseImage> = emptyList(),
 	var deleteImageOnFailing: Boolean = false,
 
-	var userMsg: UserMsg = UserMsg()
+	var userMsg: UserMsg = UserMsg(),
+	var prefixUrl: String = "",
 
 	) : BaseContext() {
 

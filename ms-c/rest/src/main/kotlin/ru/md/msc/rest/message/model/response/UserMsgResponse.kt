@@ -1,6 +1,6 @@
 package ru.md.msc.rest.message.model.response
 
-import ru.md.msc.domain.message.model.MessageType
+import ru.md.msc.domain.msg.model.MessageType
 
 data class UserMsgResponse(
 	val id: Long = 0,

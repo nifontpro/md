@@ -20,6 +20,9 @@ class DeptEntity(
 	var name: String = "",
 	var classname: String? = null,
 
+	@Column(name = "top_level", nullable = false)
+	var topLevel: Boolean = false,
+
 	@Column(name = "main_img")
 	var mainImg: String? = null,
 

@@ -1,4 +1,4 @@
-package ru.md.msc.domain.message.model
+package ru.md.msc.domain.msg.model
 
 import java.time.LocalDateTime
 

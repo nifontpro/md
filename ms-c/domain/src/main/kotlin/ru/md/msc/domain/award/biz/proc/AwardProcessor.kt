@@ -31,7 +31,7 @@ import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.deleteBaseImagesFromS3
 import ru.md.msc.domain.base.workers.getRootDeptId
 import ru.md.msc.domain.dept.service.DeptService
-import ru.md.msc.domain.message.service.MessageService
+import ru.md.msc.domain.msg.service.MessageService
 import ru.md.msc.domain.s3.repository.S3Repository
 import ru.md.msc.domain.user.service.UserService
 

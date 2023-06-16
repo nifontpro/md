@@ -1,8 +1,8 @@
-package ru.md.msc.domain.message.biz.proc
+package ru.md.msc.domain.msg.biz.proc
 
 import ru.md.base_domain.biz.proc.IBaseCommand
 import ru.md.msc.domain.base.biz.BaseClientContext
-import ru.md.msc.domain.message.model.UserMsg
+import ru.md.msc.domain.msg.model.UserMsg
 
 class MessageContext : BaseClientContext() {
 

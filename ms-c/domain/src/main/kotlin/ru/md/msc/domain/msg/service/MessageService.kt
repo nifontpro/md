@@ -1,6 +1,6 @@
-package ru.md.msc.domain.message.service
+package ru.md.msc.domain.msg.service
 
-import ru.md.msc.domain.message.model.UserMsg
+import ru.md.msc.domain.msg.model.UserMsg
 
 interface MessageService {
 	fun send(userMsg: UserMsg): UserMsg

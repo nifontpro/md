@@ -50,11 +50,18 @@ class DeptProcessor(
 				createTestUsers("Создаем тестовых сотрудников")
 			}
 
-			operation("Получить поддерево отделов", DeptCommand.GET_DEPTS_TREE) {
+			operation("Получить поддерево отделов", DeptCommand.GET_AUTH_SUB_TREE) {
 				worker("Допустимые поля сортировки") { orderFields = listOf("parentId", "name", "classname") }
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				getSubtreeDepts("Получаем поддерево отделов")
+			}
+
+			operation("Получить поддерево отделов верхнего уровня доступа", DeptCommand.GET_TOP_LEVEL_TREE) {
+				worker("Допустимые поля сортировки") { orderFields = listOf("parentId", "name", "classname") }
+				validateSortedFields("Проверка списка полей сортировки")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				getTopLevelTreeDepts("Получаем поддерево отделов верхнего уровня")
 			}
 
 			operation("Получить отдел по id", DeptCommand.GET_DEPT_BY_ID_DETAILS) {

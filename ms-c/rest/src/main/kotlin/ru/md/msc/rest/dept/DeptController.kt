@@ -70,6 +70,20 @@ class DeptController(
 		)
 	}
 
+	@PostMapping("top_level_tree")
+	private suspend fun getAuthTopLevelTreeDepts(
+		@RequestBody request: GetAuthTopLevelTreeDeptsRequest,
+		@RequestHeader(name = AUTH) bearerToken: String
+	): BaseResponse<List<Dept>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = deptProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportDepts() }
+		)
+	}
+
 	@PostMapping("get_id")
 	private suspend fun getDeptById(
 		@RequestHeader(name = AUTH) bearerToken: String,

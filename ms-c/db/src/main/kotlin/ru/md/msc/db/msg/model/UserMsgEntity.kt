@@ -1,7 +1,7 @@
 package ru.md.msc.db.msg.model
 
 import jakarta.persistence.*
-import ru.md.msc.domain.message.model.MessageType
+import ru.md.msc.domain.msg.model.MessageType
 import java.time.LocalDateTime
 import java.util.*
 

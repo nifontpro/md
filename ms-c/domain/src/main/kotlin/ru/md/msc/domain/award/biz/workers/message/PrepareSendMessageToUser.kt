@@ -5,7 +5,7 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.model.actionMessage
-import ru.md.msc.domain.message.model.MessageType
+import ru.md.msc.domain.msg.model.MessageType
 import java.time.LocalDateTime
 
 fun ICorChainDsl<AwardContext>.prepareSendActionMessageToUser(title: String) = worker {

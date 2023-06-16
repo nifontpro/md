@@ -126,6 +126,7 @@ class UserProcessor(
 				worker("Получение id сущности") { userId = fileData.entityId }
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				getUserImagePrefixUrl("Получаем префикс изображения")
 				addUserImageToS3("Сохраняем изображение в s3")
 				addUserImageToDb("Сохраняем изображение в БД")
 				updateUserMainImage("Обновление основного изображения")

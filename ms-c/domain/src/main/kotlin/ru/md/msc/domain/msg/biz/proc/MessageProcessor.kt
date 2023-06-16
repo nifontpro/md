@@ -1,4 +1,4 @@
-package ru.md.msc.domain.message.biz.proc
+package ru.md.msc.domain.msg.biz.proc
 
 import org.springframework.stereotype.Component
 import ru.md.base_domain.biz.proc.IBaseProcessor
@@ -10,12 +10,12 @@ import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.validateUserId
 import ru.md.msc.domain.base.workers.msg.sendMessage
 import ru.md.msc.domain.dept.service.DeptService
-import ru.md.msc.domain.message.biz.validate.validateDeleteMessage
-import ru.md.msc.domain.message.biz.validate.validateMessageEmpty
-import ru.md.msc.domain.message.biz.validate.validateMessageId
-import ru.md.msc.domain.message.biz.validate.validateModifyMessage
-import ru.md.msc.domain.message.biz.workers.*
-import ru.md.msc.domain.message.service.MessageService
+import ru.md.msc.domain.msg.biz.validate.validateDeleteMessage
+import ru.md.msc.domain.msg.biz.validate.validateMessageEmpty
+import ru.md.msc.domain.msg.biz.validate.validateMessageId
+import ru.md.msc.domain.msg.biz.validate.validateModifyMessage
+import ru.md.msc.domain.msg.biz.workers.*
+import ru.md.msc.domain.msg.service.MessageService
 import ru.md.msc.domain.user.service.UserService
 
 @Component

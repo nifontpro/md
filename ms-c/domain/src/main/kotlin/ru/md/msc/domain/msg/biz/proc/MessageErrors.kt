@@ -1,4 +1,4 @@
-package ru.md.msc.domain.message.biz.proc
+package ru.md.msc.domain.msg.biz.proc
 
 import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.base_domain.biz.helper.errorDb

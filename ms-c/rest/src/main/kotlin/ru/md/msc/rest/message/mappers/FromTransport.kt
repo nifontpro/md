@@ -1,8 +1,8 @@
 package ru.md.msc.rest.message.mappers
 
-import ru.md.msc.domain.message.biz.proc.MessageCommand
-import ru.md.msc.domain.message.biz.proc.MessageContext
-import ru.md.msc.domain.message.model.UserMsg
+import ru.md.msc.domain.msg.biz.proc.MessageCommand
+import ru.md.msc.domain.msg.biz.proc.MessageContext
+import ru.md.msc.domain.msg.model.UserMsg
 import ru.md.msc.rest.message.model.request.DeleteMessageRequest
 import ru.md.msc.rest.message.model.request.GetAuthUserMessageRequest
 import ru.md.msc.rest.message.model.request.SendMessageRequest
