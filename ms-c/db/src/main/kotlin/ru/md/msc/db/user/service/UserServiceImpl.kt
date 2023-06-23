@@ -165,6 +165,8 @@ class UserServiceImpl(
 			userId = userId,
 			imageUrl = baseImage.imageUrl,
 			imageKey = baseImage.imageKey,
+			miniUrl = baseImage.miniUrl,
+			miniKey = baseImage.miniKey,
 			type = baseImage.type,
 			createdAt = LocalDateTime.now()
 		)
@@ -193,7 +195,8 @@ class UserServiceImpl(
 				userImageEntity = it
 			}
 		}
-		userEntity.mainImg = userImageEntity.imageUrl
+		userEntity.mainImg = userImageEntity.miniUrl
+		userImageEntity.main = true
 		return userImageEntity.toImage()
 	}
 

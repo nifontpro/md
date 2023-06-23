@@ -37,7 +37,7 @@ suspend fun <C : BaseClientContext> imageProcess(
 
 	processor.exec(context)
 
-	File(fileData.url).delete()
+	File(fileData.imageUrl).delete()
 	File(fileData.miniUrl).delete()
 
 	return context.baseResponse(data = context.baseImage)

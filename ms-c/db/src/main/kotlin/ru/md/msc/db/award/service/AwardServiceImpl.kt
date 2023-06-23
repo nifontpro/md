@@ -102,6 +102,8 @@ class AwardServiceImpl(
 			awardId = awardId,
 			imageUrl = baseImage.imageUrl,
 			imageKey = baseImage.imageKey,
+			miniUrl = baseImage.miniUrl,
+			miniKey = baseImage.miniKey,
 			type = baseImage.type,
 			createdAt = LocalDateTime.now()
 		)
@@ -240,7 +242,8 @@ class AwardServiceImpl(
 				awardImageEntity = it
 			}
 		}
-		awardEntity.mainImg = awardImageEntity.imageUrl
+		awardImageEntity.main=true
+		awardEntity.mainImg = awardImageEntity.miniUrl
 		return awardImageEntity.toImage()
 	}
 

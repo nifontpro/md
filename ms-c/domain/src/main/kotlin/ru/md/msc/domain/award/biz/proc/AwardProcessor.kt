@@ -23,13 +23,14 @@ import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId
-import ru.md.msc.domain.base.workers.msg.sendMessage
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
 import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
-import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
-import ru.md.msc.domain.base.workers.deleteBaseImagesFromS3
 import ru.md.msc.domain.base.workers.getRootDeptId
+import ru.md.msc.domain.base.workers.image.addImageToS3
+import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
+import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
+import ru.md.msc.domain.base.workers.msg.sendMessage
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.msg.service.MessageService
 import ru.md.msc.domain.s3.repository.S3Repository
@@ -99,7 +100,8 @@ class AwardProcessor(
 			operation("Добавление изображения", AwardCommand.IMG_ADD) {
 				worker("Получение id сущности") { awardId = fileData.entityId }
 				validateAccessToAwardChain()
-				addAwardImageToS3("Сохраняем изображение в s3")
+				prepareAwardImagePrefixUrl("Получаем префикс изображения")
+				addImageToS3("Сохраняем изображение в s3")
 				addAwardImageToDb("Сохраняем ссылки на изображение в БД")
 				updateAwardMainImage("Обновление основного изображения")
 				deleteS3ImageOnFailingChain()
@@ -188,7 +190,7 @@ class AwardProcessor(
 			operation("Количество активных награждений от корневого отдела", AwardCommand.COUNT_ACTIV_ROOT) {
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 //				validateAuthDeptLevel("Проверка доступа к отделу")
-				worker("Подготовка") { deptId = authUser.dept?.id ?: 0}
+				worker("Подготовка") { deptId = authUser.dept?.id ?: 0 }
 				validateDeptId("Проверяем deptId")
 				getRootDeptId("Получаем корневой отдел")
 				worker("Подготовка") { deptId = rootDeptId }

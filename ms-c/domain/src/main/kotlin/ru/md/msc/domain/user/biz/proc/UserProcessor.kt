@@ -16,10 +16,14 @@ import ru.md.msc.domain.base.validate.validateAdminRole
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId
-import ru.md.msc.domain.base.workers.chain.*
-import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
-import ru.md.msc.domain.base.workers.deleteBaseImagesFromS3
+import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
+import ru.md.msc.domain.base.workers.chain.validateAdminModifyUserByRoleChain
+import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
+import ru.md.msc.domain.base.workers.chain.validateSameAndAdminModifyUser
 import ru.md.msc.domain.base.workers.findModifyUserAndGetRolesAndDeptId
+import ru.md.msc.domain.base.workers.image.addImageToS3
+import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
+import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.s3.repository.S3Repository
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
@@ -126,8 +130,8 @@ class UserProcessor(
 				worker("Получение id сущности") { userId = fileData.entityId }
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				getUserImagePrefixUrl("Получаем префикс изображения")
-				addUserImageToS3("Сохраняем изображение в s3")
+				prepareUserImagePrefixUrl("Получаем префикс изображения")
+				addImageToS3("Сохраняем изображение в s3")
 				addUserImageToDb("Сохраняем изображение в БД")
 				updateUserMainImage("Обновление основного изображения")
 				deleteS3ImageOnFailingChain()

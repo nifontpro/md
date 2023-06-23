@@ -20,7 +20,7 @@ class S3RepositoryImpl(
 	override suspend fun putObject(key: String, fileData: FileData): String? {
 		return try {
 			withContext(Dispatchers.IO) {
-				val file = File(fileData.url)
+				val file = File(fileData.imageUrl)
 				s3.putObject(Constants.S3_BUCKET_NAME, key, file)
 				s3.getUrl(Constants.S3_BUCKET_NAME, key).toExternalForm()
 			}

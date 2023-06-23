@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service
 import ru.md.base_db.mapper.toImage
 import ru.md.base_db.mapper.toSort
 import ru.md.base_domain.image.model.BaseImage
-import ru.md.base_domain.image.model.ImageType
 import ru.md.base_domain.model.BaseOrder
 import ru.md.msc.db.dept.model.image.DeptImageEntity
 import ru.md.msc.db.dept.model.mappers.toDeptDetails
@@ -108,7 +107,9 @@ class DeptServiceImpl(
 			deptId = deptId,
 			imageUrl = baseImage.imageUrl,
 			imageKey = baseImage.imageKey,
-			type = ImageType.USER,
+			miniUrl = baseImage.miniUrl,
+			miniKey = baseImage.miniKey,
+			type = baseImage.type,
 			createdAt = LocalDateTime.now()
 		)
 		deptImageRepository.save(deptImageEntity)
@@ -136,7 +137,8 @@ class DeptServiceImpl(
 				deptImageEntity = it
 			}
 		}
-		deptEntity.mainImg = deptImageEntity.imageUrl
+		deptEntity.mainImg = deptImageEntity.miniUrl
+		deptImageEntity.main = true
 		return deptImageEntity.toImage()
 	}
 

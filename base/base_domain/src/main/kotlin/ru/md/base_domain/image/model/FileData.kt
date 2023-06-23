@@ -2,7 +2,7 @@ package ru.md.base_domain.image.model
 
 data class FileData(
 	val entityId: Long = 0, // id сущности, например сотрудника
-	val url: String = "",
+	val imageUrl: String = "",
 	val miniUrl: String = "", // мини изображение
 	val filename: String = "",
 	val fileExtension: String = "",

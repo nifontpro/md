@@ -12,14 +12,15 @@ fun ICorChainDsl<AwardContext>.validateAwardPeriod(title: String) = worker {
 	this.title = title
 	on {
 		val now = LocalDateTime.now()
-		award.type == AwardType.PERIOD && (award.startDate > now || award.endDate < now)
+//		award.type == AwardType.PERIOD && (award.startDate > now || award.endDate < now)
+		award.type == AwardType.PERIOD && award.endDate < now
 	}
 	handle {
 		fail(
 			errorValidation(
 				field = "period",
 				violationCode = "not valid",
-				description = "Невозможно выполнить действие вне периода награды"
+				description = "Невозможно выполнить действие по окончании периода награды"
 			)
 		)
 	}

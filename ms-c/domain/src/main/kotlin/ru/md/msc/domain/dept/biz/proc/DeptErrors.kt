@@ -1,9 +1,9 @@
 package ru.md.msc.domain.dept.biz.proc
 
-import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.base_domain.biz.helper.errorDb
 import ru.md.base_domain.biz.helper.errorUnauthorized
 import ru.md.base_domain.biz.helper.fail
+import ru.md.msc.domain.base.biz.BaseClientContext
 
 fun BaseClientContext.deptNotFound() {
 	fail(
@@ -11,6 +11,16 @@ fun BaseClientContext.deptNotFound() {
 			repository = "dept",
 			violationCode = "not found",
 			description = "Отдел не найден"
+		)
+	)
+}
+
+fun BaseClientContext.rootDeptNotFound() {
+	fail(
+		errorDb(
+			repository = "dept",
+			violationCode = "root not found",
+			description = "Не найден корневой отдел"
 		)
 	)
 }
@@ -54,5 +64,6 @@ fun BaseClientContext.deptAuthError() {
 	)
 }
 
+class RootDeptNotFoundException(message: String = "") : RuntimeException(message)
 class DeptNotFoundException(message: String = "") : RuntimeException(message)
 class TopLevelDeptNotFoundException(message: String = "") : RuntimeException(message)

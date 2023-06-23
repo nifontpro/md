@@ -1,4 +1,4 @@
-package ru.md.msc.domain.base.workers
+package ru.md.msc.domain.base.workers.image
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -42,7 +42,7 @@ fun saveFile(multipartFile: MultipartFile, entityId: Long = 0): FileData? {
 		file.writeBytes(fileBytes)
 		FileData(
 			entityId = entityId,
-			url = url,
+			imageUrl = url,
 			miniUrl = miniUrl,
 			filename = fileName,
 			fileExtension = fileExtension ?: "",

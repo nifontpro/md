@@ -20,11 +20,17 @@ class DeptImageEntity(
 	@Column(name = "image_key")
 	override val imageKey: String = "",
 
+	@Column(name = "mini_url")
+	override val miniUrl: String? = null,
+
+	@Column(name = "mini_key")
+	override val miniKey: String? = null,
+
 	@Column(name = "type_code")
 	override val type: ImageType = ImageType.UNDEF,
 
 	@Column(name = "main")
-	override val main: Boolean = false,
+	override var main: Boolean = false,
 
 	@Column(name = "created_at")
 	override val createdAt: LocalDateTime = LocalDateTime.now(),

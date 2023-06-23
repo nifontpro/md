@@ -14,8 +14,9 @@ import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
-import ru.md.msc.domain.base.workers.deleteBaseImageFromS3
-import ru.md.msc.domain.base.workers.deleteBaseImagesFromS3
+import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
+import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
+import ru.md.msc.domain.base.workers.image.addImageToS3
 import ru.md.msc.domain.dept.biz.validate.validateDeptName
 import ru.md.msc.domain.dept.biz.workers.*
 import ru.md.msc.domain.dept.service.DeptService
@@ -89,7 +90,8 @@ class DeptProcessor(
 			operation("Добавление изображения", DeptCommand.IMG_ADD) {
 				worker("Получение id сущности") { deptId = fileData.entityId }
 				validateAdminDeptLevelChain()
-				addDeptImageToS3("Сохраняем изображение в s3")
+				prepareDeptImagePrefixUrl("Получаем префикс изображения")
+				addImageToS3("Сохраняем изображение в s3")
 				addDeptImageToDb("Добавляем картинку в БД")
 				updateDeptMainImage("Обновление основного изображения")
 				deleteS3ImageOnFailingChain()

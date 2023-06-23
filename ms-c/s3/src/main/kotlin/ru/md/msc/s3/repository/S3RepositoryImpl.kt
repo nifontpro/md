@@ -6,7 +6,6 @@ import kotlinx.coroutines.withContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
-import ru.md.base_domain.image.model.FileData
 import ru.md.base_domain.image.model.IBaseImage
 import ru.md.base_domain.image.model.ImageType
 import ru.md.msc.domain.s3.repository.S3Repository
@@ -19,10 +18,10 @@ class S3RepositoryImpl(
 
 	val log: Logger = LoggerFactory.getLogger(S3RepositoryImpl::class.java)
 
-	override suspend fun putObject(key: String, fileData: FileData): String? {
+	override suspend fun putObject(key: String, fileUrl: String): String? {
 		return try {
 			withContext(Dispatchers.IO) {
-				val file = File(fileData.url)
+				val file = File(fileUrl)
 				s3.putObject(Constants.S3_BUCKET_NAME, key, file)
 				s3.getUrl(Constants.S3_BUCKET_NAME, key).toExternalForm()
 			}
@@ -41,6 +40,7 @@ class S3RepositoryImpl(
 	override suspend fun deleteBaseImage(entity: IBaseImage) {
 		if (entity.type == ImageType.USER) {
 			deleteObject(entity.imageKey)
+			entity.miniKey?.let { deleteObject(it) }
 		}
 	}
 
