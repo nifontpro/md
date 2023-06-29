@@ -98,6 +98,23 @@ class DeptController(
 		)
 	}
 
+	/**
+	 * Получение списка отделов по parentId
+	 */
+	@PostMapping("get_parent_id")
+	private suspend fun getDeptByParentId(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetDeptsByParentIdRequest
+	): BaseResponse<List<Dept>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = deptProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportDepts() }
+		)
+	}
+
 	@PostMapping("delete")
 	private suspend fun delete(
 		@RequestHeader(name = AUTH) bearerToken: String,

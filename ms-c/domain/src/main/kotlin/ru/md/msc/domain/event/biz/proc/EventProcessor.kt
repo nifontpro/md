@@ -9,6 +9,8 @@ import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
+import ru.md.msc.domain.base.validate.db.validateAuthDeptTopLevelForView
+import ru.md.msc.domain.base.validate.db.validateAuthUserTopLevelForView
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateUserId
 import ru.md.msc.domain.base.workers.chain.validateSameAndAdminModifyUser
@@ -53,7 +55,7 @@ class EventProcessor(
 			operation("Получить события", EventCommand.GET_ALL_EVENTS) {
 				validateDeptId("Проверка deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				worker("Очищаем список сортировки") { baseQuery = baseQuery.copy(orders = emptyList()) }
 				getAllEvents("Получаем события")
 			}
@@ -61,12 +63,14 @@ class EventProcessor(
 			operation("Получить события сотрудника", EventCommand.GET_USER_EVENTS) {
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthUserTopLevelForView("Проверка доступа к чтению данных сотрудника")
 				getUserEvents("Получаем события сотрудника")
 			}
 
 			operation("Получить события отдела", EventCommand.GET_DEPT_EVENTS) {
 				validateDeptId("Проверка deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getDeptEvents("Получаем события отдела")
 			}
 

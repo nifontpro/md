@@ -66,6 +66,13 @@ fun DeptContext.fromTransport(request: GetDeptByIdRequest) {
 	deptId = request.deptId
 }
 
+fun DeptContext.fromTransport(request: GetDeptsByParentIdRequest) {
+	command = DeptCommand.GET_DEPTS_BY_PARENT_ID
+	authId = request.authId
+	deptId = request.parentId
+	baseQuery = request.baseRequest.toBaseQuery()
+}
+
 fun DeptContext.fromTransport(request: DeleteDeptRequest) {
 	command = DeptCommand.DELETE
 	authId = request.authId

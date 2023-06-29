@@ -222,7 +222,7 @@ class AwardServiceImpl(
 			deptRepository.subTreeIds(deptId = deptId)
 		} else {
 			if (nearSub) {
-				deptRepository.findByParentId(parentId = deptId)
+				deptRepository.findChildIdsByParentId(parentId = deptId)
 			} else {
 				listOf(deptId)
 			}

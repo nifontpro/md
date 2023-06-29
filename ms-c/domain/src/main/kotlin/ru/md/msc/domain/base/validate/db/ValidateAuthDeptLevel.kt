@@ -9,16 +9,16 @@ import ru.md.msc.domain.dept.biz.proc.getDeptAuthIOError
 
 /**
  * Проверка, имеет ли авторизованный пользователь
- * доступ к заданному отделу (включая его отдел)
+ * доступ к заданному отделу (включая его отдел и ниже по иерархии)
  */
 fun <T : BaseClientContext> ICorChainDsl<T>.validateAuthDeptLevel(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
 	handle {
+		val authUserDeptId = authUser.dept?.id ?: throw Exception()
+		if (authUserDeptId == deptId) return@handle
 
-		if (authUser.dept?.id == deptId) return@handle
-
-		if (!deptService.validateDeptLevel(upId = authUser.dept?.id ?: 0, downId = deptId)) {
+		if (!deptService.validateDeptLevel(upId = authUserDeptId, downId = deptId)) {
 			deptAuthError()
 		}
 	}

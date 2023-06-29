@@ -10,7 +10,7 @@ import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
-import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
+import ru.md.msc.domain.base.validate.db.validateAuthDeptTopLevelForView
 import ru.md.msc.domain.base.validate.db.validateAuthUserLevel
 import ru.md.msc.domain.base.validate.validateAdminRole
 import ru.md.msc.domain.base.validate.validateDeptId
@@ -100,7 +100,7 @@ class UserProcessor(
 				setUsersValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getUsersByDept("Получаем сотрудников")
 			}
 
@@ -109,7 +109,7 @@ class UserProcessor(
 				setUsersBySubdeptsValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getUsersBySubDepts("Получаем сотрудников подотделов")
 			}
 
@@ -149,29 +149,30 @@ class UserProcessor(
 			operation("Подсчет количества сотрудников по полам", UserCommand.GENDER_COUNT_BY_DEPTS) {
 				validateDeptId("Проверка deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getGenderCountByDept("Подсчет количества по полам")
 			}
 
 			operation("Сотрудники с активностью", UserCommand.GET_WITH_ACTIVITY) {
 				validateDeptId("Проверка deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getUsersWithActivityByDept("Получаем сотрудников с активностью")
 			}
 
 			operation("Сотрудники с наградами", UserCommand.GET_WITH_AWARDS) {
 				validateDeptId("Проверка deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getUsersWithAwardsByDept("Получаем сотрудников с наградами")
 			}
 
-			operation("Сотрудники с наградами", UserCommand.GET_WITH_AWARD_COUNT) {
+			operation("Количество сотрудников с наградами", UserCommand.GET_WITH_AWARD_COUNT) {
 				validateDeptId("Проверка deptId")
 				setUsersWithAwardCountValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getUsersWithAwardCountByDept("Получаем сотрудников с количеством наград")
 			}
 

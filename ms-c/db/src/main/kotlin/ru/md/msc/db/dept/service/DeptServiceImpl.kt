@@ -80,10 +80,22 @@ class DeptServiceImpl(
 		return depts.map { it.toDeptLazy() }
 	}
 
+	override fun findTopLevelDept(deptId: Long): Long {
+		return deptRepository.getTopLevelId(deptId = deptId) ?: throw TopLevelDeptNotFoundException()
+	}
+
 	override fun getTopLevelTreeDepts(deptId: Long, orders: List<BaseOrder>): List<Dept> {
-		val topLevelId = deptRepository.getTopLevelId(deptId = deptId) ?: throw TopLevelDeptNotFoundException()
+		val topLevelId = findTopLevelDept(deptId = deptId)
 		val ids = deptRepository.subTreeIds(deptId = topLevelId)
 		val depts = deptRepository.findByIdIn(ids = ids, sort = orders.toSort())
+		return depts.map { it.toDeptLazy() }
+	}
+
+	/**
+	 * Получение отделов по parentId
+	 */
+	override fun getDeptsByParentId(parentId: Long, orders: List<BaseOrder>): List<Dept> {
+		val depts = deptRepository.findByParentId(parentId = parentId, sort = orders.toSort())
 		return depts.map { it.toDeptLazy() }
 	}
 

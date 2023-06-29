@@ -20,6 +20,8 @@ import ru.md.msc.domain.award.biz.workers.sort.setAwardWithDeptValidSortedFields
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
+import ru.md.msc.domain.base.validate.db.validateAuthDeptTopLevelForView
+import ru.md.msc.domain.base.validate.db.validateAuthUserTopLevelForView
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId
@@ -75,7 +77,7 @@ class AwardProcessor(
 			}
 
 			operation("Получить по id", AwardCommand.GET_BY_ID_DETAILS) {
-				validateAccessToAwardChain()
+				validateViewAccessToAwardChain()
 				getAwardByIdDetails("Получаем детальную награду")
 			}
 
@@ -85,7 +87,7 @@ class AwardProcessor(
 				worker("Допустимые поля сортировки") { orderFields = listOf("name", "type", "startDate", "endDate") }
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getAwardsByDept("Получаем награды из отдела")
 			}
 
@@ -144,7 +146,7 @@ class AwardProcessor(
 				setActionByUserValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				// Проверка прав !!!
+				validateAuthUserTopLevelForView("Проверка доступа к данным сотрудника для просмотра")
 				getActiveAwardsByUser("Получаем награды сотрудника")
 			}
 
@@ -154,14 +156,14 @@ class AwardProcessor(
 				setActionByDeptValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptLevel("Проверка доступа к отделу награды")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getActiveAwardsByDept("Получаем награды в отделе")
 			}
 
 			operation("Получить сотрудников, награжденных наградой", AwardCommand.GET_USERS_BY_ACTIVE_AWARD) {
 				setActionByAwardValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
-				validateAccessToAwardChain()
+				validateViewAccessToAwardChain()
 				getUsersByActiveAward("Получаем награды сотрудника")
 			}
 
@@ -176,14 +178,14 @@ class AwardProcessor(
 			operation("Количество наград в отделе (включая подотделы - опц.)", AwardCommand.COUNT_BY_DEPTS) {
 				validateDeptId("Проверяем deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getAwardCountByDepts("Получаем количество наград")
 			}
 
 			operation("Количество активных награждений (включая ближние/дальние подотделы)", AwardCommand.COUNT_ACTIV) {
 				validateDeptId("Проверяем deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getActivCountByDepts("Получаем количество награждений")
 			}
 
@@ -200,7 +202,7 @@ class AwardProcessor(
 			operation("Количество сотрудников с наградами и без", AwardCommand.COUNT_USER_AWARD_WW) {
 				validateDeptId("Проверяем deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getUserAwardWWCountByDepts("Получаем количество сотрудников с наградами и без")
 			}
 
@@ -222,6 +224,13 @@ class AwardProcessor(
 			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 			findDeptIdByAwardId("Получаем deptId")
 			validateAuthDeptLevel("Проверка доступа к отделу")
+		}
+
+		private fun ICorChainDsl<AwardContext>.validateViewAccessToAwardChain() {
+			validateAwardId("Проверяем awardId")
+			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+			findDeptIdByAwardId("Получаем deptId")
+			validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 		}
 
 	}

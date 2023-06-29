@@ -40,7 +40,7 @@ class DeptTest(
 
 	@Test
 	fun getNearIds() {
-		val ids = deptRepository.findByParentId(parentId = 1)
+		val ids = deptRepository.findChildIdsByParentId(parentId = 1)
 		println("ids: $ids")
 	}
 

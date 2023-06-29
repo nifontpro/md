@@ -9,14 +9,14 @@ import ru.md.base_domain.biz.workers.operation
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
-import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
+import ru.md.msc.domain.base.validate.db.validateAuthDeptTopLevelForView
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
+import ru.md.msc.domain.base.workers.image.addImageToS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
-import ru.md.msc.domain.base.workers.image.addImageToS3
 import ru.md.msc.domain.dept.biz.validate.validateDeptName
 import ru.md.msc.domain.dept.biz.workers.*
 import ru.md.msc.domain.dept.service.DeptService
@@ -65,10 +65,19 @@ class DeptProcessor(
 				getTopLevelTreeDepts("Получаем поддерево отделов верхнего уровня")
 			}
 
+			operation("Получить список потомков отдела deptId", DeptCommand.GET_DEPTS_BY_PARENT_ID) {
+				validateDeptId("Проверяем deptId")
+				worker("Допустимые поля сортировки") { orderFields = listOf("name", "classname") }
+				validateSortedFields("Проверка списка полей сортировки")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
+				getDeptsByParentId("Получаем потомков отдела deptId")
+			}
+
 			operation("Получить отдел по id", DeptCommand.GET_DEPT_BY_ID_DETAILS) {
 				validateDeptId("Проверяем deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getDeptDetailsById("Получаем отдел")
 			}
 

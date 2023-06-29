@@ -8,22 +8,19 @@ import ru.md.msc.domain.dept.biz.proc.deptAuthError
 import ru.md.msc.domain.dept.biz.proc.getDeptAuthIOError
 
 /**
- * Проверка, имеет ли администратор доступ к заданному отделу ниже по иерархии
+ * Проверка, имеет ли авторизованный пользователь доступ к заданному отделу ниже по иерархии
  */
 fun <T : BaseClientContext> ICorChainDsl<T>.validateAuthDeptDownLevel(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
 	handle {
-
-		val auth = try {
-			deptService.validateDeptLevel(upId = authUser.dept?.id ?: 0, downId = deptId)
-		} catch (e: Exception) {
-			getDeptAuthIOError()
-			return@handle
-		}
-
-		if (!auth) {
+		val authUserDeptId = authUser.dept?.id ?: throw Exception()
+		if (!deptService.validateDeptLevel(upId = authUserDeptId, downId = deptId)) {
 			deptAuthError()
 		}
+	}
+
+	except {
+		getDeptAuthIOError()
 	}
 }
