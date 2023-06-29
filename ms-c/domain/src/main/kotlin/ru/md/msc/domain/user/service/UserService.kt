@@ -30,4 +30,5 @@ interface UserService {
 	fun getUsersWithAwardCount(deptId: Long, baseQuery: BaseQuery): PageResult<User>
 	fun saveSettings(userSettings: UserSettings): UserSettings
 	fun getSettings(userId: Long): UserSettings?
+	fun getParentDeptId(userId: Long): Long
 }

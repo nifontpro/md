@@ -18,10 +18,10 @@ import ru.md.msc.domain.award.biz.workers.sort.setActionByDeptValidSortedFields
 import ru.md.msc.domain.award.biz.workers.sort.setActionByUserValidSortedFields
 import ru.md.msc.domain.award.biz.workers.sort.setAwardWithDeptValidSortedFields
 import ru.md.msc.domain.award.service.AwardService
-import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
-import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
-import ru.md.msc.domain.base.validate.db.validateAuthDeptTopLevelForView
-import ru.md.msc.domain.base.validate.db.validateAuthUserTopLevelForView
+import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
+import ru.md.msc.domain.base.validate.auth.validateAuthDeptLevel
+import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
+import ru.md.msc.domain.base.validate.auth.validateAuthUserTopLevelForView
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId

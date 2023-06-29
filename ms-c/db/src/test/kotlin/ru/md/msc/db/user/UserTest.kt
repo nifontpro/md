@@ -66,6 +66,12 @@ class UserTest(
 	}
 
 	@Test
+	fun getParentId() {
+		val parentId = userRepository.findParentDeptId(userId = 123)
+		println(parentId)
+	}
+
+	@Test
 	fun getUserAwards() {
 		val users = userRepository.findByDeptIdIn(deptsIds = listOf(79, 81))
 		println(users)

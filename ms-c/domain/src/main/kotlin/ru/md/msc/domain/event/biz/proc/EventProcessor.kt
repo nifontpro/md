@@ -7,10 +7,10 @@ import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
 import ru.md.cor.rootChain
 import ru.md.cor.worker
-import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
-import ru.md.msc.domain.base.validate.db.validateAuthDeptLevel
-import ru.md.msc.domain.base.validate.db.validateAuthDeptTopLevelForView
-import ru.md.msc.domain.base.validate.db.validateAuthUserTopLevelForView
+import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
+import ru.md.msc.domain.base.validate.auth.validateAuthDeptLevel
+import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
+import ru.md.msc.domain.base.validate.auth.validateAuthUserTopLevelForView
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateUserId
 import ru.md.msc.domain.base.workers.chain.validateSameAndAdminModifyUser

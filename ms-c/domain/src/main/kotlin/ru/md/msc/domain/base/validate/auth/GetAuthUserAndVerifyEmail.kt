@@ -1,4 +1,4 @@
-package ru.md.msc.domain.base.validate.db
+package ru.md.msc.domain.base.validate.auth
 
 import ru.md.base_domain.biz.helper.errorUnauthorized
 import ru.md.base_domain.biz.helper.fail
@@ -19,12 +19,7 @@ fun <T : BaseClientContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: Str
 			return@handle
 		}
 
-		authUser = try {
-			userService.findById(authId)
-		} catch (e: Exception) {
-			getUserError()
-			return@handle
-		} ?: run {
+		authUser = userService.findById(authId) ?: run {
 			notValidAuthIdError()
 			return@handle
 		}
@@ -37,5 +32,9 @@ fun <T : BaseClientContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: Str
 			)
 			return@handle
 		}
+	}
+
+	except {
+		getUserError()
 	}
 }

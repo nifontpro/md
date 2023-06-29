@@ -1,4 +1,4 @@
-package ru.md.msc.domain.base.validate.db
+package ru.md.msc.domain.base.validate.auth
 
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl

@@ -12,3 +12,7 @@ fun BaseClientContext.toTransportBaseImage(): BaseResponse<BaseImage> {
 fun BaseClientContext.toTransportUnit(): BaseResponse<Unit> {
 	return baseResponse(Unit)
 }
+
+fun BaseClientContext.toTransportDeptId(): BaseResponse<Long> {
+	return baseResponse(deptId)
+}

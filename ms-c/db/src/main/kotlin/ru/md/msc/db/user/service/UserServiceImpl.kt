@@ -265,6 +265,10 @@ class UserServiceImpl(
 		return userSettingsRepository.findByIdOrNull(userId)?.toUserSettings()
 	}
 
+	override fun getParentDeptId(userId: Long): Long {
+		return userRepository.findParentDeptId(userId = userId)
+	}
+
 //	companion object {
 //		val log: Logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
 //	}

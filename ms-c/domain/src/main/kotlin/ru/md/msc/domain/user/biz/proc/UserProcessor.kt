@@ -9,9 +9,9 @@ import ru.md.base_domain.biz.workers.operation
 import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
-import ru.md.msc.domain.base.validate.db.getAuthUserAndVerifyEmail
-import ru.md.msc.domain.base.validate.db.validateAuthDeptTopLevelForView
-import ru.md.msc.domain.base.validate.db.validateAuthUserLevel
+import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
+import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
+import ru.md.msc.domain.base.validate.auth.validateAuthUserLevel
 import ru.md.msc.domain.base.validate.validateAdminRole
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
@@ -21,6 +21,7 @@ import ru.md.msc.domain.base.workers.chain.validateAdminModifyUserByRoleChain
 import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
 import ru.md.msc.domain.base.workers.chain.validateSameAndAdminModifyUser
 import ru.md.msc.domain.base.workers.findModifyUserAndGetRolesAndDeptId
+import ru.md.msc.domain.base.workers.getAuthUserParentDeptId
 import ru.md.msc.domain.base.workers.image.addImageToS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
@@ -190,6 +191,11 @@ class UserProcessor(
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				getUserSettings("Получаем настройки")
+			}
+
+			operation("Получить настройки", UserCommand.GET_AUTH_PARENT_ID) {
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				getAuthUserParentDeptId("Получаем parentId отдела")
 			}
 
 			finishOperation()
