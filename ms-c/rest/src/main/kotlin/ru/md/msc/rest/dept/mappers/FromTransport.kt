@@ -66,10 +66,10 @@ fun DeptContext.fromTransport(request: GetDeptByIdRequest) {
 	deptId = request.deptId
 }
 
-fun DeptContext.fromTransport(request: GetDeptsByParentIdRequest) {
-	command = DeptCommand.GET_DEPTS_BY_PARENT_ID
+fun DeptContext.fromTransport(request: GetCurrentDeptsRequest) {
+	command = DeptCommand.GET_CURRENT_DEPTS
 	authId = request.authId
-	deptId = request.parentId
+	deptId = request.deptId
 	baseQuery = request.baseRequest.toBaseQuery()
 }
 

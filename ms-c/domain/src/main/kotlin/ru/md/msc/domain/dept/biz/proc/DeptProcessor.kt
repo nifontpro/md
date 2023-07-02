@@ -6,6 +6,7 @@ import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
+import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
@@ -65,13 +66,22 @@ class DeptProcessor(
 				getTopLevelTreeDepts("Получаем поддерево отделов верхнего уровня")
 			}
 
-			operation("Получить список потомков отдела deptId", DeptCommand.GET_DEPTS_BY_PARENT_ID) {
+			operation("Получить список потомков отдела deptId", DeptCommand.GET_CURRENT_DEPTS) {
 				validateDeptId("Проверяем deptId")
 				worker("Допустимые поля сортировки") { orderFields = listOf("name", "classname") }
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
-				getDeptsByParentId("Получаем потомков отдела deptId")
+				getDeptById("Получаем отдел")
+				chain {
+					on { dept.topLevel }
+					worker("Возвращаем список из одного отдела") { depts = listOf(dept) }
+				}
+				chain {
+					on { !dept.topLevel }
+					worker("Подготовка parentId") { deptId = dept.parentId }
+					getDeptsByParentId("Получаем потомков отдела deptId")
+				}
 			}
 
 			operation("Получить отдел по id", DeptCommand.GET_DEPT_BY_ID_DETAILS) {

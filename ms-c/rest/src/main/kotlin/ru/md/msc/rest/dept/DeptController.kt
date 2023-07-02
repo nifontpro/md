@@ -99,12 +99,12 @@ class DeptController(
 	}
 
 	/**
-	 * Получение списка отделов по parentId отдела
+	 * Получение списка отделов с одним parentId текущего отдела (на одной ветке с ним)
 	 */
-	@PostMapping("get_parent_id")
-	private suspend fun getDeptByParentId(
+	@PostMapping("current_list")
+	private suspend fun getCurrentDepts(
 		@RequestHeader(name = AUTH) bearerToken: String,
-		@RequestBody request: GetDeptsByParentIdRequest
+		@RequestBody request: GetCurrentDeptsRequest
 	): BaseResponse<List<Dept>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(

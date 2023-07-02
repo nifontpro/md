@@ -22,4 +22,5 @@ interface DeptService {
 	fun getTopLevelTreeDepts(deptId: Long, orders: List<BaseOrder>): List<Dept>
 	fun findTopLevelDept(deptId: Long): Long
 	fun getDeptsByParentId(parentId: Long, orders: List<BaseOrder>): List<Dept>
+	fun findById(deptId: Long): Dept?
 }

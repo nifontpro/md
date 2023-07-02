@@ -103,6 +103,10 @@ class DeptServiceImpl(
 		return deptDetailsRepository.findByIdOrNull(deptId)?.toDeptDetails()
 	}
 
+	override fun findById(deptId: Long): Dept? {
+		return deptRepository.findByIdOrNull(deptId)?.toDeptLazy()
+	}
+
 	override fun deleteById(deptId: Long) {
 		deptRepository.deleteById(deptId)
 	}
