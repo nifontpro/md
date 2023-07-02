@@ -277,12 +277,12 @@ class UserController(
 	}
 
 	/**
-	 * Получение id родительского отдела авторизованного пользователя
+	 * Получение id отдела авторизованного пользователя
 	 */
-	@PostMapping("get_parent_id")
+	@PostMapping("get_dept_id")
 	private suspend fun getAuthParentId(
 		@RequestHeader(name = AUTH) bearerToken: String,
-		@RequestBody request: GetAuthParentIdRequest
+		@RequestBody request: GetAuthDeptIdRequest
 	): BaseResponse<Long> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(

@@ -160,8 +160,8 @@ fun UserContext.fromTransport(request: GetUserSettingsRequest) {
 	authId = userId
 }
 
-fun UserContext.fromTransport(request: GetAuthParentIdRequest) {
-	command = UserCommand.GET_AUTH_PARENT_ID
+fun UserContext.fromTransport(request: GetAuthDeptIdRequest) {
+	command = UserCommand.GET_AUTH_DEPT_ID
 	authId = request.authId
 }
 

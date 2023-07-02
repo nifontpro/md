@@ -8,22 +8,22 @@ import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.BaseClientContext
 
 /**
- * Возвращает id родительского отдела аутентифицированного пользователя
+ * Возвращает id отдела аутентифицированного пользователя
  */
-fun <T : BaseClientContext> ICorChainDsl<T>.getAuthUserParentDeptId(title: String) = worker {
+fun <T : BaseClientContext> ICorChainDsl<T>.getAuthUserDeptId(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
 
 	handle {
-		deptId = userService.getParentDeptId(userId = authUser.id)
+		deptId = userService.findDeptIdByUserId(userId = authUser.id)
 	}
 
 	except {
 		fail(
 			errorDb(
 				repository = "dept",
-				violationCode = "get parent deptId",
-				description = "Ошибка получения id родительского отдела"
+				violationCode = "get deptId",
+				description = "Ошибка получения id отдела сотрудника"
 			)
 		)
 	}

@@ -21,7 +21,7 @@ import ru.md.msc.domain.base.workers.chain.validateAdminModifyUserByRoleChain
 import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
 import ru.md.msc.domain.base.workers.chain.validateSameAndAdminModifyUser
 import ru.md.msc.domain.base.workers.findModifyUserAndGetRolesAndDeptId
-import ru.md.msc.domain.base.workers.getAuthUserParentDeptId
+import ru.md.msc.domain.base.workers.getAuthUserDeptId
 import ru.md.msc.domain.base.workers.image.addImageToS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
@@ -193,9 +193,9 @@ class UserProcessor(
 				getUserSettings("Получаем настройки")
 			}
 
-			operation("Получить настройки", UserCommand.GET_AUTH_PARENT_ID) {
+			operation("Получить настройки", UserCommand.GET_AUTH_DEPT_ID) {
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				getAuthUserParentDeptId("Получаем parentId отдела")
+				getAuthUserDeptId("Получаем parentId отдела")
 			}
 
 			finishOperation()

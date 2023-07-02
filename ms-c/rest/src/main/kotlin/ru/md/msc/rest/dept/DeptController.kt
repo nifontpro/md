@@ -99,7 +99,7 @@ class DeptController(
 	}
 
 	/**
-	 * Получение списка отделов по parentId
+	 * Получение списка отделов по parentId отдела
 	 */
 	@PostMapping("get_parent_id")
 	private suspend fun getDeptByParentId(

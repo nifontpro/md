@@ -53,6 +53,7 @@ class UserServiceImpl(
 			name = "Владелец " + userDetails.user.authEmail,
 			classname = "Корневой",
 			type = DeptType.USER_OWNER,
+			topLevel = true
 		)
 		val deptDetailsEntity = DeptDetailsEntity(
 			dept = deptEntity,
@@ -263,10 +264,6 @@ class UserServiceImpl(
 
 	override fun getSettings(userId: Long): UserSettings? {
 		return userSettingsRepository.findByIdOrNull(userId)?.toUserSettings()
-	}
-
-	override fun getParentDeptId(userId: Long): Long {
-		return userRepository.findParentDeptId(userId = userId)
 	}
 
 //	companion object {
