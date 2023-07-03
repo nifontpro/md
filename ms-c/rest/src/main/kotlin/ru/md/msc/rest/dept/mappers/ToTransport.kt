@@ -11,9 +11,9 @@ fun DeptContext.toTransportDeptDetails(): BaseResponse<DeptDetailsResponse> {
 }
 
 fun DeptContext.toTransportDept(): BaseResponse<Dept> {
-	return baseResponse(dept)
+	return baseResponse(dept.copy(images = emptyList())) // !!! ERROR!!!
 }
 
 fun DeptContext.toTransportDepts(): BaseResponse<List<Dept>> {
-	return baseResponse(depts)
+	return baseResponse(depts.map { it.copy(images = emptyList()) }) // !!! ERROR!!!
 }

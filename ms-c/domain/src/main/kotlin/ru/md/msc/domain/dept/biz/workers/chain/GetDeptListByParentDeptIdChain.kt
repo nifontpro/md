@@ -28,9 +28,11 @@ fun ICorChainDsl<DeptContext>.getDeptListByParentDeptIdChain() {
 		getDeptsByParentId("Получаем потомков отдела deptId")
 		finishOperation()
 	}
+
 	chain {
 		on { !isAuth && state == ContextState.RUNNING }
 		getTopLevelDeptByDeptId("Получаем верхний отдел авторизованного пользователя")
+
 		chain {
 			on { dept.parentId == deptId }
 			worker("Возвращаем список из одного отдела") {
@@ -38,8 +40,15 @@ fun ICorChainDsl<DeptContext>.getDeptListByParentDeptIdChain() {
 			}
 			finishOperation()
 		}
+
 		chain {
-			on { dept.parentId != deptId && state == ContextState.RUNNING }
+			on { dept.id == deptId }
+			getDeptsByParentId("Получаем потомков отдела deptId")
+			finishOperation()
+		}
+
+		chain {
+			on { state == ContextState.RUNNING }
 			worker("Возвращаем пустой список") { depts = emptyList() }
 		}
 	}
