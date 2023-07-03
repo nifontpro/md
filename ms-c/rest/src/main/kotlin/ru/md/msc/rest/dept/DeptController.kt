@@ -16,6 +16,7 @@ import ru.md.msc.rest.base.imageProcess
 import ru.md.msc.rest.base.mappers.toTransportBaseImage
 import ru.md.msc.rest.base.mappers.toTransportUnit
 import ru.md.msc.rest.dept.mappers.fromTransport
+import ru.md.msc.rest.dept.mappers.toTransportDept
 import ru.md.msc.rest.dept.mappers.toTransportDeptDetails
 import ru.md.msc.rest.dept.mappers.toTransportDepts
 import ru.md.msc.rest.dept.model.request.*
@@ -95,6 +96,20 @@ class DeptController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportDeptDetails() }
+		)
+	}
+
+	@PostMapping("get_auth_dept")
+	private suspend fun getAuthDept(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetAuthDeptRequest
+	): BaseResponse<Dept> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = deptProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportDept() }
 		)
 	}
 

@@ -17,6 +17,7 @@ class DeptContext : BaseClientContext() {
 enum class DeptCommand : IBaseCommand {
 	CREATE,
 	GET_AUTH_SUB_TREE,
+	GET_AUTH_DEPT,
 	GET_TOP_LEVEL_TREE,
 	GET_CURRENT_DEPTS,
 	GET_DEPT_BY_ID_DETAILS,

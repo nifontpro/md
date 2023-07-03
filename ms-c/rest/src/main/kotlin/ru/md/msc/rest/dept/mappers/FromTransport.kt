@@ -54,6 +54,11 @@ fun DeptContext.fromTransport(request: GetAuthSubtreeDeptsRequest) {
 	baseQuery = request.baseRequest.toBaseQuery()
 }
 
+fun DeptContext.fromTransport(request: GetAuthDeptRequest) {
+	command = DeptCommand.GET_AUTH_DEPT
+	authId = request.authId
+}
+
 fun DeptContext.fromTransport(request: GetAuthTopLevelTreeDeptsRequest) {
 	command = DeptCommand.GET_TOP_LEVEL_TREE
 	authId = request.authId
@@ -69,7 +74,7 @@ fun DeptContext.fromTransport(request: GetDeptByIdRequest) {
 fun DeptContext.fromTransport(request: GetCurrentDeptsRequest) {
 	command = DeptCommand.GET_CURRENT_DEPTS
 	authId = request.authId
-	deptId = request.deptId
+	deptId = request.parentId
 	baseQuery = request.baseRequest.toBaseQuery()
 }
 

@@ -6,10 +6,8 @@ import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
-import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
-import ru.md.msc.domain.base.validate.auth.bool.validateAuthDeptTopLevelForViewBool
 import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
 import ru.md.msc.domain.base.validate.validateDeptId
@@ -21,6 +19,7 @@ import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
 import ru.md.msc.domain.dept.biz.validate.validateDeptName
 import ru.md.msc.domain.dept.biz.workers.*
+import ru.md.msc.domain.dept.biz.workers.chain.getDeptListByParentDeptIdChain
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.s3.repository.S3Repository
 import ru.md.msc.domain.user.service.UserService
@@ -68,28 +67,7 @@ class DeptProcessor(
 			}
 
 			operation("Получить список потомков отдела deptId", DeptCommand.GET_CURRENT_DEPTS) {
-				validateDeptId("Проверяем deptId")
-				worker("Допустимые поля сортировки") { orderFields = listOf("name", "classname") }
-				validateSortedFields("Проверка списка полей сортировки")
-				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptTopLevelForViewBool("Проверка доступа к чтению данных отдела")
-
-				chain {
-					on { isAuth }
-					getDeptsByParentId("Получаем потомков отдела deptId")
-				}
-				chain {
-					on { !isAuth }
-					getTopLevelDeptByDeptId("Получаем верхний отдел авторизованного пользователя")
-					chain {
-						on { dept.parentId == deptId }
-						worker("Возвращаем список из одного отдела") { depts = listOf(dept) }
-					}
-					chain {
-						on { dept.id == deptId }
-						worker("Возвращаем пустой список") { depts = emptyList() }
-					}
-				}
+				getDeptListByParentDeptIdChain()
 			}
 
 			operation("Получить отдел по id", DeptCommand.GET_DEPT_BY_ID_DETAILS) {
@@ -97,6 +75,12 @@ class DeptProcessor(
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getDeptDetailsById("Получаем отдел")
+			}
+
+			operation("Получить отдел авторизованного пользователя", DeptCommand.GET_AUTH_DEPT) {
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				worker("Подготовка") { deptId = authUser.dept?.id ?: 0 }
+				getDeptById("Получаем отдел")
 			}
 
 			operation("Обновить профиль", DeptCommand.UPDATE) {

@@ -10,6 +10,10 @@ fun DeptContext.toTransportDeptDetails(): BaseResponse<DeptDetailsResponse> {
 	return baseResponse(deptDetails.toDeptDetailsResponse())
 }
 
+fun DeptContext.toTransportDept(): BaseResponse<Dept> {
+	return baseResponse(dept)
+}
+
 fun DeptContext.toTransportDepts(): BaseResponse<List<Dept>> {
 	return baseResponse(depts)
 }

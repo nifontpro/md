@@ -12,7 +12,6 @@ fun ICorChainDsl<DeptContext>.getTopLevelDeptByDeptId(title: String) = worker {
 
 	handle {
 		dept = deptService.findTopLevelDept(deptId = authUser.dept?.id ?: 0)
-		log.error(dept.toString())
 	}
 
 	except {

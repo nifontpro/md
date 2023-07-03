@@ -16,7 +16,6 @@ import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserSettings
 import ru.md.msc.rest.base.imageProcess
 import ru.md.msc.rest.base.mappers.toTransportBaseImage
-import ru.md.msc.rest.base.mappers.toTransportDeptId
 import ru.md.msc.rest.base.mappers.toTransportUnit
 import ru.md.msc.rest.user.mappers.*
 import ru.md.msc.rest.user.model.request.*
@@ -273,23 +272,6 @@ class UserController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportUserSettings() }
-		)
-	}
-
-	/**
-	 * Получение id отдела авторизованного пользователя
-	 */
-	@PostMapping("get_dept_id")
-	private suspend fun getAuthDeptId(
-		@RequestHeader(name = AUTH) bearerToken: String,
-		@RequestBody request: GetAuthDeptIdRequest
-	): BaseResponse<Long> {
-		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return authProcess(
-			processor = userProcessor,
-			authRequest = baseRequest,
-			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportDeptId() }
 		)
 	}
 

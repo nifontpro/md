@@ -34,5 +34,4 @@ enum class UserCommand : IBaseCommand {
 	SET_MAIN_IMG,
 	SAVE_SETTINGS,
 	GET_SETTINGS,
-	GET_AUTH_DEPT_ID
 }
