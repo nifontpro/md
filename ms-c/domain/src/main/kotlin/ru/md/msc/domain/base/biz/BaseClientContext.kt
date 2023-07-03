@@ -31,6 +31,8 @@ abstract class BaseClientContext(
 	var userMsg: UserMsg = UserMsg(),
 	var prefixUrl: String = "",
 
+	var isAuth: Boolean = false,
+
 	) : BaseContext() {
 
 	lateinit var userService: UserService

@@ -9,6 +9,7 @@ import ru.md.base_domain.biz.workers.operation
 import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
+import ru.md.msc.domain.base.validate.auth.bool.validateAuthDeptTopLevelForViewBool
 import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
 import ru.md.msc.domain.base.validate.validateDeptId
@@ -71,16 +72,23 @@ class DeptProcessor(
 				worker("Допустимые поля сортировки") { orderFields = listOf("name", "classname") }
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
-				getDeptById("Получаем отдел")
+				validateAuthDeptTopLevelForViewBool("Проверка доступа к чтению данных отдела")
+
 				chain {
-					on { dept.topLevel }
-					worker("Возвращаем список из одного отдела") { depts = listOf(dept) }
+					on { isAuth }
+					getDeptsByParentId("Получаем потомков отдела deptId")
 				}
 				chain {
-					on { !dept.topLevel }
-					worker("Подготовка parentId") { deptId = dept.parentId }
-					getDeptsByParentId("Получаем потомков отдела deptId")
+					on { !isAuth }
+					getTopLevelDeptByDeptId("Получаем верхний отдел авторизованного пользователя")
+					chain {
+						on { dept.parentId == deptId }
+						worker("Возвращаем список из одного отдела") { depts = listOf(dept) }
+					}
+					chain {
+						on { dept.id == deptId }
+						worker("Возвращаем пустой список") { depts = emptyList() }
+					}
 				}
 			}
 

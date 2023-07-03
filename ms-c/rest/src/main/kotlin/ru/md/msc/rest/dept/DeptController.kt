@@ -99,7 +99,7 @@ class DeptController(
 	}
 
 	/**
-	 * Получение списка отделов с одним parentId текущего отдела (на одной ветке с ним)
+	 * Получение списка отделов по parentId
 	 */
 	@PostMapping("current_list")
 	private suspend fun getCurrentDepts(

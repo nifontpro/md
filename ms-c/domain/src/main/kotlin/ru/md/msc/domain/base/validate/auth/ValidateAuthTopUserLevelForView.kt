@@ -17,7 +17,7 @@ fun <T : BaseClientContext> ICorChainDsl<T>.validateAuthUserTopLevelForView(titl
 	handle {
 		val authUserDeptId = authUser.dept?.id ?: throw Exception()
 		if (authUser.id == userId) return@handle
-		val topLevelDeptId = deptService.findTopLevelDept(authUserDeptId)
+		val topLevelDeptId = deptService.findTopLevelDeptId(authUserDeptId)
 
 		if (!deptService.validateUserLevel(upId = topLevelDeptId, userId = userId)) {
 			fail(

@@ -8,6 +8,7 @@ import ru.md.base_db.mapper.toSort
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.model.BaseOrder
 import ru.md.msc.db.dept.model.image.DeptImageEntity
+import ru.md.msc.db.dept.model.mappers.toDept
 import ru.md.msc.db.dept.model.mappers.toDeptDetails
 import ru.md.msc.db.dept.model.mappers.toDeptDetailsEntity
 import ru.md.msc.db.dept.model.mappers.toDeptLazy
@@ -80,12 +81,17 @@ class DeptServiceImpl(
 		return depts.map { it.toDeptLazy() }
 	}
 
-	override fun findTopLevelDept(deptId: Long): Long {
+	override fun findTopLevelDeptId(deptId: Long): Long {
 		return deptRepository.getTopLevelId(deptId = deptId) ?: throw TopLevelDeptNotFoundException()
 	}
 
+	override fun findTopLevelDept(deptId: Long): Dept {
+		val topDeptId = deptRepository.getTopLevelId(deptId = deptId) ?: throw TopLevelDeptNotFoundException()
+		return deptRepository.findByIdOrNull(topDeptId)?.toDept() ?: throw TopLevelDeptNotFoundException()
+	}
+
 	override fun getTopLevelTreeDepts(deptId: Long, orders: List<BaseOrder>): List<Dept> {
-		val topLevelId = findTopLevelDept(deptId = deptId)
+		val topLevelId = findTopLevelDeptId(deptId = deptId)
 		val ids = deptRepository.subTreeIds(deptId = topLevelId)
 		val depts = deptRepository.findByIdIn(ids = ids, sort = orders.toSort())
 		return depts.map { it.toDeptLazy() }

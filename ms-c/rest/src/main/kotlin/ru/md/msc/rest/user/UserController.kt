@@ -280,7 +280,7 @@ class UserController(
 	 * Получение id отдела авторизованного пользователя
 	 */
 	@PostMapping("get_dept_id")
-	private suspend fun getAuthParentId(
+	private suspend fun getAuthDeptId(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetAuthDeptIdRequest
 	): BaseResponse<Long> {
