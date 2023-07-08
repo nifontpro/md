@@ -86,9 +86,9 @@ class DeptController(
 	}
 
 	@PostMapping("get_id")
-	private suspend fun getDeptById(
+	private suspend fun getDeptByIdDetails(
 		@RequestHeader(name = AUTH) bearerToken: String,
-		@RequestBody request: GetDeptByIdRequest
+		@RequestBody request: GetDeptByIdDetailsRequest
 	): BaseResponse<DeptDetailsResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
@@ -96,6 +96,20 @@ class DeptController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportDeptDetails() }
+		)
+	}
+
+	@PostMapping("get_id_m")
+	private suspend fun getDeptById(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetDeptByIdRequest
+	): BaseResponse<Dept> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = deptProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportDept() }
 		)
 	}
 

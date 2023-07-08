@@ -69,7 +69,7 @@ class AwardServiceImpl(
 	override fun findByDeptId(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award> {
 		val awards = awardRepository.findByDeptId(
 			deptId = deptId,
-			name = baseQuery.filter.toSearch(),
+			name = baseQuery.filter.toSearchOrNull(),
 			state = awardState,
 			pageable = baseQuery.toPageRequest()
 		)
@@ -160,12 +160,18 @@ class AwardServiceImpl(
 		return activities.map { it.toActivityOnlyUser() }
 	}
 
-	override fun findActivAwardsByDept(deptId: Long, baseQuery: BaseQuery): PageResult<Activity> {
+	override fun findActivAwardsByDept(
+		deptId: Long,
+		awardState: AwardState?,
+		baseQuery: BaseQuery
+	): PageResult<Activity> {
 		val pageRequest = baseQuery.toPageRequest()
 		val activities = activityRepository.findByDeptIdPage(
 			deptId = deptId,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
+			awardState = awardState,
+			filter = baseQuery.filter.toSearchOrNull(),
 			pageable = pageRequest
 		)
 		return activities.toPageResult { it.toActivityUserLazy() }
@@ -242,7 +248,7 @@ class AwardServiceImpl(
 				awardImageEntity = it
 			}
 		}
-		awardImageEntity.main=true
+		awardImageEntity.main = true
 		awardEntity.mainImg = awardImageEntity.miniUrl
 		return awardImageEntity.toImage()
 	}

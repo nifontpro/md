@@ -71,7 +71,5 @@ export const authApi = createApi({
                 }
             },
         }),
-
     })
-
 })

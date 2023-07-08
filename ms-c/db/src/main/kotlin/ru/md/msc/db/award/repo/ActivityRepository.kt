@@ -9,9 +9,10 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.award.model.ActivityEntity
 import ru.md.msc.domain.award.model.AwardCount
-import ru.md.msc.domain.dept.model.CountByDept
+import ru.md.msc.domain.award.model.AwardState
 import ru.md.msc.domain.award.model.IAwardCount
 import ru.md.msc.domain.award.model.WWAwardCount
+import ru.md.msc.domain.dept.model.CountByDept
 import java.time.LocalDateTime
 
 @Repository
@@ -27,19 +28,28 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	@EntityGraph("activityWithUser")
 	fun findByAwardIdAndActiv(awardId: Long, activ: Boolean = true, sort: Sort): List<ActivityEntity>
 
+	//	@EntityGraph("activityWithUserAndAwardAndDept")
 	@EntityGraph("activityWithUserAndAward")
 	@Query(
 		"""
 		from ActivityEntity a where 
 		a.activ = true and a.dept.id = :deptId and
 		(coalesce(:minDate, null) is null or a.date >= :minDate) and
-		(coalesce(:maxDate, null) is null or a.date <= :maxDate)
+		(coalesce(:maxDate, null) is null or a.date <= :maxDate) and 
+		(:awardState is null or a.award.state = :awardState) and
+		((:filter is null) or (
+			upper(a.user.lastname) like upper(:filter) or 
+			upper(a.user.lastname) like upper(:filter) or 
+			upper(a.award.name) like upper(:filter)
+		))
 	"""
 	)
 	fun findByDeptIdPage(
 		deptId: Long,
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
+		awardState: AwardState? = null,
+		filter: String? = null,
 		pageable: Pageable
 	): Page<ActivityEntity>
 
@@ -50,7 +60,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 			where a.dept.id in :deptsIds and  
 				a.actionType='A' and a.activ and 
 				(coalesce(:minDate, null) is null or a.date >= :minDate) and
-				(coalesce(:maxDate, null) is null or a.date <= :maxDate)
+				(coalesce(:maxDate, null) is null or a.date <= :maxDate) 
 			group by a.dept.id
 	"""
 	)
@@ -111,28 +121,31 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	/**
 	 * Количество наград и номинаций по отделам за период
 	 */
-	@Query("""
-		select new ru.md.msc.domain.award.model.AwardCount(
-			0,
-			'depts',
-			(select count (*) from ActivityEntity a where a.dept.id in :deptsIds and a.activ and a.actionType='A' and
-				(coalesce(:minDate, null) is null or a.date >= :minDate) and (coalesce(:maxDate, null) is null or a.date <= :maxDate)
-			),
-			(select count (*) from ActivityEntity a where a.dept.id in :deptsIds and a.activ and a.actionType='P' and
-				(coalesce(:minDate, null) is null or a.date >= :minDate) and (coalesce(:maxDate, null) is null or a.date <= :maxDate)
+	/*	@Query(
+			"""
+			select new ru.md.msc.domain.award.model.AwardCount(
+				0,
+				'depts',
+				(select count (*) from ActivityEntity a where a.dept.id in :deptsIds and a.activ and a.actionType='A' and
+					(coalesce(:minDate, null) is null or a.date >= :minDate) and (coalesce(:maxDate, null) is null or a.date <= :maxDate)
+				),
+				(select count (*) from ActivityEntity a where a.dept.id in :deptsIds and a.activ and a.actionType='P' and
+					(coalesce(:minDate, null) is null or a.date >= :minDate) and (coalesce(:maxDate, null) is null or a.date <= :maxDate)
+				)
 			)
+		"""
 		)
-	""")
-	fun getSumAwardCountByDepts(
-		deptsIds: List<Long>,
-		minDate: LocalDateTime? = null,
-		maxDate: LocalDateTime? = null,
-	): AwardCount
+		fun getSumAwardCountByDepts(
+			deptsIds: List<Long>,
+			minDate: LocalDateTime? = null,
+			maxDate: LocalDateTime? = null,
+		): AwardCount*/
 
 	/**
 	 * Количество сотрудников имеющих и не имеющих награды
 	 */
-	@Query("""
+	@Query(
+		"""
 		select new ru.md.msc.domain.award.model.WWAwardCount(
 			(select count(u.id) from UserEntity u where u.dept.id in (:deptsIds) and 
 				(select count(*) from ActivityEntity a where a.activ and a.actionType='A' and a.user.id=u.id and 
@@ -145,7 +158,8 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 				)<1
 			)
 		)
-	""")
+	"""
+	)
 	fun getWWAwardCount(
 		deptsIds: List<Long>,
 		minDate: LocalDateTime? = null,

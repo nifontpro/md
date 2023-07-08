@@ -110,6 +110,7 @@ fun AwardContext.fromTransport(request: GetActivAwardByDeptRequest) {
 	command = AwardCommand.GET_ACTIVE_AWARD_BY_DEPT
 	authId = request.authId
 	deptId = request.deptId
+	awardState = request.awardState
 	baseQuery = request.baseRequest.toBaseQuery()
 }
 

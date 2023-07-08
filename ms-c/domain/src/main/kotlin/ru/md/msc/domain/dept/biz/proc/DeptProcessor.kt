@@ -70,7 +70,15 @@ class DeptProcessor(
 				getDeptListByParentDeptIdChain()
 			}
 
-			operation("Получить отдел по id", DeptCommand.GET_DEPT_BY_ID_DETAILS) {
+			operation("Получить отдел по id", DeptCommand.GET_DEPT_BY_ID) {
+				validateDeptId("Проверяем deptId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
+				getDeptById("Получаем отдел")
+			}
+
+
+			operation("Получить отдел по id с деталями", DeptCommand.GET_DEPT_BY_ID_DETAILS) {
 				validateDeptId("Проверяем deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")

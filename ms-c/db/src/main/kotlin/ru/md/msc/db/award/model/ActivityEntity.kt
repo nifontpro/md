@@ -27,6 +27,11 @@ import java.util.*
 	attributeNodes = [NamedAttributeNode("user"), NamedAttributeNode("award")]
 )
 
+@NamedEntityGraph(
+	name = "activityWithUserAndAwardAndDept",
+	attributeNodes = [NamedAttributeNode("user"), NamedAttributeNode("award"), NamedAttributeNode("dept")]
+)
+
 @Entity
 @Table(name = "activity", schema = "md", catalog = "medalist")
 class ActivityEntity(

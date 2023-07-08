@@ -19,7 +19,7 @@ interface AwardService {
 	fun deleteImage(awardId: Long, imageId: Long): BaseImage
 	fun sendActivity(activity: Activity): Activity
 	fun findActivAwardsByUser(userId: Long, orders: List<BaseOrder> = emptyList()): List<Activity>
-	fun findActivAwardsByDept(deptId: Long, baseQuery: BaseQuery): PageResult<Activity>
+	fun findActivAwardsByDept(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Activity>
 	fun findUsersByActivAward(awardId: Long, orders: List<BaseOrder>): List<Activity>
 	fun findBySubDept(deptId: Long, baseQuery: BaseQuery): PageResult<Award>
 	fun findByDeptId(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award>

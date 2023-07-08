@@ -16,3 +16,5 @@ fun BaseQuery.toPageRequest(): PageRequest {
 //}
 
 fun String?.toSearch(): String = this?.let { "$it%" } ?: "%"
+
+fun String?.toSearchOrNull(): String? = this?.let { "$it%" }
