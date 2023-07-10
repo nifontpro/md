@@ -21,12 +21,42 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	@Query("from ActivityEntity a where a.user.id = :userId and a.award.id = :awardId")
 	fun findByUserIdAndAwardId(userId: Long, awardId: Long): List<ActivityEntity>
 
-	//	@Query("from ActivityEntity a where a.user.id = :userId and a.activ = true")
 	@EntityGraph("activityWithAward")
-	fun findByUserIdAndActiv(userId: Long, activ: Boolean = true, sort: Sort): List<ActivityEntity>
+	@Query(
+		"""
+		from ActivityEntity a where 
+		a.award.id = :awardId and a.activ and 
+		(coalesce(:minDate, null) is null or a.date >= :minDate) and
+		(coalesce(:maxDate, null) is null or a.date <= :maxDate) and 
+		((:filter is null) or
+			(upper(a.award.name) like upper(:filter))
+		)
+		"""
+	)
+	fun findActivityByUserId(
+		userId: Long,
+		minDate: LocalDateTime? = null,
+		maxDate: LocalDateTime? = null,
+		filter: String? = null,
+		sort: Sort
+	): List<ActivityEntity>
 
 	@EntityGraph("activityWithUser")
-	fun findByAwardIdAndActiv(awardId: Long, activ: Boolean = true, sort: Sort): List<ActivityEntity>
+	@Query(
+		"""
+		from ActivityEntity a where 
+		a.award.id = :awardId and a.activ and 
+		((:filter is null) or (
+			upper(a.user.lastname) like upper(:filter) or 
+			upper(a.user.firstname) like upper(:filter)
+		))
+		"""
+	)
+	fun findActivityByAwardId(
+		awardId: Long,
+		filter: String? = null,
+		sort: Sort
+	): List<ActivityEntity>
 
 	//	@EntityGraph("activityWithUserAndAwardAndDept")
 	@EntityGraph("activityWithUserAndAward")
@@ -39,7 +69,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		(:awardState is null or a.award.state = :awardState) and
 		((:filter is null) or (
 			upper(a.user.lastname) like upper(:filter) or 
-			upper(a.user.lastname) like upper(:filter) or 
+			upper(a.user.firstname) like upper(:filter) or 
 			upper(a.award.name) like upper(:filter)
 		))
 	"""

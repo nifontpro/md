@@ -7,7 +7,6 @@ import ru.md.base_db.mapper.*
 import ru.md.base_domain.gallery.SmallItem
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.image.model.ImageType
-import ru.md.base_domain.model.BaseOrder
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
 import ru.md.msc.db.award.model.image.AwardImageEntity
@@ -150,13 +149,23 @@ class AwardServiceImpl(
 		return activityEntity.toActivity()
 	}
 
-	override fun findActivAwardsByUser(userId: Long, orders: List<BaseOrder>): List<Activity> {
-		val activities = activityRepository.findByUserIdAndActiv(userId = userId, sort = orders.toSort())
+	override fun findActivAwardsByUser(userId: Long, baseQuery: BaseQuery): List<Activity> {
+		val activities = activityRepository.findActivityByUserId(
+			userId = userId,
+			minDate = baseQuery.minDate,
+			maxDate = baseQuery.maxDate,
+			filter = baseQuery.filter.toSearchOrNull(),
+			sort = baseQuery.orders.toSort()
+		)
 		return activities.map { it.toActivityOnlyAward() }
 	}
 
-	override fun findUsersByActivAward(awardId: Long, orders: List<BaseOrder>): List<Activity> {
-		val activities = activityRepository.findByAwardIdAndActiv(awardId = awardId, sort = orders.toSort())
+	override fun findUsersByActivAward(awardId: Long, baseQuery: BaseQuery): List<Activity> {
+		val activities = activityRepository.findActivityByAwardId(
+			awardId = awardId,
+			filter = baseQuery.filter.toSearchOrNull(),
+			sort = baseQuery.orders.toSort()
+		)
 		return activities.map { it.toActivityOnlyUser() }
 	}
 

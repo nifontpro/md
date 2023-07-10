@@ -12,7 +12,7 @@ fun ICorChainDsl<AwardContext>.getActiveAwardsByUser(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-		activities = awardService.findActivAwardsByUser(userId = userId, orders = baseQuery.orders)
+		activities = awardService.findActivAwardsByUser(userId = userId, baseQuery = baseQuery)
 	}
 
 	except {

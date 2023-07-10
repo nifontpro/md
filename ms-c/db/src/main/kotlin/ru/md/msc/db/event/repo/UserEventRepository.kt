@@ -17,6 +17,7 @@ interface UserEventRepository : JpaRepository<UserEventEntity, Long> {
 			(extract(DOY FROM e.event_date)) days,
 			e.name eventName
 		 from env.user_event e where e.user_id=:userId
+		 order by days, eventName
 	""",
 		nativeQuery = true
 	)

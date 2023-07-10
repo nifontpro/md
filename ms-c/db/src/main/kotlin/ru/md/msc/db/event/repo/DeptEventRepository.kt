@@ -116,7 +116,8 @@ select (select count(*)
 			e.event_date eventDate,
 			(extract(DOY FROM e.event_date)) days,
 			e.name eventName
-		 from env.dept_event e where e.dept_id=:deptId
+		 from env.dept_event e where e.dept_id=:deptId 
+		 order by days, eventName
 	""",
 		nativeQuery = true
 	)
