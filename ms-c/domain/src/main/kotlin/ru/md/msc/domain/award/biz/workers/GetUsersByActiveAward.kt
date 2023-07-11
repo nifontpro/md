@@ -1,5 +1,6 @@
 package ru.md.msc.domain.award.biz.workers
 
+import ru.md.base_domain.biz.helper.pageFun
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
@@ -12,7 +13,7 @@ fun ICorChainDsl<AwardContext>.getUsersByActiveAward(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-		activities = awardService.findUsersByActivAward(awardId = awardId, baseQuery = baseQuery)
+		activities = pageFun { awardService.findUsersByActivAward(awardId = awardId, baseQuery = baseQuery) }
 	}
 
 	except {

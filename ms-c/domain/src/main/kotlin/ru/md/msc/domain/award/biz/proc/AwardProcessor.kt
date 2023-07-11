@@ -143,6 +143,7 @@ class AwardProcessor(
 
 			operation("Получить активные награды сотрудника", AwardCommand.GET_ACTIVE_AWARD_BY_USER) {
 				validateUserId("Проверка userId")
+				validatePageParamsChain()
 				setActionByUserValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
@@ -161,6 +162,7 @@ class AwardProcessor(
 			}
 
 			operation("Получить сотрудников, награжденных наградой", AwardCommand.GET_USERS_BY_ACTIVE_AWARD) {
+				validatePageParamsChain()
 				setActionByAwardValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
 				validateViewAccessToAwardChain()
