@@ -103,6 +103,7 @@ fun AwardContext.fromTransport(request: GetActivAwardByUserRequest) {
 	command = AwardCommand.GET_ACTIVE_AWARD_BY_USER
 	authId = request.authId
 	userId = request.userId
+	awardState = request.awardState
 	baseQuery = request.baseRequest.toBaseQuery()
 }
 

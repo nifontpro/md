@@ -3,7 +3,10 @@ package ru.md.msc.db.award.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import ru.md.base_db.mapper.*
+import ru.md.base_db.mapper.toImage
+import ru.md.base_db.mapper.toPageRequest
+import ru.md.base_db.mapper.toPageResult
+import ru.md.base_db.mapper.toSearchOrNull
 import ru.md.base_domain.gallery.SmallItem
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.image.model.ImageType
@@ -149,12 +152,17 @@ class AwardServiceImpl(
 		return activityEntity.toActivity()
 	}
 
-	override fun findActivAwardsByUser(userId: Long, baseQuery: BaseQuery): PageResult<Activity> {
+	override fun findActivAwardsByUser(
+		userId: Long,
+		awardState: AwardState?,
+		baseQuery: BaseQuery
+	): PageResult<Activity> {
 		val activities = activityRepository.findActivityByUserId(
 			userId = userId,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 			filter = baseQuery.filter.toSearchOrNull(),
+			awardState = awardState,
 			pageable = baseQuery.toPageRequest()
 		)
 		return activities.toPageResult { it.toActivityOnlyAward() }
