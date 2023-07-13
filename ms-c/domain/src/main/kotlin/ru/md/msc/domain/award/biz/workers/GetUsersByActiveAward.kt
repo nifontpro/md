@@ -6,6 +6,7 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.biz.proc.getActivityError
+import ru.md.msc.domain.award.model.ActionType
 
 fun ICorChainDsl<AwardContext>.getUsersByActiveAward(title: String) = worker {
 
@@ -13,10 +14,19 @@ fun ICorChainDsl<AwardContext>.getUsersByActiveAward(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-		activities = pageFun { awardService.findUsersByActivAward(awardId = awardId, baseQuery = baseQuery) }
+		val actionTypeNull = if (actionType == ActionType.UNDEF) null else actionType
+		log.info("actionTypeNull = $actionTypeNull")
+		activities = pageFun {
+			awardService.findUsersByActivAward(
+				awardId = awardId,
+				actionType = actionTypeNull,
+				baseQuery = baseQuery
+			)
+		}
 	}
 
 	except {
+		log.error(it.message)
 		getActivityError()
 	}
 

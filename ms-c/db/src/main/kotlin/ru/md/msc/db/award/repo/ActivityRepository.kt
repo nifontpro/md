@@ -7,10 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.award.model.ActivityEntity
-import ru.md.msc.domain.award.model.AwardCount
-import ru.md.msc.domain.award.model.AwardState
-import ru.md.msc.domain.award.model.IAwardCount
-import ru.md.msc.domain.award.model.WWAwardCount
+import ru.md.msc.domain.award.model.*
 import ru.md.msc.domain.dept.model.CountByDept
 import java.time.LocalDateTime
 
@@ -45,6 +42,9 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		"""
 		from ActivityEntity a where 
 		a.award.id = :awardId and a.activ and 
+		(:actionType is null or a.actionType = :actionType) and 
+		(coalesce(:minDate, null) is null or a.date >= :minDate) and
+		(coalesce(:maxDate, null) is null or a.date <= :maxDate) and 
 		((:filter is null) or (
 			upper(a.user.lastname) like upper(:filter) or 
 			upper(a.user.firstname) like upper(:filter)
@@ -53,7 +53,10 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	)
 	fun findActivityByAwardId(
 		awardId: Long,
+		minDate: LocalDateTime? = null,
+		maxDate: LocalDateTime? = null,
 		filter: String? = null,
+		actionType: ActionType? = null,
 		pageable: Pageable
 	): Page<ActivityEntity>
 
