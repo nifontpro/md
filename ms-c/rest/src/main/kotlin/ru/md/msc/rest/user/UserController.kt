@@ -114,6 +114,20 @@ class UserController(
 		)
 	}
 
+	@PostMapping("exclude_by_depts")
+	private suspend fun getBySubDeptsExclude(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetUsersByDeptsExcludeRequest
+	): BaseResponse<List<User>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = userProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportUsers() }
+		)
+	}
+
 	@PostMapping("delete")
 	private suspend fun deleteUser(
 		@RequestHeader(name = AUTH) bearerToken: String,

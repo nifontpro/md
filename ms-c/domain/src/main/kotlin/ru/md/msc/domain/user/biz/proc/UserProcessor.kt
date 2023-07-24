@@ -9,6 +9,7 @@ import ru.md.base_domain.biz.workers.operation
 import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
+import ru.md.msc.domain.award.biz.validate.validateAwardId
 import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
 import ru.md.msc.domain.base.validate.auth.validateAuthUserLevel
@@ -96,6 +97,7 @@ class UserProcessor(
 			}
 
 			operation("Получение сотрудников отдела", UserCommand.GET_BY_DEPT) {
+				validateDeptId("Проверка deptId")
 				validatePageParamsChain()
 				setUsersValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
@@ -105,12 +107,24 @@ class UserProcessor(
 			}
 
 			operation("Получение сотрудников всех подотделов", UserCommand.GET_BY_SUB_DEPTS) {
+				validateDeptId("Проверка deptId")
 				validatePageParamsChain()
 				setUsersBySubdeptsValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getUsersBySubDepts("Получаем сотрудников подотделов")
+			}
+
+			operation("Получение сотрудников отделов без награды", UserCommand.GET_BY_SUB_DEPTS_EXCLUDE_AWARD) {
+				validateDeptId("Проверка deptId")
+				validateAwardId("Проверяем awardId")
+				validatePageParamsChain()
+				setUsersBySubdeptsValidSortedFields("Устанавливаем допустимые поля сортировки")
+				validateSortedFields("Проверка списка полей сортировки")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
+				getUsersByDeptsExclude("Получаем сотрудников отделов без данной награды")
 			}
 
 			operation("Получение профиля сотрудника", UserCommand.GET_BY_ID_DETAILS) {

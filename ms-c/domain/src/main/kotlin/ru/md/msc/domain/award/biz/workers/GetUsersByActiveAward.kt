@@ -15,7 +15,6 @@ fun ICorChainDsl<AwardContext>.getUsersByActiveAward(title: String) = worker {
 
 	handle {
 		val actionTypeNull = if (actionType == ActionType.UNDEF) null else actionType
-		log.info("actionTypeNull = $actionTypeNull")
 		activities = pageFun {
 			awardService.findUsersByActivAward(
 				awardId = awardId,

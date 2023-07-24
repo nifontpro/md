@@ -14,7 +14,6 @@ class AwardContext : BaseClientContext() {
 	var activity: Activity = Activity()
 	var activities: List<Activity> = emptyList()
 
-	var awardId: Long = 0
 	var userDeptId: Long = 0
 	var actionType: ActionType = ActionType.UNDEF
 	var awardState: AwardState? = null

@@ -1,12 +1,12 @@
 package ru.md.msc.domain.award.biz.validate
 
-import ru.md.cor.ICorChainDsl
-import ru.md.cor.worker
-import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.base_domain.biz.helper.errorValidation
 import ru.md.base_domain.biz.helper.fail
+import ru.md.cor.ICorChainDsl
+import ru.md.cor.worker
+import ru.md.msc.domain.base.biz.BaseClientContext
 
-fun ICorChainDsl<AwardContext>.validateAwardId(title: String) = worker {
+fun <T: BaseClientContext> ICorChainDsl<T>.validateAwardId(title: String) = worker {
 	this.title = title
 	on { awardId < 1 }
 	handle {

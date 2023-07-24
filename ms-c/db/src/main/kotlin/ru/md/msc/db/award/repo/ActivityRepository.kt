@@ -62,6 +62,24 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		pageable: Pageable
 	): Page<ActivityEntity>
 
+	@EntityGraph("activityWithUser")
+	@Query(
+		"""
+		select a.user.id from ActivityEntity a where 
+		a.award.id = :awardId and a.activ and 
+		(:actionType is null or a.actionType = :actionType) and 
+		((:filter is null) or (
+			upper(a.user.lastname) like upper(:filter) or 
+			upper(a.user.firstname) like upper(:filter)
+		))
+		"""
+	)
+	fun findActivityUserIdsByAwardId(
+		awardId: Long,
+		filter: String? = null,
+		actionType: ActionType? = null,
+	): List<Long>
+
 	//	@EntityGraph("activityWithUserAndAwardAndDept")
 	@EntityGraph("activityWithUserAndAward")
 	@Query(

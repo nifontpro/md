@@ -91,6 +91,15 @@ fun UserContext.fromTransport(request: GetUsersBySubDeptsRequest) {
 	baseQuery = request.baseRequest?.toBaseQuery() ?: BaseQuery()
 }
 
+fun UserContext.fromTransport(request: GetUsersByDeptsExcludeRequest) {
+	command = UserCommand.GET_BY_SUB_DEPTS_EXCLUDE_AWARD
+	authId = request.authId
+	deptId = request.deptId
+	awardId = request.awardId
+	actionType = request.actionType
+	baseQuery = request.baseRequest?.toBaseQuery() ?: BaseQuery()
+}
+
 fun UserContext.fromTransport(request: GetUserByIdRequest) {
 	command = UserCommand.GET_BY_ID_DETAILS
 	authId = request.authId

@@ -1,6 +1,7 @@
 package ru.md.msc.domain.user.biz.proc
 
 import ru.md.base_domain.biz.proc.IBaseCommand
+import ru.md.msc.domain.award.model.ActionType
 import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.msc.domain.user.model.*
 
@@ -13,6 +14,9 @@ class UserContext : BaseClientContext() {
 	var genderCount: GenderCount = GenderCount()
 	var userSettings: UserSettings = UserSettings()
 
+	// for exclude award:
+	var actionType: ActionType? = null
+
 //	var usersDetails: List<UserDetails> = emptyList()
 }
 
@@ -23,6 +27,7 @@ enum class UserCommand : IBaseCommand {
 	GET_PROFILES,
 	GET_BY_DEPT,
 	GET_BY_SUB_DEPTS,
+	GET_BY_SUB_DEPTS_EXCLUDE_AWARD,
 	GET_BY_ID_DETAILS,
 	DELETE,
 	IMG_ADD,

@@ -3,13 +3,11 @@ package ru.md.msc.db.user.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import ru.md.base_db.mapper.toImage
-import ru.md.base_db.mapper.toPageRequest
-import ru.md.base_db.mapper.toPageResult
-import ru.md.base_db.mapper.toSearch
+import ru.md.base_db.mapper.*
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
+import ru.md.msc.db.award.repo.ActivityRepository
 import ru.md.msc.db.dept.model.DeptDetailsEntity
 import ru.md.msc.db.dept.model.DeptEntity
 import ru.md.msc.db.dept.repo.DeptDetailsRepository
@@ -19,6 +17,7 @@ import ru.md.msc.db.user.model.image.UserImageEntity
 import ru.md.msc.db.user.model.mappers.*
 import ru.md.msc.db.user.model.role.RoleEntity
 import ru.md.msc.db.user.repo.*
+import ru.md.msc.domain.award.model.ActionType
 import ru.md.msc.domain.base.biz.ImageNotFoundException
 import ru.md.msc.domain.dept.model.DeptType
 import ru.md.msc.domain.user.biz.proc.UserNotFoundException
@@ -38,7 +37,8 @@ class UserServiceImpl(
 	private val deptRepository: DeptRepository,
 	private val deptDetailsRepository: DeptDetailsRepository,
 	private val userImageRepository: UserImageRepository,
-	private val userSettingsRepository: UserSettingsRepository
+	private val userSettingsRepository: UserSettingsRepository,
+	private val activityRepository: ActivityRepository,
 ) : UserService {
 
 	/**
@@ -149,6 +149,36 @@ class UserServiceImpl(
 		return res.toPageResult { it.toUserWithDeptOnly() }
 	}
 
+	override fun findByDeptsExclude(
+		deptId: Long,
+		awardId: Long,
+		actionType: ActionType?,
+		baseQuery: BaseQuery
+	): PageResult<User> {
+		val pageRequest = baseQuery.toPageRequest()
+		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
+
+		val filter = baseQuery.filter.toSearchOrNull()
+
+		val excludeUsersIds = activityRepository.findActivityUserIdsByAwardId(
+			awardId = awardId,
+			filter = filter,
+			actionType = actionType
+		)
+
+		println("--> excludeUsersIds = $excludeUsersIds")
+
+		val res = userRepository.findByDeptIdExcludeIds(
+			deptsIds = deptsIds,
+			filter = filter,
+//			usersIds = excludeUsersIds.ifEmpty { null },
+			notExclude = excludeUsersIds.isEmpty(),
+			usersIds = excludeUsersIds,
+			pageable = pageRequest
+		)
+		return res.toPageResult { it.toUserWithDeptOnly() }
+	}
+
 	override fun findById(userId: Long): User? {
 		return userRepository.findByIdOrNull(userId)?.toUserOnlyRoles()
 	}
@@ -215,38 +245,22 @@ class UserServiceImpl(
 	}
 
 	override fun getGenderCountByDept(deptId: Long, subdepts: Boolean): GenderCount {
-		val deptsIds = if (subdepts) {
-			deptRepository.subTreeIds(deptId = deptId)
-		} else {
-			listOf(deptId)
-		}
+		val deptsIds = getDepts(deptId = deptId, subdepts = subdepts)
 		return userRepository.genderCount(deptsIds = deptsIds)
 	}
 
 	override fun getUsersWithActivity(deptId: Long, baseQuery: BaseQuery): List<User> {
-		val deptsIds = if (baseQuery.subdepts) {
-			deptRepository.subTreeIds(deptId = deptId)
-		} else {
-			listOf(deptId)
-		}
+		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		return userRepository.findByDeptIdIn(deptsIds = deptsIds).map { it.toUserActivity() }
 	}
 
 	override fun getUsersWithAward(deptId: Long, baseQuery: BaseQuery): List<User> {
-		val deptsIds = if (baseQuery.subdepts) {
-			deptRepository.subTreeIds(deptId = deptId)
-		} else {
-			listOf(deptId)
-		}
+		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		return userRepository.findByDeptIdIn(deptsIds = deptsIds).map { it.toUserAward() }
 	}
 
 	override fun getUsersWithAwardCount(deptId: Long, baseQuery: BaseQuery): PageResult<User> {
-		val deptsIds = if (baseQuery.subdepts) {
-			deptRepository.subTreeIds(deptId = deptId)
-		} else {
-			listOf(deptId)
-		}
+		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		val users = userRepository.findUsersWithAwardCount(
 			deptsIds = deptsIds,
 			minDate = baseQuery.minDate,
@@ -254,6 +268,14 @@ class UserServiceImpl(
 			pageable = baseQuery.toPageRequest()
 		)
 		return users.toPageResult { it.toUser() }
+	}
+
+	private fun getDepts(deptId: Long, subdepts: Boolean): List<Long> {
+		return if (subdepts) {
+			deptRepository.subTreeIds(deptId = deptId)
+		} else {
+			listOf(deptId)
+		}
 	}
 
 	override fun saveSettings(userSettings: UserSettings): UserSettings {

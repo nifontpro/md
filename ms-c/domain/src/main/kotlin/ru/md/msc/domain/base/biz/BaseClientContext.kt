@@ -18,6 +18,7 @@ abstract class BaseClientContext(
 	var authId: Long = 0,
 	var userId: Long = 0,
 	var deptId: Long = 0,
+	var awardId: Long = 0,
 	var rootDeptId: Long = 0,
 
 	var modifyUser: User = User(),

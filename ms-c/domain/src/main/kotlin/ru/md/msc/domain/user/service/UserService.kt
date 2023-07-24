@@ -3,6 +3,7 @@ package ru.md.msc.domain.user.service
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
+import ru.md.msc.domain.award.model.ActionType
 import ru.md.msc.domain.user.model.GenderCount
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
@@ -30,4 +31,5 @@ interface UserService {
 	fun getUsersWithAwardCount(deptId: Long, baseQuery: BaseQuery): PageResult<User>
 	fun saveSettings(userSettings: UserSettings): UserSettings
 	fun getSettings(userId: Long): UserSettings?
+	fun findByDeptsExclude(deptId: Long, awardId: Long, actionType: ActionType?, baseQuery: BaseQuery): PageResult<User>
 }

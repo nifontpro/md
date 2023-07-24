@@ -28,6 +28,23 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 		pageable: Pageable
 	): Page<UserEntity>
 
+	@EntityGraph("withDept")
+	@Query("""from UserEntity u where u.dept.id in :deptsIds and 
+		((:notExclude = true) or (u.id not in :usersIds)) and
+		((:filter is null) or (
+			upper(u.lastname) like upper(:filter) or 
+			upper(u.firstname) like upper(:filter)
+		))
+
+	""")
+	fun findByDeptIdExcludeIds(
+		deptsIds: List<Long>,
+		filter: String? = null,
+		notExclude: Boolean = false,
+		usersIds: List<Long>,
+		pageable: Pageable
+	): Page<UserEntity>
+
 	@Modifying
 	@Query("delete from UserEntity u where u.id = :userId")
 	override fun deleteById(userId: Long)
