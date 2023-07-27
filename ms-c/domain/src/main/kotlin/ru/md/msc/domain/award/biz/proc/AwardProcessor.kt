@@ -177,6 +177,17 @@ class AwardProcessor(
 				getAvailableAwardsBySubdepts("Получаем доступные награды")
 			}
 
+			operation(
+				"Получить доступные для награждения медали, кроме уже полученных сотрудником",
+				AwardCommand.GET_ADMIN_AVAILABLE_USER_EXCLUDE
+			) {
+				validatePageParamsChain()
+				setAwardWithDeptValidSortedFields("Устанавливаем допустимые поля сортировки")
+				validateSortedFields("Проверка списка полей сортировки")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				getAvailableAwardsUserExclude("Получаем доступные награды, кроме тех, которыми награжден сотрудник")
+			}
+
 			operation("Количество наград в отделе (включая подотделы - опц.)", AwardCommand.COUNT_BY_DEPTS) {
 				validateDeptId("Проверяем deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")

@@ -85,7 +85,39 @@ class AwardServiceImpl(
 			deptsIds = deptsIds,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
-			filter = baseQuery.filter?.let { "$it%" },
+			filter = baseQuery.filter.toSearchOrNull(),
+			pageable = pageRequest
+		)
+		return awards.toPageResult { it.toAwardOnlyDept() }
+	}
+
+	override fun findBySubDeptUserExlude(
+		deptId: Long,
+		userId: Long,
+		actionType: ActionType,
+		baseQuery: BaseQuery
+	): PageResult<Award> {
+
+		val filter = baseQuery.filter.toSearchOrNull()
+
+		val excludeAwardIds = activityRepository.findActivityAwardIdsByUserId(
+			userId = userId,
+			filter = filter,
+			actionType = actionType.takeIf { it != ActionType.UNDEF }
+		)
+
+		println("excludeAwardIds = $excludeAwardIds")
+
+		val pageRequest = baseQuery.toPageRequest()
+		val deptsIds = deptRepository.subTreeIds(deptId = deptId)
+
+		val awards = awardRepository.findByDeptIdIn(
+			deptsIds = deptsIds,
+			minDate = baseQuery.minDate,
+			maxDate = baseQuery.maxDate,
+			filter = filter,
+			notExclude = excludeAwardIds.isEmpty(),
+			excludeAwardIds = excludeAwardIds,
 			pageable = pageRequest
 		)
 		return awards.toPageResult { it.toAwardOnlyDept() }

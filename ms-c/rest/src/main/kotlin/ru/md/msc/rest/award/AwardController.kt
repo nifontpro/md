@@ -125,6 +125,39 @@ class AwardController(
 		)
 	}
 
+	/**
+	 * Получение наград доступных для награждения сотрудников текущим админом
+	 * с исключением сотрудника userId, который уже имеет эту награду
+	 * (исключение действует только для наград с типом PERIOD, наградами SIMPLE можно награждать сколько угодно)
+	 * отделы наград берутся из поддерева отделов авторизованного пользователя
+	 * Для наград типа AwardType.PERIOD - выводятся только попадающие в период номинации (state=NOMINEE)
+	 * baseRequest:
+	 *  filter - фильтрация по имени награды (необязателен)
+	 *  Параметры пагинации page, pageSize - необязательны, по умолчанию 0 и 100 соответственно
+	 *  minDate <= award.startDate (отсутствует - без min ограничения)
+	 *  maxDate >= award.endDate (отсутствует - без max ограничения)
+	 *  Допустимые поля для сортировки:
+	 *  			"name",
+	 *  			"type",
+	 *  			"startDate",
+	 *  			"endDate",
+	 *  			"dept.name",
+	 *  			"dept.classname",
+	 */
+	@PostMapping("admin_available_user_exclude")
+	private suspend fun getAwardBySubDeptUserExclude(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetAwardsBySubDeptsExcludeUserRequest
+	): BaseResponse<List<AwardResponse>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = awardProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportAwards() }
+		)
+	}
+
 	@PostMapping("delete")
 	private suspend fun delete(
 		@RequestHeader(name = AUTH) bearerToken: String,

@@ -166,8 +166,6 @@ class UserServiceImpl(
 			actionType = actionType
 		)
 
-		println("--> excludeUsersIds = $excludeUsersIds")
-
 		val res = userRepository.findByDeptIdExcludeIds(
 			deptsIds = deptsIds,
 			filter = filter,

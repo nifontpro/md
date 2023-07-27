@@ -70,6 +70,14 @@ fun AwardContext.fromTransport(request: GetAwardsBySubDeptsRequest) {
 	baseQuery = request.baseRequest.toBaseQuery()
 }
 
+fun AwardContext.fromTransport(request: GetAwardsBySubDeptsExcludeUserRequest) {
+	command = AwardCommand.GET_ADMIN_AVAILABLE_USER_EXCLUDE
+	authId = request.authId
+	userId = request.userId
+	actionType = request.actionType
+	baseQuery = request.baseRequest.toBaseQuery()
+}
+
 fun AwardContext.fromTransport(request: DeleteAwardRequest) {
 	command = AwardCommand.DELETE
 	authId = request.authId

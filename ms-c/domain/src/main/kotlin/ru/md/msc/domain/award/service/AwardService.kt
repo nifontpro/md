@@ -28,4 +28,10 @@ interface AwardService {
 	fun getWWAwardCount(deptId: Long, baseQuery: BaseQuery): WWAwardCount
 	fun setMainImage(awardId: Long): BaseImage?
 	fun updateAllAwardImg()
+	fun findBySubDeptUserExlude(
+		deptId: Long,
+		userId: Long,
+		actionType: ActionType,
+		baseQuery: BaseQuery
+	): PageResult<Award>
 }

@@ -62,6 +62,9 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		pageable: Pageable
 	): Page<ActivityEntity>
 
+	/**
+	 * Получение ids сотрудников, награжденных наградой
+	 */
 	@EntityGraph("activityWithUser")
 	@Query(
 		"""
@@ -76,6 +79,26 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	)
 	fun findActivityUserIdsByAwardId(
 		awardId: Long,
+		filter: String? = null,
+		actionType: ActionType? = null,
+	): List<Long>
+
+	/**
+	 * Получение ids наград, которыми уже награжден сотрудник
+	 */
+	@EntityGraph("activityWithAward")
+	@Query(
+		"""
+		select a.award.id from ActivityEntity a where 
+		a.user.id = :userId and a.activ and a.award.type = 'P' and
+		(:actionType is null or a.actionType = :actionType) and 
+		((:filter is null) or (
+			upper(a.award.name) like upper(:filter) 
+		))
+		"""
+	)
+	fun findActivityAwardIdsByUserId(
+		userId: Long,
 		filter: String? = null,
 		actionType: ActionType? = null,
 	): List<Long>

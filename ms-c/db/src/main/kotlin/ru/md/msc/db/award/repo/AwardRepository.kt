@@ -44,6 +44,7 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		"""
 		from AwardEntity a where 
 		a.dept.id in :deptsIds and 
+		((:notExclude = true) or (a.id not in :excludeAwardIds)) and 
 		((
 			a.type = 'P'  and 
 			a.startDate <= NOW() and (coalesce(:minDate, null) is null or a.startDate >= :minDate) and
@@ -62,6 +63,8 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
 		filter: String? = null,
+		notExclude: Boolean = true,
+		excludeAwardIds: List<Long> = emptyList(),
 		pageable: Pageable
 	): Page<AwardEntity>
 
