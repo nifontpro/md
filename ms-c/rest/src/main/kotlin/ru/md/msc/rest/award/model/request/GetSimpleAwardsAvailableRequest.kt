@@ -1,10 +1,9 @@
 package ru.md.msc.rest.award.model.request
 
 import ru.md.base_rest.model.BaseRequest
-import ru.md.msc.domain.award.model.AwardState
 
-data class GetAwardsBySubDeptsRequest(
+data class GetSimpleAwardsAvailableRequest(
 	val authId: Long = 0,
-	val state: AwardState? = null,
+	val userId: Long = 0,
 	val baseRequest: BaseRequest = BaseRequest()
 )

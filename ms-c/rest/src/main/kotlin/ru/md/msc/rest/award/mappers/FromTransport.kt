@@ -67,6 +67,7 @@ fun AwardContext.fromTransport(request: GetAwardsByDeptRequest) {
 fun AwardContext.fromTransport(request: GetAwardsBySubDeptsRequest) {
 	command = AwardCommand.GET_ADMIN_AVAILABLE
 	authId = request.authId
+	awardState = request.state
 	baseQuery = request.baseRequest.toBaseQuery()
 }
 
@@ -75,6 +76,13 @@ fun AwardContext.fromTransport(request: GetAwardsBySubDeptsExcludeUserRequest) {
 	authId = request.authId
 	userId = request.userId
 	actionType = request.actionType
+	baseQuery = request.baseRequest.toBaseQuery()
+}
+
+fun AwardContext.fromTransport(request: GetSimpleAwardsAvailableRequest) {
+	command = AwardCommand.GET_SIMPLE_AWARD_AVAILABLE_USER_EXCLUDE
+	authId = request.authId
+	userId = request.userId
 	baseQuery = request.baseRequest.toBaseQuery()
 }
 

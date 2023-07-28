@@ -158,6 +158,24 @@ class AwardController(
 		)
 	}
 
+	/**
+	 * Получение простых наград с awardType == 'SIMPLE',
+	 * С вычетом тех, которыми уже награжден сотрудник
+	 */
+	@PostMapping("get_simple")
+	private suspend fun getSimpleAwardAvailable(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetSimpleAwardsAvailableRequest
+	): BaseResponse<List<AwardResponse>> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = awardProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportAwards() }
+		)
+	}
+
 	@PostMapping("delete")
 	private suspend fun delete(
 		@RequestHeader(name = AUTH) bearerToken: String,

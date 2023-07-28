@@ -19,7 +19,6 @@ interface AwardService {
 	fun findActivAwardsByUser(userId: Long, awardType: AwardType?, baseQuery: BaseQuery): PageResult<Activity>
 	fun findActivAwardsByDept(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Activity>
 	fun findUsersByActivAward(awardId: Long, actionType: ActionType?, baseQuery: BaseQuery): PageResult<Activity>
-	fun findBySubDept(deptId: Long, baseQuery: BaseQuery): PageResult<Award>
 	fun findByDeptId(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award>
 	fun addGalleryImage(awardId: Long, smallItem: SmallItem): BaseImage
 	fun findActiveCountByDepts(deptId: Long, baseQuery: BaseQuery): List<AwardCount>
@@ -28,7 +27,9 @@ interface AwardService {
 	fun getWWAwardCount(deptId: Long, baseQuery: BaseQuery): WWAwardCount
 	fun setMainImage(awardId: Long): BaseImage?
 	fun updateAllAwardImg()
-	fun findBySubDeptUserExlude(
+	fun findSimpleAwardUserAvailable(deptId: Long, userId: Long, baseQuery: BaseQuery): PageResult<Award>
+	fun findBySubDept(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award>
+	fun findBySubDeptUserExclude(
 		deptId: Long,
 		userId: Long,
 		actionType: ActionType,

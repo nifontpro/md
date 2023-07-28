@@ -90,7 +90,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	@Query(
 		"""
 		select a.award.id from ActivityEntity a where 
-		a.user.id = :userId and a.activ and a.award.type = 'P' and
+		a.user.id = :userId and a.activ and a.award.type = :awardType and
 		(:actionType is null or a.actionType = :actionType) and 
 		((:filter is null) or (
 			upper(a.award.name) like upper(:filter) 
@@ -101,6 +101,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		userId: Long,
 		filter: String? = null,
 		actionType: ActionType? = null,
+		awardType: AwardType,
 	): List<Long>
 
 	//	@EntityGraph("activityWithUserAndAwardAndDept")

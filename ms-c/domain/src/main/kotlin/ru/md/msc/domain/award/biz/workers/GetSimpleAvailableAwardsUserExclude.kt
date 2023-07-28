@@ -7,17 +7,16 @@ import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.biz.proc.getAwardError
 
-fun ICorChainDsl<AwardContext>.getAvailableAwardsUserExclude(title: String) = worker {
+fun ICorChainDsl<AwardContext>.getSimpleAvailableAwardsUserExclude(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
 
 	handle {
 		awards = pageFun {
-			awardService.findBySubDeptUserExclude(
+			awardService.findSimpleAwardUserAvailable(
 				deptId = authUser.dept?.id ?: 0,
 				userId = userId,
-				actionType = actionType,
 				baseQuery = baseQuery
 			)
 		}

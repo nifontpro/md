@@ -44,6 +44,7 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		"""
 		from AwardEntity a where 
 		a.dept.id in :deptsIds and 
+		((:state is null) or (:state = a.state)) and
 		((:notExclude = true) or (a.id not in :excludeAwardIds)) and 
 		((
 			a.type = 'P'  and 
@@ -59,6 +60,32 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 	"""
 	)
 	fun findByDeptIdIn(
+		deptsIds: List<Long>,
+		state: AwardState? = null,
+		minDate: LocalDateTime? = null,
+		maxDate: LocalDateTime? = null,
+		filter: String? = null,
+		notExclude: Boolean = true,
+		excludeAwardIds: List<Long> = emptyList(),
+		pageable: Pageable
+	): Page<AwardEntity>
+
+	@EntityGraph("awardWithDept")
+	@Query(
+		"""
+		from AwardEntity a where 
+		a.dept.id in :deptsIds and 
+		((:notExclude = true) or (a.id not in :excludeAwardIds)) and 
+		(
+			a.type = 'S' and
+			(coalesce(:minDate, null) is null or a.startDate >= :minDate) and 
+			(coalesce(:maxDate, null) is null or a.endDate <= :maxDate)
+		) and 
+		((:filter is null) or (upper(a.name) like upper(:filter)))
+		
+	"""
+	)
+	fun findSimpleAwardByDeptIdIn(
 		deptsIds: List<Long>,
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,

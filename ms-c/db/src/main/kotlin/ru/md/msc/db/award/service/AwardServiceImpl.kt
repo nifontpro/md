@@ -78,11 +78,12 @@ class AwardServiceImpl(
 		return awards.toPageResult { it.toAwardLazy() }
 	}
 
-	override fun findBySubDept(deptId: Long, baseQuery: BaseQuery): PageResult<Award> {
+	override fun findBySubDept(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award> {
 		val pageRequest = baseQuery.toPageRequest()
 		val deptsIds = deptRepository.subTreeIds(deptId = deptId)
 		val awards = awardRepository.findByDeptIdIn(
 			deptsIds = deptsIds,
+			state = awardState,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 			filter = baseQuery.filter.toSearchOrNull(),
@@ -91,7 +92,7 @@ class AwardServiceImpl(
 		return awards.toPageResult { it.toAwardOnlyDept() }
 	}
 
-	override fun findBySubDeptUserExlude(
+	override fun findBySubDeptUserExclude(
 		deptId: Long,
 		userId: Long,
 		actionType: ActionType,
@@ -103,7 +104,8 @@ class AwardServiceImpl(
 		val excludeAwardIds = activityRepository.findActivityAwardIdsByUserId(
 			userId = userId,
 			filter = filter,
-			actionType = actionType.takeIf { it != ActionType.UNDEF }
+			actionType = actionType.takeIf { it != ActionType.UNDEF },
+			awardType = AwardType.PERIOD
 		)
 
 		println("excludeAwardIds = $excludeAwardIds")
@@ -112,6 +114,38 @@ class AwardServiceImpl(
 		val deptsIds = deptRepository.subTreeIds(deptId = deptId)
 
 		val awards = awardRepository.findByDeptIdIn(
+			deptsIds = deptsIds,
+			minDate = baseQuery.minDate,
+			maxDate = baseQuery.maxDate,
+			filter = filter,
+			notExclude = excludeAwardIds.isEmpty(),
+			excludeAwardIds = excludeAwardIds,
+			pageable = pageRequest
+		)
+		return awards.toPageResult { it.toAwardOnlyDept() }
+	}
+
+	override fun findSimpleAwardUserAvailable(
+		deptId: Long,
+		userId: Long,
+		baseQuery: BaseQuery
+	): PageResult<Award> {
+
+		val filter = baseQuery.filter.toSearchOrNull()
+
+		val excludeAwardIds = activityRepository.findActivityAwardIdsByUserId(
+			userId = userId,
+			filter = filter,
+			actionType = ActionType.AWARD,
+			awardType = AwardType.SIMPLE
+		)
+
+		println("excludeAwardIds = $excludeAwardIds")
+
+		val pageRequest = baseQuery.toPageRequest()
+		val deptsIds = deptRepository.subTreeIds(deptId = deptId)
+
+		val awards = awardRepository.findSimpleAwardByDeptIdIn(
 			deptsIds = deptsIds,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
