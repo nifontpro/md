@@ -19,7 +19,6 @@ interface AwardService {
 	fun findActivAwardsByUser(userId: Long, awardType: AwardType?, baseQuery: BaseQuery): PageResult<Activity>
 	fun findActivAwardsByDept(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Activity>
 	fun findUsersByActivAward(awardId: Long, actionType: ActionType?, baseQuery: BaseQuery): PageResult<Activity>
-	fun findByDeptId(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award>
 	fun addGalleryImage(awardId: Long, smallItem: SmallItem): BaseImage
 	fun findActiveCountByDepts(deptId: Long, baseQuery: BaseQuery): List<AwardCount>
 	fun findCountBySubdepts(deptId: Long, baseQuery: BaseQuery): AwardStateCount

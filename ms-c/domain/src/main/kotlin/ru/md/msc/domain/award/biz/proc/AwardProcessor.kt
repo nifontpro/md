@@ -81,14 +81,15 @@ class AwardProcessor(
 				getAwardByIdDetails("Получаем детальную награду")
 			}
 
-			operation("Получить награды в отделе", AwardCommand.GET_BY_DEPT) {
+			operation("Получить награды в отделе или подотделах", AwardCommand.GET_BY_DEPT) {
 				validateDeptId("Проверяем deptId")
 				validatePageParamsChain()
-				worker("Допустимые поля сортировки") { orderFields = listOf("name", "type", "startDate", "endDate") }
+//				worker("Допустимые поля сортировки") { orderFields = listOf("name", "type", "startDate", "endDate") }
+				setAwardWithDeptValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
-				getAwardsByDept("Получаем награды из отдела")
+				getAwardsByDept("Получаем награды из отдела или всех подотделов")
 			}
 
 			operation("Удалить награду", AwardCommand.DELETE) {

@@ -20,6 +20,7 @@ import ru.md.msc.db.award.repo.AwardImageRepository
 import ru.md.msc.db.award.repo.AwardRepository
 import ru.md.msc.db.award.repo.mappers.toAwardCount
 import ru.md.msc.db.dept.repo.DeptRepository
+import ru.md.msc.db.dept.service.DeptUtil
 import ru.md.msc.domain.award.biz.proc.AlreadyActionException
 import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
 import ru.md.msc.domain.award.model.*
@@ -35,6 +36,7 @@ class AwardServiceImpl(
 	private val awardImageRepository: AwardImageRepository,
 	private val activityRepository: ActivityRepository,
 	private val deptRepository: DeptRepository,
+	private val deptUtil: DeptUtil,
 ) : AwardService {
 
 	override fun create(awardDetails: AwardDetails): AwardDetails {
@@ -68,19 +70,9 @@ class AwardServiceImpl(
 		return awardDetailsEntity.toAwardDetails()
 	}
 
-	override fun findByDeptId(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award> {
-		val awards = awardRepository.findByDeptId(
-			deptId = deptId,
-			name = baseQuery.filter.toSearchOrNull(),
-			state = awardState,
-			pageable = baseQuery.toPageRequest()
-		)
-		return awards.toPageResult { it.toAwardLazy() }
-	}
-
 	override fun findBySubDept(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award> {
 		val pageRequest = baseQuery.toPageRequest()
-		val deptsIds = deptRepository.subTreeIds(deptId = deptId)
+		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		val awards = awardRepository.findByDeptIdIn(
 			deptsIds = deptsIds,
 			state = awardState,
@@ -268,7 +260,7 @@ class AwardServiceImpl(
 	}
 
 	override fun findCountBySubdepts(deptId: Long, baseQuery: BaseQuery): AwardStateCount {
-		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
+		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		return awardRepository.countByState(deptsIds = deptsIds)
 	}
 
@@ -278,7 +270,7 @@ class AwardServiceImpl(
 	 * subdepts=false - в ближних наследниках
 	 */
 	override fun findActiveCountByDepts(deptId: Long, baseQuery: BaseQuery): List<AwardCount> {
-		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts, nearSub = true)
+		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts, nearSub = true)
 		return activityRepository.getAllCountByDept(
 			deptsIds = deptsIds,
 			minDate = baseQuery.minDate,
@@ -287,7 +279,7 @@ class AwardServiceImpl(
 	}
 
 	override fun findActiveCountByDeptsNative(deptId: Long, baseQuery: BaseQuery): PageResult<AwardCount> {
-		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts, nearSub = true)
+		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts, nearSub = true)
 		val count = activityRepository.getGroupAwardCountByDept(
 			deptsIds = deptsIds,
 			minDate = baseQuery.minDate,
@@ -298,31 +290,12 @@ class AwardServiceImpl(
 	}
 
 	override fun getWWAwardCount(deptId: Long, baseQuery: BaseQuery): WWAwardCount {
-		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
+		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		return activityRepository.getWWAwardCount(
 			deptsIds = deptsIds,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 		)
-	}
-
-	/**
-	 * Получение списка отделов от текущей вершины дерева
-	 * subdepts = true - все дерево подотделов
-	 * subdepts = false:
-	 *    nearSub = false (default) - только вершина
-	 *            = true - непосредственные потомки
-	 */
-	private fun getDepts(deptId: Long, subdepts: Boolean, nearSub: Boolean = false): List<Long> {
-		return if (subdepts) {
-			deptRepository.subTreeIds(deptId = deptId)
-		} else {
-			if (nearSub) {
-				deptRepository.findChildIdsByParentId(parentId = deptId)
-			} else {
-				listOf(deptId)
-			}
-		}
 	}
 
 	override fun setMainImage(awardId: Long): BaseImage? {

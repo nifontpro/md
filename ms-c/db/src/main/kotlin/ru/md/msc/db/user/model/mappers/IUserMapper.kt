@@ -10,6 +10,7 @@ fun IUser.toUser() = User(
 	lastname = getLastname(),
 	patronymic = getPatronymic(),
 	post = getPost(),
+	mainImg = getMainImg(),
 	awardCount = getAwardCount(),
 	dept = Dept(
 		id = getDeptId(),

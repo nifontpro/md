@@ -17,7 +17,7 @@ fun ICorChainDsl<AwardContext>.getAvailableAwardsBySubdepts(title: String) = wor
 			awardService.findBySubDept(
 				deptId = authUser.dept?.id ?: 0,
 				awardState = awardState,
-				baseQuery = baseQuery
+				baseQuery = baseQuery.copy(subdepts = true)
 			)
 		}
 	}

@@ -14,7 +14,7 @@ fun ICorChainDsl<AwardContext>.getAwardsByDept(title: String) = worker {
 
 	handle {
 		awards = pageFun {
-			awardService.findByDeptId(
+			awardService.findBySubDept(
 				deptId = deptId,
 				awardState = awardState,
 				baseQuery = baseQuery

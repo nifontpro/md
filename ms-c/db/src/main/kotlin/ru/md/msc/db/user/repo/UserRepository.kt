@@ -19,8 +19,6 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 	@EntityGraph("withDept")
 	fun findByAuthEmailIgnoreCase(authEmail: String): List<UserEntity>
 
-	fun findByDeptIdAndLastnameLikeIgnoreCase(deptId: Long, lastname: String, pageable: Pageable): Page<UserEntity>
-
 	@EntityGraph("withDept")
 	fun findByDeptIdInAndLastnameLikeIgnoreCase(
 		deptsIds: List<Long>,
@@ -86,6 +84,7 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 			u.lastname,
 			u.patronymic,
 			u.post,
+			u.main_img as mainImg,
 			d.id as deptId,
 			d.name as deptName,
 			d.classname,

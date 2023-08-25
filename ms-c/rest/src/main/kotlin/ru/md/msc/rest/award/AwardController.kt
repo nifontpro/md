@@ -76,6 +76,7 @@ class AwardController(
 	 * Получение наград из отдела deptId
 	 * state: AwardState? - фильтрация по состоянию награды
 	 * baseRequest:
+	 * 	subdepts - отдел или все подотделы
 	 *  Допустимые поля для сортировки orders: "name", "type", "startDate", "endDate"
 	 *  Пагинация.
 	 *  filter - фильтрация по названию (name)
@@ -99,7 +100,7 @@ class AwardController(
 	 * отделы наград берутся из поддерева отделов авторизованного пользователя
 	 * Для наград типа AwardType.PERIOD - выводятся только попадающие в период номинации (state=NOMINEE)
 	 * baseRequest:
-	 *  filter - фильтрация по имени награды (необязателен)
+	 *  filter - фильтрация по названию награды (необязателен)
 	 *  Параметры пагинации page, pageSize - необязательны, по умолчанию 0 и 100 соответственно
 	 *  minDate <= award.startDate (отсутствует - без min ограничения)
 	 *  maxDate >= award.endDate (отсутствует - без max ограничения)
