@@ -13,7 +13,7 @@ fun ICorChainDsl<UserContext>.deleteUser(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-		userService.deleteById(userId)
+		userService.deleteById(userId = userId, deptId = deleteDeptId)
 	}
 
 	except {

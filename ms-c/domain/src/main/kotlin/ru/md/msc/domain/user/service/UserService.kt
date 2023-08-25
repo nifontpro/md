@@ -12,7 +12,7 @@ import ru.md.msc.domain.user.model.UserSettings
 interface UserService {
 	fun createOwner(userDetails: UserDetails): UserDetails
 	fun create(userDetails: UserDetails): UserDetails
-	fun deleteById(userId: Long)
+	fun deleteById(userId: Long, deptId: Long?)
 	fun update(userDetails: UserDetails, isAuthUserHasAdminRole: Boolean): UserDetails
 	fun doesOwnerWithEmailExist(email: String): Boolean
 	fun findById(userId: Long): User?
@@ -22,7 +22,6 @@ interface UserService {
 	fun deleteImage(userId: Long, imageId: Long): BaseImage
 	fun findDeptIdByUserId(userId: Long): Long
 	fun findBySubDepts(deptId: Long, baseQuery: BaseQuery): PageResult<User>
-	fun findByDeptId(deptId: Long, baseQuery: BaseQuery): PageResult<User>
 	fun getGenderCountByDept(deptId: Long, subdepts: Boolean): GenderCount
 	fun getUsersWithActivity(deptId: Long, baseQuery: BaseQuery): List<User>
 	fun getUsersWithAward(deptId: Long, baseQuery: BaseQuery): List<User>

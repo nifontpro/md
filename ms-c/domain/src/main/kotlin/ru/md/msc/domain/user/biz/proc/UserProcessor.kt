@@ -17,10 +17,7 @@ import ru.md.msc.domain.base.validate.validateAdminRole
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId
-import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
-import ru.md.msc.domain.base.workers.chain.validateAdminModifyUserByRoleChain
-import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
-import ru.md.msc.domain.base.workers.chain.validateSameAndAdminModifyUser
+import ru.md.msc.domain.base.workers.chain.*
 import ru.md.msc.domain.base.workers.findModifyUserAndGetRolesAndDeptId
 import ru.md.msc.domain.base.workers.image.addImageToS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
@@ -32,7 +29,6 @@ import ru.md.msc.domain.user.biz.validate.validateCreateUserRoles
 import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
 import ru.md.msc.domain.user.biz.workers.*
 import ru.md.msc.domain.user.biz.workers.sort.setUsersBySubdeptsValidSortedFields
-import ru.md.msc.domain.user.biz.workers.sort.setUsersValidSortedFields
 import ru.md.msc.domain.user.biz.workers.sort.setUsersWithAwardCountValidSortedFields
 import ru.md.msc.domain.user.service.UserService
 
@@ -85,7 +81,7 @@ class UserProcessor(
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				findModifyUserAndGetRolesAndDeptId("Получаем профиль для обновления")
-				validateAdminModifyUserByRoleChain()
+				validateSameOwnerAndAdminModifyUser()
 				getUserDetailsById("Получаем сотрудника")
 				deleteUser("Удаляем сотрудника")
 				worker("Подготовка к удалению изображений") { baseImages = userDetails.user.images }
@@ -94,16 +90,6 @@ class UserProcessor(
 
 			operation("Получение профилей пользователя", UserCommand.GET_PROFILES) {
 				getProfiles("Получаем доступные профили")
-			}
-
-			operation("Получение сотрудников отдела", UserCommand.GET_BY_DEPT) {
-				validateDeptId("Проверка deptId")
-				validatePageParamsChain()
-				setUsersValidSortedFields("Устанавливаем допустимые поля сортировки")
-				validateSortedFields("Проверка списка полей сортировки")
-				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
-				getUsersByDept("Получаем сотрудников")
 			}
 
 			operation("Получение сотрудников всех подотделов", UserCommand.GET_BY_SUB_DEPTS) {

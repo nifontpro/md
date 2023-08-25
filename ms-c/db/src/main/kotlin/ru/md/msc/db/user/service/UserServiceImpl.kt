@@ -12,6 +12,7 @@ import ru.md.msc.db.dept.model.DeptDetailsEntity
 import ru.md.msc.db.dept.model.DeptEntity
 import ru.md.msc.db.dept.repo.DeptDetailsRepository
 import ru.md.msc.db.dept.repo.DeptRepository
+import ru.md.msc.db.dept.service.DeptUtil
 import ru.md.msc.db.user.model.UserDetailsEntity
 import ru.md.msc.db.user.model.image.UserImageEntity
 import ru.md.msc.db.user.model.mappers.*
@@ -39,6 +40,7 @@ class UserServiceImpl(
 	private val userImageRepository: UserImageRepository,
 	private val userSettingsRepository: UserSettingsRepository,
 	private val activityRepository: ActivityRepository,
+	private val deptUtil: DeptUtil,
 ) : UserService {
 
 	/**
@@ -128,19 +130,9 @@ class UserServiceImpl(
 		}
 	}
 
-	override fun findByDeptId(deptId: Long, baseQuery: BaseQuery): PageResult<User> {
-		val pageRequest = baseQuery.toPageRequest()
-		val res = userRepository.findByDeptIdAndLastnameLikeIgnoreCase(
-			deptId = deptId,
-			lastname = baseQuery.filter.toSearch(),
-			pageable = pageRequest
-		)
-		return res.toPageResult { it.toUserLazy() }
-	}
-
 	override fun findBySubDepts(deptId: Long, baseQuery: BaseQuery): PageResult<User> {
 		val pageRequest = baseQuery.toPageRequest()
-		val deptsIds = deptRepository.subTreeIds(deptId = deptId)
+		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		val res = userRepository.findByDeptIdInAndLastnameLikeIgnoreCase(
 			deptsIds = deptsIds,
 			lastname = baseQuery.filter.toSearch(),
@@ -156,7 +148,7 @@ class UserServiceImpl(
 		baseQuery: BaseQuery
 	): PageResult<User> {
 		val pageRequest = baseQuery.toPageRequest()
-		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
+		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 
 		val filter = baseQuery.filter.toSearchOrNull()
 
@@ -185,8 +177,9 @@ class UserServiceImpl(
 		return userDetailsRepository.findByUserId(userId)?.toUserDetails()
 	}
 
-	override fun deleteById(userId: Long) {
+	override fun deleteById(userId: Long, deptId: Long?) {
 		userRepository.deleteById(userId)
+		deptId?.let { deptRepository.deleteById(it) } // Если Владелец, удаляем его отдел
 	}
 
 	override fun addImage(userId: Long, baseImage: BaseImage): BaseImage {
@@ -243,22 +236,22 @@ class UserServiceImpl(
 	}
 
 	override fun getGenderCountByDept(deptId: Long, subdepts: Boolean): GenderCount {
-		val deptsIds = getDepts(deptId = deptId, subdepts = subdepts)
+		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = subdepts)
 		return userRepository.genderCount(deptsIds = deptsIds)
 	}
 
 	override fun getUsersWithActivity(deptId: Long, baseQuery: BaseQuery): List<User> {
-		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
+		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		return userRepository.findByDeptIdIn(deptsIds = deptsIds).map { it.toUserActivity() }
 	}
 
 	override fun getUsersWithAward(deptId: Long, baseQuery: BaseQuery): List<User> {
-		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
+		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		return userRepository.findByDeptIdIn(deptsIds = deptsIds).map { it.toUserAward() }
 	}
 
 	override fun getUsersWithAwardCount(deptId: Long, baseQuery: BaseQuery): PageResult<User> {
-		val deptsIds = getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
+		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		val users = userRepository.findUsersWithAwardCount(
 			deptsIds = deptsIds,
 			minDate = baseQuery.minDate,
@@ -266,14 +259,6 @@ class UserServiceImpl(
 			pageable = baseQuery.toPageRequest()
 		)
 		return users.toPageResult { it.toUser() }
-	}
-
-	private fun getDepts(deptId: Long, subdepts: Boolean): List<Long> {
-		return if (subdepts) {
-			deptRepository.subTreeIds(deptId = deptId)
-		} else {
-			listOf(deptId)
-		}
 	}
 
 	override fun saveSettings(userSettings: UserSettings): UserSettings {

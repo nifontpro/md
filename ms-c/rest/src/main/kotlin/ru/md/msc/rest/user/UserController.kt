@@ -1,3 +1,5 @@
+@file:Suppress("KDocUnresolvedReference")
+
 package ru.md.msc.rest.user
 
 import org.springframework.web.bind.annotation.*
@@ -86,22 +88,23 @@ class UserController(
 		)
 	}
 
+	/**
+	 * Получение сотрудников отдела [deptId]
+	 * [baseRequest]:
+	 *    subdepts - отдел или все подотделы
+	 *    Параметры пагинации [page], [pageSize]
+	 *    Параметр [filter] - фильтрация по Фамилии сотрудника
+	 *    Допустимые поля для сортировки:
+	 *          "firstname",
+	 *    			"patronymic",
+	 *    			"lastname",
+	 *    			"authEmail",
+	 *    			"post",
+	 *          "dept.name" - Первым рекомендую его установить,
+	 *     			"dept.classname",
+	 */
 	@PostMapping("get_by_dept")
 	private suspend fun getByDept(
-		@RequestHeader(name = AUTH) bearerToken: String,
-		@RequestBody request: GetUsersByDeptRequest
-	): BaseResponse<List<User>> {
-		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return authProcess(
-			processor = userProcessor,
-			authRequest = baseRequest,
-			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportUsers() }
-		)
-	}
-
-	@PostMapping("get_by_subdepts")
-	private suspend fun getBySubDepts(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetUsersBySubDeptsRequest
 	): BaseResponse<List<User>> {

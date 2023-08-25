@@ -77,13 +77,6 @@ fun UserContext.fromTransport(request: GetProfilesRequest) {
 	command = UserCommand.GET_PROFILES
 }
 
-fun UserContext.fromTransport(request: GetUsersByDeptRequest) {
-	command = UserCommand.GET_BY_DEPT
-	authId = request.authId
-	deptId = request.deptId
-	baseQuery = request.baseRequest?.toBaseQuery() ?: BaseQuery()
-}
-
 fun UserContext.fromTransport(request: GetUsersBySubDeptsRequest) {
 	command = UserCommand.GET_BY_SUB_DEPTS
 	authId = request.authId

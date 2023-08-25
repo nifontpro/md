@@ -10,6 +10,7 @@ class UserContext : BaseClientContext() {
 	var userDetails: UserDetails = UserDetails()
 	var users: List<User> = emptyList()
 	var notValidRole: RoleUser? = null
+	var deleteDeptId: Long? = null // При удалении собственного профиля владельца id его отдела
 
 	var genderCount: GenderCount = GenderCount()
 	var userSettings: UserSettings = UserSettings()
@@ -25,7 +26,6 @@ enum class UserCommand : IBaseCommand {
 	UPDATE,
 	CREATE_OWNER,
 	GET_PROFILES,
-	GET_BY_DEPT,
 	GET_BY_SUB_DEPTS,
 	GET_BY_SUB_DEPTS_EXCLUDE_AWARD,
 	GET_BY_ID_DETAILS,
