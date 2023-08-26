@@ -121,7 +121,7 @@ class DeptServiceImpl(
 	 * Получение id отдела корневого Владельца
 	 */
 	override fun getRootId(deptId: Long): Long? {
-		return deptRepository.getRootId(deptId = deptId)
+		return deptRepository.getOwnerRootId(deptId = deptId)
 	}
 
 	override fun addImage(deptId: Long, baseImage: BaseImage): BaseImage {

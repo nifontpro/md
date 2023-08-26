@@ -12,7 +12,6 @@ import ru.md.msc.db.award.repo.ActivityRepository
 import ru.md.msc.db.award.repo.AwardRepository
 import ru.md.msc.db.award.repo.mappers.toAwardCount
 import ru.md.msc.db.dept.repo.DeptRepository
-import ru.md.msc.domain.award.service.AwardService
 import java.time.LocalDateTime
 
 @SpringBootTest
@@ -20,7 +19,6 @@ import java.time.LocalDateTime
 class AwardTest(
 	@Autowired private val awardRepository: AwardRepository,
 	@Autowired private val activityRepository: ActivityRepository,
-	@Autowired private val awardService: AwardService,
 	@Autowired private val deptRepository: DeptRepository
 ) {
 
@@ -28,12 +26,6 @@ class AwardTest(
 	fun findDeptId() {
 		val deptId = awardRepository.findDeptId(awardId = 9)
 		println("DeptId: $deptId")
-	}
-
-	@Test
-	fun findActByUser() {
-		val acts = awardService.findActivAwardsByUser(userId = 217)
-		println("Res: $acts")
 	}
 
 	@Test

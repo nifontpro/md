@@ -15,7 +15,8 @@ interface DeptRepository : JpaRepository<DeptEntity, Long> {
 	 * Хранимая процедура проверяет, является ли отдел [upId]
 	 * предком отдела [downId] (нижнего в иерархии отделов)
 	 */
-	@Procedure(procedureName = "dep.up_tree_has_id")
+//	@Procedure(procedureName = "dep.up_tree_has_id") // Не работает с версии Spring Boot 3.1.x
+	@Query("select * from dep.up_tree_has_id(:downId, :upId)", nativeQuery = true)
 	fun upTreeHasDeptId(downId: Long, upId: Long): Boolean
 
 	/**
@@ -28,14 +29,15 @@ interface DeptRepository : JpaRepository<DeptEntity, Long> {
 	/**
 	 * Получить ids всех элементов поддерева отделов, включая вершину
 	 */
-	@Procedure(procedureName = "dep.sub_tree_ids")
+	@Query("select * from dep.sub_tree_ids(:deptId)", nativeQuery = true)
 	fun subTreeIds(deptId: Long): List<Long>
 
 	/**
 	 * Получить корневой отдел (тот который создал владелец) от текущего [deptId]
 	 */
 	@Procedure(procedureName = "dep.get_root_id")
-	fun getRootId(deptId: Long): Long?
+	@Query("select * from dep.get_root_id(:deptId)", nativeQuery = true)
+	fun getOwnerRootId(deptId: Long): Long?
 
 	/**
 	 * Получить отдел верхнего уровня просмотра (top-level) от текущего [deptId]
