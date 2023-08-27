@@ -163,18 +163,18 @@ class UserController(
 	suspend fun imageAdd(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestPart("file") file: MultipartFile,
+		@RequestPart("authId") authId: String,
 		@RequestPart("userId") userId: String,
 	): BaseResponse<BaseImage> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = UserContext().apply { command = UserCommand.IMG_ADD }
-		val entityId = userId.toLongOr0()
 		return imageProcess(
 			authData = authData,
 			context = context,
 			processor = userProcessor,
 			multipartFile = file,
-			authId = entityId,
-			entityId = entityId,
+			authId = authId.toLongOr0(),
+			entityId = userId.toLongOr0(),
 		)
 	}
 
