@@ -141,6 +141,7 @@ class UserProcessor(
 			operation("Удаление изображения", UserCommand.IMG_DELETE) {
 				validateUserId("Проверка userId")
 				validateImageId("Проверка imageId")
+				// Авторизация
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				deleteUserImageFromDb("Удаляем изображение из БД")
 				deleteBaseImageFromS3("Удаляем изображение из s3")

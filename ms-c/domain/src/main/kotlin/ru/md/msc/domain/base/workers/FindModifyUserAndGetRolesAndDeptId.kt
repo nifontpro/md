@@ -18,7 +18,7 @@ fun <T : BaseClientContext> ICorChainDsl<T>.findModifyUserAndGetRolesAndDeptId(t
 			return@handle
 		}
 
-		isModifyUserHasAdminRole = authUser.roles.find { it == RoleUser.ADMIN } != null
+		isModifyUserHasAdminRole = modifyUser.roles.find { it == RoleUser.ADMIN } != null
 		deptId = modifyUser.dept?.id ?: 0 // Для авторизации по отделу
 	}
 
