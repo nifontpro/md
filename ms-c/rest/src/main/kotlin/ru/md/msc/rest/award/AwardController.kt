@@ -423,7 +423,9 @@ class AwardController(
 	}
 
 	/**
+	 * Для процесса разработки! Удалить в релизе.
 	 * !!!! Set ADMIN role
+	 * Обновление основных изображений у медалей
 	 */
 	@PostMapping("admin/img")
 	private suspend fun setMainImages(
