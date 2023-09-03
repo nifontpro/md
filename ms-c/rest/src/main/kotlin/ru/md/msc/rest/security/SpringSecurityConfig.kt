@@ -22,19 +22,19 @@ class SpringSecurityConfig {
 		// подключаем конвертер ролей
 		jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(KCRoleConverter())
 
-		http.authorizeHttpRequests()
-//			.requestMatchers("/user/d").permitAll()
-			.requestMatchers("/user/**").hasRole("user")
-			.requestMatchers("/t/**").permitAll()
-			.anyRequest().hasRole("user")
-			.and() // добавляем новые настройки, не связанные с предыдущими
-			.csrf().disable()
-//			.cors()// Разрешает запросы типа OPTIONS
-//			.and()
-			.oauth2ResourceServer()// добавляем конвертер ролей из JWT в Authority (Role)
-			.jwt()
-			.jwtAuthenticationConverter(jwtAuthenticationConverter)
-			.and()
+		http
+			.csrf { csrf -> csrf.disable() }
+//			.cors {}// Разрешает запросы типа OPTIONS
+			.authorizeHttpRequests { auth ->
+				auth.requestMatchers("/t/**").permitAll()
+				auth.anyRequest().hasRole("user")
+			}
+			.oauth2ResourceServer { oauth2ResourceServer ->
+				oauth2ResourceServer
+					.jwt { jwt ->
+						jwt.jwtAuthenticationConverter(jwtAuthenticationConverter)
+					}
+			}
 //			.authenticationEntryPoint(OAuth2ExceptionHandler())
 
 		return http.build()

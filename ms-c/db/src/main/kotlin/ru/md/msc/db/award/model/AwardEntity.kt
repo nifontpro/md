@@ -1,9 +1,13 @@
 package ru.md.msc.db.award.model
 
 import jakarta.persistence.*
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
 import org.hibernate.annotations.Formula
+import org.hibernate.annotations.WhereJoinTable
 import ru.md.msc.db.award.model.image.AwardImageEntity
 import ru.md.msc.db.dept.model.DeptEntity
+import ru.md.msc.db.user.model.UserEntity
 import ru.md.msc.domain.award.model.AwardState
 import ru.md.msc.domain.award.model.AwardType
 import java.time.LocalDateTime
@@ -12,6 +16,11 @@ import java.util.*
 @NamedEntityGraph(
 	name = "awardWithDept",
 	attributeNodes = [NamedAttributeNode("dept")]
+)
+
+@NamedEntityGraph(
+	name = "awardWithDeptAndUser",
+	attributeNodes = [NamedAttributeNode("dept"), NamedAttributeNode("users")]
 )
 
 @Entity
@@ -51,8 +60,15 @@ class AwardEntity(
 //	@Fetch(FetchMode.SUBSELECT)
 	val images: List<AwardImageEntity> = emptyList(),
 
-//	@OneToMany(mappedBy = "award")
-//	val users: List<UserEntity> = emptyList(),
+	@Fetch(FetchMode.SUBSELECT)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+		schema = "md", name = "activity",
+		joinColumns = [JoinColumn(name = "award_id")],
+		inverseJoinColumns = [JoinColumn(name = "user_id")]
+	)
+	@WhereJoinTable(clause = "is_activ=true and action_code='A'")
+	val users: List<UserEntity> = emptyList(),
 ) {
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true

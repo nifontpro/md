@@ -70,18 +70,34 @@ class AwardServiceImpl(
 		return awardDetailsEntity.toAwardDetails()
 	}
 
-	override fun findBySubDept(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award> {
+	override fun findBySubDept(
+		deptId: Long,
+		awardState: AwardState?,
+		withUsers: Boolean,
+		baseQuery: BaseQuery
+	): PageResult<Award> {
 		val pageRequest = baseQuery.toPageRequest()
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
-		val awards = awardRepository.findByDeptIdIn(
-			deptsIds = deptsIds,
-			state = awardState,
-			minDate = baseQuery.minDate,
-			maxDate = baseQuery.maxDate,
-			filter = baseQuery.filter.toSearchOrNull(),
-			pageable = pageRequest
-		)
-		return awards.toPageResult { it.toAwardOnlyDept() }
+
+		return if (withUsers) {
+			awardRepository.findByDeptIdInWithUsers(
+				deptsIds = deptsIds,
+				state = awardState,
+				minDate = baseQuery.minDate,
+				maxDate = baseQuery.maxDate,
+				filter = baseQuery.filter.toSearchOrNull(),
+				pageable = pageRequest
+			).toPageResult { it.toAwardOnlyDeptAndUsers() }
+		} else {
+			awardRepository.findByDeptIdIn(
+				deptsIds = deptsIds,
+				state = awardState,
+				minDate = baseQuery.minDate,
+				maxDate = baseQuery.maxDate,
+				filter = baseQuery.filter.toSearchOrNull(),
+				pageable = pageRequest
+			).toPageResult { it.toAwardOnlyDept() }
+		}
 	}
 
 	override fun findBySubDeptUserExclude(

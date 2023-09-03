@@ -70,6 +70,37 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		pageable: Pageable
 	): Page<AwardEntity>
 
+	@EntityGraph("awardWithDeptAndUser")
+	@Query(
+		"""
+		from AwardEntity a where 
+		a.dept.id in :deptsIds and 
+		((:state is null) or (:state = a.state)) and
+		((:notExclude = true) or (a.id not in :excludeAwardIds)) and 
+		((
+			a.type = 'P'  and 
+			a.startDate <= NOW() and (coalesce(:minDate, null) is null or a.startDate >= :minDate) and
+			a.endDate >= NOW() and (coalesce(:maxDate, null) is null or a.endDate <= :maxDate)
+		) or (
+			a.type = 'S' and
+			(coalesce(:minDate, null) is null or a.startDate >= :minDate) and 
+			(coalesce(:maxDate, null) is null or a.endDate <= :maxDate)
+		)) and 
+		((:filter is null) or (upper(a.name) like upper(:filter)))
+		
+	"""
+	)
+	fun findByDeptIdInWithUsers(
+		deptsIds: List<Long>,
+		state: AwardState? = null,
+		minDate: LocalDateTime? = null,
+		maxDate: LocalDateTime? = null,
+		filter: String? = null,
+		notExclude: Boolean = true,
+		excludeAwardIds: List<Long> = emptyList(),
+		pageable: Pageable
+	): Page<AwardEntity>
+
 	@EntityGraph("awardWithDept")
 	@Query(
 		"""

@@ -61,6 +61,7 @@ fun AwardContext.fromTransport(request: GetAwardsByDeptRequest) {
 	authId = request.authId
 	deptId = request.deptId
 	awardState = request.state
+	withUsers = request.withUsers
 	baseQuery = request.baseRequest.toBaseQuery()
 }
 

@@ -4,7 +4,6 @@ import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
-import org.springframework.data.jpa.repository.query.Procedure
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.dept.model.DeptEntity
 
@@ -23,7 +22,7 @@ interface DeptRepository : JpaRepository<DeptEntity, Long> {
 	 * Хранимая процедура проверяет, является ли сотрудник [userId]
 	 * потомком отдела [upId]
 	 */
-	@Procedure(procedureName = "dep.check_user_child")
+	@Query("select * from dep.check_user_child(:userId, :upId)", nativeQuery = true)
 	fun checkUserChild(userId: Long, upId: Long): Boolean
 
 	/**
@@ -35,14 +34,13 @@ interface DeptRepository : JpaRepository<DeptEntity, Long> {
 	/**
 	 * Получить корневой отдел (тот который создал владелец) от текущего [deptId]
 	 */
-	@Procedure(procedureName = "dep.get_root_id")
 	@Query("select * from dep.get_root_id(:deptId)", nativeQuery = true)
 	fun getOwnerRootId(deptId: Long): Long?
 
 	/**
 	 * Получить отдел верхнего уровня просмотра (top-level) от текущего [deptId]
 	 */
-	@Procedure(procedureName = "dep.get_top_level_id")
+	@Query("select * from dep.get_top_level_id(:deptId)", nativeQuery = true)
 	fun getTopLevelId(deptId: Long): Long?
 
 	fun findByIdIn(ids: List<Long>, sort: Sort): List<DeptEntity>

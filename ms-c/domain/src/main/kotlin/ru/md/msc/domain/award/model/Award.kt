@@ -2,6 +2,7 @@ package ru.md.msc.domain.award.model
 
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.msc.domain.dept.model.Dept
+import ru.md.msc.domain.user.model.User
 import java.time.LocalDateTime
 
 data class Award(
@@ -13,5 +14,6 @@ data class Award(
 	val endDate: LocalDateTime = LocalDateTime.now(),
 	val state: AwardState = AwardState.ERROR,
 	val dept: Dept = Dept(),
-	val images: List<BaseImage> = emptyList()
+	val images: List<BaseImage> = emptyList(),
+	val users: List<User> = emptyList(),
 )

@@ -27,7 +27,13 @@ interface AwardService {
 	fun setMainImage(awardId: Long): BaseImage?
 	fun updateAllAwardImg()
 	fun findSimpleAwardUserAvailable(deptId: Long, userId: Long, baseQuery: BaseQuery): PageResult<Award>
-	fun findBySubDept(deptId: Long, awardState: AwardState?, baseQuery: BaseQuery): PageResult<Award>
+	fun findBySubDept(
+		deptId: Long,
+		awardState: AwardState?,
+		withUsers: Boolean = false,
+		baseQuery: BaseQuery
+	): PageResult<Award>
+
 	fun findBySubDeptUserExclude(
 		deptId: Long,
 		userId: Long,

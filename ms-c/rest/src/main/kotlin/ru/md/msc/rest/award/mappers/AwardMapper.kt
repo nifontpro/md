@@ -13,7 +13,8 @@ fun Award.toAwardResponse() = AwardResponse(
 	endDate = endDate.toEpochMilliUTC(),
 	state = state,
 	dept = dept,
-	images = images
+	images = images,
+	users = users
 )
 
 //fun Award.getState(): AwardState {

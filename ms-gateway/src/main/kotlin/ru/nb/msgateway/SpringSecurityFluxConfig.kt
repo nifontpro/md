@@ -18,11 +18,15 @@ class SpringSecurityFluxConfig {
 	@Bean
 	fun springSecurityFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
 
-		http.authorizeExchange()
-			.anyExchange().permitAll()
-			.and()
-			.csrf().disable()
-			.cors()
+		http
+//			.authorizeExchange()
+//			.anyExchange().permitAll()
+//			.and()
+			.authorizeExchange { auth->
+				auth.anyExchange().permitAll()
+			}
+			.csrf { csrf -> csrf.disable() }
+			.cors { }
 
 		return http.build()
 	}

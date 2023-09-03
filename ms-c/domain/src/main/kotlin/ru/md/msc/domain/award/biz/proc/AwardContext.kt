@@ -19,6 +19,7 @@ class AwardContext : BaseClientContext() {
 	var awardState: AwardState? = null
 	var awardType: AwardType? = null
 	var smallItem: SmallItem = SmallItem()
+	var withUsers: Boolean = false // Включать ли награжденных сотрудников при получении наград
 
 	var awardsCount: List<AwardCount> = emptyList()
 	var awardStateCount: AwardStateCount = AwardStateCount()

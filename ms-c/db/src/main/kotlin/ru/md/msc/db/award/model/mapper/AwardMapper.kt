@@ -4,6 +4,8 @@ import ru.md.base_db.mapper.toImage
 import ru.md.msc.db.award.model.AwardEntity
 import ru.md.msc.db.dept.model.mappers.toDept
 import ru.md.msc.db.dept.model.mappers.toDeptEntity
+import ru.md.msc.db.dept.model.mappers.toDeptLazy
+import ru.md.msc.db.user.model.mappers.toUserLazy
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.dept.model.Dept
 
@@ -27,7 +29,19 @@ fun AwardEntity.toAwardOnlyDept() = Award(
 	startDate = startDate,
 	endDate = endDate,
 	state = state,
-	dept = dept?.toDept() ?: Dept(),
+	dept = dept?.toDeptLazy() ?: Dept(),
+)
+
+fun AwardEntity.toAwardOnlyDeptAndUsers() = Award(
+	id = id ?: 0,
+	name = name,
+	type = type,
+	mainImg = mainImg,
+	startDate = startDate,
+	endDate = endDate,
+	state = state,
+	dept = dept?.toDeptLazy() ?: Dept(),
+	users = users.map { it.toUserLazy() }
 )
 
 fun AwardEntity.toAwardOnlyImages() = Award(
