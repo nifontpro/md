@@ -32,12 +32,10 @@ include("base")
 include("base:base_db")
 include("base:base_domain")
 include("base:base_rest")
+include("base:base_client")
 
 include("ms-gal")
 include("ms-gal:db")
 include("ms-gal:domain")
 include("ms-gal:rest")
 include("ms-gal:s3")
-findProject(":ms-gal:s3")?.name = "s3"
-include("base:base_client")
-findProject(":base:base_client")?.name = "base_client"
