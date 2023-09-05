@@ -12,6 +12,7 @@ fun ICorChainDsl<UserContext>.setUsersWithAwardCountValidSortedFields(title: Str
 			"patronymic",
 			"lastname",
 			"post",
+			"(scores)",
 			"(awardCount)",
 			"(deptName)",
 			"(classname)",
