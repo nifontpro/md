@@ -1,4 +1,4 @@
-select sum(a.score)
+select coalesce(sum(a.score),0)
 from md.activity i
          left join md.award a on i.award_id = a.id
 where i.user_id = 2

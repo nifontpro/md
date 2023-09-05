@@ -94,7 +94,7 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 			) as awardCount,
 			
 			(
-				select sum(a.score) from md.activity i 
+				select coalesce(sum(a.score),0) from md.activity i 
 					left join md.award a on i.award_id=a.id 
 					where i.user_id=u.id and i.is_activ and i.action_code='A' and
 					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
