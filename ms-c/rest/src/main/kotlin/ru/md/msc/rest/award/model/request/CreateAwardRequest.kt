@@ -10,6 +10,7 @@ data class CreateAwardRequest(
 	val type: AwardType = AwardType.UNDEF,
 	val startDate: Long = 0,
 	val endDate: Long = 0,
+	val score: Int = 1,
 
 	val description: String? = null,
 	val criteria: String? = null

@@ -44,7 +44,6 @@ class UserTest(
 	fun findImage() {
 		val data = userImageRepository.findByIdAndUserId(imageId = 16, userId = 130)
 		println("Image: $data")
-
 	}
 
 	@Test

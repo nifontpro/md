@@ -11,6 +11,7 @@ fun Award.toAwardResponse() = AwardResponse(
 	mainImg = mainImg,
 	startDate = startDate.toEpochMilliUTC(),
 	endDate = endDate.toEpochMilliUTC(),
+	score = score,
 	state = state,
 	dept = dept,
 	images = images,

@@ -13,6 +13,7 @@ data class AwardResponse(
 	val type: AwardType = AwardType.UNDEF,
 	val startDate: Long? = null,
 	val endDate: Long? = null,
+	val score: Int = 0,
 	val state: AwardState,
 	val dept: Dept = Dept(),
 	val images: List<BaseImage> = emptyList(),

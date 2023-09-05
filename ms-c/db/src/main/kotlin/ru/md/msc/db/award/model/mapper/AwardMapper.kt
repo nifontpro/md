@@ -16,6 +16,7 @@ fun AwardEntity.toAward() = Award(
 	mainImg = mainImg,
 	startDate = startDate,
 	endDate = endDate,
+	score = score,
 	state = state,
 	dept = dept?.toDept() ?: Dept(),
 	images = images.map { it.toImage() }
@@ -28,6 +29,7 @@ fun AwardEntity.toAwardOnlyDept() = Award(
 	mainImg = mainImg,
 	startDate = startDate,
 	endDate = endDate,
+	score = score,
 	state = state,
 	dept = dept?.toDeptLazy() ?: Dept(),
 )
@@ -39,6 +41,7 @@ fun AwardEntity.toAwardOnlyDeptAndUsers() = Award(
 	mainImg = mainImg,
 	startDate = startDate,
 	endDate = endDate,
+	score = score,
 	state = state,
 	dept = dept?.toDeptLazy() ?: Dept(),
 	users = users.map { it.toUserLazy() }
@@ -51,6 +54,7 @@ fun AwardEntity.toAwardOnlyImages() = Award(
 	mainImg = mainImg,
 	startDate = startDate,
 	endDate = endDate,
+	score = score,
 	state = state,
 	dept = Dept(id = dept?.id ?: 0),
 	images = images.map { it.toImage() }
@@ -64,6 +68,7 @@ fun AwardEntity.toAwardLazy() = Award(
 	startDate = startDate,
 	state = state,
 	endDate = endDate,
+	score = score,
 	dept = Dept(id = dept?.id ?: 0),
 )
 
@@ -73,5 +78,6 @@ fun Award.toAwardEntity(create: Boolean = false) = AwardEntity(
 	type = type,
 	startDate = startDate,
 	endDate = endDate,
+	score = score,
 	dept = dept.toDeptEntity()
 )

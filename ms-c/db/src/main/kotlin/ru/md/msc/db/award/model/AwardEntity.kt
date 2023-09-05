@@ -44,6 +44,9 @@ class AwardEntity(
 	@Column(name = "end_date")
 	var endDate: LocalDateTime = LocalDateTime.now(),
 
+	@Column
+	var score: Int = 0,
+
 	@Formula("award_state(start_date, end_date)")
 	val state: AwardState = AwardState.ERROR,
 
