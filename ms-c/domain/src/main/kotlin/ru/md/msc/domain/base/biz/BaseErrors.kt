@@ -7,6 +7,7 @@ import ru.md.base_domain.biz.helper.fail
 
 
 fun BaseClientContext.notValidAuthIdError() {
+	log.error("notValidAuthIdError: authId=$authId")
 	fail(
 		errorUnauthorized(
 			message = "Неверный authId",

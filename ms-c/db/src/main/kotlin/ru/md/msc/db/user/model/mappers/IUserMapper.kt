@@ -12,6 +12,7 @@ fun IUser.toUser() = User(
 	post = getPost(),
 	mainImg = getMainImg(),
 	awardCount = getAwardCount(),
+	scores = getScores() ?: 0,
 	dept = Dept(
 		id = getDeptId(),
 		name = getDeptName(),

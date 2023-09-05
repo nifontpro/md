@@ -21,4 +21,5 @@ data class User(
 	val activities: List<Activity> = emptyList(),
 	val awards: List<Award> = emptyList(),
 	val awardCount: Long = 0,
+	val scores: Long = 0,
 )

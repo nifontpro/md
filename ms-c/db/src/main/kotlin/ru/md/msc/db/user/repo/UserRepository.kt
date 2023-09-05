@@ -88,9 +88,17 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 			d.id as deptId,
 			d.name as deptName,
 			d.classname,
+			
 			(select count (*) from md.activity i where i.user_id=u.id and i.is_activ and i.action_code='A' and
 					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
-			) as awardCount
+			) as awardCount,
+			
+			(
+				select sum(a.score) from md.activity i 
+					left join md.award a on i.award_id=a.id 
+					where i.user_id=u.id and i.is_activ and i.action_code='A' and
+					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
+			) as scores
 			
 		from users.user_data u left join dep.dept d on u.dept_id = d.id
 		where u.dept_id in (:deptsIds)

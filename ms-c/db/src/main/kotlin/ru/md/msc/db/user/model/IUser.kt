@@ -11,4 +11,5 @@ interface IUser {
 	fun getDeptName(): String
 	fun getClassname(): String?
 	fun getAwardCount(): Long
+	fun getScores(): Long?
 }

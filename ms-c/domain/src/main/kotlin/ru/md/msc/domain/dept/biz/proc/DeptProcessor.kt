@@ -45,7 +45,6 @@ class DeptProcessor(
 			operation("Создать отдел", DeptCommand.CREATE) {
 				validateDeptName("Проверяем имя отдела")
 				worker("Для проверки доступа к какому отделу") { deptId = dept.parentId }
-				validateDeptId("Проверка deptId")
 				validateAdminDeptLevelChain()
 				trimFieldDeptDetails("Очищаем поля")
 				createDept("Создаем отдел")

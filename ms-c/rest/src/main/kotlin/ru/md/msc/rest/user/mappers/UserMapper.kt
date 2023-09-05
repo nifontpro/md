@@ -17,6 +17,7 @@ fun User.toUserResponse() = UserResponse(
 	roles = roles,
 	images = images,
 	awardCount = awardCount,
+	scores = scores,
 	mainImg = mainImg,
 	activities = activities.map { it.toActivityResponse() },
 	awards = awards.map { it.toAwardResponse() },
