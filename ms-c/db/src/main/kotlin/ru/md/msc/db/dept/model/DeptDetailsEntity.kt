@@ -44,6 +44,6 @@ class DeptDetailsEntity(
 	}
 
 	override fun toString(): String {
-		return "DeptDetails={id: $deptId, email:$email}"
+		return "DeptDetails={id: $deptId, email:$email, description: $description}"
 	}
 }
