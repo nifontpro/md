@@ -1,5 +1,7 @@
-CREATE SCHEMA IF NOT EXISTS dep;
-CREATE SCHEMA IF NOT EXISTS md;
+CREATE SCHEMA IF NOT EXISTS dep;;
+CREATE SCHEMA IF NOT EXISTS md;;
+
+-- Отделы
 
 CREATE TABLE IF NOT EXISTS dep.dept
 (
@@ -14,7 +16,7 @@ CREATE TABLE IF NOT EXISTS dep.dept
         REFERENCES dep.dept (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE RESTRICT
-);
+);;
 
 CREATE TABLE IF NOT EXISTS dep.dept_details
 (
@@ -29,7 +31,7 @@ CREATE TABLE IF NOT EXISTS dep.dept_details
         REFERENCES dep.dept (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
-);
+);;
 
 CREATE TABLE IF NOT EXISTS md.base_image
 (
@@ -40,7 +42,7 @@ CREATE TABLE IF NOT EXISTS md.base_image
     created_at timestamp without time zone,
     mini_url text COLLATE pg_catalog."default",
     mini_key text COLLATE pg_catalog."default"
-);
+);;
 
 CREATE TABLE IF NOT EXISTS dep.dept_image
 (
@@ -51,7 +53,7 @@ CREATE TABLE IF NOT EXISTS dep.dept_image
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
-    INHERITS (md.base_image);
+    INHERITS (md.base_image);;
 
 CREATE OR REPLACE FUNCTION dep.sub_tree_ids(
     dept_id bigint)
@@ -63,7 +65,6 @@ CREATE OR REPLACE FUNCTION dep.sub_tree_ids(
 
 AS $BODY$
 -- Получить ids поддерева подразделений от текущего узла
-
 WITH RECURSIVE tmp AS (
     SELECT dept.id FROM dep.dept WHERE id = dept_id
 
@@ -71,5 +72,135 @@ WITH RECURSIVE tmp AS (
 
     SELECT dept.id FROM dep.dept
     JOIN tmp ON dept.parent_id = tmp.id
-) SELECT tmp.id FROM tmp
-$BODY$;
+) SELECT tmp.id FROM tmp;
+$BODY$;;
+
+CREATE OR REPLACE FUNCTION dep.up_tree_has_id(
+    down_id bigint,
+    up_id bigint)
+    RETURNS boolean
+    LANGUAGE plpgsql
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+-- Является ли верхний отдел предком нижнего (Для авторизации)
+DECLARE
+    ret boolean := false;
+    curent_id bigint := $1;
+    find_id bigint := $2;
+BEGIN
+    WHILE curent_id IS NOT NULL LOOP
+            SELECT parent_id INTO curent_id from dep.dept where id = curent_id;
+
+            IF curent_id = find_id
+            THEN
+                ret := true;
+                EXIT;
+            END IF;
+
+        END LOOP;
+    RETURN ret;
+END;
+$BODY$;;
+
+CREATE OR REPLACE FUNCTION dep.check_user_child(
+    user_id bigint,
+    up_id bigint)
+    RETURNS boolean
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+-- Является ли сотрудник потомком отдела (Для авторизации)
+
+DECLARE
+    ret boolean := false;
+    user_id bigint := $1;
+    find_id bigint := $2;
+    curent_id bigint;
+BEGIN
+
+    SELECT dept_id INTO curent_id FROM users.user_data WHERE id = user_id;
+
+    IF (curent_id = find_id) THEN RETURN true;
+    END IF;
+
+    WHILE curent_id IS NOT NULL LOOP
+            SELECT parent_id INTO curent_id from dep.dept where id = curent_id;
+
+            IF curent_id = find_id
+            THEN
+                ret := true;
+                EXIT;
+            END IF;
+
+        END LOOP;
+    RETURN ret;
+END;
+$BODY$;;
+
+CREATE OR REPLACE FUNCTION dep.get_root_id(
+    dept_id bigint)
+    RETURNS bigint
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+-- Является ли верхний отдел предком нижнего (Для авторизации)
+
+DECLARE
+    curent_id bigint := $1;
+    root_id bigint;
+    c_id bigint;
+    curent_code text;
+
+BEGIN
+    WHILE curent_id IS NOT NULL LOOP
+            SELECT id, parent_id, code INTO c_id, curent_id, curent_code from dep.dept where id = curent_id;
+
+            IF curent_code = 'U'
+            THEN
+                root_id := c_id;
+                EXIT;
+            END IF;
+
+        END LOOP;
+    RETURN root_id;
+END;
+
+$BODY$;;
+
+CREATE OR REPLACE FUNCTION dep.get_top_level_id(
+    dept_id bigint)
+    RETURNS bigint
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+-- Является ли верхний отдел предком нижнего (Для авторизации)
+
+DECLARE
+    curent_id bigint := $1;
+    top_level_id bigint;
+    c_id bigint;
+    curent_code text;
+    curent_top_level boolean;
+
+BEGIN
+    WHILE curent_id IS NOT NULL LOOP
+            SELECT id, parent_id, code, top_level
+            INTO c_id, curent_id, curent_code, curent_top_level
+            FROM dep.dept where id = curent_id;
+
+            IF curent_top_level OR curent_code = 'U'
+            THEN
+                top_level_id := c_id;
+                EXIT;
+            END IF;
+
+        END LOOP;
+    RETURN top_level_id;
+END;
+
+$BODY$;;
+
