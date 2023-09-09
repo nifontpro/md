@@ -133,6 +133,7 @@ class UserServiceImpl(
 	override fun findBySubDepts(deptId: Long, baseQuery: BaseQuery): PageResult<User> {
 		val pageRequest = baseQuery.toPageRequest()
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
+		println("deptsIds: $deptsIds")
 		val res = userRepository.findByDeptIdInAndLastnameLikeIgnoreCase(
 			deptsIds = deptsIds,
 			lastname = baseQuery.filter.toSearch(),

@@ -15,3 +15,19 @@ values
     (4, 'Descr. dept 4'),
     (5, 'Descr. dept 5')
 ;;
+
+insert into users.user_data (dept_id, firstname, lastname)
+values (2, 'Owner User 1 - dept 2', 'User 1'),
+       (3, 'User 2 - dept 3', 'User 2'),
+       (3, 'User 3 - dept 3', 'User 3'),
+       (3, 'User 4 - dept 3', 'User 4')
+;;
+
+insert into users.user_details (user_id, description)
+values (1, 'Owner User 1 - dept 2'),
+       (2, 'User 2 - dept 3'),
+       (3, 'User 3 - dept 3'),
+       (4, 'User 4 - dept 3')
+;;
+
+

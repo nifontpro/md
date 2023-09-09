@@ -100,7 +100,7 @@ class UserEntity(
 	}
 
 	override fun toString(): String {
-		return "User: {$id, $firstname, $authEmail}"
+		return "\nUser: {$id: $firstname, email: $authEmail, deptId: ${dept?.id}}"
 	}
 
 }
