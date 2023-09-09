@@ -30,4 +30,13 @@ values (1, 'Owner User 1 - dept 2'),
        (4, 'User 4 - dept 3')
 ;;
 
+insert into users.user_roles (user_id, role_code)
+values (1, 'O'),
+       (1,'A'),
+       (1,'U'),
+       (2,'U'),
+       (3,'U'),
+       (4,'U')
+;;
+
 

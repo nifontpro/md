@@ -262,3 +262,15 @@ CREATE TABLE IF NOT EXISTS users.user_image
 )
     INHERITS (md.base_image);
 
+CREATE TABLE IF NOT EXISTS users.settings
+(
+    user_id bigint NOT NULL,
+    show_onb boolean NOT NULL DEFAULT false,
+    page_onb integer,
+    CONSTRAINT settings_pkey PRIMARY KEY (user_id),
+    CONSTRAINT user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES users.user_data (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+);;
+
