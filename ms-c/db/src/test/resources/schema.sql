@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS dep.dept_image
     CONSTRAINT dept_id_fk FOREIGN KEY (dept_id)
         REFERENCES dep.dept (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 )
     INHERITS (md.base_image);;
 
@@ -273,4 +273,94 @@ CREATE TABLE IF NOT EXISTS users.settings
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 );;
+
+-- AWARDS
+
+CREATE TABLE IF NOT EXISTS md.award
+(
+    id bigserial NOT NULL primary key,
+    dept_id bigint NOT NULL,
+    start_date timestamp without time zone NOT NULL,
+    end_date timestamp without time zone NOT NULL,
+    name text COLLATE pg_catalog."default" NOT NULL,
+    type_code text COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::text,
+    main_img text COLLATE pg_catalog."default",
+    score integer NOT NULL DEFAULT 1,
+    CONSTRAINT dept_id_fkey FOREIGN KEY (dept_id)
+        REFERENCES dep.dept (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE RESTRICT
+);;
+
+CREATE TABLE IF NOT EXISTS md.award_details
+(
+    award_id bigint NOT NULL,
+    description text COLLATE pg_catalog."default",
+    criteria text COLLATE pg_catalog."default",
+    created_at timestamp without time zone DEFAULT now(),
+    CONSTRAINT award_details_pkey PRIMARY KEY (award_id),
+    CONSTRAINT award_id_fkey FOREIGN KEY (award_id)
+        REFERENCES md.award (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+);;
+
+CREATE TABLE IF NOT EXISTS md.award_image
+(
+    id bigserial NOT NULL primary key,
+    award_id bigint NOT NULL,
+    CONSTRAINT award_id_fkey FOREIGN KEY (award_id)
+        REFERENCES md.award (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+)
+    INHERITS (md.base_image)
+;;
+
+CREATE TABLE IF NOT EXISTS md.activity
+(
+    id bigserial NOT NULL primary key,
+    date timestamp without time zone NOT NULL DEFAULT now(),
+    user_id bigint NOT NULL,
+    award_id bigint NOT NULL,
+    action_code text COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::text,
+    is_activ boolean NOT NULL,
+    dept_id bigint NOT NULL,
+    auth_id bigint NOT NULL,
+    CONSTRAINT auth_id_fkey FOREIGN KEY (auth_id)
+        REFERENCES users.user_data (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE SET NULL,
+    CONSTRAINT award_id_fkey FOREIGN KEY (award_id)
+        REFERENCES md.award (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE RESTRICT,
+    CONSTRAINT dept_id_fkey FOREIGN KEY (dept_id)
+        REFERENCES dep.dept (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE SET NULL,
+    CONSTRAINT user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES users.user_data (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE RESTRICT
+);;
+
+
+CREATE OR REPLACE FUNCTION md.activ_count(
+    root_id bigint)
+    RETURNS TABLE(did bigint, award_count bigint, nominee_count bigint, delete_count bigint)
+    LANGUAGE 'sql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+
+SELECT did,
+       (select count(*) from md.activity i where i.dept_id = did and i.is_activ and i.action_code='A') as award_count,
+       (select count(*) from md.activity i where i.dept_id = did and i.is_activ and i.action_code='P') as nominee_count,
+       (select count(*) from md.activity i where i.dept_id = did and i.is_activ and i.action_code='D') as delete_count
+from dep.sub_tree_ids(root_id) as did;
+
+$BODY$;;
 

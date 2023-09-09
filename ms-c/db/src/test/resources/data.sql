@@ -1,3 +1,5 @@
+-- DEPTS
+
 insert into dep.dept
     (parent_id, name, code, classname, top_level)
 values (null, '/', 'R', 'ROOT', true),
@@ -15,6 +17,8 @@ values
     (4, 'Descr. dept 4'),
     (5, 'Descr. dept 5')
 ;;
+
+-- USERS
 
 insert into users.user_data (dept_id, firstname, lastname)
 values (2, 'Owner User 1 - dept 2', 'User 1'),
@@ -38,5 +42,7 @@ values (1, 'O'),
        (3,'U'),
        (4,'U')
 ;;
+
+-- AWARDS
 
 
