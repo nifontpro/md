@@ -12,18 +12,21 @@ fun ICorChainDsl<ItemContext>.addItemImageToS3(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-
-		try {
 			val prefix = "F$folderId"
 			val imageKey = "$prefix/${fileData.filename}"
-			val imageUrl = s3Repository.putObject(key = imageKey, fileData = fileData) ?: throw Exception()
+			val miniKey = "$prefix/mini/${fileData.filename}"
+			val imageUrl = s3Repository.putObject(key = imageKey, fileUrl = fileData.imageUrl) ?: throw Exception()
+			val miniUrl = s3Repository.putObject(key = imageKey, fileUrl = fileData.miniUrl) ?: throw Exception()
 			item = item.copy(
 				imageUrl = imageUrl,
-				imageKey = imageKey
+				imageKey = imageKey,
+				miniUrl = miniUrl,
+				miniKey = miniKey,
 			)
-		} catch (e: Exception) {
-			log.info(e.message)
-			s3Error()
-		}
+	}
+
+	except {
+		log.info(it.message)
+		s3Error()
 	}
 }

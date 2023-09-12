@@ -8,5 +8,7 @@ fun GalleryItem.toSmallItem() = SmallItem(
 	folderId = folderId,
 	name = name,
 	imageUrl = imageUrl,
-	imageKey = imageKey
+	imageKey = imageKey,
+	miniUrl = miniUrl,
+	miniKey = miniKey
 )

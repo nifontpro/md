@@ -1,6 +1,5 @@
 package ru.md.msc.db.tc
 
-import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -11,7 +10,6 @@ import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.user.service.UserService
 
 @SpringBootTest(classes = [TestBeans::class])
-@Transactional
 class TcTest(
 	@Autowired private val deptService: DeptService,
 	@Autowired private val userService: UserService,

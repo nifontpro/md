@@ -11,6 +11,8 @@ fun GalleryItem.toItemResponse() = ItemResponse(
 	description = description,
 	imageUrl = imageUrl,
 	imageKey = imageKey,
+	miniUrl = miniUrl,
+	miniKey = miniKey,
 	createdAt = createdAt?.toEpochMilliUTC(),
 	updatedAt = updatedAt?.toEpochMilliUTC(),
 )

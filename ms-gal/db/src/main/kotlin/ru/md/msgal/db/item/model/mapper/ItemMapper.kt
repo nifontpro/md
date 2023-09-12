@@ -12,7 +12,9 @@ fun ItemEntity.toItem() = GalleryItem(
 	createdAt = createdAt,
 	updatedAt = updatedAt,
 	imageUrl = imageUrl ?: "",
-	imageKey = imageKey ?: ""
+	imageKey = imageKey ?: "",
+	miniUrl = miniUrl ?: "",
+	miniKey = miniKey ?: "",
 )
 
 fun GalleryItem.toItemEntity(create: Boolean = false) = ItemEntity(
@@ -23,5 +25,7 @@ fun GalleryItem.toItemEntity(create: Boolean = false) = ItemEntity(
 	createdAt = if (create) LocalDateTime.now() else createdAt,
 	updatedAt = updatedAt,
 	imageUrl = imageUrl,
-	imageKey = imageKey
+	imageKey = imageKey,
+	miniUrl = miniUrl,
+	miniKey = miniKey,
 )

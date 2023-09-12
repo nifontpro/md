@@ -6,4 +6,6 @@ data class SmallItem(
 	val name: String = "",
 	val imageUrl: String = "",
 	val imageKey: String = "",
+	val miniUrl: String = "",
+	val miniKey: String = "",
 )

@@ -7,6 +7,8 @@ data class ItemResponse(
 	val description: String? = null,
 	val imageUrl: String = "",
 	val imageKey: String = "",
+	val miniUrl: String = "",
+	val miniKey: String = "",
 	val createdAt: Long? = null,
 	val updatedAt: Long? = null,
 )

@@ -30,6 +30,12 @@ class ItemEntity(
 	@Column(name = "image_key")
 	var imageKey: String? = null,
 
+	@Column(name = "mini_url")
+	val miniUrl: String? = null,
+
+	@Column(name = "mini_key")
+	val miniKey: String? = null,
+
 	) {
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true

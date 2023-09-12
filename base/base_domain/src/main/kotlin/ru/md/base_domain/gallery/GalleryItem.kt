@@ -9,6 +9,8 @@ data class GalleryItem(
 	val description: String? = null,
 	val imageUrl: String = "",
 	val imageKey: String = "",
+	val miniUrl: String = "",
+	val miniKey: String = "",
 	val createdAt: LocalDateTime? = null,
 	val updatedAt: LocalDateTime? = null,
 )

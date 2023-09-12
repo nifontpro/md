@@ -187,15 +187,11 @@ class AwardServiceImpl(
 		return awardImageEntity.toImage()
 	}
 
-	/**
-	 * !!! Здесь не используется сжатое изображение!!!
-	 * Для добавления сжатых изображений, нужно добавить их реализацию в галерею
-	 */
 	override fun addGalleryImage(awardId: Long, smallItem: SmallItem): BaseImage {
 		val awardImageEntity = AwardImageEntity(
 			awardId = awardId,
 			imageUrl = smallItem.imageUrl,
-			miniUrl = smallItem.imageUrl,
+			miniUrl = smallItem.miniUrl,
 			type = ImageType.SYSTEM,
 			createdAt = LocalDateTime.now()
 		)
