@@ -10,4 +10,5 @@ interface RoleRepository : JpaRepository<RoleEntity, Long> {
 
 	fun findByRoleUserAndUserAuthEmail(roleUser: RoleUser, userEmail: String): List<RoleEntity>
 
+	fun countByUserIdAndRoleUser(userId: Long, roleUser: RoleUser): Int
 }

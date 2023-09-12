@@ -194,6 +194,11 @@ class UserProcessor(
 				getUserSettings("Получаем настройки")
 			}
 
+			operation("Проверка, имеет ли сотрудник роль Владельца", UserCommand.CHECK_HAS_OWNER_ROLE) {
+				validateUserId("Проверка userId")
+				checkUserHasOwnerRole("Проверяем наличие роли Владельца")
+			}
+
 			finishOperation()
 		}.build()
 

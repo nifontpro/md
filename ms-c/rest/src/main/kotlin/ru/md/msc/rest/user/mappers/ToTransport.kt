@@ -28,3 +28,8 @@ fun UserContext.toTransportGenderCount(): BaseResponse<GenderCount> {
 fun UserContext.toTransportUserSettings(): BaseResponse<UserSettings> {
 	return baseResponse(userSettings)
 }
+
+fun UserContext.toTransportHasOwner(): BaseResponse<Boolean> {
+	return baseResponse(hasOwnerRole)
+}
+

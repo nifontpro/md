@@ -310,6 +310,19 @@ class UserController(
 		)
 	}
 
+	@PostMapping("has_owner")
+	private suspend fun hasUserOwnerRole(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: HasUserOwnerRequest
+	): BaseResponse<Boolean> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = userProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportHasOwner() }
+		)
+	}
 
 	@PostMapping("data")
 	suspend fun getData(

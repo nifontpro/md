@@ -162,3 +162,8 @@ fun UserContext.fromTransport(request: GetUserSettingsRequest) {
 	authId = userId
 }
 
+fun UserContext.fromTransport(request: HasUserOwnerRequest) {
+	command = UserCommand.CHECK_HAS_OWNER_ROLE
+	userId = request.userId
+}
+

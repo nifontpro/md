@@ -272,6 +272,16 @@ class UserServiceImpl(
 		return userSettingsRepository.findByIdOrNull(userId)?.toUserSettings()
 	}
 
+	/**
+	 * Проверка, имеет ли сотрудник роль Владельца
+	 */
+	override fun doesUserOwnerRole(userId: Long): Boolean {
+		return roleRepository.countByUserIdAndRoleUser(
+			userId = userId,
+			roleUser = RoleUser.OWNER
+		) > 0
+	}
+
 //	companion object {
 //		val log: Logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
 //	}

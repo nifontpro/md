@@ -31,4 +31,5 @@ interface UserService {
 	fun saveSettings(userSettings: UserSettings): UserSettings
 	fun getSettings(userId: Long): UserSettings?
 	fun findByDeptsExclude(deptId: Long, awardId: Long, actionType: ActionType?, baseQuery: BaseQuery): PageResult<User>
+	fun doesUserOwnerRole(userId: Long): Boolean
 }

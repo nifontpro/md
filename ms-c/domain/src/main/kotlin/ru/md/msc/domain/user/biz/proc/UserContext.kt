@@ -18,7 +18,7 @@ class UserContext : BaseClientContext() {
 	// for exclude award:
 	var actionType: ActionType? = null
 
-//	var usersDetails: List<UserDetails> = emptyList()
+	var hasOwnerRole: Boolean = false
 }
 
 enum class UserCommand : IBaseCommand {
@@ -39,4 +39,5 @@ enum class UserCommand : IBaseCommand {
 	SET_MAIN_IMG,
 	SAVE_SETTINGS,
 	GET_SETTINGS,
+	CHECK_HAS_OWNER_ROLE
 }
