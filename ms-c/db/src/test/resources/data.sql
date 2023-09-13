@@ -45,4 +45,20 @@ values (1, 'O'),
 
 -- AWARDS
 
+insert into md.award(dept_id, name, start_date, end_date, type_code)
+values (3, 'Award a1-d3', '2023-01-01', '2024-01-01', 'P')
+;;
 
+insert into md.award_details (award_id, description)
+values (1, 'a1')
+;;
+
+insert into md.activity (date, user_id, award_id, action_code, is_activ, dept_id, auth_id)
+values ('2023-01-01', 2, 1, 'P', false, 3, 1),
+       ('2023-01-02', 2, 1, 'A', false, 3, 1),
+       ('2023-01-03', 2, 1, 'D', false, 3, 1),
+       ('2023-01-04', 2, 1, 'A', true, 3, 1),
+
+       ('2023-01-03', 3, 1, 'P', false, 3, 1),
+       ('2023-01-04', 3, 1, 'D', false, 3, 1)
+;;

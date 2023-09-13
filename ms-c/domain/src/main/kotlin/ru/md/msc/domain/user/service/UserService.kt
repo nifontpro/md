@@ -32,4 +32,5 @@ interface UserService {
 	fun getSettings(userId: Long): UserSettings?
 	fun findByDeptsExclude(deptId: Long, awardId: Long, actionType: ActionType?, baseQuery: BaseQuery): PageResult<User>
 	fun doesUserOwnerRole(userId: Long): Boolean
+	fun activityByUserExist(userId: Long): Boolean
 }

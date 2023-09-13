@@ -219,6 +219,7 @@ CREATE TABLE IF NOT EXISTS users.user_data
     dept_id bigint NOT NULL,
     post text COLLATE pg_catalog."default",
     main_img text COLLATE pg_catalog."default",
+    archive boolean NOT NULL DEFAULT false,
     CONSTRAINT user_data_pkey PRIMARY KEY (id),
     CONSTRAINT dept_id_fkey FOREIGN KEY (dept_id)
         REFERENCES dep.dept (id) MATCH SIMPLE

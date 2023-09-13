@@ -282,6 +282,10 @@ class UserServiceImpl(
 		) > 0
 	}
 
+	override fun activityByUserExist(userId: Long): Boolean {
+		return activityRepository.countByUserIdAndActiv(userId = userId) > 0
+	}
+
 //	companion object {
 //		val log: Logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
 //	}

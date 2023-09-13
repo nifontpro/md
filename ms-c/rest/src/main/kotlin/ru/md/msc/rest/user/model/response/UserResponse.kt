@@ -6,7 +6,6 @@ import ru.md.msc.domain.user.model.Gender
 import ru.md.msc.domain.user.model.RoleUser
 import ru.md.msc.rest.award.model.response.ActivityResponse
 import ru.md.msc.rest.award.model.response.AwardResponse
-import java.util.*
 
 data class UserResponse(
 	val id: Long = 0,
@@ -20,8 +19,9 @@ data class UserResponse(
 	val awardCount: Long = 0,
 	val scores: Long = 0,
 	val mainImg: String? = null,
-	val roles: Set<RoleUser> = Collections.emptySet(),
+	val roles: Set<RoleUser> = emptySet(),
 	val images: List<BaseImage> = emptyList(),
 	val activities: List<ActivityResponse> = emptyList(),
 	val awards: List<AwardResponse> = emptyList(),
+	val isDelete: Boolean = false
 )

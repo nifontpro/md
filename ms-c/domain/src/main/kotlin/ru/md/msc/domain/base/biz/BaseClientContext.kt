@@ -34,6 +34,8 @@ abstract class BaseClientContext(
 
 	var isAuth: Boolean = false,
 
+	var deleteForever: Boolean = false
+
 	) : BaseContext() {
 
 	lateinit var userService: UserService

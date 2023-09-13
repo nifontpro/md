@@ -22,4 +22,5 @@ data class User(
 	val awards: List<Award> = emptyList(),
 	val awardCount: Long = 0,
 	val scores: Long = 0,
+	val archive: Boolean = false
 )

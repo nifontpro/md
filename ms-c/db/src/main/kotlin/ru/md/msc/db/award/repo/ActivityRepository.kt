@@ -218,7 +218,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		): AwardCount*/
 
 	/**
-	 * Количество сотрудников имеющих и не имеющих награды
+	 * Количество сотрудников имеющих и не имеющих награды WW - with/without
 	 */
 	@Query(
 		"""
@@ -241,5 +241,10 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
 	): WWAwardCount
+
+	fun countByUserIdAndActiv(
+		userId: Long,
+		activ: Boolean = true
+	): Long
 
 }

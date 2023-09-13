@@ -113,4 +113,14 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 		maxDate: LocalDateTime? = null,
 		pageable: Pageable
 	): Page<IUser>
+
+	@Modifying
+	@Query(
+		"""
+			update users.user_data set archive = true where id = :userId
+		""",
+		nativeQuery = true
+	)
+	fun moveUserToArchive(userId: Long)
+
 }

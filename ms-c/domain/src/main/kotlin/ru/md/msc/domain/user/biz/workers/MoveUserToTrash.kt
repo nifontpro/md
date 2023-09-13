@@ -7,7 +7,7 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.user.biz.proc.UserContext
 
-fun ICorChainDsl<UserContext>.deleteUser(title: String) = worker {
+fun ICorChainDsl<UserContext>.moveUserToTrash(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
@@ -21,8 +21,8 @@ fun ICorChainDsl<UserContext>.deleteUser(title: String) = worker {
 		fail(
 			errorDb(
 				repository = "user",
-				violationCode = "delete",
-				description = "Ошибка при удалении профиля сотрудника, возможно у него есть награждения"
+				violationCode = "to trash",
+				description = "Ошибка при перемещении профиля сотрудника в корзину"
 			)
 		)
 	}

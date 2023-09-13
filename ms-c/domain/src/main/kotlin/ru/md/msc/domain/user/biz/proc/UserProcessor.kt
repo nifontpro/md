@@ -36,7 +36,7 @@ import ru.md.msc.domain.user.service.UserService
 class UserProcessor(
 	private val userService: UserService,
 	private val deptService: DeptService,
-	private val s3Repository: S3Repository
+	private val s3Repository: S3Repository,
 ) : IBaseProcessor<UserContext> {
 
 	override suspend fun exec(ctx: UserContext) = businessChain.exec(ctx.also {
@@ -83,9 +83,17 @@ class UserProcessor(
 				findModifyUserAndGetRolesAndDeptId("Получаем профиль для обновления")
 				validateSameOwnerAndAdminModifyUser()
 				getUserDetailsById("Получаем сотрудника")
-				deleteUser("Удаляем сотрудника")
-				worker("Подготовка к удалению изображений") { baseImages = userDetails.user.images }
-				deleteBaseImagesFromS3("Удаляем все изображения")
+				chain {
+					on { deleteForever }
+					deleteUser("Удаляем профиль сотрудника")
+					worker("Подготовка к удалению изображений") { baseImages = userDetails.user.images }
+					deleteBaseImagesFromS3("Удаляем все изображения")
+				}
+				chain {
+					// При удалении в корзину
+					on { !deleteForever }
+
+				}
 			}
 
 			operation("Получение профилей пользователя", UserCommand.GET_PROFILES) {

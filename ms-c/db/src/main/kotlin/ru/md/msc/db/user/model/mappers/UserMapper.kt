@@ -32,6 +32,7 @@ fun UserEntity.toUserOnlyRoles() = User(
 	gender = gender,
 	post = post,
 	mainImg = mainImg,
+	archive = archive,
 	roles = roles.map { it.roleUser }.toSet(),
 )
 
@@ -46,6 +47,7 @@ fun UserEntity.toUserLazy() = User(
 	gender = gender,
 	post = post,
 	mainImg = mainImg,
+	archive = archive,
 )
 
 fun UserEntity.toUserWithDeptOnly() = User(
@@ -58,6 +60,7 @@ fun UserEntity.toUserWithDeptOnly() = User(
 	gender = gender,
 	post = post,
 	mainImg = mainImg,
+	archive = archive,
 )
 
 fun UserEntity.toUser() = User(
@@ -70,6 +73,7 @@ fun UserEntity.toUser() = User(
 	gender = gender,
 	post = post,
 	mainImg = mainImg,
+	archive = archive,
 	roles = roles.map { it.roleUser }.toSet(),
 	images = images.map { it.toImage() }
 )
@@ -84,6 +88,7 @@ fun UserEntity.toUserActivity() = User(
 	gender = gender,
 	post = post,
 	mainImg = mainImg,
+	archive = archive,
 	images = images.map { it.toImage() },
 	activities = activities.map { it.toActivityOnlyAward() }
 )
@@ -98,6 +103,7 @@ fun UserEntity.toUserAward() = User(
 	gender = gender,
 	post = post,
 	mainImg = mainImg,
+	archive = archive,
 	images = images.map { it.toImage() },
 	awards = awards.map { it.toAwardOnlyImages() }
 )
