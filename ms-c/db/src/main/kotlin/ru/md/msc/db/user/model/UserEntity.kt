@@ -86,6 +86,9 @@ class UserEntity(
 	@Where(clause = "is_activ=true and action_code='A'")
 	val activities: List<ActivityEntity> = emptyList(),
 
+	@Column(name = "is_delete")
+	val isDelete: Boolean = false
+
 	) : Serializable {
 
 	override fun equals(other: Any?): Boolean {
