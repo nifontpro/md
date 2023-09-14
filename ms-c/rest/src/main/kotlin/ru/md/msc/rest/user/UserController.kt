@@ -131,6 +131,11 @@ class UserController(
 		)
 	}
 
+	/**
+	 * Удаление профиля сотрудника
+	 * forever: Boolean - true: удаление навсегда со связанными данными
+	 * 									- false: помещение профиля в архив
+	 */
 	@PostMapping("delete")
 	private suspend fun deleteUser(
 		@RequestHeader(name = AUTH) bearerToken: String,

@@ -17,13 +17,15 @@ import ru.md.msc.domain.base.validate.validateAdminRole
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId
-import ru.md.msc.domain.base.workers.chain.*
-import ru.md.msc.domain.base.workers.findModifyUserAndGetRolesAndDeptId
+import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
+import ru.md.msc.domain.base.workers.chain.validateAdminModifyUserByRoleChain
+import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
+import ru.md.msc.domain.base.workers.chain.validateSameAndAdminModifyUser
 import ru.md.msc.domain.base.workers.image.addImageToS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
-import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.s3.repository.S3Repository
+import ru.md.msc.domain.user.biz.proc.operation.deleteUserOperation
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
 import ru.md.msc.domain.user.biz.validate.validateCreateUserRoles
 import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
@@ -77,24 +79,7 @@ class UserProcessor(
 				updateUser("Обновляем профиль сотрудника")
 			}
 
-			operation("Удаление профиля сотрудника", UserCommand.DELETE) {
-				validateUserId("Проверка userId")
-				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				findModifyUserAndGetRolesAndDeptId("Получаем профиль для обновления")
-				validateSameOwnerAndAdminModifyUser()
-				getUserDetailsById("Получаем сотрудника")
-				chain {
-					on { deleteForever }
-					deleteUser("Удаляем профиль сотрудника")
-					worker("Подготовка к удалению изображений") { baseImages = userDetails.user.images }
-					deleteBaseImagesFromS3("Удаляем все изображения")
-				}
-				chain {
-					// При удалении в корзину
-					on { !deleteForever }
-
-				}
-			}
+			deleteUserOperation()
 
 			operation("Получение профилей пользователя", UserCommand.GET_PROFILES) {
 				getProfiles("Получаем доступные профили")
@@ -209,6 +194,5 @@ class UserProcessor(
 
 			finishOperation()
 		}.build()
-
 	}
 }

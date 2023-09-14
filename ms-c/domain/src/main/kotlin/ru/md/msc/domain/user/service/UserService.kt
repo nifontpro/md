@@ -33,4 +33,5 @@ interface UserService {
 	fun findByDeptsExclude(deptId: Long, awardId: Long, actionType: ActionType?, baseQuery: BaseQuery): PageResult<User>
 	fun doesUserOwnerRole(userId: Long): Boolean
 	fun activityByUserExist(userId: Long): Boolean
+	fun moveUserToArchive(userId: Long)
 }

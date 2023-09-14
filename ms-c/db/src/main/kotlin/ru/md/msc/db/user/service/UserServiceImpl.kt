@@ -286,6 +286,10 @@ class UserServiceImpl(
 		return activityRepository.countByUserIdAndActiv(userId = userId) > 0
 	}
 
+	override fun moveUserToArchive(userId: Long) {
+		userRepository.moveUserToArchive(userId = userId)
+	}
+
 //	companion object {
 //		val log: Logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
 //	}

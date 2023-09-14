@@ -103,6 +103,7 @@ fun UserContext.fromTransport(request: DeleteUserRequest) {
 	command = UserCommand.DELETE
 	authId = request.authId
 	userId = request.userId
+	deleteForever = request.forever
 }
 
 fun UserContext.fromTransport(request: DeleteUserImageRequest) {
