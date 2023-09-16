@@ -34,7 +34,7 @@ fun AwardEntity.toAwardOnlyDept() = Award(
 	dept = dept?.toDeptLazy() ?: Dept(),
 )
 
-fun AwardEntity.toAwardOnlyDeptAndUsers() = Award(
+fun AwardEntity.toAwardWithDeptAndUsers() = Award(
 	id = id ?: 0,
 	name = name,
 	type = type,

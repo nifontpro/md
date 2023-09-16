@@ -87,7 +87,7 @@ class AwardServiceImpl(
 				maxDate = baseQuery.maxDate,
 				filter = baseQuery.filter.toSearchOrNull(),
 				pageable = pageRequest
-			).toPageResult { it.toAwardOnlyDeptAndUsers() }
+			).toPageResult { it.toAwardWithDeptAndUsers() }
 		} else {
 			awardRepository.findByDeptIdIn(
 				deptsIds = deptsIds,

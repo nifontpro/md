@@ -5,31 +5,32 @@ import java.util.*
 
 @Entity
 @Table(name = "act_medal", schema = "rew", catalog = "medalist")
-class ActMedalEntity {
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+class ActMedalEntity(
+
 	@Id
 	@Column(name = "id")
-	var id: Long = 0
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	var id: Long = 0,
 
-	@Basic
 	@Column(name = "act_id")
-	var actId: Long = 0
+	var actId: Long = 0,
 
-	@Basic
 	@Column(name = "medal_id")
-	var medalId: Long = 0
+	var medalId: Long = 0,
 
-	@Basic
-	@Column(name = "count")
-	var count = 0
-	override fun equals(o: Any?): Boolean {
-		if (this === o) return true
-		if (o == null || javaClass != o.javaClass) return false
-		val that = o as ActMedalEntity
+	var count: Int = 0,
+
+	) {
+
+	override fun equals(other: Any?): Boolean {
+		if (this === other) return true
+		if (other == null || javaClass != other.javaClass) return false
+		val that = other as ActMedalEntity
 		return id == that.id && actId == that.actId && medalId == that.medalId && count == that.count
 	}
 
 	override fun hashCode(): Int {
 		return Objects.hash(id, actId, medalId, count)
 	}
+
 }

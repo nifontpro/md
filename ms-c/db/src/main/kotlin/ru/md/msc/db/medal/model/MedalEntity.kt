@@ -6,7 +6,7 @@ import java.util.*
 
 @NamedEntityGraph(
 	name = "medalWithDept",
-	attributeNodes = [NamedAttributeNode("dept")]
+	attributeNodes = [NamedAttributeNode("deptEntity")]
 )
 
 //@NamedEntityGraph(
@@ -31,7 +31,7 @@ class MedalEntity(
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "dept_id")
-	var dept: DeptEntity? = null,
+	var deptEntity: DeptEntity? = null,
 
 //	@Fetch(FetchMode.SUBSELECT)
 //	@ManyToMany(fetch = FetchType.LAZY)
@@ -47,11 +47,11 @@ class MedalEntity(
 		if (this === other) return true
 		if (other == null || javaClass != other.javaClass) return false
 		val medal = other as MedalEntity
-		return id == medal.id && dept?.id == medal.dept?.id && score == medal.score
+		return id == medal.id && deptEntity?.id == medal.deptEntity?.id && score == medal.score
 	}
 
 	override fun hashCode(): Int {
-		return Objects.hash(id, name, dept?.id, score)
+		return Objects.hash(id, name, deptEntity?.id, score)
 	}
 
 	override fun toString(): String {

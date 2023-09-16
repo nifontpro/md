@@ -1,56 +1,55 @@
 package ru.md.msc.db.medal.model
 
 import jakarta.persistence.*
-import java.sql.Timestamp
+import ru.md.base_domain.image.model.ImageType
+import java.time.LocalDateTime
 import java.util.*
 
 @Entity
 @Table(name = "medal_image", schema = "rew", catalog = "medalist")
-class MedalImageEntity {
-	@Basic
-	@Column(name = "image_url")
-	var imageUrl: String? = null
+class MedalImageEntity(
 
-	@Basic
-	@Column(name = "image_key")
-	var imageKey: String? = null
-
-	@Basic
-	@Column(name = "type_code")
-	var typeCode: String? = null
-
-	@Basic
-	@Column(name = "main")
-	var isMain = false
-
-	@Basic
-	@Column(name = "created_at")
-	var createdAt: Timestamp? = null
-
-	@Basic
-	@Column(name = "mini_url")
-	var miniUrl: String? = null
-
-	@Basic
-	@Column(name = "mini_key")
-	var miniKey: String? = null
-
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	@Column(name = "id")
-	var id: Long = 0
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	var id: Long = 0,
 
-	@Basic
+	@Column(name = "image_url")
+	var imageUrl: String = "",
+
+	@Column(name = "image_key")
+	var imageKey: String = "",
+
+	@Column(name = "mini_url")
+	var miniUrl: String = "",
+
+	@Column(name = "mini_key")
+	var miniKey: String = "",
+
+	@Column(name = "type_code")
+	var type: ImageType = ImageType.UNDEF,
+
+	@Column(name = "main")
+	var isMain: Boolean = false,
+
+	@Column(name = "created_at")
+	var createdAt: LocalDateTime? = null,
+
 	@Column(name = "medal_id")
-	var medalId: Long = 0
-	override fun equals(o: Any?): Boolean {
-		if (this === o) return true
-		if (o == null || javaClass != o.javaClass) return false
-		val that = o as MedalImageEntity
-		return isMain == that.isMain && id == that.id && medalId == that.medalId && imageUrl == that.imageUrl && imageKey == that.imageKey && typeCode == that.typeCode && createdAt == that.createdAt && miniUrl == that.miniUrl && miniKey == that.miniKey
+	var medalId: Long = 0,
+
+	) {
+
+	override fun equals(other: Any?): Boolean {
+		if (this === other) return true
+		if (other == null || javaClass != other.javaClass) return false
+		val that = other as MedalImageEntity
+		return isMain == that.isMain && id == that.id && medalId == that.medalId && imageUrl == that.imageUrl &&
+				imageKey == that.imageKey && type == that.type && createdAt == that.createdAt &&
+				miniUrl == that.miniUrl && miniKey == that.miniKey
 	}
 
 	override fun hashCode(): Int {
-		return Objects.hash(imageUrl, imageKey, typeCode, isMain, createdAt, miniUrl, miniKey, id, medalId)
+		return Objects.hash(imageUrl, imageKey, type, isMain, createdAt, miniUrl, miniKey, id, medalId)
 	}
 }

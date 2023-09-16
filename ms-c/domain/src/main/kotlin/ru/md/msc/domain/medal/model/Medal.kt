@@ -1,4 +1,4 @@
-package ru.md.msc.domain.medal
+package ru.md.msc.domain.medal.model
 
 import ru.md.msc.domain.dept.model.Dept
 
