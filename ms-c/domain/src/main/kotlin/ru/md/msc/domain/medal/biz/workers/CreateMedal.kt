@@ -13,10 +13,12 @@ fun ICorChainDsl<MedalContext>.createMedal(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
+		println("DOMAIN MEDAL CREATE")
 			medalDetails = medalService.create(medalDetails)
 	}
 
 	except {
+		log.error(it.message)
 		fail(
 			errorDb(
 				repository = "medal",

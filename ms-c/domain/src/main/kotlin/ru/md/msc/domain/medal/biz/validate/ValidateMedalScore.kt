@@ -7,7 +7,7 @@ import ru.md.cor.worker
 import ru.md.msc.domain.medal.biz.proc.MedalContext
 
 private const val MIN_SCORE = 0
-private const val MAX_SCORE = 0
+private const val MAX_SCORE = 100
 
 fun ICorChainDsl<MedalContext>.validateMedalScore(title: String) = worker {
 	this.title = title

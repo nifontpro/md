@@ -45,9 +45,9 @@ class MedalProcessor(
 
 			operation("Создать медаль", MedalCommand.CREATE) {
 				validateMainMedalFieldChain()
-				validateAdminDeptLevelChain()
+//				validateAdminDeptLevelChain()
 				trimFieldMedalDetails("Очищаем поля")
-				createMedal("Создаем награду")
+				createMedal("Создаем медаль")
 			}
 
 			operation("Обновить награду", MedalCommand.UPDATE) {

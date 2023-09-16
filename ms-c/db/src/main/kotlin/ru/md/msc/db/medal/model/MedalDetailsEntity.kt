@@ -21,7 +21,7 @@ class MedalDetailsEntity(
 	@MapsId
 	@JoinColumn(name = "medal_id")
 	@OneToOne(fetch = FetchType.EAGER, optional = false)
-	val medalEntity: MedalEntity
+	var medalEntity: MedalEntity
 
 ) {
 	override fun equals(other: Any?): Boolean {

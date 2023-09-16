@@ -19,7 +19,7 @@ import java.util.*
 class MedalEntity(
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	val id: Long? = null,
+	var id: Long? = null,
 
 	var name: String = "",
 
