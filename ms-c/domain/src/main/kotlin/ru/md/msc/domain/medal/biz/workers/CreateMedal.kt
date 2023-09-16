@@ -6,6 +6,7 @@ import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.medal.biz.proc.MedalContext
+import java.time.LocalDateTime
 
 fun ICorChainDsl<MedalContext>.createMedal(title: String) = worker {
 
@@ -13,8 +14,7 @@ fun ICorChainDsl<MedalContext>.createMedal(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-		println("DOMAIN MEDAL CREATE")
-			medalDetails = medalService.create(medalDetails)
+		medalDetails = medalService.create(medalDetails)
 	}
 
 	except {

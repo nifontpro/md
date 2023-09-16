@@ -8,11 +8,13 @@ import ru.md.base_domain.biz.workers.operation
 import ru.md.base_domain.client.MicroClient
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.rootChain
-import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
+import ru.md.cor.worker
+import ru.md.msc.domain.base.workers.chain.validateDeptIdAndAdminDeptLevelChain
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.medal.biz.validate.validateMedalName
 import ru.md.msc.domain.medal.biz.validate.validateMedalScore
 import ru.md.msc.domain.medal.biz.workers.createMedal
+import ru.md.msc.domain.medal.biz.workers.getMedalByIdDetails
 import ru.md.msc.domain.medal.biz.workers.trimFieldMedalDetails
 import ru.md.msc.domain.medal.service.MedalService
 import ru.md.msc.domain.msg.service.MessageService
@@ -45,7 +47,8 @@ class MedalProcessor(
 
 			operation("Создать медаль", MedalCommand.CREATE) {
 				validateMainMedalFieldChain()
-//				validateAdminDeptLevelChain()
+				worker("Для проверки") { deptId = medal.dept?.id ?: 0}
+				validateDeptIdAndAdminDeptLevelChain()
 				trimFieldMedalDetails("Очищаем поля")
 				createMedal("Создаем медаль")
 			}
@@ -59,7 +62,7 @@ class MedalProcessor(
 
 			operation("Получить по id", MedalCommand.GET_BY_ID_DETAILS) {
 //				validateViewAccessToAwardChain()
-//				getAwardByIdDetails("Получаем детальную награду")
+				getMedalByIdDetails("Получаем медаль с детализацией")
 			}
 
 //			operation("Получить награды в отделе или подотделах", AwardCommand.GET_BY_DEPT) {

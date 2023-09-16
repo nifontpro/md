@@ -26,7 +26,7 @@ import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
-import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
+import ru.md.msc.domain.base.workers.chain.validateDeptIdAndAdminDeptLevelChain
 import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
 import ru.md.msc.domain.base.workers.getRootDeptId
 import ru.md.msc.domain.base.workers.image.addImageToS3
@@ -64,7 +64,7 @@ class AwardProcessor(
 
 			operation("Создать награду", AwardCommand.CREATE) {
 				validateMainAwardFieldChain()
-				validateAdminDeptLevelChain()
+				validateDeptIdAndAdminDeptLevelChain()
 				trimFieldAwardDetails("Очищаем поля")
 				createAward("Создаем награду")
 			}

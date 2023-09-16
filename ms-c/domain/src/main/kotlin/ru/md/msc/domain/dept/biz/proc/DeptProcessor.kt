@@ -13,7 +13,7 @@ import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
-import ru.md.msc.domain.base.workers.chain.validateAdminDeptLevelChain
+import ru.md.msc.domain.base.workers.chain.validateDeptIdAndAdminDeptLevelChain
 import ru.md.msc.domain.base.workers.image.addImageToS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
@@ -45,7 +45,7 @@ class DeptProcessor(
 			operation("Создать отдел", DeptCommand.CREATE) {
 				validateDeptName("Проверяем имя отдела")
 				worker("Для проверки доступа к какому отделу") { deptId = dept.parentId }
-				validateAdminDeptLevelChain()
+				validateDeptIdAndAdminDeptLevelChain()
 				trimFieldDeptDetails("Очищаем поля")
 				createDept("Создаем отдел")
 				createTestUsers("Создаем тестовых сотрудников")
@@ -92,13 +92,13 @@ class DeptProcessor(
 
 			operation("Обновить профиль", DeptCommand.UPDATE) {
 				validateDeptName("Проверяем имя отдела")
-				validateAdminDeptLevelChain()
+				validateDeptIdAndAdminDeptLevelChain()
 				trimFieldDeptDetails("Очищаем поля")
 				updateDept("Обновляем профиль")
 			}
 
 			operation("Удалить отдел", DeptCommand.DELETE) {
-				validateAdminDeptLevelChain()
+				validateDeptIdAndAdminDeptLevelChain()
 				getDeptDetailsById("Получаем отдел")
 				deleteDept("Удаляем отдел")
 				worker("Подготовка к удалению изображений") { baseImages = deptDetails.dept.images }
@@ -107,7 +107,7 @@ class DeptProcessor(
 
 			operation("Добавление изображения", DeptCommand.IMG_ADD) {
 				worker("Получение id сущности") { deptId = fileData.entityId }
-				validateAdminDeptLevelChain()
+				validateDeptIdAndAdminDeptLevelChain()
 				prepareDeptImagePrefixUrl("Получаем префикс изображения")
 				addImageToS3("Сохраняем изображение в s3")
 				addDeptImageToDb("Добавляем картинку в БД")
@@ -117,7 +117,7 @@ class DeptProcessor(
 
 			operation("Удаление изображения", DeptCommand.IMG_DELETE) {
 				validateImageId("Проверка imageId")
-				validateAdminDeptLevelChain()
+				validateDeptIdAndAdminDeptLevelChain()
 				deleteDeptImageFromDb("Удаляем изображение")
 				deleteBaseImageFromS3("Удаляем изображение из s3")
 				updateDeptMainImage("Обновление основного изображения")

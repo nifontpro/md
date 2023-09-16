@@ -20,11 +20,11 @@ values
 
 -- USERS
 
-insert into users.user_data (dept_id, firstname, lastname)
-values (2, 'Owner User 1 - dept 2', 'User 1'),
-       (3, 'User 2 - dept 3', 'User 2'),
-       (3, 'User 3 - dept 3', 'User 3'),
-       (3, 'User 4 - dept 3', 'User 4')
+insert into users.user_data (dept_id, firstname, lastname, auth_email)
+values (2, 'Owner User 1 - dept 2', 'User 1', 'owner@test.ru'),
+       (3, 'User 2 - dept 3', 'User 2', null),
+       (3, 'User 3 - dept 3', 'User 3', null),
+       (3, 'User 4 - dept 3', 'User 4', null)
 ;;
 
 insert into users.user_details (user_id, description)

@@ -1,25 +1,28 @@
 package ru.md.msc.domain.medal.biz.proc
 
-//fun AwardContext.awardNotFoundError() {
-//	fail(
-//		errorDb(
-//			repository = "award",
-//			violationCode = "not found",
-//			description = "Награда не найдена"
-//		)
-//	)
-//}
-//
-//fun AwardContext.getAwardError() {
-//	fail(
-//		errorDb(
-//			repository = "award",
-//			violationCode = "get error",
-//			description = "Ошибка получения награды"
-//		)
-//	)
-//}
-//
+import ru.md.base_domain.biz.helper.errorDb
+import ru.md.base_domain.biz.helper.fail
+
+fun MedalContext.medalNotFoundError() {
+	fail(
+		errorDb(
+			repository = "medal",
+			violationCode = "not found",
+			description = "Медаль не найдена"
+		)
+	)
+}
+
+fun MedalContext.getMedalError() {
+	fail(
+		errorDb(
+			repository = "medal",
+			violationCode = "get error",
+			description = "Ошибка получения медали"
+		)
+	)
+}
+
 //fun AwardContext.getAwardCountError() {
 //	fail(
 //		errorDb(

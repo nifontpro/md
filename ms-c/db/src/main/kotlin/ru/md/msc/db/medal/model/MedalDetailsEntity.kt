@@ -1,7 +1,6 @@
 package ru.md.msc.db.medal.model
 
 import jakarta.persistence.*
-import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.util.*
 
@@ -16,7 +15,7 @@ class MedalDetailsEntity(
 	var description: String? = null,
 
 	@Column(name = "created_at")
-	var createdAt: LocalDateTime? = null,
+	var createdAt: LocalDateTime = LocalDateTime.MIN,
 
 	@MapsId
 	@JoinColumn(name = "medal_id")

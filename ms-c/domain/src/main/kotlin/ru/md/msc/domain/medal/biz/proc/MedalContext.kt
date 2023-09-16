@@ -7,6 +7,7 @@ import ru.md.msc.domain.medal.model.MedalDetails
 import ru.md.msc.domain.medal.service.MedalService
 
 class MedalContext : BaseClientContext() {
+	var medalId: Long = 0
 	var medal: Medal = Medal()
 	var medalDetails: MedalDetails = MedalDetails()
 	var medals: List<Medal> = emptyList()

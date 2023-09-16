@@ -10,7 +10,7 @@ import ru.md.msc.domain.base.validate.validateDeptId
 /**
  * Проверка возможности доступа Администратора к отделу
  */
-fun <T : BaseClientContext> ICorChainDsl<T>.validateAdminDeptLevelChain() {
+fun <T : BaseClientContext> ICorChainDsl<T>.validateDeptIdAndAdminDeptLevelChain() {
 	validateDeptId("Проверяем deptId")
 	getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 	validateAdminRole("Проверка наличия прав Администратора")
