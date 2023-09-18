@@ -9,13 +9,15 @@ import ru.md.base_domain.client.MicroClient
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.rootChain
 import ru.md.cor.worker
+import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
+import ru.md.msc.domain.base.validate.auth.validateAuthDeptLevel
+import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
 import ru.md.msc.domain.base.workers.chain.validateDeptIdAndAdminDeptLevelChain
 import ru.md.msc.domain.dept.service.DeptService
+import ru.md.msc.domain.medal.biz.validate.validateMedalId
 import ru.md.msc.domain.medal.biz.validate.validateMedalName
 import ru.md.msc.domain.medal.biz.validate.validateMedalScore
-import ru.md.msc.domain.medal.biz.workers.createMedal
-import ru.md.msc.domain.medal.biz.workers.getMedalByIdDetails
-import ru.md.msc.domain.medal.biz.workers.trimFieldMedalDetails
+import ru.md.msc.domain.medal.biz.workers.*
 import ru.md.msc.domain.medal.service.MedalService
 import ru.md.msc.domain.msg.service.MessageService
 import ru.md.msc.domain.s3.repository.S3Repository
@@ -54,14 +56,14 @@ class MedalProcessor(
 			}
 
 			operation("Обновить награду", MedalCommand.UPDATE) {
-//				validateMainAwardFieldChain()
-//				validateAccessToAwardChain()
-//				trimFieldAwardDetails("Очищаем поля")
-//				updateAward("Обновляем награду")
+				validateMainMedalFieldChain()
+				validateMedalIdAndAccessToAwardChain()
+				trimFieldMedalDetails("Очищаем поля")
+				updateMedal("Обновляем медаль")
 			}
 
 			operation("Получить по id", MedalCommand.GET_BY_ID_DETAILS) {
-//				validateViewAccessToAwardChain()
+				validateMedalIdAndViewAccessToMedalChain()
 				getMedalByIdDetails("Получаем медаль с детализацией")
 			}
 
@@ -228,20 +230,22 @@ class MedalProcessor(
 			validateMedalName("Проверяем наименование")
 			validateMedalScore("Проверяем цену медали")
 		}
-//
-//		private fun ICorChainDsl<AwardContext>.validateAccessToAwardChain() {
-//			validateAwardId("Проверяем awardId")
-//			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-//			findDeptIdByAwardId("Получаем deptId")
-//			validateAuthDeptLevel("Проверка доступа к отделу")
-//		}
-//
-//		private fun ICorChainDsl<AwardContext>.validateViewAccessToAwardChain() {
-//			validateAwardId("Проверяем awardId")
-//			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-//			findDeptIdByAwardId("Получаем deptId")
-//			validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
-//		}
+
+		private fun ICorChainDsl<MedalContext>.validateMedalIdAndViewAccessToMedalChain() {
+			validateMedalId("Проверяем awardId")
+			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+			getDeptIdByMedalId("Получаем deptId")
+			validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
+		}
+
+		private fun ICorChainDsl<MedalContext>.validateMedalIdAndAccessToAwardChain() {
+			validateMedalId("Проверяем awardId")
+			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+			getDeptIdByMedalId("Получаем deptId")
+			validateAuthDeptLevel("Проверка доступа к отделу")
+		}
+
+
 
 	}
 }

@@ -13,4 +13,7 @@ interface MedalRepository : JpaRepository<MedalEntity, Long> {
 	@Query("delete from MedalEntity a where a.id = :medalId")
 	override fun deleteById(medalId: Long)
 
+	@Query("select m.deptEntity.id from MedalEntity m where m.id = :medalId")
+	fun findDeptId(medalId: Long): Long?
+
 }

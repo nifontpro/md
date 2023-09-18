@@ -14,7 +14,7 @@ import ru.md.msc.domain.medal.model.Medal
 import ru.md.msc.domain.medal.model.MedalDetails
 import ru.md.msc.domain.medal.service.MedalService
 
-const val ownerEmail = "owner@test.ru"
+const val ownerEmail = "necmedals@yandex.ru"
 
 @SpringBootTest(classes = [TestBeans::class])
 class MedalBizTest(

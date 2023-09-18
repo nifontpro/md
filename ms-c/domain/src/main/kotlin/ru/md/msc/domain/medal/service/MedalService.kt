@@ -9,4 +9,5 @@ interface MedalService {
 	fun findMedalById(medalId: Long): Medal
 	fun findMedalDetailsById(medalId: Long): MedalDetails
 	fun deleteById(medalId: Long)
+	fun findDeptIdByMedalId(medalId: Long): Long
 }

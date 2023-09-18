@@ -62,4 +62,8 @@ class MedalServiceImpl(
 		return medalDetailsEntity.toMedalDetails()
 	}
 
+	override fun findDeptIdByMedalId(medalId: Long): Long {
+		return medalRepository.findDeptId(medalId = medalId) ?: throw MedalNotFoundException()
+	}
+
 }

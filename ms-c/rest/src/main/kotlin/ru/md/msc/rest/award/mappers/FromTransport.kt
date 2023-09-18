@@ -42,7 +42,6 @@ fun AwardContext.fromTransport(request: UpdateAwardRequest) {
 		startDate = request.startDate.toLocalDateTimeUTC(),
 		endDate = request.endDate.toLocalDateTimeUTC(),
 		score = request.score,
-		dept = Dept(id = deptId)
 	)
 
 	awardDetails = AwardDetails(
