@@ -18,5 +18,8 @@ enum class MedalCommand : IBaseCommand {
 	CREATE,
 	DELETE,
 	UPDATE,
-	GET_BY_ID_DETAILS,
+	GET_BY_ID,
+	IMG_ADD,
+	IMG_DELETE,
+	IMG_ADD_GALLERY
 }

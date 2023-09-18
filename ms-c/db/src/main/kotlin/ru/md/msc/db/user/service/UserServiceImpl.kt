@@ -194,7 +194,7 @@ class UserServiceImpl(
 			createdAt = LocalDateTime.now()
 		)
 		userImageRepository.save(userImageEntity)
-		return userImageEntity.toImage()
+		return userImageEntity.toBaseImage()
 	}
 
 	override fun deleteImage(userId: Long, imageId: Long): BaseImage {
@@ -202,7 +202,7 @@ class UserServiceImpl(
 			throw ImageNotFoundException()
 		}
 		userImageRepository.delete(userImageEntity)
-		return userImageEntity.toImage()
+		return userImageEntity.toBaseImage()
 	}
 
 	override fun setMainImage(userId: Long): BaseImage? {
@@ -216,11 +216,13 @@ class UserServiceImpl(
 		images.forEach {
 			if (it.createdAt > userImageEntity.createdAt) {
 				userImageEntity = it
+			} else if (it.main) {
+				it.main = false
 			}
 		}
 		userEntity.mainImg = userImageEntity.miniUrl
 		userImageEntity.main = true
-		return userImageEntity.toImage()
+		return userImageEntity.toBaseImage()
 	}
 
 	override fun updateAllUserImg() {

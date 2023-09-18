@@ -1,4 +1,4 @@
-package ru.md.base_rest.model
+package ru.md.base_rest.model.request
 
 import ru.md.base_domain.model.BaseOrder
 

@@ -20,7 +20,13 @@ class MedalDetailsEntity(
 	@MapsId
 	@JoinColumn(name = "medal_id")
 	@OneToOne(fetch = FetchType.EAGER, optional = false)
-	var medalEntity: MedalEntity
+	var medalEntity: MedalEntity,
+
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "medal_id")
+	@OrderBy("id DESC")
+//	@Fetch(FetchMode.SUBSELECT)
+	val images: List<MedalImageEntity> = emptyList(),
 
 ) {
 	override fun equals(other: Any?): Boolean {

@@ -1,6 +1,6 @@
 package ru.md.msc.rest.user.model.request
 
-import ru.md.base_rest.model.BaseRequest
+import ru.md.base_rest.model.request.BaseRequest
 
 data class GetUsersByDeptRequest(
 	val authId: Long = 0,

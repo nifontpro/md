@@ -5,9 +5,7 @@ import ru.md.msc.domain.medal.biz.proc.MedalCommand
 import ru.md.msc.domain.medal.biz.proc.MedalContext
 import ru.md.msc.domain.medal.model.Medal
 import ru.md.msc.domain.medal.model.MedalDetails
-import ru.md.msc.rest.medal.model.request.CreateMedalRequest
-import ru.md.msc.rest.medal.model.request.GetMedalByIdRequest
-import ru.md.msc.rest.medal.model.request.UpdateMedalRequest
+import ru.md.msc.rest.medal.model.request.*
 
 
 fun MedalContext.fromTransport(request: CreateMedalRequest) {
@@ -45,7 +43,27 @@ fun MedalContext.fromTransport(request: UpdateMedalRequest) {
 }
 
 fun MedalContext.fromTransport(request: GetMedalByIdRequest) {
-	command = MedalCommand.GET_BY_ID_DETAILS
+	command = MedalCommand.GET_BY_ID
 	authId = request.authId
 	medalId = request.medalId
+}
+
+fun MedalContext.fromTransport(request: DeleteMedalRequest) {
+	command = MedalCommand.DELETE
+	authId = request.authId
+	medalId = request.medalId
+}
+
+fun MedalContext.fromTransport(request: DeleteMedalImageRequest) {
+	command = MedalCommand.IMG_DELETE
+	authId = request.authId
+	medalId = request.medalId
+	imageId = request.imageId
+}
+
+fun MedalContext.fromTransport(request: AddMedalImageFromGalleryRequest) {
+	command = MedalCommand.IMG_ADD_GALLERY
+	authId = request.authId
+	medalId = request.medalId
+	imageId = request.itemId
 }

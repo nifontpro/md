@@ -1,4 +1,4 @@
-package ru.md.base_rest.model
+package ru.md.base_rest.model.request
 
 const val AUTH = "Authorization"
 

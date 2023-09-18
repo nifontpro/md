@@ -3,7 +3,7 @@ package ru.md.msc.db.dept.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import ru.md.base_db.mapper.toImage
+import ru.md.base_db.mapper.toBaseImage
 import ru.md.base_db.mapper.toSort
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.model.BaseOrder
@@ -135,7 +135,7 @@ class DeptServiceImpl(
 			createdAt = LocalDateTime.now()
 		)
 		deptImageRepository.save(deptImageEntity)
-		return deptImageEntity.toImage()
+		return deptImageEntity.toBaseImage()
 	}
 
 	override fun deleteImage(deptId: Long, imageId: Long): BaseImage {
@@ -143,7 +143,7 @@ class DeptServiceImpl(
 			throw ImageNotFoundException()
 		}
 		deptImageRepository.delete(deptImageEntity)
-		return deptImageEntity.toImage()
+		return deptImageEntity.toBaseImage()
 	}
 
 	override fun setMainImage(deptId: Long): BaseImage? {
@@ -157,11 +157,13 @@ class DeptServiceImpl(
 		images.forEach {
 			if (it.createdAt > deptImageEntity.createdAt) {
 				deptImageEntity = it
+			} else if (it.main) {
+				it.main = false
 			}
 		}
 		deptEntity.mainImg = deptImageEntity.miniUrl
 		deptImageEntity.main = true
-		return deptImageEntity.toImage()
+		return deptImageEntity.toBaseImage()
 	}
 
 	override fun updateAllDeptImg() {

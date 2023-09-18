@@ -1,16 +1,18 @@
 package ru.md.msc.db.medal.model.mapper
 
+import ru.md.base_db.mapper.toBaseImage
 import ru.md.msc.db.medal.model.MedalDetailsEntity
 import ru.md.msc.domain.medal.model.MedalDetails
 
 fun MedalDetails.toMedalDetailsEntity() = MedalDetailsEntity(
+	medalEntity = medal.toMedalEntity(),
 	description = description,
 	createdAt = createdAt,
-	medalEntity = medal.toMedalEntity()
 )
 
 fun MedalDetailsEntity.toMedalDetails() = MedalDetails(
+	medal = medalEntity.toMedal(),
 	description = description,
 	createdAt = createdAt,
-	medal = medalEntity.toMedal()
+	images = images.map { it.toBaseImage() }
 )

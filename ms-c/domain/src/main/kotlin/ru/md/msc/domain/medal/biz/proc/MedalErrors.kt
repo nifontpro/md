@@ -1,5 +1,6 @@
 package ru.md.msc.domain.medal.biz.proc
 
+import ru.md.base_domain.biz.helper.ContextError
 import ru.md.base_domain.biz.helper.errorDb
 import ru.md.base_domain.biz.helper.fail
 
@@ -8,7 +9,8 @@ fun MedalContext.medalNotFoundError() {
 		errorDb(
 			repository = "medal",
 			violationCode = "not found",
-			description = "Медаль не найдена"
+			description = "Медаль не найдена",
+			level = ContextError.Levels.INFO
 		)
 	)
 }

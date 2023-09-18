@@ -20,6 +20,7 @@ suspend fun <C : BaseClientContext> imageProcess(
 	authId: Long,
 	entityId: Long,
 	imageId: Long = 0,
+	// Исправить на BaseImageResponse
 ): BaseResponse<BaseImage> {
 	if (!authData.emailVerified || authData.email.isBlank()) {
 		context.emailNotVerified()
@@ -31,6 +32,7 @@ suspend fun <C : BaseClientContext> imageProcess(
 		context.fileSaveError()
 		return BaseResponse.error(errors = context.errors)
 	}
+
 	context.fileData = fileData
 	context.authId = authId
 	context.imageId = imageId

@@ -3,7 +3,7 @@ package ru.md.msc.db.award.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import ru.md.base_db.mapper.toImage
+import ru.md.base_db.mapper.toBaseImage
 import ru.md.base_db.mapper.toPageRequest
 import ru.md.base_db.mapper.toPageResult
 import ru.md.base_db.mapper.toSearchOrNull
@@ -184,7 +184,7 @@ class AwardServiceImpl(
 			createdAt = LocalDateTime.now()
 		)
 		awardImageRepository.save(awardImageEntity)
-		return awardImageEntity.toImage()
+		return awardImageEntity.toBaseImage()
 	}
 
 	override fun addGalleryImage(awardId: Long, smallItem: SmallItem): BaseImage {
@@ -196,7 +196,7 @@ class AwardServiceImpl(
 			createdAt = LocalDateTime.now()
 		)
 		awardImageRepository.save(awardImageEntity)
-		return awardImageEntity.toImage()
+		return awardImageEntity.toBaseImage()
 	}
 
 	override fun deleteImage(awardId: Long, imageId: Long): BaseImage {
@@ -204,7 +204,7 @@ class AwardServiceImpl(
 			throw ImageNotFoundException()
 		}
 		awardImageRepository.delete(awardImageEntity)
-		return awardImageEntity.toImage()
+		return awardImageEntity.toBaseImage()
 	}
 
 	/**
@@ -330,7 +330,7 @@ class AwardServiceImpl(
 		}
 		awardImageEntity.main = true
 		awardEntity.mainImg = awardImageEntity.miniUrl
-		return awardImageEntity.toImage()
+		return awardImageEntity.toBaseImage()
 	}
 
 	override fun updateAllAwardImg() {

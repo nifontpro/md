@@ -3,7 +3,7 @@ package ru.md.msc.rest.event
 import org.springframework.web.bind.annotation.*
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_rest.authProcess
-import ru.md.base_rest.model.AUTH
+import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.event.biz.proc.EventProcessor
 import ru.md.msc.rest.event.mappers.fromTransport

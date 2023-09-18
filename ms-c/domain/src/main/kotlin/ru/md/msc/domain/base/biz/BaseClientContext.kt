@@ -3,6 +3,7 @@ package ru.md.msc.domain.base.biz
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import ru.md.base_domain.biz.proc.BaseContext
+import ru.md.base_domain.gallery.SmallItem
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.msg.model.UserMsg
@@ -27,6 +28,7 @@ abstract class BaseClientContext(
 
 	var imageId: Long = 0,
 	var baseImage: BaseImage = BaseImage(),
+	var smallItem: SmallItem = SmallItem(), // убрать
 	var baseImages: List<BaseImage> = emptyList(),
 	var deleteImageOnFailing: Boolean = false,
 

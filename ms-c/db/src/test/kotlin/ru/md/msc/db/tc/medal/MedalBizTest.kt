@@ -55,7 +55,7 @@ class MedalBizTest(
 			authId = 1
 			authEmail = ownerEmail
 			medalId = createContext.medalDetails.medal.id
-			command = MedalCommand.GET_BY_ID_DETAILS
+			command = MedalCommand.GET_BY_ID
 		}
 		medalProcessor.exec(getContext)
 

@@ -1,11 +1,9 @@
 package ru.md.msc.domain.award.biz.proc
 
 import ru.md.base_domain.biz.proc.IBaseCommand
-import ru.md.base_domain.gallery.SmallItem
 import ru.md.msc.domain.award.model.*
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.biz.BaseClientContext
-import ru.md.msc.domain.award.model.AwardCount
 
 class AwardContext : BaseClientContext() {
 	var award: Award = Award()
@@ -18,7 +16,6 @@ class AwardContext : BaseClientContext() {
 	var actionType: ActionType = ActionType.UNDEF
 	var awardState: AwardState? = null
 	var awardType: AwardType? = null
-	var smallItem: SmallItem = SmallItem()
 	var withUsers: Boolean = false // Включать ли награжденных сотрудников при получении наград
 
 	var awardsCount: List<AwardCount> = emptyList()

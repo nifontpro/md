@@ -6,7 +6,7 @@ import ru.md.base_domain.gallery.GalleryItem
 import ru.md.base_domain.gallery.request.GetItemByIdRequest
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_rest.authProcess
-import ru.md.base_rest.model.AUTH
+import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.process
 import ru.md.base_rest.toLongOr0
 import ru.md.base_rest.utils.JwtUtils

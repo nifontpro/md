@@ -3,10 +3,9 @@ package ru.md.msc.rest.message
 import org.springframework.web.bind.annotation.*
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_rest.authProcess
-import ru.md.base_rest.model.AUTH
+import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.msg.biz.proc.MessageProcessor
-import ru.md.msc.rest.event.model.request.*
 import ru.md.msc.rest.message.mappers.fromTransport
 import ru.md.msc.rest.message.mappers.toTransportUserMessagesResponse
 import ru.md.msc.rest.message.mappers.toTransportUserMsgResponse

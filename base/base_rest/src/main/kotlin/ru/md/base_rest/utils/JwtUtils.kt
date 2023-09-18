@@ -3,7 +3,7 @@ package ru.md.base_rest.utils
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.stereotype.Service
-import ru.md.base_rest.model.AuthRequest
+import ru.md.base_rest.model.request.AuthRequest
 import java.util.*
 import javax.naming.AuthenticationException
 

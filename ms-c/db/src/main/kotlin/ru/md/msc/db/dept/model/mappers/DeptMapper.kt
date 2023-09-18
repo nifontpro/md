@@ -1,6 +1,6 @@
 package ru.md.msc.db.dept.model.mappers
 
-import ru.md.base_db.mapper.toImage
+import ru.md.base_db.mapper.toBaseImage
 import ru.md.msc.db.dept.model.DeptEntity
 import ru.md.msc.domain.dept.model.Dept
 
@@ -12,7 +12,7 @@ fun DeptEntity.toDept() = Dept(
 	topLevel = topLevel,
 	type = type,
 	mainImg = mainImg,
-	images = images.map { it.toImage() }
+	images = images.map { it.toBaseImage() }
 )
 
 fun DeptEntity.toDeptLazy() = Dept(

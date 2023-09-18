@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_rest.authProcess
-import ru.md.base_rest.model.AUTH
+import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.toLongOr0
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.award.biz.proc.AwardCommand

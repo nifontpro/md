@@ -18,6 +18,7 @@ fun ICorChainDsl<MedalContext>.getMedalByIdDetails(title: String) = worker {
 	}
 
 	except {
+		log.error(it.message)
 		when (it) {
 			is MedalNotFoundException -> medalNotFoundError()
 			else -> getMedalError()

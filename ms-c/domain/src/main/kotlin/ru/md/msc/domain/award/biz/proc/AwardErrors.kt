@@ -1,9 +1,7 @@
 package ru.md.msc.domain.award.biz.proc
 
-import ru.md.base_domain.biz.helper.ContextError
 import ru.md.base_domain.biz.helper.errorDb
 import ru.md.base_domain.biz.helper.fail
-import ru.md.base_domain.biz.helper.otherError
 
 fun AwardContext.awardNotFoundError() {
 	fail(
@@ -31,16 +29,6 @@ fun AwardContext.getAwardCountError() {
 			repository = "award",
 			violationCode = "count error",
 			description = "Ошибка получения количества наград"
-		)
-	)
-}
-
-fun AwardContext.getGalleryItemMsError() {
-	fail(
-		otherError(
-			description = "Ошибка получения объекта из микросервиса галереи",
-			field = "gallery",
-			level = ContextError.Levels.ERROR
 		)
 	)
 }

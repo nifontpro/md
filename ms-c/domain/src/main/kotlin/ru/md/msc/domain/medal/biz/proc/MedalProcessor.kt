@@ -12,7 +12,12 @@ import ru.md.cor.worker
 import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
+import ru.md.msc.domain.base.validate.validateImageId
+import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateDeptIdAndAdminDeptLevelChain
+import ru.md.msc.domain.base.workers.image.addImageToS3
+import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
+import ru.md.msc.domain.base.workers.image.getGalleryItemByClient
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.medal.biz.validate.validateMedalId
 import ru.md.msc.domain.medal.biz.validate.validateMedalName
@@ -57,14 +62,22 @@ class MedalProcessor(
 
 			operation("Обновить награду", MedalCommand.UPDATE) {
 				validateMainMedalFieldChain()
-				validateMedalIdAndAccessToAwardChain()
+				validateMedalIdAndAccessToMedalChain()
 				trimFieldMedalDetails("Очищаем поля")
 				updateMedal("Обновляем медаль")
 			}
 
-			operation("Получить по id", MedalCommand.GET_BY_ID_DETAILS) {
+			operation("Получить по id", MedalCommand.GET_BY_ID) {
 				validateMedalIdAndViewAccessToMedalChain()
 				getMedalByIdDetails("Получаем медаль с детализацией")
+			}
+
+			operation("Удалить медаль", MedalCommand.DELETE) {
+				validateMedalIdAndAccessToMedalChain()
+				getMedalByIdDetails("Получаем детальную награду")
+				deleteMedal("Удаляем")
+//				worker("Подготовка к удалению изображений") { baseImages = awardDetails.award.images }
+//				deleteBaseImagesFromS3("Удаляем все изображения")
 			}
 
 //			operation("Получить награды в отделе или подотделах", AwardCommand.GET_BY_DEPT) {
@@ -78,40 +91,33 @@ class MedalProcessor(
 //				getAwardsByDept("Получаем награды из отдела или всех подотделов")
 //			}
 //
-//			operation("Удалить награду", AwardCommand.DELETE) {
-//				validateAccessToAwardChain()
-//				getAwardByIdDetails("Получаем детальную награду")
-//				deleteAward("Удаляем")
-//				worker("Подготовка к удалению изображений") { baseImages = awardDetails.award.images }
-//				deleteBaseImagesFromS3("Удаляем все изображения")
-//			}
 
-//			operation("Добавление изображения", AwardCommand.IMG_ADD) {
-//				worker("Получение id сущности") { awardId = fileData.entityId }
-//				validateAccessToAwardChain()
-//				prepareAwardImagePrefixUrl("Получаем префикс изображения")
-//				addImageToS3("Сохраняем изображение в s3")
-//				addAwardImageToDb("Сохраняем ссылки на изображение в БД")
-//				updateAwardMainImage("Обновление основного изображения")
-//				deleteS3ImageOnFailingChain()
-//			}
-//
-//			operation("Добавление изображения из галереи", AwardCommand.IMG_ADD_GALLERY) {
-//				validateAwardId("Проверяем awardId")
-//				validateImageId("Проверка imageId")
-//				validateAccessToAwardChain()
-//				getGalleryItemByClient("Получаем объект галереи из мс")
-//				addAwardGalleryImageToDb("Сохраняем ссылки на изображение в БД")
-//				updateAwardMainImage("Обновление основного изображения")
-//			}
-//
-//			operation("Удаление изображения", AwardCommand.IMG_DELETE) {
-//				validateImageId("Проверка imageId")
-//				validateAccessToAwardChain()
-//				deleteAwardImageFromDb("Удаляем изображение из БД")
-//				deleteBaseImageFromS3("Удаляем изображение из s3")
-//				updateAwardMainImage("Обновление основного изображения")
-//			}
+			operation("Добавление изображения", MedalCommand.IMG_ADD) {
+				worker("Получение id сущности") { medalId = fileData.entityId }
+				validateMedalIdAndAccessToMedalChain()
+				prepareMedalImagePrefixUrl("Получаем префикс изображения")
+				addImageToS3("Сохраняем изображение в s3")
+				addMedalImageToDb("Сохраняем ссылки на изображение в БД")
+				updateMedalMainImage("Обновление основного изображения")
+				deleteS3ImageOnFailingChain()
+				getMedalByIdDetails("Получаем медаль с детализацией")
+			}
+
+			operation("Добавление изображения из галереи", MedalCommand.IMG_ADD_GALLERY) {
+				validateImageId("Проверка imageId")
+				validateMedalIdAndAccessToMedalChain()
+				getGalleryItemByClient("Получаем объект галереи из мс")
+				addMedalGalleryImageToDb("Сохраняем ссылки на изображение в БД")
+				updateMedalMainImage("Обновление основного изображения")
+			}
+
+			operation("Удаление изображения", MedalCommand.IMG_DELETE) {
+				validateImageId("Проверка imageId")
+				validateMedalIdAndAccessToMedalChain()
+				deleteMedalImageFromDb("Удаляем изображение из БД")
+				deleteBaseImageFromS3("Удаляем изображение из s3")
+				updateMedalMainImage("Обновление основного изображения")
+			}
 //
 //			operation("Добавить действие в активность награждения", AwardCommand.ADD_ACTION) {
 //				validateUserId("Проверка userId")
@@ -238,14 +244,11 @@ class MedalProcessor(
 			validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 		}
 
-		private fun ICorChainDsl<MedalContext>.validateMedalIdAndAccessToAwardChain() {
+		private fun ICorChainDsl<MedalContext>.validateMedalIdAndAccessToMedalChain() {
 			validateMedalId("Проверяем awardId")
 			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 			getDeptIdByMedalId("Получаем deptId")
 			validateAuthDeptLevel("Проверка доступа к отделу")
 		}
-
-
-
 	}
 }

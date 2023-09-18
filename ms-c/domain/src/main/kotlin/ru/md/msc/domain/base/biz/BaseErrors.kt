@@ -1,9 +1,6 @@
 package ru.md.msc.domain.base.biz
 
-import ru.md.base_domain.biz.helper.ContextError
-import ru.md.base_domain.biz.helper.errorDb
-import ru.md.base_domain.biz.helper.errorUnauthorized
-import ru.md.base_domain.biz.helper.fail
+import ru.md.base_domain.biz.helper.*
 
 
 fun BaseClientContext.notValidAuthIdError() {
@@ -62,6 +59,16 @@ fun BaseClientContext.s3Error() {
 			repository = "s3",
 			violationCode = "i/o",
 			description = "Ошибка хранилища объектов"
+		)
+	)
+}
+
+fun BaseClientContext.getGalleryItemMsError() {
+	fail(
+		otherError(
+			description = "Ошибка получения объекта из микросервиса галереи",
+			field = "gallery",
+			level = ContextError.Levels.ERROR
 		)
 	)
 }

@@ -1,6 +1,6 @@
 package ru.md.msc.db.user.model.mappers
 
-import ru.md.base_db.mapper.toImage
+import ru.md.base_db.mapper.toBaseImage
 import ru.md.msc.db.award.model.mapper.toActivityOnlyAward
 import ru.md.msc.db.award.model.mapper.toAwardOnlyImages
 import ru.md.msc.db.dept.model.mappers.toDept
@@ -75,7 +75,7 @@ fun UserEntity.toUser() = User(
 	mainImg = mainImg,
 	archive = archive,
 	roles = roles.map { it.roleUser }.toSet(),
-	images = images.map { it.toImage() }
+	images = images.map { it.toBaseImage() }
 )
 
 fun UserEntity.toUserActivity() = User(
@@ -89,7 +89,7 @@ fun UserEntity.toUserActivity() = User(
 	post = post,
 	mainImg = mainImg,
 	archive = archive,
-	images = images.map { it.toImage() },
+	images = images.map { it.toBaseImage() },
 	activities = activities.map { it.toActivityOnlyAward() }
 )
 
@@ -104,6 +104,6 @@ fun UserEntity.toUserAward() = User(
 	post = post,
 	mainImg = mainImg,
 	archive = archive,
-	images = images.map { it.toImage() },
+	images = images.map { it.toBaseImage() },
 	awards = awards.map { it.toAwardOnlyImages() }
 )

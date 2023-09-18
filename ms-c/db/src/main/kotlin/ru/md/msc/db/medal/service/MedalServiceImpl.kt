@@ -3,26 +3,31 @@ package ru.md.msc.db.medal.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import ru.md.msc.db.dept.service.DeptUtil
+import ru.md.base_db.mapper.toBaseImage
+import ru.md.base_domain.gallery.SmallItem
+import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_domain.image.model.ImageType
+import ru.md.msc.db.medal.model.MedalImageEntity
 import ru.md.msc.db.medal.model.mapper.toMedal
 import ru.md.msc.db.medal.model.mapper.toMedalDetails
 import ru.md.msc.db.medal.model.mapper.toMedalDetailsEntity
-import ru.md.msc.db.medal.repo.ActRepository
 import ru.md.msc.db.medal.repo.MedalDetailsRepository
 import ru.md.msc.db.medal.repo.MedalImageRepository
 import ru.md.msc.db.medal.repo.MedalRepository
+import ru.md.msc.domain.base.biz.ImageNotFoundException
 import ru.md.msc.domain.medal.biz.proc.MedalNotFoundException
 import ru.md.msc.domain.medal.model.Medal
 import ru.md.msc.domain.medal.model.MedalDetails
 import ru.md.msc.domain.medal.service.MedalService
+import java.time.LocalDateTime
 
 @Service
 class MedalServiceImpl(
 	private val medalRepository: MedalRepository,
 	private val medalDetailsRepository: MedalDetailsRepository,
 	private val medalImageRepository: MedalImageRepository,
-	private val actRepository: ActRepository,
-	private val deptUtil: DeptUtil,
+//	private val actRepository: ActRepository,
+//	private val deptUtil: DeptUtil,
 ) : MedalService {
 
 	@Transactional
@@ -64,6 +69,65 @@ class MedalServiceImpl(
 
 	override fun findDeptIdByMedalId(medalId: Long): Long {
 		return medalRepository.findDeptId(medalId = medalId) ?: throw MedalNotFoundException()
+	}
+
+	@Transactional
+	override fun addImage(medalId: Long, baseImage: BaseImage): BaseImage {
+		val medalImageEntity = MedalImageEntity(
+			medalId = medalId,
+			imageUrl = baseImage.imageUrl,
+			imageKey = baseImage.imageKey,
+			miniUrl = baseImage.miniUrl ?: "",
+			miniKey = baseImage.miniKey ?: "",
+			type = baseImage.type,
+			createdAt = LocalDateTime.now()
+		)
+		medalImageRepository.save(medalImageEntity)
+		return medalImageEntity.toBaseImage()
+	}
+
+	@Transactional
+	override fun setMainImage(medalId: Long): BaseImage? {
+		val medalDetailsEntity = medalDetailsRepository.findByIdOrNull(medalId) ?: throw MedalNotFoundException()
+		val medalEntity = medalDetailsEntity.medalEntity
+		val images = medalDetailsEntity.images
+
+		var medalImageEntity = images.firstOrNull() ?: run {
+			medalEntity.mainImg = null
+			return null
+		}
+
+		images.forEach {
+			if (it.createdAt > medalImageEntity.createdAt) {
+				medalImageEntity = it
+			} else if (it.main) {
+				it.main = false
+			}
+		}
+		medalImageEntity.main = true
+		medalEntity.mainImg = medalImageEntity.miniUrl
+		return medalImageEntity.toBaseImage()
+	}
+
+	@Transactional
+	override fun deleteImage(medalId: Long, imageId: Long): BaseImage {
+		val awardImageEntity = medalImageRepository.findByIdAndMedalId(medalId = medalId, imageId = imageId) ?: run {
+			throw ImageNotFoundException()
+		}
+		medalImageRepository.delete(awardImageEntity)
+		return awardImageEntity.toBaseImage()
+	}
+
+	override fun addGalleryImage(medalId: Long, smallItem: SmallItem): BaseImage {
+		val medalImageEntity = MedalImageEntity(
+			medalId = medalId,
+			imageUrl = smallItem.imageUrl,
+			miniUrl = smallItem.miniUrl,
+			type = ImageType.SYSTEM,
+			createdAt = LocalDateTime.now()
+		)
+		medalImageRepository.save(medalImageEntity)
+		return medalImageEntity.toBaseImage()
 	}
 
 }

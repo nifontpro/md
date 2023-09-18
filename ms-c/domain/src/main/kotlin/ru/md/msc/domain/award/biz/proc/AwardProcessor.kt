@@ -32,6 +32,7 @@ import ru.md.msc.domain.base.workers.getRootDeptId
 import ru.md.msc.domain.base.workers.image.addImageToS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
+import ru.md.msc.domain.base.workers.image.getGalleryItemByClient
 import ru.md.msc.domain.base.workers.msg.sendMessage
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.msg.service.MessageService

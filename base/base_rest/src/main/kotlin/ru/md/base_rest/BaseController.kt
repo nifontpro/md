@@ -2,7 +2,7 @@ package ru.md.base_rest
 
 import ru.md.base_domain.biz.proc.BaseContext
 import ru.md.base_domain.biz.proc.IBaseProcessor
-import ru.md.base_rest.model.AuthRequest
+import ru.md.base_rest.model.request.AuthRequest
 import kotlin.reflect.full.createInstance
 
 /**
