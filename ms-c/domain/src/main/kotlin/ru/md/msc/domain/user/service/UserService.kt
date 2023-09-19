@@ -34,4 +34,5 @@ interface UserService {
 	fun doesUserOwnerRole(userId: Long): Boolean
 	fun activityByUserExist(userId: Long): Boolean
 	fun moveUserToArchive(userId: Long)
+	fun validateEmail(deptId: Long, email: String): Boolean
 }

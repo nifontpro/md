@@ -292,6 +292,14 @@ class UserServiceImpl(
 		userRepository.moveUserToArchive(userId = userId)
 	}
 
+	/**
+	 * Проверка есть ли заданный email во всем дереве отделов
+	 */
+	override fun validateEmail(deptId: Long, email: String): Boolean {
+		val deptIds = deptUtil.getAllDeptIds(deptId)
+		return userRepository.countByAuthEmailIgnoreCaseAndDeptIdIn(authEmail = email, deptsIds = deptIds) > 0
+	}
+
 //	companion object {
 //		val log: Logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
 //	}

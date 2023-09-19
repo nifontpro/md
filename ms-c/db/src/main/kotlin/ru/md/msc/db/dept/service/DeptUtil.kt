@@ -1,11 +1,9 @@
 package ru.md.msc.db.dept.service
 
-import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import ru.md.msc.db.dept.repo.DeptRepository
 
 @Service
-@Transactional
 class DeptUtil(
 	private val deptRepository: DeptRepository,
 ) {
@@ -26,5 +24,14 @@ class DeptUtil(
 				listOf(deptId)
 			}
 		}
+	}
+
+	/**
+	 * Получить ids всех отделов иерархии от Владельца
+	 * deptId может быть в любом месте дерева
+	 */
+	fun getAllDeptIds(deptId: Long): List<Long> {
+		val rootId = deptRepository.getOwnerRootId(deptId = deptId) ?: return emptyList()
+		return getDepts(deptId = rootId, subdepts = true)
 	}
 }

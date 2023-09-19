@@ -23,6 +23,13 @@ class UserTest(
 ) {
 
 	@Test
+	fun authEmailExistTest() {
+		val deptId = 3L
+		val exist = userService.validateEmail(deptId = deptId, email = ownerEmail)
+		assertEquals(true, exist)
+	}
+
+	@Test
 	fun deptTest() {
 		val depts = deptService.findSubTreeDepts(1)
 		println(depts)

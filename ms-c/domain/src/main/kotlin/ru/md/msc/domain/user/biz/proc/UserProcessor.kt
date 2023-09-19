@@ -28,6 +28,7 @@ import ru.md.msc.domain.s3.repository.S3Repository
 import ru.md.msc.domain.user.biz.proc.operation.deleteUserOperation
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
 import ru.md.msc.domain.user.biz.validate.validateCreateUserRoles
+import ru.md.msc.domain.user.biz.validate.validateUserEmailExist
 import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
 import ru.md.msc.domain.user.biz.workers.*
 import ru.md.msc.domain.user.biz.workers.sort.setUsersBySubdeptsValidSortedFields
@@ -65,6 +66,7 @@ class UserProcessor(
 				validateCreateUserRoles("Проверка ролей")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				findCreateUserAdminRole("Сканируем роль ADMIN у нового сотрудника")
+				validateUserEmailExist("Проверка наличия сотрудника с почтой")
 				validateAdminModifyUserByRoleChain()
 				trimFieldUserDetails("Очищаем поля")
 				createUser("Создаем профиль сотрудника")
@@ -74,6 +76,7 @@ class UserProcessor(
 				validateUserId("Проверка userId")
 				validateUserFirstnameEmpty("Проверка имени пользователя")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateUserEmailExist("Проверка наличия сотрудника с почтой")
 				validateSameAndAdminModifyUser() // Проверка модификации собственного профиля или Администратором
 				trimFieldUserDetails("Очищаем поля")
 				updateUser("Обновляем профиль сотрудника")

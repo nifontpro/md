@@ -17,6 +17,7 @@ import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateDeptIdAndAdminDeptLevelChain
 import ru.md.msc.domain.base.workers.image.addImageToS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
+import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
 import ru.md.msc.domain.base.workers.image.getGalleryItemByClient
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.medal.biz.validate.validateMedalId
@@ -76,21 +77,9 @@ class MedalProcessor(
 				validateMedalIdAndAccessToMedalChain()
 				getMedalByIdDetails("Получаем детальную награду")
 				deleteMedal("Удаляем")
-//				worker("Подготовка к удалению изображений") { baseImages = awardDetails.award.images }
-//				deleteBaseImagesFromS3("Удаляем все изображения")
+				worker("Подготовка к удалению изображений") { baseImages = medalDetails.images }
+				deleteBaseImagesFromS3("Удаляем все изображения")
 			}
-
-//			operation("Получить награды в отделе или подотделах", AwardCommand.GET_BY_DEPT) {
-//				validateDeptId("Проверяем deptId")
-//				validatePageParamsChain()
-////				worker("Допустимые поля сортировки") { orderFields = listOf("name", "type", "startDate", "endDate") }
-//				setAwardWithDeptValidSortedFields("Устанавливаем допустимые поля сортировки")
-//				validateSortedFields("Проверка списка полей сортировки")
-//				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-//				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
-//				getAwardsByDept("Получаем награды из отдела или всех подотделов")
-//			}
-//
 
 			operation("Добавление изображения", MedalCommand.IMG_ADD) {
 				worker("Получение id сущности") { medalId = fileData.entityId }
@@ -118,6 +107,18 @@ class MedalProcessor(
 				deleteBaseImageFromS3("Удаляем изображение из s3")
 				updateMedalMainImage("Обновление основного изображения")
 			}
+
+//			operation("Получить награды в отделе или подотделах", AwardCommand.GET_BY_DEPT) {
+//				validateDeptId("Проверяем deptId")
+//				validatePageParamsChain()
+////				worker("Допустимые поля сортировки") { orderFields = listOf("name", "type", "startDate", "endDate") }
+//				setAwardWithDeptValidSortedFields("Устанавливаем допустимые поля сортировки")
+//				validateSortedFields("Проверка списка полей сортировки")
+//				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+//				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
+//				getAwardsByDept("Получаем награды из отдела или всех подотделов")
+//			}
+//
 //
 //			operation("Добавить действие в активность награждения", AwardCommand.ADD_ACTION) {
 //				validateUserId("Проверка userId")

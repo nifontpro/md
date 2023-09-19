@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import ru.md.msc.db.tc.TestBeans
+import ru.md.msc.db.tc.ownerEmail
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.medal.biz.proc.MedalCommand
 import ru.md.msc.domain.medal.biz.proc.MedalContext
@@ -13,8 +14,6 @@ import ru.md.msc.domain.medal.biz.proc.MedalProcessor
 import ru.md.msc.domain.medal.model.Medal
 import ru.md.msc.domain.medal.model.MedalDetails
 import ru.md.msc.domain.medal.service.MedalService
-
-const val ownerEmail = "necmedals@yandex.ru"
 
 @SpringBootTest(classes = [TestBeans::class])
 class MedalBizTest(
