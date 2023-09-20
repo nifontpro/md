@@ -10,6 +10,7 @@ fun DeptEntity.toDept() = Dept(
 	name = name,
 	classname = classname,
 	topLevel = topLevel,
+	level = level,
 	type = type,
 	mainImg = mainImg,
 	images = images.map { it.toBaseImage() }
@@ -21,6 +22,7 @@ fun DeptEntity.toDeptLazy() = Dept(
 	name = name,
 	classname = classname,
 	topLevel = topLevel,
+	level = level,
 	type = type,
 	mainImg = mainImg,
 )

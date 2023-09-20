@@ -19,7 +19,7 @@ fun <T : BaseClientContext> ICorChainDsl<T>.validateAdminRole(title: String) = w
 			fail(
 				errorUnauthorized(
 					role = "ADMIN",
-					message = "Для обновления профиля другого сотрудника нужны права Администратора",
+					message = "Для выполнения операции нужны права Администратора",
 				)
 			)
 		}

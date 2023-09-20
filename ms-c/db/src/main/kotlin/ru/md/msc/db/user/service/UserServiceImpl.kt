@@ -92,6 +92,10 @@ class UserServiceImpl(
 				}
 				it.gender = userDetails.user.gender
 				it.post = userDetails.user.post
+				val targetDeptId = userDetails.user.dept?.id
+				if (targetDeptId != 0L && targetDeptId != oldUserDetailsEntity.user?.dept?.id) {
+					it.dept = DeptEntity(id = userDetails.user.dept?.id)
+				}
 			}
 			phone = userDetails.phone
 			address = userDetails.address

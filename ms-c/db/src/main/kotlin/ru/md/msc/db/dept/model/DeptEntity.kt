@@ -23,6 +23,8 @@ class DeptEntity(
 	@Column(name = "top_level", nullable = false)
 	var topLevel: Boolean = false,
 
+	val level: Int = 0,
+
 	@Column(name = "main_img")
 	var mainImg: String? = null,
 

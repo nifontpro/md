@@ -8,18 +8,66 @@ CREATE SCHEMA IF NOT EXISTS rew;;
 
 CREATE TABLE IF NOT EXISTS dep.dept
 (
-    id bigserial NOT NULL primary key,
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
     parent_id bigint,
     name text COLLATE pg_catalog."default" NOT NULL,
     code text COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::text,
     classname text COLLATE pg_catalog."default",
     main_img text COLLATE pg_catalog."default",
     top_level boolean NOT NULL DEFAULT false,
+    level integer NOT NULL DEFAULT 0,
+    CONSTRAINT dept_pkey PRIMARY KEY (id),
     CONSTRAINT parent_id_fkey FOREIGN KEY (parent_id)
         REFERENCES dep.dept (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE RESTRICT
 );;
+
+CREATE OR REPLACE FUNCTION dep.get_level(
+    dept_id bigint)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+-- Является ли верхний отдел предком нижнего (Для авторизации)
+
+DECLARE
+    curent_id bigint := $1;
+    lev int := 0;
+    c_id bigint;
+    curent_code text;
+
+BEGIN
+    WHILE curent_id IS NOT NULL LOOP
+            SELECT id, parent_id, code INTO c_id, curent_id, curent_code from dep.dept where id = curent_id;
+            lev = lev + 1;
+    END LOOP;
+    RETURN lev - 1;
+END;
+$BODY$;;
+
+CREATE OR REPLACE FUNCTION dep.calc_level()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
+    update dep.dept set level = dep.get_level(new.id) where id = new.id;
+
+    update dep.dept set top_level = level < 3 where id = new.id;
+
+    return new;
+END
+$BODY$;;
+
+CREATE OR REPLACE TRIGGER add_dept
+    AFTER INSERT OR UPDATE OF parent_id
+    ON dep.dept
+    FOR EACH ROW
+EXECUTE FUNCTION dep.calc_level();;
+
 
 CREATE TABLE IF NOT EXISTS dep.dept_details
 (

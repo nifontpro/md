@@ -57,7 +57,7 @@ class DeptServiceImpl(
 	/**
 	 * Проверка, является ли отдел [downId] потомком [upId] в дереве отделов
 	 */
-	override fun validateDeptLevel(upId: Long, downId: Long): Boolean {
+	override fun validateDeptChild(upId: Long, downId: Long): Boolean {
 		return deptRepository.upTreeHasDeptId(downId = downId, upId = upId)
 	}
 

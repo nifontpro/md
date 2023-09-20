@@ -55,7 +55,7 @@ fun UserContext.fromTransport(request: UpdateUserRequest) {
 	userId = request.userId // auth
 	user = User(
 		id = userId,
-		dept = Dept(id = deptId),
+		dept = Dept(id = request.deptId),
 		authEmail = request.authEmail,
 		firstname = request.firstname,
 		patronymic = request.patronymic,

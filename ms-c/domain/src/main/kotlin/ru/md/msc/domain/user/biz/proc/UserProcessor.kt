@@ -11,6 +11,7 @@ import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.validate.validateAwardId
 import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
+import ru.md.msc.domain.base.validate.auth.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
 import ru.md.msc.domain.base.validate.auth.validateAuthUserLevel
 import ru.md.msc.domain.base.validate.validateAdminRole
@@ -78,6 +79,13 @@ class UserProcessor(
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateUserEmailExist("Проверка наличия сотрудника с почтой")
 				validateSameAndAdminModifyUser() // Проверка модификации собственного профиля или Администратором
+				chain {
+					// При перемещении сотрудника в другой отдел
+					on { user.dept?.id != 0L && user.dept?.id != modifyUser.dept?.id }
+					validateAdminRole("Проверяем наличие прав Администратора")
+					worker("target deptId") { deptId = user.dept?.id ?: 0 }
+					validateAuthDeptLevel("Проверяем доступ к целевому отделу")
+				}
 				trimFieldUserDetails("Очищаем поля")
 				updateUser("Обновляем профиль сотрудника")
 			}

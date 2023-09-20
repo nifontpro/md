@@ -43,6 +43,12 @@ interface DeptRepository : JpaRepository<DeptEntity, Long> {
 	@Query("select * from dep.get_top_level_id(:deptId)", nativeQuery = true)
 	fun getTopLevelId(deptId: Long): Long?
 
+//	/**
+//	 * Получить уровень отдела
+//	 */
+//	@Query("select * from dep.get_level(:deptId)", nativeQuery = true)
+//	fun getLevel(deptId: Long): Long
+
 	fun findByIdIn(ids: List<Long>, sort: Sort): List<DeptEntity>
 
 	/**

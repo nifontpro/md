@@ -18,7 +18,7 @@ fun <T : BaseClientContext> ICorChainDsl<T>.validateAuthDeptLevel(title: String)
 		val authUserDeptId = authUser.dept?.id ?: throw Exception()
 		if (authUserDeptId == deptId) return@handle
 
-		if (!deptService.validateDeptLevel(upId = authUserDeptId, downId = deptId)) {
+		if (!deptService.validateDeptChild(upId = authUserDeptId, downId = deptId)) {
 			deptAuthError()
 		}
 	}

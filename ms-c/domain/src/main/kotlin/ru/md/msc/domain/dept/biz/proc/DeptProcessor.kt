@@ -58,7 +58,7 @@ class DeptProcessor(
 				getSubtreeDepts("Получаем поддерево отделов")
 			}
 
-			operation("Получить поддерево отделов верхнего уровня доступа", DeptCommand.GET_TOP_LEVEL_TREE) {
+			operation("Получить поддерево отделов с верхнего уровня доступа", DeptCommand.GET_TOP_LEVEL_TREE) {
 				worker("Допустимые поля сортировки") { orderFields = listOf("parentId", "name", "classname") }
 				validateSortedFields("Проверка списка полей сортировки")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")

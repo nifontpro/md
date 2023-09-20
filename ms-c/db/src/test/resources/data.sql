@@ -1,12 +1,12 @@
 -- DEPTS
 
 insert into dep.dept
-    (parent_id, name, code, classname, top_level)
-values (null, '/', 'R', 'ROOT', true),
-       (1, 'Owner Dept id=2', 'U', 'Owner Dept', false),
-       (2, 'Dept 3, id=3', 'D', 'Dept', false),
-       (2, 'Dept 4, id=4', 'D', 'Dept', false),
-       (2, 'Dept 5, id=5', 'D', 'Dept', false)
+    (parent_id, name, code, classname)
+values (null, '/', 'R', 'ROOT'),
+       (1, 'Owner Dept id=2', 'U', 'Owner Dept'),
+       (2, 'Dept 3, id=3', 'D', 'Dept'),
+       (2, 'Dept 4, id=4', 'D', 'Dept'),
+       (2, 'Dept 5, id=5', 'D', 'Dept')
 ;;
 
 insert into dep.dept_details (dept_id, description)

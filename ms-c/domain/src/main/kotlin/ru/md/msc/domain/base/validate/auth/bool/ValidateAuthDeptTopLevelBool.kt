@@ -22,7 +22,7 @@ fun <T : BaseClientContext> ICorChainDsl<T>.validateAuthDeptTopLevelForViewBool(
 			return@handle
 		}
 		val topLevelDeptId = deptService.findTopLevelDeptId(authUserDeptId)
-		isAuth = deptService.validateDeptLevel(upId = topLevelDeptId, downId = deptId)
+		isAuth = deptService.validateDeptChild(upId = topLevelDeptId, downId = deptId)
 	}
 
 	except {

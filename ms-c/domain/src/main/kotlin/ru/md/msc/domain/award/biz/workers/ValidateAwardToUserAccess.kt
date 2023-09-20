@@ -38,7 +38,7 @@ fun ICorChainDsl<AwardContext>.validateAwardToUserAccess(title: String) = worker
 		if (deptId == userDeptId) return@handle
 
 		val auth = try {
-			deptService.validateDeptLevel(upId = deptId, downId = userDeptId)
+			deptService.validateDeptChild(upId = deptId, downId = userDeptId)
 		} catch (e: Exception) {
 			getDeptAuthIOError()
 			return@handle

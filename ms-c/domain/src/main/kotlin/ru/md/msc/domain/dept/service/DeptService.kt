@@ -7,7 +7,7 @@ import ru.md.msc.domain.dept.model.DeptDetails
 
 interface DeptService {
 	fun create(deptDetails: DeptDetails): DeptDetails
-	fun validateDeptLevel(upId: Long, downId: Long): Boolean
+	fun validateDeptChild(upId: Long, downId: Long): Boolean
 	fun findSubTreeDepts(deptId: Long, orders: List<BaseOrder> = emptyList()): List<Dept>
 	fun validateUserLevel(upId: Long, userId: Long): Boolean
 	fun findByIdDetails(deptId: Long): DeptDetails?

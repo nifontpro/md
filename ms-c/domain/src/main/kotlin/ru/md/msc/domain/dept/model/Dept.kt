@@ -8,6 +8,7 @@ data class Dept(
 	val name: String = "",
 	val classname: String? = null,
 	val topLevel: Boolean = false,
+	val level: Int = 0,
 	var mainImg: String? = null,
 	val type: DeptType = DeptType.UNDEF,
 	val images: List<BaseImage> = emptyList(),
