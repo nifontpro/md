@@ -77,8 +77,13 @@ class UserProcessor(
 				validateUserId("Проверка userId")
 				validateUserFirstnameEmpty("Проверка имени пользователя")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-				validateUserEmailExist("Проверка наличия сотрудника с почтой")
 				validateSameAndAdminModifyUser() // Проверка модификации собственного профиля или Администратором
+				trimFieldUserDetails("Очищаем поля")
+				chain {
+					// чтоб не возникала ошибка, если почта уже установлена, даже повторяющаяся
+					on { modifyUser.authEmail?.lowercase()?.trim() != user.authEmail?.lowercase() }
+					validateUserEmailExist("Проверка наличия сотрудника с почтой")
+				}
 				chain {
 					// При перемещении сотрудника в другой отдел
 					on { user.dept?.id != 0L && user.dept?.id != modifyUser.dept?.id }
@@ -86,7 +91,6 @@ class UserProcessor(
 					worker("target deptId") { deptId = user.dept?.id ?: 0 }
 					validateAuthDeptLevel("Проверяем доступ к целевому отделу")
 				}
-				trimFieldUserDetails("Очищаем поля")
 				updateUser("Обновляем профиль сотрудника")
 			}
 

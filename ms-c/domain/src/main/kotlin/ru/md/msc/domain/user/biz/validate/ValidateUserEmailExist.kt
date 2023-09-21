@@ -11,7 +11,7 @@ fun ICorChainDsl<UserContext>.validateUserEmailExist(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
 	handle {
-		val email = user.authEmail
+		val email = user.authEmail?.trim()
 		if (email.isNullOrBlank()) return@handle
 		val deptId = authUser.dept?.id ?: return@handle
 		val emailExist = userService.validateEmail(email = email, deptId = deptId)

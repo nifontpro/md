@@ -301,7 +301,9 @@ class UserServiceImpl(
 	 */
 	override fun validateEmail(deptId: Long, email: String): Boolean {
 		val deptIds = deptUtil.getAllDeptIds(deptId)
-		return userRepository.countByAuthEmailIgnoreCaseAndDeptIdIn(authEmail = email, deptsIds = deptIds) > 0
+		return userRepository.countByAuthEmailIgnoreCaseAndDeptIdIn(
+			authEmail = email, deptsIds = deptIds
+		) > 0
 	}
 
 //	companion object {

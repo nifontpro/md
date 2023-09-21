@@ -14,9 +14,9 @@ import ru.md.msc.domain.base.workers.findModifyUserAndGetRolesAndDeptId
  */
 
 fun <T : BaseClientContext> ICorChainDsl<T>.validateSameAndAdminModifyUser() {
+	findModifyUserAndGetRolesAndDeptId("Получаем профиль для обновления")
 	chain {
 		on { userId != authUser.id } // Если запрос не собственного профиля:
-		findModifyUserAndGetRolesAndDeptId("Получаем профиль для обновления")
 		validateAdminModifyUserByRoleChain() // Тогда должны быть права Администратора
 	}
 }
