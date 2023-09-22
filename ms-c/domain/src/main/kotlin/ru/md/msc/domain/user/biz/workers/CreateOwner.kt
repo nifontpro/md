@@ -16,7 +16,9 @@ fun ICorChainDsl<UserContext>.createOwner(title: String) = worker {
 	handle {
 		val userRoles = setOf(RoleUser.OWNER, RoleUser.ADMIN)
 		userDetails = userDetails.copy(user = user.copy(roles = userRoles))
-		userDetails = userService.createOwner(userDetails)
+		val res = userService.createOwner(userDetails)
+		userDetails = res.userDetails
+		deptId = res.deptId
 	}
 
 	except {

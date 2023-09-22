@@ -30,4 +30,17 @@ fun <C : BaseContext> C.fileSaveError() {
 	)
 }
 
+fun <C : BaseContext> C.fileContentTypeError(type: String) {
+	state = ContextState.FAILING
+	errors.add(
+		ContextError(
+			code = "file content type error",
+			group = "type",
+			field = type,
+			level = ContextError.Levels.ERROR,
+			message = "Загружаемый файл должен быть изображением"
+		)
+	)
+}
+
 fun String.toLongOr0(): Long = this.toLongOrNull() ?: 0

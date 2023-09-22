@@ -4,13 +4,10 @@ import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
 import ru.md.msc.domain.award.model.ActionType
-import ru.md.msc.domain.user.model.GenderCount
-import ru.md.msc.domain.user.model.User
-import ru.md.msc.domain.user.model.UserDetails
-import ru.md.msc.domain.user.model.UserSettings
+import ru.md.msc.domain.user.model.*
 
 interface UserService {
-	fun createOwner(userDetails: UserDetails): UserDetails
+	fun createOwner(userDetails: UserDetails): UserDetailsDept
 	fun create(userDetails: UserDetails): UserDetails
 	fun deleteById(userId: Long, deptId: Long?)
 	fun update(userDetails: UserDetails, isAuthUserHasAdminRole: Boolean): UserDetails

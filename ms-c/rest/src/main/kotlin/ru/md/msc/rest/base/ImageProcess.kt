@@ -6,11 +6,15 @@ import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_domain.rest.baseResponse
 import ru.md.base_rest.emailNotVerified
+import ru.md.base_rest.fileContentTypeError
 import ru.md.base_rest.fileSaveError
 import ru.md.base_rest.saveFile
 import ru.md.base_rest.utils.AuthData
 import ru.md.msc.domain.base.biz.BaseClientContext
 import java.io.File
+
+// Допустимые типы файлов:
+private val mimes = listOf("image/jpeg", "image/png")
 
 suspend fun <C : BaseClientContext> imageProcess(
 	authData: AuthData,
@@ -27,6 +31,12 @@ suspend fun <C : BaseClientContext> imageProcess(
 		return BaseResponse.error(errors = context.errors)
 	}
 	context.authEmail = authData.email
+
+	val contentType = multipartFile.contentType
+	if (contentType == null || contentType !in mimes) {
+		context.fileContentTypeError(contentType ?: "")
+		return BaseResponse.error(errors = context.errors)
+	}
 
 	val fileData = saveFile(multipartFile = multipartFile, entityId = entityId) ?: run {
 		context.fileSaveError()

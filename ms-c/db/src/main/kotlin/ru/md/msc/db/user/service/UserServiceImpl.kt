@@ -46,13 +46,13 @@ class UserServiceImpl(
 	/**
 	 * Создание корневого владельца вместе с отделом
 	 */
-	override fun createOwner(userDetails: UserDetails): UserDetails {
+	override fun createOwner(userDetails: UserDetails): UserDetailsDept {
 
 		val userDetailsEntity = userDetails.toUserDetailsEntity(create = true)
 
 		val deptEntity = DeptEntity(
 			parentId = ROOT_DEPT_ID,
-			name = "Владелец " + userDetails.user.authEmail,
+			name = "Корневой отдел",
 			classname = "Корневой",
 			type = DeptType.USER_OWNER,
 			topLevel = true
@@ -65,12 +65,28 @@ class UserServiceImpl(
 			createdAt = LocalDateTime.now()
 		)
 
-		deptDetailsRepository.save(deptDetailsEntity)
+		deptDetailsRepository.saveAndFlush(deptDetailsEntity)
 		userDetailsEntity.user?.dept = deptEntity
 		userDetailsRepository.save(userDetailsEntity)
 		addRolesToUserEntity(userDetails, userDetailsEntity)
 
-		return userDetailsEntity.toUserDetails()
+		// Создание первого отдела (компании) по умолчанию
+		val newDeptEntity = DeptEntity(
+			parentId = deptEntity.id,
+			name = "Новый отдел",
+			classname = "Компания",
+			type = DeptType.SIMPLE,
+			topLevel = true
+		)
+		val newDeptDetailsEntity = DeptDetailsEntity(
+			dept = newDeptEntity,
+			createdAt = LocalDateTime.now()
+		)
+		deptDetailsRepository.saveAndFlush(newDeptDetailsEntity)
+		return UserDetailsDept(
+			userDetails = userDetailsEntity.toUserDetails(),
+			deptId = newDeptDetailsEntity.dept?.id ?: 0
+		)
 	}
 
 	override fun create(userDetails: UserDetails): UserDetails {

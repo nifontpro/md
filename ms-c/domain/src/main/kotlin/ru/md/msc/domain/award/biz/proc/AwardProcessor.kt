@@ -137,7 +137,7 @@ class AwardProcessor(
 				validateAwardPeriod("Проверяем период период действия награды")
 				worker("Получаем deptId для авторизации") { deptId = award.dept.id }
 				validateAuthDeptLevel("Проверка доступа к отделу награды")
-				validateAwardToUserAccess("Проверка доступности (по дереву отделов) награждения сотрудника этой наградой")
+//				validateAwardToUserAccess("Проверка доступности (по дереву отделов) награждения сотрудника этой наградой")
 				addAwardAction("Добавляем операцию в активность")
 				prepareSendActionMessageToUser("Подготовка к отправке сообщения")
 				sendMessage("Отправляем сообщение")

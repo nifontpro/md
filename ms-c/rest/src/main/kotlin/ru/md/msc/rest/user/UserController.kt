@@ -21,6 +21,7 @@ import ru.md.msc.rest.base.mappers.toTransportBaseImage
 import ru.md.msc.rest.base.mappers.toTransportUnit
 import ru.md.msc.rest.user.mappers.*
 import ru.md.msc.rest.user.model.request.*
+import ru.md.msc.rest.user.model.response.UserDetailsDeptResponse
 import ru.md.msc.rest.user.model.response.UserDetailsResponse
 import ru.md.msc.rest.user.model.response.UserResponse
 import java.security.Principal
@@ -36,13 +37,13 @@ class UserController(
 	private suspend fun createOwner(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: CreateOwnerRequest
-	): BaseResponse<UserDetailsResponse> {
+	): BaseResponse<UserDetailsDeptResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportUserDetails() }
+			toTransport = { toTransportUserDetailsDept() }
 		)
 	}
 
