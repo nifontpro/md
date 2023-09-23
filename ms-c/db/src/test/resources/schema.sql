@@ -2,7 +2,35 @@ CREATE SCHEMA IF NOT EXISTS dep;;
 CREATE SCHEMA IF NOT EXISTS users;;
 CREATE SCHEMA IF NOT EXISTS md;;
 CREATE SCHEMA IF NOT EXISTS env;;
+CREATE SCHEMA IF NOT EXISTS msg;;
 CREATE SCHEMA IF NOT EXISTS rew;;
+
+-- public fun
+
+CREATE OR REPLACE FUNCTION public.award_state(
+    start_date timestamp without time zone,
+    end_date timestamp without time zone)
+    RETURNS text
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+    start_date timestamp := $1;
+    end_date timestamp := $2;
+    nn timestamp := NOW();
+    ret text;
+BEGIN
+
+    CASE
+        WHEN end_date < start_date THEN ret := 'ERROR';
+        WHEN nn >= start_date AND nn <= end_date THEN ret := 'NOMINEE';
+        WHEN nn < start_date THEN ret := 'FUTURE';
+        ELSE ret := 'FINISH';
+        END CASE;
+    RETURN ret;
+END;
+$BODY$;;
 
 -- DEPTS
 
@@ -451,6 +479,28 @@ CREATE TABLE IF NOT EXISTS rew.medal_image
         ON DELETE CASCADE
 )
     INHERITS (md.base_image);;
+
+CREATE TABLE IF NOT EXISTS msg.user_msg
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    from_id bigint,
+    to_id bigint NOT NULL,
+    type text COLLATE pg_catalog."default" NOT NULL DEFAULT 'S'::text,
+    msg text COLLATE pg_catalog."default",
+    read boolean NOT NULL DEFAULT false,
+    send_date timestamp without time zone NOT NULL,
+    image_url text COLLATE pg_catalog."default",
+    CONSTRAINT user_msg_pkey PRIMARY KEY (id),
+    CONSTRAINT from_id_fkey FOREIGN KEY (from_id)
+        REFERENCES users.user_data (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE SET NULL,
+    CONSTRAINT to_id_fkey FOREIGN KEY (to_id)
+        REFERENCES users.user_data (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+);;
+
 
 
 

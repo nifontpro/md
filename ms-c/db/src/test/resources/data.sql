@@ -24,14 +24,14 @@ insert into users.user_data (dept_id, firstname, lastname, auth_email)
 values (2, 'Owner User 1 - dept 2', 'User 1', 'necmedals@yandex.ru'),
        (3, 'User 2 - dept 3', 'User 2', null),
        (3, 'User 3 - dept 3', 'User 3', null),
-       (3, 'User 4 - dept 3', 'User 4', 'necmedals@yandex.ru')
+       (4, 'User 4 - dept 4', 'User 4', 'necmedals@yandex.ru')
 ;;
 
 insert into users.user_details (user_id, description)
 values (1, 'Owner User 1 - dept 2'),
        (2, 'User 2 - dept 3'),
        (3, 'User 3 - dept 3'),
-       (4, 'User 4 - dept 3')
+       (4, 'User 4 - dept 4')
 ;;
 
 insert into users.user_roles (user_id, role_code)

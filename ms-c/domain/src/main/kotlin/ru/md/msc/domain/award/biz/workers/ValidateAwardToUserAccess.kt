@@ -7,9 +7,6 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.dept.biz.proc.getDeptAuthIOError
-import ru.md.msc.domain.user.biz.proc.UserNotFoundException
-import ru.md.msc.domain.user.biz.proc.getUserError
-import ru.md.msc.domain.user.biz.proc.userNotFoundError
 
 /**
  * Проверка доступности награждения сотрудника определенной наградой.
@@ -23,17 +20,6 @@ fun ICorChainDsl<AwardContext>.validateAwardToUserAccess(title: String) = worker
 	on { state == ContextState.RUNNING }
 
 	handle {
-
-		userDeptId = try {
-			userService.findDeptIdByUserId(userId = userId)
-		} catch (e: UserNotFoundException) {
-			userNotFoundError()
-			return@handle
-		} catch (e: Exception) {
-			getUserError()
-			return@handle
-		}
-
 		// deptId - отдел награды
 		if (deptId == userDeptId) return@handle
 
