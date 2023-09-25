@@ -34,7 +34,9 @@ import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
 import ru.md.msc.domain.base.workers.image.getGalleryItemByClient
 import ru.md.msc.domain.base.workers.msg.sendMessage
+import ru.md.msc.domain.base.workers.msg.sendMessageToEmail
 import ru.md.msc.domain.dept.service.DeptService
+import ru.md.msc.domain.email.EmailService
 import ru.md.msc.domain.msg.service.MessageService
 import ru.md.msc.domain.s3.repository.S3Repository
 import ru.md.msc.domain.user.service.UserService
@@ -47,6 +49,7 @@ class AwardProcessor(
 	private val s3Repository: S3Repository,
 	private val microClient: MicroClient,
 	private val messageService: MessageService,
+	private val emailService: EmailService,
 ) : IBaseProcessor<AwardContext> {
 
 	override suspend fun exec(ctx: AwardContext) = businessChain.exec(ctx.also {
@@ -56,6 +59,7 @@ class AwardProcessor(
 		it.s3Repository = s3Repository
 		it.microClient = microClient
 		it.messageService = messageService
+		it.emailService = emailService
 	})
 
 	companion object {
@@ -137,11 +141,12 @@ class AwardProcessor(
 				validateAwardPeriod("Проверяем период период действия награды")
 				worker("Получаем deptId для авторизации") { deptId = award.dept.id }
 				validateAuthDeptLevel("Проверка доступа к отделу награды")
-				findUserDeptIdByUserId("Получаем deptId сотрудника")
+				getUserById("Получаем deptId сотрудника")
 //				validateAwardToUserAccess("Проверка доступности (по дереву отделов) награждения сотрудника этой наградой")
 				addAwardAction("Добавляем операцию в активность")
 				prepareSendActionMessageToUser("Подготовка к отправке сообщения")
 				sendMessage("Отправляем сообщение")
+				sendMessageToEmail("Отправляем сообщение на email")
 			}
 
 			operation("Получить активные награды сотрудника", AwardCommand.GET_ACTIVE_AWARD_BY_USER) {

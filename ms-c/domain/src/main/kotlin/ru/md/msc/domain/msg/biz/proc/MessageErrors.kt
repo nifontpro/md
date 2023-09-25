@@ -1,8 +1,10 @@
 package ru.md.msc.domain.msg.biz.proc
 
+import ru.md.base_domain.biz.helper.ContextError
 import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.base_domain.biz.helper.errorDb
 import ru.md.base_domain.biz.helper.fail
+import ru.md.base_domain.biz.helper.otherError
 
 fun MessageContext.messageNotFoundError() {
 	fail(
@@ -40,6 +42,17 @@ fun BaseClientContext.sendMessageError() {
 			repository = "message",
 			violationCode = "send",
 			description = "Ошибка отправки сообщения сотруднику"
+		)
+	)
+}
+
+fun BaseClientContext.sendMessageToEmailError() {
+	fail(
+		otherError(
+			description = "Ошибка отправки сообщения на email сотруднику",
+			field = "email",
+			code = "send email",
+			level = ContextError.Levels.INFO
 		)
 	)
 }

@@ -10,8 +10,6 @@ import ru.md.msc.domain.award.biz.proc.AlreadyActionException
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.model.ActionType
 import ru.md.msc.domain.award.model.Activity
-import ru.md.msc.domain.dept.model.Dept
-import ru.md.msc.domain.user.model.User
 import java.time.LocalDateTime
 
 fun ICorChainDsl<AwardContext>.addAwardAction(title: String) = worker {
@@ -22,12 +20,12 @@ fun ICorChainDsl<AwardContext>.addAwardAction(title: String) = worker {
 	handle {
 
 		val newActivity = Activity(
-			user = User(id = userId),
+			user = user,
 			award = award,
 			date = LocalDateTime.now(),
 			actionType = actionType,
 			activ = actionType == ActionType.NOMINEE || actionType == ActionType.AWARD,
-			dept = Dept(id = userDeptId),
+			dept = user.dept,
 			authId = authId
 		)
 		activity = awardService.sendActivity(activity = newActivity)

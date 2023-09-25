@@ -6,7 +6,6 @@ import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.msc.domain.user.model.*
 
 class UserContext : BaseClientContext() {
-	var user: User = User()
 	var userDetails: UserDetails = UserDetails()
 	var users: List<User> = emptyList()
 	var notValidRole: RoleUser? = null
