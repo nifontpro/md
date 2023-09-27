@@ -13,7 +13,7 @@ import ru.md.base_rest.utils.AuthData
 import ru.md.msc.domain.base.biz.BaseClientContext
 import java.io.File
 
-// Допустимые типы файлов:
+// Допустимые типы файлов to возможность сжатия
 private val mimes = listOf("image/jpeg" to true, "image/png" to true, "image/svg+xml" to false)
 
 suspend fun <C : BaseClientContext> imageProcess(
@@ -35,7 +35,6 @@ suspend fun <C : BaseClientContext> imageProcess(
 	val contentType = multipartFile.contentType
 	val compress = mimes.find { it.first == contentType }?.second
 	println("Content Type: $contentType, compress: $compress")
-//	if (contentType == null || contentType !in mimes.map { it.first }) {
 	if (compress == null) {
 		context.fileContentTypeError(contentType ?: "")
 		return BaseResponse.error(errors = context.errors)

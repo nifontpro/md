@@ -36,7 +36,7 @@ class ItemController(
 		return addItemProc(
 			authData = authData,
 			itemProcessor = itemProcessor,
-			file = file,
+			multipartFile = file,
 			folderId = folderId.toLongOr0(),
 			name = name,
 			description = description
