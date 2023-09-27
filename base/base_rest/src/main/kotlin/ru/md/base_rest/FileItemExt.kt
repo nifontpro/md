@@ -11,7 +11,7 @@ import java.io.InputStream
 import java.util.*
 import javax.imageio.ImageIO
 
-fun saveFile(multipartFile: MultipartFile, entityId: Long = 0): FileData? {
+fun saveFile(multipartFile: MultipartFile, entityId: Long = 0, compress: Boolean = true): FileData? {
 	val fileBytes = multipartFile.bytes
 	val fileSize = multipartFile.size
 	if (fileBytes.isEmpty()) return null
@@ -27,16 +27,19 @@ fun saveFile(multipartFile: MultipartFile, entityId: Long = 0): FileData? {
 		val folder = File(LOCAL_FOLDER)
 		folder.mkdirs()
 		val url = "$LOCAL_FOLDER/$fileName"
-		val miniUrl = "$LOCAL_FOLDER/mini-$fileName"
 
-		// сжимаем изображение
-		// https://simplesolution.dev/java-resize-image-file-using-imgscalr/
-		val originalImage = byteArrayToBufferedImage(fileBytes)
-		val resizedImage = Scalr.resize(originalImage, Constants.COMPRESS_IMAGE_SIZE)
-		val resizedFile = File(miniUrl)
-		ImageIO.write(resizedImage, fileExtension, resizedFile)
-		originalImage.flush()
-		resizedImage.flush()
+		val miniUrl = if (compress) "$LOCAL_FOLDER/mini-$fileName" else url
+
+		if (compress) {
+			// сжимаем изображение
+			// https://simplesolution.dev/java-resize-image-file-using-imgscalr/
+			val originalImage = byteArrayToBufferedImage(fileBytes)
+			val resizedImage = Scalr.resize(originalImage, Constants.COMPRESS_IMAGE_SIZE)
+			val resizedFile = File(miniUrl)
+			ImageIO.write(resizedImage, fileExtension, resizedFile)
+			originalImage.flush()
+			resizedImage.flush()
+		}
 
 		val file = File(url)
 		file.writeBytes(fileBytes)
@@ -47,8 +50,10 @@ fun saveFile(multipartFile: MultipartFile, entityId: Long = 0): FileData? {
 			filename = fileName,
 			fileExtension = fileExtension ?: "",
 			size = fileSize,
+			compress = compress
 		)
 	} catch (e: Exception) {
+		println(e.message)
 		null
 	}
 }

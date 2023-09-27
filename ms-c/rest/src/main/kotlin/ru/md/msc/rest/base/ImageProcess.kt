@@ -14,7 +14,7 @@ import ru.md.msc.domain.base.biz.BaseClientContext
 import java.io.File
 
 // Допустимые типы файлов:
-private val mimes = listOf("image/jpeg", "image/png")
+private val mimes = listOf("image/jpeg" to true, "image/png" to true, "image/svg+xml" to false)
 
 suspend fun <C : BaseClientContext> imageProcess(
 	authData: AuthData,
@@ -33,12 +33,15 @@ suspend fun <C : BaseClientContext> imageProcess(
 	context.authEmail = authData.email
 
 	val contentType = multipartFile.contentType
-	if (contentType == null || contentType !in mimes) {
+	val compress = mimes.find { it.first == contentType }?.second
+	println("Content Type: $contentType, compress: $compress")
+//	if (contentType == null || contentType !in mimes.map { it.first }) {
+	if (compress == null) {
 		context.fileContentTypeError(contentType ?: "")
 		return BaseResponse.error(errors = context.errors)
 	}
 
-	val fileData = saveFile(multipartFile = multipartFile, entityId = entityId) ?: run {
+	val fileData = saveFile(multipartFile = multipartFile, entityId = entityId, compress = compress) ?: run {
 		context.fileSaveError()
 		return BaseResponse.error(errors = context.errors)
 	}

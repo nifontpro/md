@@ -16,10 +16,14 @@ fun <T: BaseClientContext> ICorChainDsl<T>.addImageToS3(title: String) = worker 
 	handle {
 
 		val imageKey = "$prefixUrl/${fileData.filename}"
-		val miniKey = "$prefixUrl/mini/${fileData.filename}"
+		val miniKey = if (fileData.compress) "$prefixUrl/mini/${fileData.filename}" else imageKey
 
 		val imageUrl = s3Repository.putObject(key = imageKey, fileUrl = fileData.imageUrl) ?: throw Exception()
-		val miniUrl = s3Repository.putObject(key = miniKey, fileUrl = fileData.miniUrl) ?: throw Exception()
+		val miniUrl = if (fileData.compress) {
+			s3Repository.putObject(key = miniKey, fileUrl = fileData.miniUrl) ?: throw Exception()
+		} else {
+			imageUrl
+		}
 
 		baseImage = BaseImage(
 			imageUrl = imageUrl,
