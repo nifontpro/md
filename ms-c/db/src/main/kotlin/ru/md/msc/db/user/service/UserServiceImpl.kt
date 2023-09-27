@@ -73,7 +73,7 @@ class UserServiceImpl(
 		// Создание первого отдела (компании) по умолчанию
 		val newDeptEntity = DeptEntity(
 			parentId = deptEntity.id,
-			name = "Новый отдел",
+			name = "Новая компания",
 			classname = "Компания",
 			type = DeptType.SIMPLE,
 			topLevel = true
@@ -117,9 +117,9 @@ class UserServiceImpl(
 			address = userDetails.address
 			description = userDetails.description
 		}
-//		if (isAuthUserHasAdminRole) {
-//			addRolesToUserEntity(userDetails, oldUserDetailsEntity)
-//		}
+		if (userDetails.user.roles.isNotEmpty() && isAuthUserHasAdminRole) {
+			addRolesToUserEntity(userDetails, oldUserDetailsEntity)
+		}
 		return oldUserDetailsEntity.toUserDetails()
 	}
 
@@ -130,6 +130,7 @@ class UserServiceImpl(
 		val roles = userDetails.user.roles.map { roleEnum ->
 			RoleEntity(roleUser = roleEnum, user = userDetailsEntity.user)
 		}
+//		userDetailsEntity.user?.roles = roles.toMutableList()
 		userDetailsEntity.user?.roles?.let {
 			it.removeAll { true }
 			it.addAll(roles)
@@ -277,6 +278,7 @@ class UserServiceImpl(
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		val users = userRepository.findUsersWithAwardCount(
 			deptsIds = deptsIds,
+			filter = baseQuery.filter.toSearchOrNull(),
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 			pageable = baseQuery.toPageRequest()

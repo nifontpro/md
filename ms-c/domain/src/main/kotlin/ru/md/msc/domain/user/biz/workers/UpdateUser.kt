@@ -13,6 +13,11 @@ fun ICorChainDsl<UserContext>.updateUser(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
+//		if (user.roles.isEmpty()) { // при пустом значении роли не меняются
+//			userDetails = userDetails.copy(
+//				user = user.copy(roles = modifyUser.roles)
+//			)
+//		}
 		userDetails = userService.update(userDetails = userDetails, isAuthUserHasAdminRole = isAuthUserHasAdminRole)
 	}
 

@@ -103,14 +103,23 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 			) as scores
 			
 		from users.user_data u left join dep.dept d on u.dept_id = d.id
-		where u.dept_id in (:deptsIds)
+		where u.dept_id in (:deptsIds) and
+		((:filter is null) or (
+			upper(u.lastname) like upper(:filter) or 
+			upper(u.firstname) like upper(:filter)
+		))
 	""",
 		countQuery = """
-			select count(*) from users.user_data u where u.dept_id in :deptsIds
+			select count(*) from users.user_data u where u.dept_id in :deptsIds and
+		((:filter is null) or (
+			upper(u.lastname) like upper(:filter) or 
+			upper(u.firstname) like upper(:filter)
+		))
 		""", nativeQuery = true
 	)
 	fun findUsersWithAwardCount(
 		deptsIds: List<Long>,
+		filter: String? = null,
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
 		pageable: Pageable

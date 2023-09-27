@@ -63,7 +63,7 @@ class UserEntity(
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
 	@OrderBy("roleUser ASC")
 //	@Fetch(FetchMode.SUBSELECT)
-	val roles: MutableList<RoleEntity> = mutableListOf(),
+	var roles: MutableList<RoleEntity> = mutableListOf(),
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
 	@JoinColumn(name = "user_id")
