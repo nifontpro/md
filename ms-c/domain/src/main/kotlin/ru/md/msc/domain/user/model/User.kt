@@ -23,4 +23,8 @@ data class User(
 	val awardCount: Long = 0,
 	val scores: Long = 0,
 	val archive: Boolean = false
-)
+) {
+	fun getFirstAndLastName() = "$firstname ${lastname ?: ""}"
+	fun getFullName() = "$firstname ${patronymic ?: ""} ${lastname ?: ""}"
+	fun getFIO() = "${lastname ?: "-"} ${firstname.first()}. ${patronymic?.first() ?: ""}"
+}

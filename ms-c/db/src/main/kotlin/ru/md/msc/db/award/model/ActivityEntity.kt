@@ -1,7 +1,6 @@
 package ru.md.msc.db.award.model
 
 import jakarta.persistence.*
-import ru.md.msc.db.dept.model.DeptEntity
 import ru.md.msc.db.user.model.UserEntity
 import ru.md.msc.domain.award.model.ActionType
 import java.time.LocalDateTime
@@ -12,9 +11,17 @@ import java.util.*
 	attributeNodes = [NamedAttributeNode("award")]
 )
 
+//@NamedEntityGraph(
+//	name = "activityWithDept",
+//	attributeNodes = [NamedAttributeNode("dept")]
+//)
+
 @NamedEntityGraph(
-	name = "activityWithDept",
-	attributeNodes = [NamedAttributeNode("dept")]
+	name = "activityWithUserWithDept",
+	attributeNodes = [
+		NamedAttributeNode(value = "user", subgraph = "userWithDeptSub"),
+	],
+	subgraphs = [NamedSubgraph(name = "userWithDeptSub", attributeNodes = [NamedAttributeNode("dept")])]
 )
 
 @NamedEntityGraph(
@@ -29,7 +36,11 @@ import java.util.*
 
 @NamedEntityGraph(
 	name = "activityWithUserAndAwardAndDept",
-	attributeNodes = [NamedAttributeNode("user"), NamedAttributeNode("award"), NamedAttributeNode("dept")]
+	attributeNodes = [
+		NamedAttributeNode("user", subgraph = "userWithDeptSub"),
+		NamedAttributeNode("award"),
+	],
+	subgraphs = [NamedSubgraph(name = "userWithDeptSub", attributeNodes = [NamedAttributeNode("dept")])]
 )
 
 @Entity
@@ -54,10 +65,6 @@ class ActivityEntity(
 
 	@Column(name = "is_activ")
 	var activ: Boolean = true,
-
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "dept_id")
-	var dept: DeptEntity? = null,
 
 	@Column(name = "auth_id")
 	var authId: Long = 0,

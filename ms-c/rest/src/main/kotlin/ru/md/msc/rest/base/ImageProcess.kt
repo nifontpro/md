@@ -24,7 +24,7 @@ suspend fun <C : BaseClientContext> imageProcess(
 	authId: Long,
 	entityId: Long,
 	imageId: Long = 0,
-	// Исправить на BaseImageResponse
+	// Исправить на BaseImageResponsecfg
 ): BaseResponse<BaseImage> {
 	if (!authData.emailVerified || authData.email.isBlank()) {
 		context.emailNotVerified()

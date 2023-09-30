@@ -13,7 +13,6 @@ import ru.md.msc.domain.award.biz.validate.validateAwardId
 import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
-import ru.md.msc.domain.base.validate.auth.validateAuthUserLevel
 import ru.md.msc.domain.base.validate.validateAdminRole
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
@@ -127,8 +126,7 @@ class UserProcessor(
 
 				chain {
 					on { userId != authUser.id } // Если запрос не собственного профиля:
-					validateAdminRole("Проверка наличия прав Администратора")
-					validateAuthUserLevel("Проверка доступа к сотруднику")
+					validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				}
 
 				getUserDetailsById("Получаем сотрудника")
