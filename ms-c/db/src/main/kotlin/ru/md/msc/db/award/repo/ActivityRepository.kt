@@ -169,7 +169,6 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	): List<AwardCount>
 
 	@Suppress("SqlRedundantCodeInCoalesce")
-	@EntityGraph("activityWithUserWithDept")
 	@Query(
 		"""
 		select

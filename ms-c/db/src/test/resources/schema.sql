@@ -403,7 +403,6 @@ CREATE TABLE IF NOT EXISTS md.activity
     award_id bigint NOT NULL,
     action_code text COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::text,
     is_activ boolean NOT NULL,
-    dept_id bigint NOT NULL,
     auth_id bigint NOT NULL,
     CONSTRAINT auth_id_fkey FOREIGN KEY (auth_id)
         REFERENCES users.user_data (id) MATCH SIMPLE
@@ -413,10 +412,6 @@ CREATE TABLE IF NOT EXISTS md.activity
         REFERENCES md.award (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE RESTRICT,
-    CONSTRAINT dept_id_fkey FOREIGN KEY (dept_id)
-        REFERENCES dep.dept (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE SET NULL,
     CONSTRAINT user_id_fkey FOREIGN KEY (user_id)
         REFERENCES users.user_data (id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -435,9 +430,21 @@ CREATE OR REPLACE FUNCTION md.activ_count(
 AS $BODY$
 
 SELECT did,
-       (select count(*) from md.activity i where i.dept_id = did and i.is_activ and i.action_code='A') as award_count,
-       (select count(*) from md.activity i where i.dept_id = did and i.is_activ and i.action_code='P') as nominee_count,
-       (select count(*) from md.activity i where i.dept_id = did and i.is_activ and i.action_code='D') as delete_count
+       (select count(*) from md.activity i
+        left join users.user_data lu on i.user_id=lu.id
+        left join dep.dept ld on lu.dept_id=ld.id
+        where ld.id = did and i.is_activ and i.action_code='A'
+        ) as award_count,
+       (select count(*) from md.activity i
+        left join users.user_data lu on i.user_id=lu.id
+        left join dep.dept ld on lu.dept_id=ld.id
+        where ld.id = did and i.is_activ and i.action_code='P'
+        ) as nominee_count,
+       (select count(*) from md.activity i
+        left join users.user_data lu on i.user_id=lu.id
+        left join dep.dept ld on lu.dept_id=ld.id
+        where ld.id = did and i.is_activ and i.action_code='D'
+        ) as delete_count
 from dep.sub_tree_ids(root_id) as did;
 
 $BODY$;;

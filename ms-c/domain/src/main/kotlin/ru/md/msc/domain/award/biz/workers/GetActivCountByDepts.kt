@@ -17,6 +17,7 @@ fun ICorChainDsl<AwardContext>.getActivCountByDepts(title: String) = worker {
 	}
 
 	except {
+		log.error(it.message)
 		getAwardCountError()
 	}
 

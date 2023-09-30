@@ -14,14 +14,26 @@ import ru.md.msc.domain.dept.biz.proc.getDeptAuthIOError
 fun <T : BaseClientContext> ICorChainDsl<T>.validateAuthDeptLevel(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
+
+	// Access top level
 	handle {
 		val authUserDeptId = authUser.dept?.id ?: throw Exception()
-		if (authUserDeptId == deptId) return@handle
-
-		if (!deptService.validateDeptChild(upId = authUserDeptId, downId = deptId)) {
+		if (authUser.dept?.id == deptId) return@handle
+		val topLevelDeptId = deptService.findTopLevelDeptId(authUserDeptId)
+		if (topLevelDeptId == deptId) return@handle
+		if (!deptService.validateDeptChild(upId = topLevelDeptId, downId = deptId)) {
 			deptAuthError()
 		}
 	}
+
+//	handle {
+//		val authUserDeptId = authUser.dept?.id ?: throw Exception()
+//		if (authUserDeptId == deptId) return@handle
+//
+//		if (!deptService.validateDeptChild(upId = authUserDeptId, downId = deptId)) {
+//			deptAuthError()
+//		}
+//	}
 
 	except {
 		getDeptAuthIOError()
