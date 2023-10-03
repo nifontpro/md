@@ -75,7 +75,8 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		"""
 		from AwardEntity a where 
 		a.dept.id in :deptsIds and 
-		((:state is null) or (:state = a.state)) and
+		((:state is null) or (:state = a.state and
+		(:state != 'FINISH' or (:state = 'FINISH' and a.userCount>0)))) and 
 		((
 			a.type = 'P'  and 
 			a.startDate <= NOW() and (coalesce(:minDate, null) is null or a.startDate >= :minDate) and
@@ -95,7 +96,8 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
 		filter: String? = null,
-		pageable: Pageable
+		pageable: Pageable,
+//		finish: AwardState = AwardState.FINISH
 	): Page<AwardEntity>
 
 	@EntityGraph("awardWithDept")

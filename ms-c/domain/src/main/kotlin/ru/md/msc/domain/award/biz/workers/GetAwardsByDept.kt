@@ -24,6 +24,7 @@ fun ICorChainDsl<AwardContext>.getAwardsByDept(title: String) = worker {
 	}
 
 	except {
+		log.error(it.message)
 		getAwardError()
 	}
 

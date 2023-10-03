@@ -17,6 +17,7 @@ fun <T : BaseClientContext> ICorChainDsl<T>.validateAuthDeptLevel(title: String)
 
 	// Access top level
 	handle {
+//		return@handle
 		val authUserDeptId = authUser.dept?.id ?: throw Exception()
 		if (authUser.dept?.id == deptId) return@handle
 		val topLevelDeptId = deptService.findTopLevelDeptId(authUserDeptId)

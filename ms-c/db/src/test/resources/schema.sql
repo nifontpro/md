@@ -449,6 +449,23 @@ from dep.sub_tree_ids(root_id) as did;
 
 $BODY$;;
 
+CREATE OR REPLACE FUNCTION public.user_count(
+    award_id bigint)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+    curent_id int := $1;
+    a_count int;
+BEGIN
+    select count(*) into a_count from md.activity a
+    where a.award_id = curent_id and a.is_activ and a.action_code='A';
+    RETURN a_count;
+END;
+$BODY$;;
+
 CREATE TABLE IF NOT EXISTS rew.medal
 (
     id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),

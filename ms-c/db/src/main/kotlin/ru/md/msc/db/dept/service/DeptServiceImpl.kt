@@ -166,6 +166,11 @@ class DeptServiceImpl(
 		return deptImageEntity.toBaseImage()
 	}
 
+	override fun checkDeptExist(parentId: Long, name: String): Boolean {
+		return deptRepository.countByParentIdAndNameIgnoreCase(parentId, name) > 0
+	}
+
+	// Service
 	override fun updateAllDeptImg() {
 		val depts = deptRepository.findAll()
 		depts.forEach {

@@ -50,6 +50,10 @@ class AwardEntity(
 	@Formula("award_state(start_date, end_date)")
 	val state: AwardState = AwardState.ERROR,
 
+	@Suppress("unused")
+	@Formula("user_count(id)")
+	var userCount: Int = 0,
+
 //	@OneToOne(mappedBy = "award", fetch = FetchType.LAZY, optional = false)
 //	val details: AwardDetailsEntity? = null,
 

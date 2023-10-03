@@ -23,7 +23,7 @@ values
 insert into users.user_data (dept_id, firstname, lastname, auth_email)
 values (2, 'Owner User 1 - dept 2', 'User 1', 'necmedals@yandex.ru'),
        (3, 'User 2 - dept 3', 'User 2', 'nifontbus@yandex.ru'),
-       (3, 'User 3 - dept 3', 'User 3', null),
+       (3, 'User 3 - dept 3', 'User 3', 'family.medalist@gmail.com'),
        (4, 'User 4 - dept 4', 'User 4', 'necmedals@yandex.ru')
 ;;
 

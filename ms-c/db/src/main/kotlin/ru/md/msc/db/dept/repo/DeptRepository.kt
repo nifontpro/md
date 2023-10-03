@@ -62,4 +62,6 @@ interface DeptRepository : JpaRepository<DeptEntity, Long> {
 	override fun deleteById(deptId: Long)
 
 	fun findByParentId(parentId: Long, sort: Sort): List<DeptEntity>
+
+	fun countByParentIdAndNameIgnoreCase(parentId: Long, name: String): Int
 }

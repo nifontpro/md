@@ -18,6 +18,7 @@ import ru.md.msc.domain.base.workers.image.addImageToS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
 import ru.md.msc.domain.dept.biz.validate.validateDeptName
+import ru.md.msc.domain.dept.biz.validate.validateDeptNameExist
 import ru.md.msc.domain.dept.biz.workers.*
 import ru.md.msc.domain.dept.biz.workers.chain.getDeptListByParentDeptIdChain
 import ru.md.msc.domain.dept.service.DeptService
@@ -47,8 +48,9 @@ class DeptProcessor(
 				worker("Для проверки доступа к какому отделу") { deptId = dept.parentId }
 				validateDeptIdAndAdminDeptLevelChain()
 				trimFieldDeptDetails("Очищаем поля")
+				validateDeptNameExist("Проверка существования отдела с таким названием на этом уровне")
 				createDept("Создаем отдел")
-				createTestUsers("Создаем тестовых сотрудников")
+//				createTestUsers("Создаем тестовых сотрудников")
 			}
 
 			operation("Получить поддерево отделов", DeptCommand.GET_AUTH_SUB_TREE) {

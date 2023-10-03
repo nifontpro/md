@@ -2,6 +2,7 @@ package ru.md.msc.domain.award.model
 
 import ru.md.msc.domain.base.Config.WEB_APP_URL
 import ru.md.msc.domain.user.model.User
+import ru.md.msc.domain.user.model.getFirstAndLastName
 
 enum class ActionType(val code: String, val message: String) {
 	NOMINEE("P", "Номинация сотрудника на награду"),
@@ -53,7 +54,7 @@ fun ActionType.actionMessageHtml(user: User, authUser: User, award: Award): Stri
 
 			<p>
 			Тебя номинировал на медаль
-			<a href="$WEB_APP_URL/user/${authUser.id}">${authUser.getFirstAndLastName()}</a>
+			<a href="$WEB_APP_URL/user/${authUser.id}">${getFirstAndLastName(authUser)}</a>
 			</p>
 			
 			<p>
@@ -84,7 +85,7 @@ fun ActionType.actionMessageHtml(user: User, authUser: User, award: Award): Stri
 			
 			<p>
 			Тебя наградил медалью
-			<a href="$WEB_APP_URL/user/${authUser.id}">${authUser.getFirstAndLastName()}</a>
+			<a href="$WEB_APP_URL/user/${authUser.id}">${getFirstAndLastName(authUser)}</a>
 			</p>
 			
 			<p>
