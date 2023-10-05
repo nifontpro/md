@@ -20,9 +20,9 @@ fun <T : BaseClientContext> ICorChainDsl<T>.deleteBaseImagesFromS3(title: String
 			baseImages.forEach {
 				try {
 					s3Repository.deleteBaseImage(it)
-					log.info("Object ${it.imageKey} deleted")
+					log.info("Object ${it.normalKey} deleted")
 				} catch (e: Exception) {
-					log.error("Add ${it.imageKey} to dirty link S3")
+					log.error("Add ${it.normalKey} to dirty link S3")
 				}
 			}
 			log.info("All Images deleted on ${System.currentTimeMillis()}")

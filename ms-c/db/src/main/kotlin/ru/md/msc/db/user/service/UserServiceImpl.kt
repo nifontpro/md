@@ -207,8 +207,10 @@ class UserServiceImpl(
 	override fun addImage(userId: Long, baseImage: BaseImage): BaseImage {
 		val userImageEntity = UserImageEntity(
 			userId = userId,
-			imageUrl = baseImage.imageUrl,
-			imageKey = baseImage.imageKey,
+			originUrl = baseImage.originUrl,
+			originKey = baseImage.originKey,
+			normalUrl = baseImage.normalUrl,
+			normalKey = baseImage.normalKey,
 			miniUrl = baseImage.miniUrl,
 			miniKey = baseImage.miniKey,
 			type = baseImage.type,

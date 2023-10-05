@@ -14,10 +14,10 @@ fun <T : BaseClientContext> ICorChainDsl<T>.deleteBaseImageFromS3(title: String)
 	handle {
 			try {
 				s3Repository.deleteBaseImage(baseImage)
-				log.info("Object ${baseImage.imageKey} deleted")
+				log.info("Object ${baseImage.normalKey} deleted")
 			} catch (e: Exception) {
 				log.error(e.message)
-				log.error("Add ${baseImage.imageKey} to dirty link S3")
+				log.error("Add ${baseImage.normalKey} to dirty link S3")
 			}
 	}
 }

@@ -8,30 +8,41 @@ import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.msc.domain.base.biz.s3Error
 
-fun <T: BaseClientContext> ICorChainDsl<T>.addImageToS3(title: String) = worker {
+fun <T : BaseClientContext> ICorChainDsl<T>.addImageToS3(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
 
 	handle {
 
-		val imageKey = "$prefixUrl/${fileData.filename}"
-		val miniKey = if (fileData.compress) "$prefixUrl/mini/${fileData.filename}" else imageKey
+		val originKey = "$prefixUrl/${fileData.filename}"
+		val originUrl = s3Repository.putObject(key = originKey, fileUrl = fileData.originUrl) ?: throw Exception()
 
-		val imageUrl = s3Repository.putObject(key = imageKey, fileUrl = fileData.imageUrl) ?: throw Exception()
-		val miniUrl = if (fileData.compress) {
-			s3Repository.putObject(key = miniKey, fileUrl = fileData.miniUrl) ?: throw Exception()
-		} else {
-			imageUrl
-		}
-
+		// Поэтапное заполнение для удаления из S3 в случае ошибки
 		baseImage = BaseImage(
-			imageUrl = imageUrl,
-			imageKey = imageKey,
-			miniUrl = miniUrl,
-			miniKey = miniKey,
+			originUrl = originUrl,
+			originKey = originKey,
+			miniUrl = originUrl,
+			normalUrl = originUrl,
 			type = ImageType.USER
 		)
+
+		if (fileData.compress) {
+			val miniKey = "$prefixUrl/mini/${fileData.filename}"
+			val miniUrl = s3Repository.putObject(key = miniKey, fileUrl = fileData.miniUrl) ?: throw Exception()
+			baseImage = baseImage.copy(
+				miniUrl = miniUrl,
+				miniKey = miniKey,
+			)
+			if (fileData.normCompress) {
+				val normalKey = "$prefixUrl/normal/${fileData.filename}"
+				val normalUrl = s3Repository.putObject(key = normalKey, fileUrl = fileData.normalUrl) ?: throw Exception()
+				baseImage = baseImage.copy(
+					normalUrl = normalUrl,
+					normalKey = normalKey,
+				)
+			}
+		}
 	}
 
 	except {

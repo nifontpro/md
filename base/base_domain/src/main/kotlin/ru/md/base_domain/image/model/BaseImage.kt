@@ -4,8 +4,10 @@ import java.time.LocalDateTime
 
 data class BaseImage(
 	override val id: Long? = null,
-	override val imageUrl: String = "",
-	override val imageKey: String = "",
+	override val originUrl: String? = null,
+	override val originKey: String? = null,
+	override val normalUrl: String? = null,
+	override val normalKey: String? = null,
 	override val miniUrl: String? = null,
 	override val miniKey: String? = null,
 	override val type: ImageType = ImageType.UNDEF,

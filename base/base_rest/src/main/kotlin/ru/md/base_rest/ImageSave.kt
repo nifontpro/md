@@ -85,7 +85,7 @@ fun saveFile(multipartFile: MultipartFile, entityId: Long = 0, compress: Boolean
 	}
 	return FileData(
 		entityId = entityId,
-		imageUrl = normUrl,
+		normalUrl = normUrl,
 		miniUrl = miniUrl,
 		originUrl = originUrl,
 		filename = fileName,

@@ -8,7 +8,7 @@ import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
 
 fun <T : BaseClientContext> ICorChainDsl<T>.deleteS3ImageOnFailingChain() {
 	chain {
-		on { state == ContextState.FAILING && baseImage.imageKey.isNotBlank() }
+		on { state == ContextState.FAILING }
 		deleteBaseImageFromS3("Удаляем изображения из s3")
 	}
 }

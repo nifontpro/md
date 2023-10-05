@@ -127,8 +127,8 @@ class DeptServiceImpl(
 	override fun addImage(deptId: Long, baseImage: BaseImage): BaseImage {
 		val deptImageEntity = DeptImageEntity(
 			deptId = deptId,
-			imageUrl = baseImage.imageUrl,
-			imageKey = baseImage.imageKey,
+			normalUrl = baseImage.normalUrl,
+			normalKey = baseImage.normalKey,
 			miniUrl = baseImage.miniUrl,
 			miniKey = baseImage.miniKey,
 			type = baseImage.type,

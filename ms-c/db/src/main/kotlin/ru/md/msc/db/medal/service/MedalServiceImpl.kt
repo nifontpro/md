@@ -75,8 +75,8 @@ class MedalServiceImpl(
 	override fun addImage(medalId: Long, baseImage: BaseImage): BaseImage {
 		val medalImageEntity = MedalImageEntity(
 			medalId = medalId,
-			imageUrl = baseImage.imageUrl,
-			imageKey = baseImage.imageKey,
+			normalUrl = baseImage.normalUrl,
+			normalKey = baseImage.normalKey,
 			miniUrl = baseImage.miniUrl ?: "",
 			miniKey = baseImage.miniKey ?: "",
 			type = baseImage.type,
@@ -121,7 +121,7 @@ class MedalServiceImpl(
 	override fun addGalleryImage(medalId: Long, smallItem: SmallItem): BaseImage {
 		val medalImageEntity = MedalImageEntity(
 			medalId = medalId,
-			imageUrl = smallItem.imageUrl,
+			normalUrl = smallItem.imageUrl,
 			miniUrl = smallItem.miniUrl,
 			type = ImageType.SYSTEM,
 			createdAt = LocalDateTime.now()

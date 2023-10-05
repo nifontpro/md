@@ -5,8 +5,10 @@ import ru.md.base_domain.image.model.IBaseImage
 
 fun IBaseImage.toBaseImage() = BaseImage(
 	id = id,
-	imageUrl = imageUrl,
-	imageKey = imageKey,
+	originUrl = originUrl,
+	originKey = originKey,
+	normalUrl = normalUrl,
+	normalKey = normalKey,
 	miniUrl = miniUrl,
 	miniKey = miniKey,
 	type = type,

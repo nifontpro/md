@@ -51,7 +51,7 @@ suspend fun <C : BaseClientContext> imageProcess(
 	context.imageId = imageId
 
 	processor.exec(context)
-	println("fileDate: $fileData")
+	println("fileData: $fileData")
 
 	return context.baseResponse(data = context.baseImage)
 }

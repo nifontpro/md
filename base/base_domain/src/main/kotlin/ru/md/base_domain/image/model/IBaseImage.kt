@@ -4,8 +4,10 @@ import java.time.LocalDateTime
 
 interface IBaseImage {
 	val id: Long?
-	val imageUrl: String
-	val imageKey: String
+	val originUrl: String?
+	val originKey: String?
+	val normalUrl: String?
+	val normalKey: String?
 	val miniUrl: String?
 	val miniKey: String?
 	val type: ImageType

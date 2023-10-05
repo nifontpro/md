@@ -6,8 +6,10 @@ import ru.md.base_rest.model.response.BaseImageResponse
 
 fun BaseImage.toBaseImageResponse() = BaseImageResponse(
 	id = id,
-	imageUrl = imageUrl,
-	imageKey = imageKey,
+	originUrl = originUrl,
+	originKey = originKey,
+	imageUrl = normalUrl,
+	imageKey = normalKey,
 	miniUrl = miniUrl,
 	miniKey = miniKey,
 	type = type,
