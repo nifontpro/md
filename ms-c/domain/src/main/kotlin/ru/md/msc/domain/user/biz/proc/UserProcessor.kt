@@ -126,6 +126,7 @@ class UserProcessor(
 
 				chain {
 					on { userId != authUser.id } // Если запрос не собственного профиля:
+					getDeptIdByUserId("Находим отдел для авторизации")
 					validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				}
 
@@ -147,8 +148,8 @@ class UserProcessor(
 			operation("Удаление изображения", UserCommand.IMG_DELETE) {
 				validateUserId("Проверка userId")
 				validateImageId("Проверка imageId")
-				// Авторизация
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateSameAndAdminModifyUser() // Проверка модификации собственного профиля или Администратором
 				deleteUserImageFromDb("Удаляем изображение из БД")
 				deleteBaseImageFromS3("Удаляем изображение из s3")
 				updateUserMainImage("Обновление основного изображения")

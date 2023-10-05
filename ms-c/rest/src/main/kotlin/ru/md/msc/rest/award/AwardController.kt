@@ -287,7 +287,8 @@ class AwardController(
 	/**
 	 * Получить активные награждения в отделе deptId
 	 * baseRequest:
-	 * Допустимые поля для сортировки:
+	 * 	subdepts - отдел или все подотделы
+	 * 	Допустимые поля для сортировки:
 	 *      "date",
 	 * 			"actionType",
 	 * 			"user.firstname",

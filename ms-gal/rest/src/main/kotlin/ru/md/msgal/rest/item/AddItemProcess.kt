@@ -2,7 +2,7 @@ package ru.md.msgal.rest.item
 
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_rest.emailNotVerified
-import ru.md.base_rest.fileSaveError
+import ru.md.base_rest.imageSaveError
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_domain.rest.baseResponse
 import ru.md.base_rest.saveFile
@@ -45,7 +45,7 @@ suspend fun addItemProc(
 	}
 
 	val fileData = saveFile(multipartFile = multipartFile, compress = compress) ?: run {
-		context.fileSaveError()
+		context.imageSaveError()
 		return BaseResponse.error(errors = context.errors)
 	}
 

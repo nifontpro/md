@@ -5,13 +5,9 @@ import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_domain.rest.baseResponse
-import ru.md.base_rest.emailNotVerified
-import ru.md.base_rest.fileContentTypeError
-import ru.md.base_rest.fileSaveError
-import ru.md.base_rest.saveFile
+import ru.md.base_rest.*
 import ru.md.base_rest.utils.AuthData
 import ru.md.msc.domain.base.biz.BaseClientContext
-import java.io.File
 
 // Допустимые типы файлов to возможность сжатия
 private val mimes = listOf("image/jpeg" to true, "image/png" to true, "image/svg+xml" to false)
@@ -24,7 +20,7 @@ suspend fun <C : BaseClientContext> imageProcess(
 	authId: Long,
 	entityId: Long,
 	imageId: Long = 0,
-	// Исправить на BaseImageResponsecfg
+	// Исправить на BaseImageResponse
 ): BaseResponse<BaseImage> {
 	if (!authData.emailVerified || authData.email.isBlank()) {
 		context.emailNotVerified()
@@ -40,8 +36,13 @@ suspend fun <C : BaseClientContext> imageProcess(
 		return BaseResponse.error(errors = context.errors)
 	}
 
-	val fileData = saveFile(multipartFile = multipartFile, entityId = entityId, compress = compress) ?: run {
-		context.fileSaveError()
+	val fileData = try {
+		saveFile(multipartFile = multipartFile, entityId = entityId, compress = compress)
+	} catch (e: Exception) {
+		when (e) {
+			is ImageSaveException -> context.imageSaveError(e.message)
+			else -> context.imageSaveError()
+		}
 		return BaseResponse.error(errors = context.errors)
 	}
 
@@ -50,9 +51,7 @@ suspend fun <C : BaseClientContext> imageProcess(
 	context.imageId = imageId
 
 	processor.exec(context)
-
-	File(fileData.imageUrl).delete()
-	File(fileData.miniUrl).delete()
+	println("fileDate: $fileData")
 
 	return context.baseResponse(data = context.baseImage)
 }

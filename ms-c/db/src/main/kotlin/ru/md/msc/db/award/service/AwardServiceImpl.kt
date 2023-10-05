@@ -265,15 +265,16 @@ class AwardServiceImpl(
 		baseQuery: BaseQuery
 	): PageResult<Activity> {
 		val pageRequest = baseQuery.toPageRequest()
+		val deptIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		val activities = activityRepository.findByDeptIdPage(
-			deptId = deptId,
+			deptIds = deptIds,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 			awardState = awardState,
 			filter = baseQuery.filter.toSearchOrNull(),
 			pageable = pageRequest
 		)
-		return activities.toPageResult { it.toActivityUserLazy() }
+		return activities.toPageResult { it.toActivity() }
 	}
 
 	override fun findCountBySubdepts(deptId: Long, baseQuery: BaseQuery): AwardStateCount {

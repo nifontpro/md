@@ -1,8 +1,8 @@
 package ru.md.base_rest
 
-import ru.md.base_domain.biz.proc.ContextState
 import ru.md.base_domain.biz.helper.ContextError
 import ru.md.base_domain.biz.proc.BaseContext
+import ru.md.base_domain.biz.proc.ContextState
 
 fun <C : BaseContext> C.emailNotVerified() {
 	state = ContextState.FAILING
@@ -17,15 +17,16 @@ fun <C : BaseContext> C.emailNotVerified() {
 	)
 }
 
-fun <C : BaseContext> C.fileSaveError() {
+private const val IMG_ERR = "Ошибка записи в файловую систему сервера"
+fun <C : BaseContext> C.imageSaveError(message: String? = IMG_ERR) {
 	state = ContextState.FAILING
 	errors.add(
 		ContextError(
-			code = "file save error",
+			code = "image save error",
 			group = "internal",
 			field = "file",
 			level = ContextError.Levels.ERROR,
-			message = "Ошибка записи в файловую систему сервера"
+			message = message ?: IMG_ERR
 		)
 	)
 }

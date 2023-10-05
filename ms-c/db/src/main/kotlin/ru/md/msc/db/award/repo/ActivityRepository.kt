@@ -108,7 +108,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	@Query(
 		"""
 		from ActivityEntity a where 
-		a.activ = true and a.user.dept.id = :deptId and
+		a.activ = true and a.user.dept.id in :deptIds and
 		(coalesce(:minDate, null) is null or a.date >= :minDate) and
 		(coalesce(:maxDate, null) is null or a.date <= :maxDate) and 
 		(:awardState is null or a.award.state = :awardState) and
@@ -120,7 +120,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 	"""
 	)
 	fun findByDeptIdPage(
-		deptId: Long,
+		deptIds: List<Long>,
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
 		awardState: AwardState? = null,
@@ -128,23 +128,23 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		pageable: Pageable
 	): Page<ActivityEntity>
 
-	@EntityGraph("activityWithUserWithDept")
-	@Query(
-		"""
-		select new ru.md.msc.domain.dept.model.CountByDept(a.user.dept.id, count(*)) 
-			from ActivityEntity a
-			where a.user.dept.id in :deptsIds and  
-				a.actionType='A' and a.activ and 
-				(coalesce(:minDate, null) is null or a.date >= :minDate) and
-				(coalesce(:maxDate, null) is null or a.date <= :maxDate) 
-			group by a.user.dept.id
-	"""
-	)
-	fun getActivAwardCountByDept(
-		deptsIds: List<Long>,
-		minDate: LocalDateTime? = null,
-		maxDate: LocalDateTime? = null,
-	): List<CountByDept>
+//	@EntityGraph("activityWithUserWithDept")
+//	@Query(
+//		"""
+//		select new ru.md.msc.domain.dept.model.CountByDept(a.user.dept.id, count(*))
+//			from ActivityEntity a
+//			where a.user.dept.id in :deptsIds and
+//				a.actionType='A' and a.activ and
+//				(coalesce(:minDate, null) is null or a.date >= :minDate) and
+//				(coalesce(:maxDate, null) is null or a.date <= :maxDate)
+//			group by a.user.dept.id
+//	"""
+//	)
+//	fun getActivAwardCountByDept(
+//		deptsIds: List<Long>,
+//		minDate: LocalDateTime? = null,
+//		maxDate: LocalDateTime? = null,
+//	): List<CountByDept>
 
 	@EntityGraph("activityWithUserWithDept")
 	@Query(
