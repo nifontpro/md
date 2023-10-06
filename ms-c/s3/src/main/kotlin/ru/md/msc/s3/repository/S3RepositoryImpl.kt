@@ -40,11 +40,18 @@ class S3RepositoryImpl(
 	override suspend fun deleteBaseImage(entity: IBaseImage) {
 		if (entity.type == ImageType.USER) {
 			entity.originKey?.let { deleteObject(it) }
+			log.info("Object ${entity.originKey} deleted")
 			if (entity.normalKey != entity.originKey) {
-				entity.normalKey?.let { deleteObject(it) }
+				entity.normalKey?.let {
+					deleteObject(it)
+					log.info("Object $it deleted")
+				}
 			}
 			if (entity.miniKey != entity.originKey) {
-				entity.miniKey?.let { deleteObject(it) }
+				entity.miniKey?.let {
+					deleteObject(it)
+					log.info("Object $it deleted")
+				}
 			}
 		}
 	}

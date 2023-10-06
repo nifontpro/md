@@ -120,7 +120,9 @@ CREATE TABLE IF NOT EXISTS md.base_image
     main boolean,
     created_at timestamp without time zone,
     mini_url text COLLATE pg_catalog."default",
-    mini_key text COLLATE pg_catalog."default"
+    mini_key text COLLATE pg_catalog."default",
+    origin_url text COLLATE pg_catalog."default",
+    origin_key text COLLATE pg_catalog."default"
 );;
 
 CREATE TABLE IF NOT EXISTS dep.dept_image

@@ -1,10 +1,10 @@
 package ru.md.msc.rest.award.model.response
 
-import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_rest.model.response.BaseImageResponse
 import ru.md.msc.domain.award.model.AwardState
 import ru.md.msc.domain.award.model.AwardType
-import ru.md.msc.domain.dept.model.Dept
-import ru.md.msc.domain.user.model.User
+import ru.md.msc.rest.dept.model.response.DeptResponse
+import ru.md.msc.rest.user.model.response.UserResponse
 
 data class AwardResponse(
 	val id: Long = 0,
@@ -15,7 +15,7 @@ data class AwardResponse(
 	val endDate: Long? = null,
 	val score: Int = 0,
 	val state: AwardState,
-	val dept: Dept = Dept(),
-	val images: List<BaseImage> = emptyList(),
-	val users: List<User> = emptyList(),
+	val dept: DeptResponse = DeptResponse(),
+	val images: List<BaseImageResponse> = emptyList(),
+	val users: List<UserResponse> = emptyList(),
 )

@@ -4,20 +4,19 @@ package ru.md.msc.rest.user
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_rest.authProcess
 import ru.md.base_rest.model.request.AUTH
+import ru.md.base_rest.model.response.BaseImageResponse
 import ru.md.base_rest.toLongOr0
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.GenderCount
-import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserSettings
 import ru.md.msc.rest.base.imageProcess
-import ru.md.msc.rest.base.mappers.toTransportBaseImage
+import ru.md.msc.rest.base.mappers.toTransportBaseImageResponse
 import ru.md.msc.rest.base.mappers.toTransportUnit
 import ru.md.msc.rest.user.mappers.*
 import ru.md.msc.rest.user.model.request.*
@@ -79,13 +78,13 @@ class UserController(
 	private suspend fun getProfiles(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetProfilesRequest
-	): BaseResponse<List<User>> {
+	): BaseResponse<List<UserResponse>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportUsers() }
+			toTransport = { toTransportUsersResponse() }
 		)
 	}
 
@@ -108,13 +107,13 @@ class UserController(
 	private suspend fun getByDept(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetUsersBySubDeptsRequest
-	): BaseResponse<List<User>> {
+	): BaseResponse<List<UserResponse>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportUsers() }
+			toTransport = { toTransportUsersResponse() }
 		)
 	}
 
@@ -122,13 +121,13 @@ class UserController(
 	private suspend fun getBySubDeptsExclude(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetUsersByDeptsExcludeRequest
-	): BaseResponse<List<User>> {
+	): BaseResponse<List<UserResponse>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportUsers() }
+			toTransport = { toTransportUsersResponse() }
 		)
 	}
 
@@ -171,7 +170,7 @@ class UserController(
 		@RequestPart("file") file: MultipartFile,
 		@RequestPart("authId") authId: String,
 		@RequestPart("userId") userId: String,
-	): BaseResponse<BaseImage> {
+	): BaseResponse<BaseImageResponse> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = UserContext().apply { command = UserCommand.IMG_ADD }
 		return imageProcess(
@@ -188,13 +187,13 @@ class UserController(
 	private suspend fun imageDelete(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: DeleteUserImageRequest
-	): BaseResponse<BaseImage> {
+	): BaseResponse<BaseImageResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportBaseImage() }
+			toTransport = { toTransportBaseImageResponse() }
 		)
 	}
 

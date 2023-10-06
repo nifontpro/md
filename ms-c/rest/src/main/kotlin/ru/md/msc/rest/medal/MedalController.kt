@@ -2,7 +2,6 @@ package ru.md.msc.rest.medal
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_rest.authProcess
 import ru.md.base_rest.model.request.AUTH
@@ -88,7 +87,7 @@ class MedalController(
 		@RequestPart("file") file: MultipartFile,
 		@RequestPart("authId") authId: String,
 		@RequestPart("medalId") medalId: String,
-	): BaseResponse<BaseImage> {
+	): BaseResponse<BaseImageResponse> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = MedalContext().apply { command = MedalCommand.IMG_ADD }
 		return imageProcess(

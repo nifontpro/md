@@ -1,6 +1,6 @@
 package ru.md.msc.rest.user.model.response
 
-import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_rest.model.response.BaseImageResponse
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.user.model.Gender
 import ru.md.msc.domain.user.model.RoleUser
@@ -20,7 +20,7 @@ data class UserResponse(
 	val scores: Long = 0,
 	val mainImg: String? = null,
 	val roles: Set<RoleUser> = emptySet(),
-	val images: List<BaseImage> = emptyList(),
+	val images: List<BaseImageResponse> = emptyList(),
 	val activities: List<ActivityResponse> = emptyList(),
 	val awards: List<AwardResponse> = emptyList(),
 	val archive: Boolean = false

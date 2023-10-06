@@ -2,10 +2,11 @@ package ru.md.msc.rest.base
 
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.biz.proc.IBaseProcessor
-import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_domain.rest.baseResponse
 import ru.md.base_rest.*
+import ru.md.base_rest.model.mapper.toBaseImageResponse
+import ru.md.base_rest.model.response.BaseImageResponse
 import ru.md.base_rest.utils.AuthData
 import ru.md.msc.domain.base.biz.BaseClientContext
 import java.io.File
@@ -21,8 +22,7 @@ suspend fun <C : BaseClientContext> imageProcess(
 	authId: Long,
 	entityId: Long,
 	imageId: Long = 0,
-	// Исправить на BaseImageResponse
-): BaseResponse<BaseImage> {
+): BaseResponse<BaseImageResponse> {
 	if (!authData.emailVerified || authData.email.isBlank()) {
 		context.emailNotVerified()
 		return BaseResponse.error(errors = context.errors)
@@ -52,7 +52,6 @@ suspend fun <C : BaseClientContext> imageProcess(
 	context.imageId = imageId
 
 	processor.exec(context)
-	println("fileData: $fileData")
 	File(fileData.originUrl).delete()
 	if (compress) {
 		File(fileData.miniUrl).delete()
@@ -60,5 +59,5 @@ suspend fun <C : BaseClientContext> imageProcess(
 			File(fileData.normalUrl).delete()
 		}
 	}
-	return context.baseResponse(data = context.baseImage)
+	return context.baseResponse(data = context.baseImage.toBaseImageResponse())
 }

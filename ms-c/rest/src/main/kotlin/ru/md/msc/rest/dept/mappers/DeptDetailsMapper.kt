@@ -5,7 +5,7 @@ import ru.md.msc.domain.dept.model.DeptDetails
 import ru.md.msc.rest.dept.model.response.DeptDetailsResponse
 
 fun DeptDetails.toDeptDetailsResponse() = DeptDetailsResponse(
-	dept = dept,
+	dept = dept.toDeptResponse(),
 	address = address,
 	email = email,
 	phone = phone,
