@@ -23,7 +23,7 @@ fun UserContext.toTransportUserDetailsDept(): BaseResponse<UserDetailsDeptRespon
 }
 
 fun UserContext.toTransportUsersResponse(): BaseResponse<List<UserResponse>> {
-	return baseResponse(users.map { it.toUserResponse() })
+	return baseResponse(users.map { it.toUserResponseWithAwardAndActivity() })
 }
 
 fun UserContext.toTransportGenderCount(): BaseResponse<GenderCount> {

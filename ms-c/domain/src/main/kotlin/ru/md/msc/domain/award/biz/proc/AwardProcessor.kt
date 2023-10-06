@@ -22,6 +22,7 @@ import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
 import ru.md.msc.domain.base.validate.auth.validateAuthUserTopLevelForView
+import ru.md.msc.domain.base.validate.validateAdminRole
 import ru.md.msc.domain.base.validate.validateDeptId
 import ru.md.msc.domain.base.validate.validateImageId
 import ru.md.msc.domain.base.validate.validateUserId
@@ -255,6 +256,7 @@ class AwardProcessor(
 		private fun ICorChainDsl<AwardContext>.validateAccessToAwardChain() {
 			validateAwardId("Проверяем awardId")
 			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+			validateAdminRole("Проверяем наличие прав Администратора")
 			findDeptIdByAwardId("Получаем deptId")
 			validateAuthDeptLevel("Проверка доступа к отделу")
 		}

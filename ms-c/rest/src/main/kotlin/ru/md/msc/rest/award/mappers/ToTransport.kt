@@ -15,7 +15,7 @@ fun AwardContext.toTransportAwardDetails(): BaseResponse<AwardDetailsResponse> {
 }
 
 fun AwardContext.toTransportAwards(): BaseResponse<List<AwardResponse>> {
-	return baseResponse(awards.map { it.toAwardResponse() })
+	return baseResponse(awards.map { it.toAwardResponseWithUsers() })
 }
 
 fun AwardContext.toTransportActivity(): BaseResponse<ActivityResponse> {
