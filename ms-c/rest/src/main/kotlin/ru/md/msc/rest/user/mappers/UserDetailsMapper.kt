@@ -5,7 +5,7 @@ import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.rest.user.model.response.UserDetailsResponse
 
 fun UserDetails.toUserDetailsResponse() = UserDetailsResponse(
-	user = user,
+	user = user.toUserResponse(),
 	phone = phone,
 	address = address,
 	description = description,
