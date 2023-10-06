@@ -1,17 +1,14 @@
 package ru.md.msgal.rest.item
 
 import org.springframework.web.multipart.MultipartFile
-import ru.md.base_rest.emailNotVerified
-import ru.md.base_rest.imageSaveError
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_domain.rest.baseResponse
-import ru.md.base_rest.saveFile
 import ru.md.base_rest.utils.AuthData
 import ru.md.msgal.domain.item.biz.proc.ItemCommand
 import ru.md.msgal.domain.item.biz.proc.ItemContext
 import ru.md.msgal.domain.item.biz.proc.ItemProcessor
 import ru.md.base_domain.gallery.GalleryItem
-import ru.md.base_rest.fileContentTypeError
+import ru.md.base_rest.*
 import java.io.File
 
 // Допустимые типы файлов to возможность сжатия
@@ -44,8 +41,13 @@ suspend fun addItemProc(
 		return BaseResponse.error(errors = context.errors)
 	}
 
-	val fileData = saveFile(multipartFile = multipartFile, compress = compress) ?: run {
-		context.imageSaveError()
+	val fileData = try {
+		saveFile(multipartFile = multipartFile, compress = compress)
+	} catch (e: Exception) {
+		when (e) {
+			is ImageSaveException -> context.imageSaveError(e.message)
+			else -> context.imageSaveError()
+		}
 		return BaseResponse.error(errors = context.errors)
 	}
 
@@ -59,6 +61,12 @@ suspend fun addItemProc(
 
 	itemProcessor.exec(context)
 
-	File(fileData.normalUrl).delete()
+	File(fileData.originUrl).delete()
+	if (compress) {
+		File(fileData.miniUrl).delete()
+		if (fileData.normCompress) {
+			File(fileData.normalUrl).delete()
+		}
+	}
 	return context.baseResponse(data = context.item)
 }

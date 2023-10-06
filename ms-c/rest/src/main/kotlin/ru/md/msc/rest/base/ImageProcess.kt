@@ -8,6 +8,7 @@ import ru.md.base_domain.rest.baseResponse
 import ru.md.base_rest.*
 import ru.md.base_rest.utils.AuthData
 import ru.md.msc.domain.base.biz.BaseClientContext
+import java.io.File
 
 // Допустимые типы файлов to возможность сжатия
 private val mimes = listOf("image/jpeg" to true, "image/png" to true, "image/svg+xml" to false)
@@ -52,6 +53,12 @@ suspend fun <C : BaseClientContext> imageProcess(
 
 	processor.exec(context)
 	println("fileData: $fileData")
-
+	File(fileData.originUrl).delete()
+	if (compress) {
+		File(fileData.miniUrl).delete()
+		if (fileData.normCompress) {
+			File(fileData.normalUrl).delete()
+		}
+	}
 	return context.baseResponse(data = context.baseImage)
 }

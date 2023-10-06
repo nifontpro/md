@@ -1,7 +1,7 @@
 package ru.md.msgal.db.item.model.mapper
 
-import ru.md.msgal.db.item.model.ItemEntity
 import ru.md.base_domain.gallery.GalleryItem
+import ru.md.msgal.db.item.model.ItemEntity
 import java.time.LocalDateTime
 
 fun ItemEntity.toItem() = GalleryItem(
@@ -11,10 +11,12 @@ fun ItemEntity.toItem() = GalleryItem(
 	description = description,
 	createdAt = createdAt,
 	updatedAt = updatedAt,
-	imageUrl = normalUrl ?: "",
-	imageKey = normalKey ?: "",
-	miniUrl = miniUrl ?: "",
-	miniKey = miniKey ?: "",
+	originUrl = originUrl,
+	originKey = originKey,
+	normalUrl = normalUrl,
+	normalKey = normalKey,
+	miniUrl = miniUrl,
+	miniKey = miniKey,
 )
 
 fun GalleryItem.toItemEntity(create: Boolean = false) = ItemEntity(
@@ -24,8 +26,10 @@ fun GalleryItem.toItemEntity(create: Boolean = false) = ItemEntity(
 	description = description,
 	createdAt = if (create) LocalDateTime.now() else createdAt,
 	updatedAt = updatedAt,
-	normalUrl = imageUrl,
-	normalKey = imageKey,
+	originUrl = originUrl,
+	originKey = originKey,
+	normalUrl = normalUrl,
+	normalKey = normalKey,
 	miniUrl = miniUrl,
 	miniKey = miniKey,
 )

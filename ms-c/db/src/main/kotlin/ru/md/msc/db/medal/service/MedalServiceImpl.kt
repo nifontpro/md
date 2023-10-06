@@ -121,7 +121,8 @@ class MedalServiceImpl(
 	override fun addGalleryImage(medalId: Long, smallItem: SmallItem): BaseImage {
 		val medalImageEntity = MedalImageEntity(
 			medalId = medalId,
-			normalUrl = smallItem.imageUrl,
+			originUrl = smallItem.originUrl,
+			normalUrl = smallItem.normalUrl,
 			miniUrl = smallItem.miniUrl,
 			type = ImageType.SYSTEM,
 			createdAt = LocalDateTime.now()

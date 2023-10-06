@@ -11,14 +11,21 @@ fun ICorChainDsl<ItemContext>.deleteItemImageFromS3(title: String) = worker {
 	this.title = title
 	on { deleteImageOnFailing }
 	handle {
-			try {
-				s3Repository.deleteObject(key = item.imageKey)
-				log.info("Gallery object ${item.imageKey} deleted")
-				s3Repository.deleteObject(key = item.miniKey)
-				log.info("Gallery object ${item.miniKey} deleted")
-			} catch (e: Exception) {
-				log.error(e.message)
-				log.error("Add ${item.imageKey} to dirty link S3")
-			}
+		item.normalKey?.let {
+			s3Repository.deleteObject(key = it)
+			log.info("Gallery object $it deleted")
+		}
+		item.miniKey?.let {
+			s3Repository.deleteObject(key = it)
+			log.info("Gallery object $it deleted")
+		}
+		item.originKey?.let {
+			s3Repository.deleteObject(key = it)
+			log.info("Gallery object $it deleted")
+		}
+	}
+
+	except {
+		log.error(it.message)
 	}
 }

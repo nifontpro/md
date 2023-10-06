@@ -176,6 +176,8 @@ class AwardServiceImpl(
 	override fun addImage(awardId: Long, baseImage: BaseImage): BaseImage {
 		val awardImageEntity = AwardImageEntity(
 			awardId = awardId,
+			originUrl = baseImage.originUrl,
+			originKey = baseImage.originKey,
 			normalUrl = baseImage.normalUrl,
 			normalKey = baseImage.normalKey,
 			miniUrl = baseImage.miniUrl,
@@ -190,7 +192,7 @@ class AwardServiceImpl(
 	override fun addGalleryImage(awardId: Long, smallItem: SmallItem): BaseImage {
 		val awardImageEntity = AwardImageEntity(
 			awardId = awardId,
-			normalUrl = smallItem.imageUrl,
+			normalUrl = smallItem.normalUrl,
 			miniUrl = smallItem.miniUrl,
 			type = ImageType.SYSTEM,
 			createdAt = LocalDateTime.now()
