@@ -31,6 +31,7 @@ fun <T : BaseClientContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: Str
 		if (authUser.authEmail != authEmail) {
 			fail(
 				errorUnauthorized(
+					role = "access authId",
 					message = "Доступ по authId запрещен",
 				)
 			)

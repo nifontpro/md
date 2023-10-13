@@ -51,7 +51,7 @@ fun BaseClientContext.sendMessageToEmailError() {
 		otherError(
 			description = "Ошибка отправки сообщения на email сотруднику",
 			field = "email",
-			code = "send email",
+			code = "message-send to email",
 			level = ContextError.Levels.INFO
 		)
 	)

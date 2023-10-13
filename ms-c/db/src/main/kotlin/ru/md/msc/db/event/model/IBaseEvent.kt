@@ -6,11 +6,11 @@ interface IBaseEvent {
 	fun getId(): Long
 	fun getEventDate(): LocalDateTime
 	fun getDays(): Int
-	fun getEventName(): String
-	fun getEntityName(): String
+	fun getEventName(): String? = null
+	fun getEntityName(): String? = null
 	fun getImageUrl(): String?
 	fun getUserId(): Long
 	fun getDeptId(): Long
 	fun getDeptName(): String
-	fun getDeptClassname(): String?
+	fun getDeptClassname(): String? = null
 }

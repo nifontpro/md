@@ -22,7 +22,7 @@ fun ICorChainDsl<UserContext>.deleteUser(title: String) = worker {
 			errorDb(
 				repository = "user",
 				violationCode = "delete",
-				description = "Ошибка при удалении профиля сотрудника, возможно у него есть награждения"
+				description = "Ошибка при удалении профиля сотрудника"
 			)
 		)
 	}

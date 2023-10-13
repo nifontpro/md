@@ -36,12 +36,12 @@ fun errorDb(
 	code = "db-$repository:$violationCode",
 	field = repository,
 	group = "db",
-	message = "БД: $description",
+	message = description,
 	level = level,
 )
 
 fun errorUnauthorized(
-	role: String = "not found", // Уровень доступа
+	role: String = "access", // Уровень доступа
 	message: String,
 	level: ContextError.Levels = ContextError.Levels.UNAUTHORIZED,
 ) = ContextError(

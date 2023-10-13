@@ -19,7 +19,7 @@ fun BaseClientContext.getUserError() {
 		errorDb(
 			repository = "user",
 			violationCode = "get error",
-			description = "Ошибка получения сотрудника"
+			description = "Ошибка получения профиля сотрудника"
 		)
 	)
 }

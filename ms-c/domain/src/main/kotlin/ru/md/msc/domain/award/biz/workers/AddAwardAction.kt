@@ -48,7 +48,7 @@ fun ICorChainDsl<AwardContext>.addAwardAction(title: String) = worker {
 					errorDb(
 						repository = "award",
 						violationCode = actionType.name.lowercase(),
-						description = actionType.message
+						description = "Ошибка:" + actionType.message
 					)
 				)
 			}

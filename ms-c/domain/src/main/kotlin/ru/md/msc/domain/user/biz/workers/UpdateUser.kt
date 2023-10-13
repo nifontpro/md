@@ -26,7 +26,7 @@ fun ICorChainDsl<UserContext>.updateUser(title: String) = worker {
 		fail(
 			errorDb(
 				repository = "user",
-				violationCode = "create",
+				violationCode = "update",
 				description = "Ошибка обновления профиля сотрудника"
 			)
 		)

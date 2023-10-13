@@ -7,6 +7,7 @@ fun BaseClientContext.notValidAuthIdError() {
 	log.error("notValidAuthIdError: authId=$authId")
 	fail(
 		errorUnauthorized(
+			role = "authId not valid",
 			message = "Неверный authId",
 		)
 	)
@@ -66,6 +67,7 @@ fun BaseClientContext.s3Error() {
 fun BaseClientContext.getGalleryItemMsError() {
 	fail(
 		otherError(
+			code = "ms-get gallery item",
 			description = "Ошибка получения объекта из микросервиса галереи",
 			field = "gallery",
 			level = ContextError.Levels.ERROR
