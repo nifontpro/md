@@ -338,6 +338,11 @@ class UserController(
 		return RS(res = "User data valid, body: ${body?.res}, used: $usedMb Mb, ${principal.name}")
 	}
 
+	@GetMapping("test")
+	suspend fun test(): String {
+		val usedMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576
+		return "Test: Ok. URL: " + System.getenv("PREFIX_URL") + ", used: $usedMb Mb"
+	}
 }
 
 data class RS(

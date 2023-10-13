@@ -24,6 +24,7 @@ suspend inline fun <reified T : Any, reified R> BaseContext.getDataFromMs(
 		return try {
 			jacksonObjectMapper().readValue(result.data, R::class.java)
 		} catch (e: Exception) {
+			println(e.message)
 			fail(
 				otherError(
 					description = "Ошибка приведения типа при получении данных из микросервиса",

@@ -15,7 +15,7 @@ fun <T : BaseClientContext> ICorChainDsl<T>.getGalleryItemByClient(title: String
 
 	handle {
 		val request = GetItemByIdRequest(itemId = imageId)
-		smallItem = getDataFromMs(uri = "/gallery/item/get_id", request = request) ?: return@handle
+		smallItem = getDataFromMs(uri = "/item/get_id", request = request) ?: return@handle
 	}
 
 	except {

@@ -24,7 +24,7 @@ import ru.md.base_domain.rest.BaseResponse
 
 @Component
 class MicroClientImpl(
-	@Value("\${resource-server.url}") private val resourceServerURL: String,
+	@Value("\${gallery-server.url}") private val resourceServerURL: String,
 	@Value("\${keycloak.url}") private val keycloakUrl: String,
 	@Value("\${keycloak.credentials.secret}") private val clientSecret: String,
 	@Value("\${micro-client.id}") private val microClientId: String,

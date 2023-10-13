@@ -107,10 +107,10 @@ class AwardProcessor(
 
 			operation("Добавление изображения", AwardCommand.IMG_ADD) {
 				worker("Получение id сущности") { awardId = fileData.entityId }
-				validateAccessToAwardChain()
+				validateAccessAndDeleteOldImages()
 				prepareAwardImagePrefixUrl("Получаем префикс изображения")
 				addImageToS3("Сохраняем изображение в s3")
-				addAwardImageToDb("Сохраняем ссылки на изображение в БД")
+				deleteOldAndAddAwardImageToDb("Сохраняем ссылки на изображение в БД")
 				updateAwardMainImage("Обновление основного изображения")
 				deleteS3ImageOnFailingChain()
 			}
@@ -118,7 +118,7 @@ class AwardProcessor(
 			operation("Добавление изображения из галереи", AwardCommand.IMG_ADD_GALLERY) {
 				validateAwardId("Проверяем awardId")
 				validateImageId("Проверка imageId")
-				validateAccessToAwardChain()
+				validateAccessAndDeleteOldImages()
 				getGalleryItemByClient("Получаем объект галереи из мс")
 				addAwardGalleryImageToDb("Сохраняем ссылки на изображение в БД")
 				updateAwardMainImage("Обновление основного изображения")
@@ -246,6 +246,14 @@ class AwardProcessor(
 
 			finishOperation()
 		}.build()
+
+		private fun ICorChainDsl<AwardContext>.validateAccessAndDeleteOldImages() {
+			validateAccessToAwardChain()
+			// Удаляем старые изображения
+			getAwardByIdDetails("Получаем детальную награду")
+			worker("Подготовка к удалению изображений") { baseImages = awardDetails.award.images }
+			deleteBaseImagesFromS3("Удаляем все изображения")
+		}
 
 		private fun ICorChainDsl<AwardContext>.validateMainAwardFieldChain() {
 			validateAwardName("Проверяем имя")

@@ -174,6 +174,7 @@ class AwardServiceImpl(
 	}
 
 	override fun addImage(awardId: Long, baseImage: BaseImage): BaseImage {
+		awardImageRepository.deleteAllAwardImage(awardId)
 		val awardImageEntity = AwardImageEntity(
 			awardId = awardId,
 			originUrl = baseImage.originUrl,
@@ -198,6 +199,25 @@ class AwardServiceImpl(
 			createdAt = LocalDateTime.now()
 		)
 		awardImageRepository.save(awardImageEntity)
+		return awardImageEntity.toBaseImage()
+	}
+
+	override fun setMainImage(awardId: Long): BaseImage? {
+		val awardEntity = awardRepository.findByIdOrNull(awardId) ?: throw AwardNotFoundException()
+		val images = awardEntity.images
+		val awardImageEntity = images.firstOrNull() ?: run {
+			awardEntity.mainImg = null
+			return null
+		}
+
+		// Если убрать @OrderBy("id DESC"), то раскомментировать
+//		images.forEach {
+//			if (it.createdAt > awardImageEntity.createdAt) {
+//				awardImageEntity = it
+//			}
+//		}
+		awardImageEntity.main = true
+		awardEntity.mainImg = awardImageEntity.miniUrl
 		return awardImageEntity.toBaseImage()
 	}
 
@@ -316,24 +336,6 @@ class AwardServiceImpl(
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 		)
-	}
-
-	override fun setMainImage(awardId: Long): BaseImage? {
-		val awardEntity = awardRepository.findByIdOrNull(awardId) ?: throw AwardNotFoundException()
-		val images = awardEntity.images
-		var awardImageEntity = images.firstOrNull() ?: run {
-			awardEntity.mainImg = null
-			return null
-		}
-
-		images.forEach {
-			if (it.createdAt > awardImageEntity.createdAt) {
-				awardImageEntity = it
-			}
-		}
-		awardImageEntity.main = true
-		awardEntity.mainImg = awardImageEntity.miniUrl
-		return awardImageEntity.toBaseImage()
 	}
 
 	override fun updateAllAwardImg() {

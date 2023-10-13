@@ -26,7 +26,7 @@ class SpringSecurityConfig {
 			.csrf { csrf -> csrf.disable() }
 //			.cors {}// Разрешает запросы типа OPTIONS
 			.authorizeHttpRequests { auth ->
-				auth.requestMatchers("/t/**").permitAll()
+				auth.requestMatchers("/user/test/**").permitAll()
 				auth.anyRequest().hasRole("user")
 			}
 			.oauth2ResourceServer { oauth2ResourceServer ->
