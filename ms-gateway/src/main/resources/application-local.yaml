@@ -5,7 +5,7 @@ eureka:
 
 server:
   ssl:
-    enabled: true
+    enabled: false
     certificate: classpath:ssl/localhost.cer
     certificate-private-key: classpath:ssl/localhost.pem
     trust-certificate: classpath:ssl/rootca.cer

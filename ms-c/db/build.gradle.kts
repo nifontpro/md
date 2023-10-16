@@ -1,6 +1,8 @@
 import org.gradle.kotlin.dsl.java
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+project.version = "1.0.0"
+
 plugins {
 	id("org.springframework.boot")
 	id("io.spring.dependency-management")
@@ -102,7 +104,7 @@ ant.withGroovyBuilder {
 
 val remoteUrl = "nmedalist.ru"
 val myFolder = System.getenv("MY_FOLDER") ?: "~"
-val patchKey = "$myFolder/Deploy/serverkey"
+val patchKey = "/Users/nifont/Deploy/serverkey"
 
 task("remote-client") {
 	dependsOn("bootJar")

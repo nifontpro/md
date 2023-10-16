@@ -28,7 +28,7 @@ class HttpToHttpsRedirectConfig {
 
 	@PostConstruct
 	fun start() {
-		val factory: ReactiveWebServerFactory = NettyReactiveWebServerFactory(8777)
+		val factory: ReactiveWebServerFactory = NettyReactiveWebServerFactory(8780)
 		http = factory.getWebServer(httpHandler).apply {
 			start()
 		}
