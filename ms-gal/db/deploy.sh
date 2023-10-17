@@ -1,5 +1,5 @@
 version=1.0.0
-image='md_client'
+image='md_gallery'
 ../../gradlew clean bootJar -x test
 #scp ./build/libs/client.jar nifont@mmedalist.ru:~/v1/md/client/client.jar
 #docker build . -t 8881981/rs:$version
