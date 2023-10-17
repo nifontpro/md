@@ -10,4 +10,6 @@ data class BaseEventResponse(
 	val userId: Long = 0,
 	val deptId: Long = 0,
 	val deptName: String = "",
+	val eventType: EventType,
+	val deptLevel: Int
 )

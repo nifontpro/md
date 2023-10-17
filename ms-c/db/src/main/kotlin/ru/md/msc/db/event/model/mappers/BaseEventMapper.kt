@@ -13,5 +13,6 @@ fun IBaseEvent.toBaseEvent() = BaseEvent(
 	userId = getUserId(),
 	deptId = getDeptId(),
 	deptName = getDeptName(),
-	deptClassname = getDeptClassname()
+	deptClassname = getDeptClassname(),
+	deptLevel = getDeptLevel()
 )

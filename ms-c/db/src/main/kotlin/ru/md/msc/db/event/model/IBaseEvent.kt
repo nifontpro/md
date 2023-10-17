@@ -13,4 +13,5 @@ interface IBaseEvent {
 	fun getDeptId(): Long
 	fun getDeptName(): String
 	fun getDeptClassname(): String? = null
+	fun getDeptLevel(): Int = 0
 }

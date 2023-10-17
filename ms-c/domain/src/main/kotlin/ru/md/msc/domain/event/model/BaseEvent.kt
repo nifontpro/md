@@ -13,4 +13,5 @@ data class BaseEvent(
 	val deptId: Long = 0,
 	val deptName: String = "",
 	val deptClassname: String? = null,
+	val deptLevel: Int = 0,
 )
