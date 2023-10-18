@@ -19,6 +19,7 @@ fun <T : BaseClientContext> ICorChainDsl<T>.getGalleryItemByClient(title: String
 	}
 
 	except {
+		log.error(it.message)
 		getGalleryItemMsError()
 	}
 }
