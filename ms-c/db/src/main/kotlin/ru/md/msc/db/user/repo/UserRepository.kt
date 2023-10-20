@@ -21,6 +21,8 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 
 	fun countByAuthEmailIgnoreCaseAndDeptIdIn(authEmail: String, deptsIds: List<Long>): Long
 
+	fun countByDeptIdAndAuthEmailIgnoreCase(deptId:Long, authEmail: String): Long
+
 	@EntityGraph("withDept")
 	fun findByDeptIdInAndLastnameLikeIgnoreCase(
 		deptsIds: List<Long>,
@@ -55,11 +57,11 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 	@Query("select u.dept.id from UserEntity u where u.id = :userId")
 	fun findDeptId(userId: Long): Long?
 
-	/**
-	 * Найти parentId отдела сотрудника
-	 */
-	@Query("select u.dept.parentId from UserEntity u where u.id = :userId")
-	fun findParentDeptId(userId: Long): Long
+//	/**
+//	 * Найти parentId отдела сотрудника
+//	 */
+//	@Query("select u.dept.parentId from UserEntity u where u.id = :userId")
+//	fun findParentDeptId(userId: Long): Long
 
 	/**
 	 * Количество сотрудников по полам в отделах

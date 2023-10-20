@@ -30,6 +30,7 @@ import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
 import ru.md.msc.domain.user.biz.validate.validateCreateUserRoles
 import ru.md.msc.domain.user.biz.validate.validateUserEmailExist
 import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
+import ru.md.msc.domain.user.biz.validate.validateUserLastnameEmpty
 import ru.md.msc.domain.user.biz.workers.*
 import ru.md.msc.domain.user.biz.workers.sort.setUsersBySubdeptsValidSortedFields
 import ru.md.msc.domain.user.biz.workers.sort.setUsersWithAwardCountValidSortedFields
@@ -62,6 +63,7 @@ class UserProcessor(
 
 			operation("Создание профиля сотрудника", UserCommand.CREATE) {
 				validateUserFirstnameEmpty("Проверка имени пользователя")
+				validateUserLastnameEmpty("Проверка фамилии пользователя")
 				validateDeptId("Проверка deptId")
 				validateCreateUserRoles("Проверка ролей")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
@@ -72,9 +74,17 @@ class UserProcessor(
 				createUser("Создаем профиль сотрудника")
 			}
 
+			operation("Добавление сотрудников из таблицы", UserCommand.ADD_FROM_EXCEL) {
+				validateDeptId("Проверка deptId")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validateAdminRole("Проверка наличия прав Администратора")
+				addUsersFromExcel("Добавляем сотрудников")
+			}
+
 			operation("Обновление профиля сотрудника", UserCommand.UPDATE) {
 				validateUserId("Проверка userId")
 				validateUserFirstnameEmpty("Проверка имени пользователя")
+				validateUserLastnameEmpty("Проверка фамилии пользователя")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateSameAndAdminModifyUser() // Проверка модификации собственного профиля или Администратором
 				trimFieldUserDetails("Очищаем поля")

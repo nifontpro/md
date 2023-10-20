@@ -33,12 +33,12 @@ suspend fun <C : BaseClientContext> imageProcess(
 	val compress = mimes.find { it.first == contentType }?.second
 	println("Content Type: $contentType, compress: $compress")
 	if (compress == null) {
-		context.fileContentTypeError(contentType ?: "")
+		context.fileContentTypeError(contentType ?: "", message = "Загружаемый файл должен быть изображением")
 		return BaseResponse.error(errors = context.errors)
 	}
 
 	val fileData = try {
-		saveFile(multipartFile = multipartFile, entityId = entityId, compress = compress)
+		saveImageFile(multipartFile = multipartFile, entityId = entityId, compress = compress)
 	} catch (e: Exception) {
 		when (e) {
 			is ImageSaveException -> context.imageSaveError(e.message)

@@ -32,4 +32,6 @@ interface UserService {
 	fun activityByUserExist(userId: Long): Boolean
 	fun moveUserToArchive(userId: Long)
 	fun validateEmail(deptId: Long, email: String): Boolean
+	fun validateByDeptIdAndEmailExist(deptId: Long, email: String): Boolean
+	fun simpleUpdate(userDetails: UserDetails): UserDetails
 }

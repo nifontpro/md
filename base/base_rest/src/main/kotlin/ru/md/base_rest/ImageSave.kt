@@ -13,7 +13,7 @@ import java.io.InputStream
 import java.util.*
 import javax.imageio.ImageIO
 
-fun saveFile(multipartFile: MultipartFile, entityId: Long = 0, compress: Boolean = true): FileData {
+fun saveImageFile(multipartFile: MultipartFile, entityId: Long = 0, compress: Boolean = true): FileData {
 	val fileBytes = multipartFile.bytes
 	val fileSize = multipartFile.size
 	if (fileBytes.isEmpty()) throw ImageSaveException("Пустой файл")

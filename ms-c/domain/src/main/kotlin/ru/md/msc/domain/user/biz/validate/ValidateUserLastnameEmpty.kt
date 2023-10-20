@@ -6,18 +6,18 @@ import ru.md.base_domain.biz.helper.fail
 import ru.md.cor.worker
 import ru.md.msc.domain.user.biz.proc.UserContext
 
-fun ICorChainDsl<UserContext>.validateUserFirstnameEmpty(title: String) = worker {
+fun ICorChainDsl<UserContext>.validateUserLastnameEmpty(title: String) = worker {
 	this.title = title
-	on { user.firstname.isBlank() }
+	on { user.lastname?.isBlank() ?: false}
 	handle {
 		fail(
-			validateUserFirstnameBlankExt()
+			validateUserLastnameBlankExt()
 		)
 	}
 }
 
-fun validateUserFirstnameBlankExt() = errorValidation(
-	field = "firstname",
+fun validateUserLastnameBlankExt() = errorValidation(
+	field = "lastname",
 	violationCode = "blank",
-	description = "Поле Имя должно быть заполнено"
+	description = "Поле Фамилия должно быть заполнено"
 )

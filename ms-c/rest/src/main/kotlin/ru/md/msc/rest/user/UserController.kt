@@ -15,6 +15,8 @@ import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.GenderCount
 import ru.md.msc.domain.user.model.UserSettings
+import ru.md.msc.domain.user.model.excel.AddUserReport
+import ru.md.msc.rest.base.excelProcess
 import ru.md.msc.rest.base.imageProcess
 import ru.md.msc.rest.base.mappers.toTransportBaseImageResponse
 import ru.md.msc.rest.base.mappers.toTransportUnit
@@ -161,6 +163,23 @@ class UserController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportUserDetails() }
+		)
+	}
+
+	@PostMapping("excel_add")
+	private suspend fun addFromExcel(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestPart("file") file: MultipartFile,
+		@RequestPart("authId") authId: String,
+		@RequestPart("deptId") deptId: String,
+	): BaseResponse<List<AddUserReport>> {
+		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
+		return excelProcess(
+			authData = authData,
+			authId = authId.toLongOr0(),
+			deptId = deptId.toLongOr0(),
+			processor = userProcessor,
+			multipartFile = file,
 		)
 	}
 

@@ -11,4 +11,14 @@ interface UserDetailsRepository : JpaRepository<UserDetailsEntity, Long> {
 	@EntityGraph("withUserDept")
 	fun findByUserId(userId: Long): UserDetailsEntity?
 
+	@EntityGraph("withUserDept")
+	fun findByUserAuthEmail(authEmail: String): UserDetailsEntity?
+
+//	@EntityGraph("withUser")
+//	@Query("""
+//		from UserDetailsEntity u where u.user.dept.id=:deptId and
+//		u.user.authEmail=:authEmail
+//	""")
+//	fun findByDeptIdAndAuthEmail(deptId: Long, authEmail: String): UserDetailsEntity?
+
 }

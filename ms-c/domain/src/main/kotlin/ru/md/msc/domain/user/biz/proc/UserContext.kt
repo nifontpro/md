@@ -4,6 +4,7 @@ import ru.md.base_domain.biz.proc.IBaseCommand
 import ru.md.msc.domain.award.model.ActionType
 import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.msc.domain.user.model.*
+import ru.md.msc.domain.user.model.excel.AddUserReport
 
 class UserContext : BaseClientContext() {
 	var userDetails: UserDetails = UserDetails()
@@ -16,8 +17,9 @@ class UserContext : BaseClientContext() {
 
 	// for exclude award:
 	var actionType: ActionType? = null
-
 	var hasOwnerRole: Boolean = false
+	var fileUrl: String = ""
+	val addReport: MutableList<AddUserReport> = mutableListOf()
 }
 
 enum class UserCommand : IBaseCommand {
@@ -38,5 +40,6 @@ enum class UserCommand : IBaseCommand {
 	SET_MAIN_IMG,
 	SAVE_SETTINGS,
 	GET_SETTINGS,
-	CHECK_HAS_OWNER_ROLE
+	CHECK_HAS_OWNER_ROLE,
+	ADD_FROM_EXCEL
 }

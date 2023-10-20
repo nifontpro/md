@@ -24,6 +24,11 @@ dependencies {
 
 	implementation("org.springframework.boot:spring-boot-starter")
 
+	val fastExcelVersion = "0.15.7"
+	implementation("org.dhatim:fastexcel:$fastExcelVersion")
+	implementation("org.dhatim:fastexcel-reader:$fastExcelVersion")
+
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
 

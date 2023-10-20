@@ -123,6 +123,26 @@ class UserServiceImpl(
 		return oldUserDetailsEntity.toUserDetails()
 	}
 
+	/**
+	 * Обновление основных полей с сохранением ролей, изображений и т. д.
+	 */
+	override fun simpleUpdate(userDetails: UserDetails): UserDetails {
+		val oldUserDetailsEntity = userDetailsRepository
+			.findByUserAuthEmail(userDetails.user.authEmail ?: "") ?: throw UserNotFoundException()
+		with(oldUserDetailsEntity) {
+			user?.let {
+				it.firstname = userDetails.user.firstname
+				it.patronymic = userDetails.user.patronymic
+				it.lastname = userDetails.user.lastname
+				it.post = userDetails.user.post
+			}
+			phone = userDetails.phone
+//			address = userDetails.address
+			description = userDetails.description
+		}
+		return oldUserDetailsEntity.toUserDetails()
+	}
+
 	private fun addRolesToUserEntity(
 		userDetails: UserDetails,
 		userDetailsEntity: UserDetailsEntity
@@ -323,6 +343,15 @@ class UserServiceImpl(
 		val deptIds = deptUtil.getAllDeptIds(deptId)
 		return userRepository.countByAuthEmailIgnoreCaseAndDeptIdIn(
 			authEmail = email, deptsIds = deptIds
+		) > 0
+	}
+
+	/**
+	 * Проверка, существует ли сотрудник с email в отделе
+	 */
+	override fun validateByDeptIdAndEmailExist(deptId: Long, email: String): Boolean {
+		return userRepository.countByDeptIdAndAuthEmailIgnoreCase(
+			authEmail = email, deptId = deptId
 		) > 0
 	}
 

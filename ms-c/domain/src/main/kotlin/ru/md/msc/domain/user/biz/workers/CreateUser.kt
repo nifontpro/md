@@ -1,11 +1,10 @@
 package ru.md.msc.domain.user.biz.workers
 
-import ru.md.base_domain.biz.helper.errorDb
-import ru.md.base_domain.biz.helper.fail
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.user.biz.proc.UserContext
+import ru.md.msc.domain.user.biz.proc.userCreateError
 
 fun ICorChainDsl<UserContext>.createUser(title: String) = worker {
 
@@ -18,12 +17,6 @@ fun ICorChainDsl<UserContext>.createUser(title: String) = worker {
 
 	except {
 		log.error(it.message)
-		fail(
-			errorDb(
-				repository = "user",
-				violationCode = "create",
-				description = "Ошибка создания профиля сотрудника"
-			)
-		)
+		userCreateError()
 	}
 }
