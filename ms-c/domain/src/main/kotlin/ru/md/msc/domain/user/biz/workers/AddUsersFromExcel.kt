@@ -9,6 +9,8 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.user.biz.proc.*
+import ru.md.msc.domain.user.biz.validate.isValidEmail
+import ru.md.msc.domain.user.biz.validate.validateUserEmailExt
 import ru.md.msc.domain.user.biz.validate.validateUserFirstnameBlankExt
 import ru.md.msc.domain.user.biz.validate.validateUserLastnameBlankExt
 import ru.md.msc.domain.user.model.RoleUser
@@ -30,20 +32,7 @@ fun ICorChainDsl<UserContext>.addUsersFromExcel(title: String) = worker {
 					row.getCellText(0).toLongOrNull() ?: continue
 					val errors = mutableListOf<ContextError>()
 					var success = true
-
-					val authEmail = row.getCellText(4).trim().lowercase()
-					val userExist = if (authEmail.isNotBlank()) {
-						try {
-							userService.validateByDeptIdAndEmailExist(deptId = deptId, email = authEmail)
-						} catch (e: Exception) {
-							log.error(e.message)
-							errors.add(getUserErrorExt())
-							success = false
-							false
-						}
-					} else {
-						false
-					}
+					var userExist = false
 
 					val lastname = row.getCellText(1).trim()
 					if (lastname.isBlank()) {
@@ -55,6 +44,26 @@ fun ICorChainDsl<UserContext>.addUsersFromExcel(title: String) = worker {
 					if (firstname.isBlank()) {
 						errors.add(validateUserFirstnameBlankExt())
 						success = false
+					}
+
+					val authEmail = row.getCellText(4).trim().lowercase()
+
+					if (authEmail.isNotBlank()) {
+						if (isValidEmail(authEmail)) {
+							try {
+								if (success) {
+									userExist = userService.validateByDeptIdAndEmailExist(deptId = deptId, email = authEmail)
+								}
+							} catch (e: Exception) {
+								log.error(e.message)
+								errors.add(getUserErrorExt())
+								success = false
+								userExist = true
+							}
+						} else {
+							success = false
+							errors.add(validateUserEmailExt())
+						}
 					}
 
 					user = User(
@@ -74,12 +83,10 @@ fun ICorChainDsl<UserContext>.addUsersFromExcel(title: String) = worker {
 						if (userExist) {
 							try {
 								userDetails = userService.simpleUpdate(userDetails)
-							}
-							catch (e: UserNotFoundException) {
+							} catch (e: UserNotFoundException) {
 								log.error(e.message)
 								errors.add(userNotFoundErrorExt())
-							}
-							catch (e: Exception) {
+							} catch (e: Exception) {
 								log.error(e.message)
 								errors.add(userUpdateErrorExt())
 							}

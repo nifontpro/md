@@ -26,11 +26,8 @@ import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.s3.repository.S3Repository
 import ru.md.msc.domain.user.biz.proc.operation.deleteUserOperation
+import ru.md.msc.domain.user.biz.validate.*
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
-import ru.md.msc.domain.user.biz.validate.validateCreateUserRoles
-import ru.md.msc.domain.user.biz.validate.validateUserEmailExist
-import ru.md.msc.domain.user.biz.validate.validateUserFirstnameEmpty
-import ru.md.msc.domain.user.biz.validate.validateUserLastnameEmpty
 import ru.md.msc.domain.user.biz.workers.*
 import ru.md.msc.domain.user.biz.workers.sort.setUsersBySubdeptsValidSortedFields
 import ru.md.msc.domain.user.biz.workers.sort.setUsersWithAwardCountValidSortedFields
@@ -56,6 +53,7 @@ class UserProcessor(
 
 			operation("Регистрация корневого владельца", UserCommand.CREATE_OWNER) {
 				validateUserFirstnameEmpty("Проверка имени пользователя")
+				validateUserLastnameEmpty("Проверка фамилии пользователя")
 				validateOwnerByEmailExist("Проверка существования владельца с email")
 				trimFieldUserDetails("Очищаем поля")
 				createOwner("Создаем владельца")
@@ -64,6 +62,7 @@ class UserProcessor(
 			operation("Создание профиля сотрудника", UserCommand.CREATE) {
 				validateUserFirstnameEmpty("Проверка имени пользователя")
 				validateUserLastnameEmpty("Проверка фамилии пользователя")
+				validateUserEmail("Проверяем email")
 				validateDeptId("Проверка deptId")
 				validateCreateUserRoles("Проверка ролей")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
@@ -78,6 +77,7 @@ class UserProcessor(
 				validateDeptId("Проверка deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAdminRole("Проверка наличия прав Администратора")
+				validateAuthDeptLevel("Проверка доступа к отделу")
 				addUsersFromExcel("Добавляем сотрудников")
 			}
 
@@ -85,6 +85,7 @@ class UserProcessor(
 				validateUserId("Проверка userId")
 				validateUserFirstnameEmpty("Проверка имени пользователя")
 				validateUserLastnameEmpty("Проверка фамилии пользователя")
+				validateUserEmail("Проверяем email")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateSameAndAdminModifyUser() // Проверка модификации собственного профиля или Администратором
 				trimFieldUserDetails("Очищаем поля")

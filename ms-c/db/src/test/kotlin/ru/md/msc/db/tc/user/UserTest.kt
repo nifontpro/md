@@ -1,4 +1,4 @@
-package ru.md.msc.db.tc
+package ru.md.msc.db.tc.user
 
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -8,9 +8,12 @@ import org.springframework.boot.test.context.SpringBootTest
 import ru.md.base_domain.model.BaseOrder
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.Direction
+import ru.md.msc.db.tc.TestBeans
+import ru.md.msc.db.tc.ownerEmail
 import ru.md.msc.db.user.repo.RoleRepository
 import ru.md.msc.db.user.repo.UserRepository
 import ru.md.msc.domain.dept.service.DeptService
+import ru.md.msc.domain.user.biz.validate.isValidEmail
 import ru.md.msc.domain.user.model.RoleUser
 import ru.md.msc.domain.user.service.UserService
 
@@ -21,6 +24,27 @@ class UserTest(
 	@Autowired private val roleRepository: RoleRepository,
 	@Autowired private val userRepository: UserRepository
 ) {
+
+	@Test
+	fun formatEmailValid() {
+		val email = "sas22d@asd2.ru"
+		val isValid = isValidEmail(email)
+		assertEquals(true, isValid)
+	}
+
+	@Test
+	fun formatEmailInvalid1() {
+		val email = "sas22d@asd2."
+		val isValid = isValidEmail(email)
+		assertEquals(false, isValid)
+	}
+
+	@Test
+	fun formatEmailInvalid2() {
+		val email = "sas22d"
+		val isValid = isValidEmail(email)
+		assertEquals(false, isValid)
+	}
 
 	@Test
 	fun authEmailExistTest() {
