@@ -7,7 +7,7 @@ import ru.md.cor.worker
 import ru.md.msc.domain.user.biz.proc.UserContext
 import java.util.regex.Pattern
 
-fun ICorChainDsl<UserContext>.validateUserEmail(title: String) = worker {
+fun ICorChainDsl<UserContext>.validateUserEmailFormat(title: String) = worker {
 	this.title = title
 	on {
 		user.authEmail?.let { email ->
@@ -16,12 +16,12 @@ fun ICorChainDsl<UserContext>.validateUserEmail(title: String) = worker {
 	}
 	handle {
 		fail(
-			validateUserEmailExt()
+			validateUserEmailFormatExt()
 		)
 	}
 }
 
-fun validateUserEmailExt() = errorValidation(
+fun validateUserEmailFormatExt() = errorValidation(
 	field = "email",
 	violationCode = "not valid",
 	description = "Неверный формат email"

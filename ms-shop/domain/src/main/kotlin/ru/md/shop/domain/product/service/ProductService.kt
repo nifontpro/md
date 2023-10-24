@@ -1,0 +1,15 @@
+package ru.md.shop.domain.product.service
+
+import ru.md.base_domain.image.model.BaseImage
+import ru.md.shop.domain.product.model.ProductDetails
+
+interface ProductService {
+	fun create(productDetails: ProductDetails): ProductDetails
+	fun update(productDetails: ProductDetails): ProductDetails
+	fun deleteById(productId: Long)
+	fun findProductDetailsById(productId: Long): ProductDetails
+	fun findDeptIdByProductId(productId: Long): Long
+	fun addImage(productId: Long, baseImage: BaseImage): BaseImage
+	fun setMainImage(productId: Long): BaseImage?
+	fun deleteImage(productId: Long, imageId: Long): BaseImage
+}

@@ -34,16 +34,13 @@ dependencies {
 	implementation(project(":base:base_domain"))
 	implementation(project(":base:base_client"))
 
-	implementation(project(":ms-c:domain"))
-	implementation(project(":ms-c:rest"))
-	implementation(project(":ms-c:s3"))
+	implementation(project(":ms-shop:domain"))
+	implementation(project(":ms-shop:rest"))
+	implementation(project(":ms-shop:s3"))
 
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
-
-	// Send email service
-	 implementation("org.apache.commons:commons-email:1.5")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
@@ -81,7 +78,7 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-val jarFileName = "client.jar"
+val jarFileName = "shop.jar"
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
 	this.archiveFileName.set(jarFileName)
 }

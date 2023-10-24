@@ -9,10 +9,7 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.user.biz.proc.*
-import ru.md.msc.domain.user.biz.validate.isValidEmail
-import ru.md.msc.domain.user.biz.validate.validateUserEmailExt
-import ru.md.msc.domain.user.biz.validate.validateUserFirstnameBlankExt
-import ru.md.msc.domain.user.biz.validate.validateUserLastnameBlankExt
+import ru.md.msc.domain.user.biz.validate.*
 import ru.md.msc.domain.user.model.RoleUser
 import ru.md.msc.domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
@@ -56,14 +53,16 @@ fun ICorChainDsl<UserContext>.addUsersFromExcel(title: String) = worker {
 								}
 							} catch (e: Exception) {
 								log.error(e.message)
-								errors.add(getUserErrorExt())
 								success = false
-								userExist = true
+								errors.add(getUserErrorExt())
 							}
 						} else {
 							success = false
-							errors.add(validateUserEmailExt())
+							errors.add(validateUserEmailFormatExt())
 						}
+					} else {
+						success = false
+						errors.add(validateUserEmailBlankExt())
 					}
 
 					user = User(

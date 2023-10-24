@@ -205,17 +205,19 @@ class AwardServiceImpl(
 	override fun setMainImage(awardId: Long): BaseImage? {
 		val awardEntity = awardRepository.findByIdOrNull(awardId) ?: throw AwardNotFoundException()
 		val images = awardEntity.images
-		val awardImageEntity = images.firstOrNull() ?: run {
+		var awardImageEntity = images.firstOrNull() ?: run {
 			awardEntity.mainImg = null
 			return null
 		}
 
-		// Если убрать @OrderBy("id DESC"), то раскомментировать
-//		images.forEach {
-//			if (it.createdAt > awardImageEntity.createdAt) {
-//				awardImageEntity = it
-//			}
-//		}
+		images.forEach {
+			if (it.createdAt > awardImageEntity.createdAt) {
+				awardImageEntity = it
+			} else if (it.main) {
+				it.main = false
+			}
+		}
+
 		awardImageEntity.main = true
 		awardEntity.mainImg = awardImageEntity.miniUrl
 		return awardImageEntity.toBaseImage()

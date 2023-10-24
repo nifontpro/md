@@ -62,7 +62,7 @@ class UserProcessor(
 			operation("Создание профиля сотрудника", UserCommand.CREATE) {
 				validateUserFirstnameEmpty("Проверка имени пользователя")
 				validateUserLastnameEmpty("Проверка фамилии пользователя")
-				validateUserEmail("Проверяем email")
+				validateUserEmailFormat("Проверяем email")
 				validateDeptId("Проверка deptId")
 				validateCreateUserRoles("Проверка ролей")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
@@ -85,7 +85,7 @@ class UserProcessor(
 				validateUserId("Проверка userId")
 				validateUserFirstnameEmpty("Проверка имени пользователя")
 				validateUserLastnameEmpty("Проверка фамилии пользователя")
-				validateUserEmail("Проверяем email")
+				validateUserEmailFormat("Проверяем email")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateSameAndAdminModifyUser() // Проверка модификации собственного профиля или Администратором
 				trimFieldUserDetails("Очищаем поля")
