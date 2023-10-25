@@ -1,44 +1,35 @@
-package ru.md.msc.s3.di
+package ru.md.base_s3.di
 
-import com.amazonaws.AmazonClientException
 import com.amazonaws.auth.AWSStaticCredentialsProvider
 import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.amazonaws.client.builder.AwsClientBuilder
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class S3Module {
+class S3Module(
+	@Value("\${s3.access.id}") private val accessKey: String,
+	@Value("\${s3.access.key}") private val secretKey: String,
+	@Value("\${s3.service.endpoint}") private val serviceEndpoint: String,
+	@Value("\${s3.signing.region}") private val signingRegion: String,
+) {
 
 	@Bean
 	fun amazonS3(): AmazonS3 {
 		val credentials = try {
 			ProfileCredentialsProvider().credentials
 		} catch (e: Exception) {
-
-			val accessKey = System.getenv("S3_ID")
-			val secretKey = System.getenv("S3_KEY")
-			if (accessKey == null || secretKey == null) {
-				throw AmazonClientException(
-					"Cannot load the credentials from the credential profiles file. " +
-							"Please make sure that your credentials file is at the correct " +
-							"location (~/.aws/credentials), and is in valid format.",
-					e
-				)
-			} else {
-				BasicAWSCredentials(accessKey, secretKey)
-			}
+			BasicAWSCredentials(accessKey, secretKey)
 		}
 
 		return AmazonS3ClientBuilder.standard()
 			.withCredentials(AWSStaticCredentialsProvider(credentials))
 			.withEndpointConfiguration(
-				AwsClientBuilder.EndpointConfiguration(
-					"storage.yandexcloud.net", "ru-central1"
-				)
+				AwsClientBuilder.EndpointConfiguration(serviceEndpoint, signingRegion)
 			)
 			.build()
 	}

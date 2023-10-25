@@ -16,8 +16,8 @@ import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.GenderCount
 import ru.md.msc.domain.user.model.UserSettings
 import ru.md.msc.domain.user.model.excel.AddUserReport
-import ru.md.msc.rest.base.excelProcess
-import ru.md.msc.rest.base.imageProcess
+import ru.md.msc.rest.user.excel.excelProcess
+import ru.md.base_rest.image.baseImageProcess
 import ru.md.msc.rest.base.mappers.toTransportBaseImageResponse
 import ru.md.msc.rest.base.mappers.toTransportUnit
 import ru.md.msc.rest.user.mappers.*
@@ -193,7 +193,7 @@ class UserController(
 	): BaseResponse<BaseImageResponse> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = UserContext().apply { command = UserCommand.IMG_ADD }
-		return imageProcess(
+		return baseImageProcess(
 			authData = authData,
 			context = context,
 			processor = userProcessor,

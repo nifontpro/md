@@ -39,7 +39,7 @@ import ru.md.msc.domain.base.workers.msg.sendMessageToEmail
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.email.EmailService
 import ru.md.msc.domain.msg.service.MessageService
-import ru.md.msc.domain.s3.repository.S3Repository
+import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.msc.domain.user.service.UserService
 
 @Component
@@ -47,7 +47,7 @@ class AwardProcessor(
 	private val userService: UserService,
 	private val deptService: DeptService,
 	private val awardService: AwardService,
-	private val s3Repository: S3Repository,
+	private val baseS3Repository: BaseS3Repository,
 	private val microClient: MicroClient,
 	private val messageService: MessageService,
 	private val emailService: EmailService,
@@ -57,7 +57,7 @@ class AwardProcessor(
 		it.userService = userService
 		it.deptService = deptService
 		it.awardService = awardService
-		it.s3Repository = s3Repository
+		it.baseS3Repository = baseS3Repository
 		it.microClient = microClient
 		it.messageService = messageService
 		it.emailService = emailService

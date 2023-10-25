@@ -33,10 +33,10 @@ dependencies {
 	implementation(project(":base:base_db"))
 	implementation(project(":base:base_domain"))
 	implementation(project(":base:base_client"))
+	implementation(project(":base:base_s3"))
 
 	implementation(project(":ms-c:domain"))
 	implementation(project(":ms-c:rest"))
-	implementation(project(":ms-c:s3"))
 
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")

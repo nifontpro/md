@@ -22,20 +22,20 @@ import ru.md.msc.domain.dept.biz.validate.validateDeptNameExist
 import ru.md.msc.domain.dept.biz.workers.*
 import ru.md.msc.domain.dept.biz.workers.chain.getDeptListByParentDeptIdChain
 import ru.md.msc.domain.dept.service.DeptService
-import ru.md.msc.domain.s3.repository.S3Repository
+import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.msc.domain.user.service.UserService
 
 @Component
 class DeptProcessor(
 	private val userService: UserService,
 	private val deptService: DeptService,
-	private val s3Repository: S3Repository
+	private val baseS3Repository: BaseS3Repository
 ) : IBaseProcessor<DeptContext> {
 
 	override suspend fun exec(ctx: DeptContext) = businessChain.exec(ctx.also {
 		it.userService = userService
 		it.deptService = deptService
-		it.s3Repository = s3Repository
+		it.baseS3Repository = baseS3Repository
 	})
 
 	companion object {

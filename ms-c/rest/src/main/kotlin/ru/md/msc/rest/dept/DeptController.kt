@@ -11,7 +11,7 @@ import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.dept.biz.proc.DeptCommand
 import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.domain.dept.biz.proc.DeptProcessor
-import ru.md.msc.rest.base.imageProcess
+import ru.md.base_rest.image.baseImageProcess
 import ru.md.msc.rest.base.mappers.toTransportBaseImageResponse
 import ru.md.msc.rest.base.mappers.toTransportUnit
 import ru.md.msc.rest.dept.mappers.fromTransport
@@ -167,7 +167,7 @@ class DeptController(
 	): BaseResponse<BaseImageResponse> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = DeptContext().apply { command = DeptCommand.IMG_ADD }
-		return imageProcess(
+		return baseImageProcess(
 			authData = authData,
 			context = context,
 			processor = deptProcessor,

@@ -26,7 +26,7 @@ import ru.md.msc.domain.medal.biz.validate.validateMedalScore
 import ru.md.msc.domain.medal.biz.workers.*
 import ru.md.msc.domain.medal.service.MedalService
 import ru.md.msc.domain.msg.service.MessageService
-import ru.md.msc.domain.s3.repository.S3Repository
+import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.msc.domain.user.service.UserService
 
 @Component
@@ -34,7 +34,7 @@ class MedalProcessor(
 	private val userService: UserService,
 	private val deptService: DeptService,
 	private val medalService: MedalService,
-	private val s3Repository: S3Repository,
+	private val baseS3Repository: BaseS3Repository,
 	private val microClient: MicroClient,
 	private val messageService: MessageService,
 ) : IBaseProcessor<MedalContext> {
@@ -43,7 +43,7 @@ class MedalProcessor(
 		it.userService = userService
 		it.deptService = deptService
 		it.medalService = medalService
-		it.s3Repository = s3Repository
+		it.baseS3Repository = baseS3Repository
 		it.microClient = microClient
 		it.messageService = messageService
 	})

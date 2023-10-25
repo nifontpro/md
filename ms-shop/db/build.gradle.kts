@@ -36,7 +36,6 @@ dependencies {
 
 	implementation(project(":ms-shop:domain"))
 	implementation(project(":ms-shop:rest"))
-	implementation(project(":ms-shop:s3"))
 
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")

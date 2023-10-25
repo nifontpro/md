@@ -1,4 +1,4 @@
-package ru.md.msc.rest.base
+package ru.md.msc.rest.user.excel
 
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_rest.Constants.LOCAL_FOLDER

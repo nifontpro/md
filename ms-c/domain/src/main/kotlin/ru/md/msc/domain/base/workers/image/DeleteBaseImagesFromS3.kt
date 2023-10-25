@@ -19,7 +19,7 @@ fun <T : BaseClientContext> ICorChainDsl<T>.deleteBaseImagesFromS3(title: String
 		CoroutineScope(Dispatchers.IO).launch {
 			baseImages.forEach {
 				try {
-					s3Repository.deleteBaseImage(it)
+					baseS3Repository.deleteBaseImage(it)
 					log.info("Object ${it.normalKey} deleted")
 				} catch (e: Exception) {
 					log.error("Add ${it.normalKey} to dirty link S3")

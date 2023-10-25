@@ -1,6 +1,7 @@
-package ru.md.msc.rest.base
+package ru.md.base_rest.image
 
 import org.springframework.web.multipart.MultipartFile
+import ru.md.base_domain.biz.proc.BaseMedalsContext
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_domain.rest.baseResponse
@@ -8,13 +9,12 @@ import ru.md.base_rest.*
 import ru.md.base_rest.model.mapper.toBaseImageResponse
 import ru.md.base_rest.model.response.BaseImageResponse
 import ru.md.base_rest.utils.AuthData
-import ru.md.msc.domain.base.biz.BaseClientContext
 import java.io.File
 
 // Допустимые типы файлов to возможность сжатия
 private val mimes = listOf("image/jpeg" to true, "image/png" to true, "image/svg+xml" to false)
 
-suspend fun <C : BaseClientContext> imageProcess(
+suspend fun <C : BaseMedalsContext> baseImageProcess(
 	authData: AuthData,
 	context: C,
 	processor: IBaseProcessor<C>,

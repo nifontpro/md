@@ -1,8 +1,8 @@
-package ru.md.msc.domain.s3.repository
+package ru.md.base_domain.s3.repo
 
 import ru.md.base_domain.image.model.IBaseImage
 
-interface S3Repository {
+interface BaseS3Repository {
 	suspend fun available(): Boolean
 	suspend fun putObject(key: String, fileUrl: String): String?
 	suspend fun deleteObject(key: String)

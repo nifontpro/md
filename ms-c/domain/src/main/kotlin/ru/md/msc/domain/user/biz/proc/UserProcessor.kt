@@ -24,7 +24,7 @@ import ru.md.msc.domain.base.workers.chain.validateSameAndAdminModifyUser
 import ru.md.msc.domain.base.workers.image.addImageToS3
 import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
 import ru.md.msc.domain.dept.service.DeptService
-import ru.md.msc.domain.s3.repository.S3Repository
+import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.msc.domain.user.biz.proc.operation.deleteUserOperation
 import ru.md.msc.domain.user.biz.validate.*
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
@@ -37,13 +37,13 @@ import ru.md.msc.domain.user.service.UserService
 class UserProcessor(
 	private val userService: UserService,
 	private val deptService: DeptService,
-	private val s3Repository: S3Repository,
+	private val baseS3Repository: BaseS3Repository,
 ) : IBaseProcessor<UserContext> {
 
 	override suspend fun exec(ctx: UserContext) = businessChain.exec(ctx.also {
 		it.userService = userService
 		it.deptService = deptService
-		it.s3Repository = s3Repository
+		it.baseS3Repository = baseS3Repository
 	})
 
 	companion object {

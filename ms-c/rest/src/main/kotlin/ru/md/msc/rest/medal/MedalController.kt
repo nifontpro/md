@@ -11,7 +11,7 @@ import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.medal.biz.proc.MedalCommand
 import ru.md.msc.domain.medal.biz.proc.MedalContext
 import ru.md.msc.domain.medal.biz.proc.MedalProcessor
-import ru.md.msc.rest.base.imageProcess
+import ru.md.base_rest.image.baseImageProcess
 import ru.md.msc.rest.base.mappers.toTransportBaseImageResponse
 import ru.md.msc.rest.medal.mappers.fromTransport
 import ru.md.msc.rest.medal.mappers.toTransportMedalDetails
@@ -90,7 +90,7 @@ class MedalController(
 	): BaseResponse<BaseImageResponse> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = MedalContext().apply { command = MedalCommand.IMG_ADD }
-		return imageProcess(
+		return baseImageProcess(
 			authData = authData,
 			context = context,
 			processor = medalProcessor,

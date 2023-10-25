@@ -19,7 +19,7 @@ import ru.md.msc.rest.award.model.request.*
 import ru.md.msc.rest.award.model.response.ActivityResponse
 import ru.md.msc.rest.award.model.response.AwardDetailsResponse
 import ru.md.msc.rest.award.model.response.AwardResponse
-import ru.md.msc.rest.base.imageProcess
+import ru.md.base_rest.image.baseImageProcess
 import ru.md.msc.rest.base.mappers.toTransportBaseImageResponse
 import ru.md.msc.rest.base.mappers.toTransportUnit
 
@@ -202,7 +202,7 @@ class AwardController(
 	): BaseResponse<BaseImageResponse> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = AwardContext().apply { command = AwardCommand.IMG_ADD }
-		return imageProcess(
+		return baseImageProcess(
 			authData = authData,
 			context = context,
 			processor = awardProcessor,

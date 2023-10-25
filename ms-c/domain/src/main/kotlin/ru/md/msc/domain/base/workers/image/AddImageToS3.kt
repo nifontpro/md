@@ -16,7 +16,7 @@ fun <T : BaseClientContext> ICorChainDsl<T>.addImageToS3(title: String) = worker
 	handle {
 
 		val originKey = "$prefixUrl/${fileData.filename}"
-		val originUrl = s3Repository.putObject(key = originKey, fileUrl = fileData.originUrl) ?: throw Exception()
+		val originUrl = baseS3Repository.putObject(key = originKey, fileUrl = fileData.originUrl) ?: throw Exception()
 
 		// Поэтапное заполнение для удаления из S3 в случае ошибки
 		baseImage = BaseImage(
@@ -29,14 +29,14 @@ fun <T : BaseClientContext> ICorChainDsl<T>.addImageToS3(title: String) = worker
 
 		if (fileData.compress) {
 			val miniKey = "$prefixUrl/mini/${fileData.filename}"
-			val miniUrl = s3Repository.putObject(key = miniKey, fileUrl = fileData.miniUrl) ?: throw Exception()
+			val miniUrl = baseS3Repository.putObject(key = miniKey, fileUrl = fileData.miniUrl) ?: throw Exception()
 			baseImage = baseImage.copy(
 				miniUrl = miniUrl,
 				miniKey = miniKey,
 			)
 			if (fileData.normCompress) {
 				val normalKey = "$prefixUrl/normal/${fileData.filename}"
-				val normalUrl = s3Repository.putObject(key = normalKey, fileUrl = fileData.normalUrl) ?: throw Exception()
+				val normalUrl = baseS3Repository.putObject(key = normalKey, fileUrl = fileData.normalUrl) ?: throw Exception()
 				baseImage = baseImage.copy(
 					normalUrl = normalUrl,
 					normalKey = normalKey,
