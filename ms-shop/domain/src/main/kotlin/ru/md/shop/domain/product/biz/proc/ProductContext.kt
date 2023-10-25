@@ -19,7 +19,7 @@ enum class ProductCommand : IBaseCommand {
 	DELETE,
 	UPDATE,
 	GET_BY_ID,
+	GET_BY_DEPT,
 	IMG_ADD,
 	IMG_DELETE,
-	IMG_ADD_GALLERY
 }

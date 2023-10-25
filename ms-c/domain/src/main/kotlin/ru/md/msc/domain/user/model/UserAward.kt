@@ -3,7 +3,9 @@ package ru.md.msc.domain.user.model
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.msc.domain.award.model.Activity
 import ru.md.msc.domain.award.model.Award
-import ru.md.msc.domain.dept.model.Dept
+import ru.md.base_domain.dept.model.Dept
+import ru.md.base_domain.user.model.Gender
+import ru.md.base_domain.user.model.RoleUser
 import java.util.Collections.emptySet
 
 data class UserAward(

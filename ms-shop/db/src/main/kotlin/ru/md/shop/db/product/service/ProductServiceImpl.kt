@@ -4,14 +4,20 @@ import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.base_db.mapper.toBaseImage
+import ru.md.base_db.mapper.toPageRequest
+import ru.md.base_db.mapper.toPageResult
 import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_domain.model.BaseQuery
+import ru.md.base_domain.model.PageResult
 import ru.md.shop.db.product.model.ProductImageEntity
+import ru.md.shop.db.product.model.mappers.toProduct
 import ru.md.shop.db.product.model.mappers.toProductDetails
 import ru.md.shop.db.product.model.mappers.toProductDetailsEntity
 import ru.md.shop.db.product.repo.ProductDetailsRepository
 import ru.md.shop.db.product.repo.ProductImageRepository
 import ru.md.shop.db.product.repo.ProductRepository
 import ru.md.shop.domain.product.biz.proc.ProductNotFoundException
+import ru.md.shop.domain.product.model.Product
 import ru.md.shop.domain.product.model.ProductDetails
 import ru.md.shop.domain.product.service.ProductService
 import java.time.LocalDateTime
@@ -58,6 +64,13 @@ class ProductServiceImpl(
 
 	override fun findDeptIdByProductId(productId: Long): Long {
 		return productRepository.findDeptId(productId) ?: throw ProductNotFoundException()
+	}
+
+	override fun findByDeptId(deptId: Long, baseQuery: BaseQuery): PageResult<Product> {
+		val res = productRepository.findByDeptId(
+			deptId = deptId, pageable = baseQuery.toPageRequest()
+		)
+		return res.toPageResult { it.toProduct() }
 	}
 
 	@Transactional

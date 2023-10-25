@@ -2,7 +2,7 @@ package ru.md.msc.db.user.model.converter
 
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter
-import ru.md.msc.domain.user.model.Gender
+import ru.md.base_domain.user.model.Gender
 
 @Converter(autoApply = true)
 class GenderConverter : AttributeConverter<Gender, String?> {

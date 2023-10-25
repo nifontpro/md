@@ -3,7 +3,7 @@ package ru.md.msc.db.user.repo
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
-import ru.md.msc.db.user.model.image.UserImageEntity
+import ru.md.base_db.user.model.UserImageEntity
 
 @Repository
 interface UserImageRepository : JpaRepository<UserImageEntity, Long> {

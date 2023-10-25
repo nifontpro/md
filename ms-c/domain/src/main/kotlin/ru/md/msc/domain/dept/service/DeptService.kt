@@ -2,7 +2,7 @@ package ru.md.msc.domain.dept.service
 
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.model.BaseOrder
-import ru.md.msc.domain.dept.model.Dept
+import ru.md.base_domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
 
 interface DeptService {

@@ -3,13 +3,13 @@ package ru.md.msc.db.user.model.mappers
 import ru.md.base_db.mapper.toBaseImage
 import ru.md.msc.db.award.model.mapper.toActivityOnlyAward
 import ru.md.msc.db.award.model.mapper.toAwardLazy
-import ru.md.msc.db.dept.model.mappers.toDept
-import ru.md.msc.db.dept.model.mappers.toDeptEntity
-import ru.md.msc.db.dept.model.mappers.toDeptLazy
+import ru.md.base_db.dept.model.mappers.toDept
+import ru.md.base_db.dept.model.mappers.toDeptEntity
+import ru.md.base_db.dept.model.mappers.toDeptLazy
 import ru.md.msc.db.user.model.UserAwardEntity
-import ru.md.msc.db.user.model.UserEntity
-import ru.md.msc.domain.dept.model.Dept
-import ru.md.msc.domain.user.model.User
+import ru.md.base_db.user.model.UserEntity
+import ru.md.base_domain.dept.model.Dept
+import ru.md.base_domain.user.model.User
 import ru.md.msc.domain.user.model.UserAward
 
 fun User.toUserEntity(create: Boolean = false) = UserEntity(

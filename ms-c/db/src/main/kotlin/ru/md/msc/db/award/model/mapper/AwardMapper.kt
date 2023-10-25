@@ -2,12 +2,12 @@ package ru.md.msc.db.award.model.mapper
 
 import ru.md.base_db.mapper.toBaseImage
 import ru.md.msc.db.award.model.AwardEntity
-import ru.md.msc.db.dept.model.mappers.toDept
-import ru.md.msc.db.dept.model.mappers.toDeptEntity
-import ru.md.msc.db.dept.model.mappers.toDeptLazy
+import ru.md.base_db.dept.model.mappers.toDept
+import ru.md.base_db.dept.model.mappers.toDeptEntity
+import ru.md.base_db.dept.model.mappers.toDeptLazy
 import ru.md.msc.db.user.model.mappers.toUserLazy
 import ru.md.msc.domain.award.model.Award
-import ru.md.msc.domain.dept.model.Dept
+import ru.md.base_domain.dept.model.Dept
 
 fun AwardEntity.toAward() = Award(
 	id = id ?: 0,

@@ -2,7 +2,7 @@ package ru.md.msc.db.user.model.converter
 
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter
-import ru.md.msc.domain.user.model.RoleUser
+import ru.md.base_domain.user.model.RoleUser
 
 @Converter(autoApply = true)
 class RoleConverter : AttributeConverter<RoleUser, String> {

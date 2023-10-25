@@ -1,9 +1,9 @@
 package ru.md.msc.rest.user.model.response
 
 import ru.md.base_rest.model.response.BaseImageResponse
-import ru.md.msc.domain.dept.model.Dept
-import ru.md.msc.domain.user.model.Gender
-import ru.md.msc.domain.user.model.RoleUser
+import ru.md.base_domain.dept.model.Dept
+import ru.md.base_domain.user.model.Gender
+import ru.md.base_domain.user.model.RoleUser
 import ru.md.msc.rest.award.model.response.ActivityResponse
 import ru.md.msc.rest.award.model.response.AwardResponse
 
@@ -25,4 +25,4 @@ data class UserAwardResponse(
 	val activities: List<ActivityResponse> = emptyList(),
 	val awards: List<AwardResponse> = emptyList(),
 
-)
+	)

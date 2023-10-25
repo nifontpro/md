@@ -1,7 +1,7 @@
 package ru.md.msc.db.award.model.mapper
 
 import ru.md.msc.db.award.model.ActivityEntity
-import ru.md.msc.db.dept.model.mappers.toDept
+import ru.md.base_db.dept.model.mappers.toDept
 import ru.md.msc.db.user.model.mappers.toUser
 import ru.md.msc.db.user.model.mappers.toUserEntity
 import ru.md.msc.db.user.model.mappers.toUserLazy

@@ -1,6 +1,8 @@
 package ru.md.msc.domain.user.biz.proc
 
 import ru.md.base_domain.biz.proc.IBaseCommand
+import ru.md.base_domain.user.model.RoleUser
+import ru.md.base_domain.user.model.User
 import ru.md.msc.domain.award.model.ActionType
 import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.msc.domain.user.model.*

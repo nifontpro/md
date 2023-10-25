@@ -7,7 +7,7 @@ import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
 import ru.md.cor.rootChain
 import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
-import ru.md.msc.domain.base.validate.validateUserId
+import ru.md.base_domain.biz.validate.validateUserId
 import ru.md.msc.domain.base.workers.msg.sendMessage
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.msg.biz.validate.validateDeleteMessage

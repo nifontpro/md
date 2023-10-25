@@ -7,11 +7,11 @@ import ru.md.base_domain.biz.helper.otherError
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.dept.model.Dept
+import ru.md.base_domain.dept.model.Dept
 import ru.md.msc.domain.user.biz.proc.*
 import ru.md.msc.domain.user.biz.validate.*
-import ru.md.msc.domain.user.model.RoleUser
-import ru.md.msc.domain.user.model.User
+import ru.md.base_domain.user.model.RoleUser
+import ru.md.base_domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.domain.user.model.excel.AddUserReport
 import java.io.FileInputStream

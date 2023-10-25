@@ -1,8 +1,8 @@
 package ru.md.msc.db.user.model.mappers
 
 import ru.md.msc.db.user.model.IUser
-import ru.md.msc.domain.dept.model.Dept
-import ru.md.msc.domain.user.model.User
+import ru.md.base_domain.dept.model.Dept
+import ru.md.base_domain.user.model.User
 
 fun IUser.toUser() = User(
 	id = getUserId(),

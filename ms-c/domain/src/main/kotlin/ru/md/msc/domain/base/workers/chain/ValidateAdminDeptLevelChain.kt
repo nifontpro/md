@@ -4,8 +4,8 @@ import ru.md.cor.ICorChainDsl
 import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptLevel
-import ru.md.msc.domain.base.validate.validateAdminRole
-import ru.md.msc.domain.base.validate.validateDeptId
+import ru.md.base_domain.biz.validate.validateAdminRole
+import ru.md.base_domain.biz.validate.validateDeptId
 
 /**
  * Проверка возможности доступа Администратора к отделу

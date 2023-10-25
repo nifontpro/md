@@ -5,7 +5,7 @@ import ru.md.cor.chain
 import ru.md.cor.worker
 import ru.md.msc.domain.base.workers.findModifyUserAndGetRolesAndDeptId
 import ru.md.msc.domain.user.biz.proc.UserContext
-import ru.md.msc.domain.user.model.RoleUser
+import ru.md.base_domain.user.model.RoleUser
 
 /**
  * Проверка доступа к обновлению собственного профиля Владельца, а также

@@ -1,7 +1,7 @@
 package ru.md.msc.rest.user.mappers
 
 import ru.md.base_rest.model.mapper.toBaseImageResponse
-import ru.md.msc.domain.user.model.User
+import ru.md.base_domain.user.model.User
 import ru.md.msc.domain.user.model.UserAward
 import ru.md.msc.rest.award.mappers.toActivityResponse
 import ru.md.msc.rest.award.mappers.toAwardResponse

@@ -1,7 +1,7 @@
 package ru.md.msc.rest.user.model.request
 
-import ru.md.msc.domain.user.model.Gender
-import ru.md.msc.domain.user.model.RoleUser
+import ru.md.base_domain.user.model.Gender
+import ru.md.base_domain.user.model.RoleUser
 
 data class CreateUserRequest(
 	val authId: Long = 0,

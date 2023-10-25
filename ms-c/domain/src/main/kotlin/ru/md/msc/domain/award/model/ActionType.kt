@@ -1,8 +1,8 @@
 package ru.md.msc.domain.award.model
 
 import ru.md.msc.domain.base.Config.WEB_APP_URL
-import ru.md.msc.domain.user.model.User
-import ru.md.msc.domain.user.model.getFirstAndLastName
+import ru.md.base_domain.user.model.User
+import ru.md.base_domain.user.model.getFirstAndLastName
 
 enum class ActionType(val code: String, val message: String) {
 	NOMINEE("P", "Номинация сотрудника на награду"),

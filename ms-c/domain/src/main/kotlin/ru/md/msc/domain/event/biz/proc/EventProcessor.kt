@@ -11,8 +11,8 @@ import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
 import ru.md.msc.domain.base.validate.auth.validateAuthUserTopLevelForView
-import ru.md.msc.domain.base.validate.validateDeptId
-import ru.md.msc.domain.base.validate.validateUserId
+import ru.md.base_domain.biz.validate.validateDeptId
+import ru.md.base_domain.biz.validate.validateUserId
 import ru.md.msc.domain.base.workers.chain.validateSameAndAdminModifyUser
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.event.biz.validate.validateEventId

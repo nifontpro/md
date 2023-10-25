@@ -1,7 +1,7 @@
 package ru.md.msc.rest.dept.model.response
 
 import ru.md.base_rest.model.response.BaseImageResponse
-import ru.md.msc.domain.dept.model.DeptType
+import ru.md.base_domain.dept.model.DeptType
 
 data class DeptResponse(
 	val id: Long = 0,

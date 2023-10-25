@@ -6,8 +6,8 @@ import org.hibernate.annotations.FetchMode
 import org.hibernate.annotations.Formula
 import org.hibernate.annotations.WhereJoinTable
 import ru.md.msc.db.award.model.image.AwardImageEntity
-import ru.md.msc.db.dept.model.DeptEntity
-import ru.md.msc.db.user.model.UserEntity
+import ru.md.base_db.dept.model.DeptEntity
+import ru.md.base_db.user.model.UserEntity
 import ru.md.msc.domain.award.model.AwardState
 import ru.md.msc.domain.award.model.AwardType
 import java.time.LocalDateTime

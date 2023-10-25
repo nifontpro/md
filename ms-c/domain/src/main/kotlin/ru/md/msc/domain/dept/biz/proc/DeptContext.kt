@@ -2,7 +2,7 @@ package ru.md.msc.domain.dept.biz.proc
 
 import ru.md.base_domain.biz.proc.IBaseCommand
 import ru.md.msc.domain.base.biz.BaseClientContext
-import ru.md.msc.domain.dept.model.Dept
+import ru.md.base_domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
 
 class DeptContext : BaseClientContext() {

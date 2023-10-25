@@ -6,7 +6,7 @@ import ru.md.msc.domain.award.biz.proc.AwardCommand
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.model.AwardDetails
-import ru.md.msc.domain.dept.model.Dept
+import ru.md.base_domain.dept.model.Dept
 import ru.md.msc.rest.award.model.request.*
 
 fun AwardContext.fromTransport(request: CreateAwardRequest) {

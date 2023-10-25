@@ -14,7 +14,7 @@ import ru.md.msc.db.user.repo.RoleRepository
 import ru.md.msc.db.user.repo.UserRepository
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.user.biz.validate.isValidEmail
-import ru.md.msc.domain.user.model.RoleUser
+import ru.md.base_domain.user.model.RoleUser
 import ru.md.msc.domain.user.service.UserService
 
 @SpringBootTest(classes = [TestBeans::class])

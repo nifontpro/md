@@ -7,10 +7,11 @@ import org.hibernate.annotations.Where
 import org.hibernate.annotations.WhereJoinTable
 import ru.md.msc.db.award.model.ActivityEntity
 import ru.md.msc.db.award.model.AwardEntity
-import ru.md.msc.db.dept.model.DeptEntity
-import ru.md.msc.db.user.model.image.UserImageEntity
-import ru.md.msc.db.user.model.role.RoleEntity
-import ru.md.msc.domain.user.model.Gender
+import ru.md.base_db.dept.model.DeptEntity
+import ru.md.base_db.user.model.UserEntity
+import ru.md.base_db.user.model.UserImageEntity
+import ru.md.base_db.user.model.RoleEntity
+import ru.md.base_domain.user.model.Gender
 import java.io.Serializable
 import java.util.*
 
@@ -61,10 +62,10 @@ class UserAwardEntity(
 //	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)
 //	val details: UserDetailsEntity? = null,
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
-	@OrderBy("roleUser ASC")
-//	@Fetch(FetchMode.SUBSELECT)
-	var roles: MutableList<RoleEntity> = mutableListOf(),
+//	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+//	@OrderBy("roleUser ASC")
+////	@Fetch(FetchMode.SUBSELECT)
+//	var roles: MutableList<RoleEntity> = mutableListOf(),
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
 	@JoinColumn(name = "user_id")

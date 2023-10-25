@@ -1,7 +1,7 @@
 package ru.md.msc.db.award.model
 
 import jakarta.persistence.*
-import ru.md.msc.db.user.model.UserEntity
+import ru.md.base_db.user.model.UserEntity
 import ru.md.msc.domain.award.model.ActionType
 import java.time.LocalDateTime
 import java.util.*

@@ -1,7 +1,7 @@
 package ru.md.msc.db.medal.model
 
 import jakarta.persistence.*
-import ru.md.msc.db.dept.model.DeptEntity
+import ru.md.base_db.dept.model.DeptEntity
 import java.util.*
 
 @NamedEntityGraph(

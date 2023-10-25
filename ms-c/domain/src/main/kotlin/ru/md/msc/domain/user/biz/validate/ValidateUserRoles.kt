@@ -5,7 +5,7 @@ import ru.md.cor.worker
 import ru.md.base_domain.biz.helper.errorValidation
 import ru.md.base_domain.biz.helper.fail
 import ru.md.msc.domain.user.biz.proc.UserContext
-import ru.md.msc.domain.user.model.RoleUser
+import ru.md.base_domain.user.model.RoleUser
 
 fun ICorChainDsl<UserContext>.validateCreateUserRoles(title: String) = worker {
 	this.title = title

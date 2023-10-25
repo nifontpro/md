@@ -1,6 +1,6 @@
 package ru.md.msc.domain.medal.model
 
-import ru.md.msc.domain.dept.model.Dept
+import ru.md.base_domain.dept.model.Dept
 
 data class Medal(
 	val id: Long = 0,

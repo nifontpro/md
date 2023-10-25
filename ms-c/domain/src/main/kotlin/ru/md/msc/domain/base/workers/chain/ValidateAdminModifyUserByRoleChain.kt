@@ -5,7 +5,7 @@ import ru.md.cor.chain
 import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptDownLevel
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptLevel
-import ru.md.msc.domain.base.validate.validateAdminRole
+import ru.md.base_domain.biz.validate.validateAdminRole
 
 /**
  * Проверка доступа авторизованного пользователя с правами Администратора

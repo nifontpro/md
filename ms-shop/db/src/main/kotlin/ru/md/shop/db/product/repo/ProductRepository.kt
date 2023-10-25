@@ -1,5 +1,7 @@
 package ru.md.shop.db.product.repo
 
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
@@ -15,5 +17,7 @@ interface ProductRepository : JpaRepository<ProductEntity, Long> {
 
 	@Query("select p.deptId from ProductEntity p where p.id = :id")
 	fun findDeptId(id: Long): Long?
+
+	fun findByDeptId(deptId: Long, pageable: Pageable): Page<ProductEntity>
 
 }

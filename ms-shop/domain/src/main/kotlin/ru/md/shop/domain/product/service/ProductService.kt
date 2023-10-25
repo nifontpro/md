@@ -1,6 +1,9 @@
 package ru.md.shop.domain.product.service
 
 import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_domain.model.BaseQuery
+import ru.md.base_domain.model.PageResult
+import ru.md.shop.domain.product.model.Product
 import ru.md.shop.domain.product.model.ProductDetails
 
 interface ProductService {
@@ -12,4 +15,5 @@ interface ProductService {
 	fun addImage(productId: Long, baseImage: BaseImage): BaseImage
 	fun setMainImage(productId: Long): BaseImage?
 	fun deleteImage(productId: Long, imageId: Long): BaseImage
+	fun findByDeptId(deptId: Long, baseQuery: BaseQuery): PageResult<Product>
 }

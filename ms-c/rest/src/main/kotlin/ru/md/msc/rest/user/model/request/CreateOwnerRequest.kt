@@ -1,6 +1,6 @@
 package ru.md.msc.rest.user.model.request
 
-import ru.md.msc.domain.user.model.Gender
+import ru.md.base_domain.user.model.Gender
 
 data class CreateOwnerRequest(
 	val firstname: String = "",

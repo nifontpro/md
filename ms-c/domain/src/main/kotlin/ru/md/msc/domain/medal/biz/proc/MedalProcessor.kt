@@ -12,7 +12,7 @@ import ru.md.cor.worker
 import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
-import ru.md.msc.domain.base.validate.validateImageId
+import ru.md.base_domain.biz.validate.validateImageId
 import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateDeptIdAndAdminDeptLevelChain
 import ru.md.msc.domain.base.workers.image.addImageToS3

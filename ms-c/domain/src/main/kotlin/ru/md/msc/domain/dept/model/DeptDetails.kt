@@ -1,5 +1,6 @@
 package ru.md.msc.domain.dept.model
 
+import ru.md.base_domain.dept.model.Dept
 import java.time.LocalDateTime
 
 data class DeptDetails(

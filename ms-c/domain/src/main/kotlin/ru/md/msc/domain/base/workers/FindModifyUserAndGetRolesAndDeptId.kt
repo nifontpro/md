@@ -6,7 +6,7 @@ import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.msc.domain.user.biz.proc.getUserError
 import ru.md.msc.domain.user.biz.proc.userNotFoundError
-import ru.md.msc.domain.user.model.RoleUser
+import ru.md.base_domain.user.model.RoleUser
 
 fun <T : BaseClientContext> ICorChainDsl<T>.findModifyUserAndGetRolesAndDeptId(title: String) = worker {
 	this.title = title

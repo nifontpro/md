@@ -1,6 +1,6 @@
 package ru.md.msc.rest.medal.mappers
 
-import ru.md.msc.domain.dept.model.Dept
+import ru.md.base_domain.dept.model.Dept
 import ru.md.msc.domain.medal.biz.proc.MedalCommand
 import ru.md.msc.domain.medal.biz.proc.MedalContext
 import ru.md.msc.domain.medal.model.Medal

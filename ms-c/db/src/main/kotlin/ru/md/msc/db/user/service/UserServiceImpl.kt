@@ -9,18 +9,20 @@ import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
 import ru.md.msc.db.award.repo.ActivityRepository
 import ru.md.msc.db.dept.model.DeptDetailsEntity
-import ru.md.msc.db.dept.model.DeptEntity
+import ru.md.base_db.dept.model.DeptEntity
 import ru.md.msc.db.dept.repo.DeptDetailsRepository
 import ru.md.msc.db.dept.repo.DeptRepository
 import ru.md.msc.db.dept.service.DeptUtil
 import ru.md.msc.db.user.model.UserDetailsEntity
-import ru.md.msc.db.user.model.image.UserImageEntity
+import ru.md.base_db.user.model.UserImageEntity
 import ru.md.msc.db.user.model.mappers.*
-import ru.md.msc.db.user.model.role.RoleEntity
+import ru.md.base_db.user.model.RoleEntity
 import ru.md.msc.db.user.repo.*
 import ru.md.msc.domain.award.model.ActionType
 import ru.md.msc.domain.base.biz.ImageNotFoundException
-import ru.md.msc.domain.dept.model.DeptType
+import ru.md.base_domain.dept.model.DeptType
+import ru.md.base_domain.user.model.RoleUser
+import ru.md.base_domain.user.model.User
 import ru.md.msc.domain.user.biz.proc.UserNotFoundException
 import ru.md.msc.domain.user.model.*
 import ru.md.msc.domain.user.service.UserService
@@ -175,7 +177,6 @@ class UserServiceImpl(
 	override fun findBySubDepts(deptId: Long, baseQuery: BaseQuery): PageResult<User> {
 		val pageRequest = baseQuery.toPageRequest()
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
-		println("deptsIds: $deptsIds")
 		val res = userRepository.findByDeptIdInAndLastnameLikeIgnoreCase(
 			deptsIds = deptsIds,
 			lastname = baseQuery.filter.toSearch(),

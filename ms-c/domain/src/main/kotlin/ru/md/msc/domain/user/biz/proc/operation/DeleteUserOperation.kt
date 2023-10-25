@@ -5,7 +5,7 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.chain
 import ru.md.cor.worker
 import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
-import ru.md.msc.domain.base.validate.validateUserId
+import ru.md.base_domain.biz.validate.validateUserId
 import ru.md.msc.domain.base.workers.chain.validateSameOwnerAndAdminModifyUser
 import ru.md.msc.domain.base.workers.findModifyUserAndGetRolesAndDeptId
 import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3

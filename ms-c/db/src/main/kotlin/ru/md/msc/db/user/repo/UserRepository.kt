@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.user.model.IUser
-import ru.md.msc.db.user.model.UserEntity
+import ru.md.base_db.user.model.UserEntity
 import ru.md.msc.domain.user.model.GenderCount
 import java.time.LocalDateTime
 

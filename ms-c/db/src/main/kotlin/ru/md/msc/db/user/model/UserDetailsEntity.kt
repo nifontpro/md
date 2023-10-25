@@ -1,6 +1,7 @@
 package ru.md.msc.db.user.model
 
 import jakarta.persistence.*
+import ru.md.base_db.user.model.UserEntity
 import java.io.Serializable
 import java.time.LocalDateTime
 import java.util.*

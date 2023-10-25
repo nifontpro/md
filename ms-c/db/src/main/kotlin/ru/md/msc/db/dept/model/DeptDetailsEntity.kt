@@ -1,6 +1,7 @@
 package ru.md.msc.db.dept.model
 
 import jakarta.persistence.*
+import ru.md.base_db.dept.model.DeptEntity
 import java.time.LocalDateTime
 import java.util.*
 
