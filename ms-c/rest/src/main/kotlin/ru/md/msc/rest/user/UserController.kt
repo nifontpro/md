@@ -22,6 +22,7 @@ import ru.md.msc.rest.base.mappers.toTransportBaseImageResponse
 import ru.md.msc.rest.base.mappers.toTransportUnit
 import ru.md.msc.rest.user.mappers.*
 import ru.md.msc.rest.user.model.request.*
+import ru.md.msc.rest.user.model.response.UserAwardResponse
 import ru.md.msc.rest.user.model.response.UserDetailsDeptResponse
 import ru.md.msc.rest.user.model.response.UserDetailsResponse
 import ru.md.msc.rest.user.model.response.UserResponse
@@ -234,13 +235,13 @@ class UserController(
 	private suspend fun getWithActivity(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetUsersWithActivityRequest
-	): BaseResponse<List<UserResponse>> {
+	): BaseResponse<List<UserAwardResponse>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportUsersResponse() }
+			toTransport = { toTransportUsersAwardsResponse() }
 		)
 	}
 
@@ -248,13 +249,13 @@ class UserController(
 	private suspend fun getWithAwards(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetUsersWithAwardsRequest
-	): BaseResponse<List<UserResponse>> {
+	): BaseResponse<List<UserAwardResponse>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = userProcessor,
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportUsersResponse() }
+			toTransport = { toTransportUsersAwardsResponse() }
 		)
 	}
 

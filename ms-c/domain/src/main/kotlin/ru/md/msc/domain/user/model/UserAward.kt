@@ -1,10 +1,12 @@
 package ru.md.msc.domain.user.model
 
 import ru.md.base_domain.image.model.BaseImage
+import ru.md.msc.domain.award.model.Activity
+import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.dept.model.Dept
 import java.util.Collections.emptySet
 
-data class User(
+data class UserAward(
 	val id: Long = 0,
 	val dept: Dept? = null,
 	val firstname: String = "",
@@ -19,8 +21,6 @@ data class User(
 	val archive: Boolean = false,
 	val awardCount: Long = 0,
 	val scores: Long = 0,
+	val activities: List<Activity> = emptyList(),
+	val awards: List<Award> = emptyList(),
 )
-
-fun getFirstAndLastName(user: User) = "${user.firstname} ${user.lastname ?: ""}"
-fun getFullName(user: User) = "${user.firstname} ${user.patronymic ?: ""} ${user.lastname ?: ""}"
-fun getFIO(user: User) = "${user.lastname ?: "-"} ${user.firstname.first()}. ${user.patronymic?.first() ?: ""}"

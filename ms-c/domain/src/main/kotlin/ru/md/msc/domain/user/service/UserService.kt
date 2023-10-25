@@ -20,8 +20,8 @@ interface UserService {
 	fun findDeptIdByUserId(userId: Long): Long
 	fun findBySubDepts(deptId: Long, baseQuery: BaseQuery): PageResult<User>
 	fun getGenderCountByDept(deptId: Long, subdepts: Boolean): GenderCount
-	fun getUsersWithActivity(deptId: Long, baseQuery: BaseQuery): List<User>
-	fun getUsersWithAward(deptId: Long, baseQuery: BaseQuery): List<User>
+	fun getUsersWithActivity(deptId: Long, baseQuery: BaseQuery): List<UserAward>
+	fun getUsersWithAward(deptId: Long, baseQuery: BaseQuery): List<UserAward>
 	fun setMainImage(userId: Long): BaseImage?
 	fun updateAllUserImg()
 	fun getUsersWithAwardCount(deptId: Long, baseQuery: BaseQuery): PageResult<User>

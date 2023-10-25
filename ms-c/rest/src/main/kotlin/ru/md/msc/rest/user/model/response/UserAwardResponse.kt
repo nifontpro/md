@@ -4,8 +4,10 @@ import ru.md.base_rest.model.response.BaseImageResponse
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.user.model.Gender
 import ru.md.msc.domain.user.model.RoleUser
+import ru.md.msc.rest.award.model.response.ActivityResponse
+import ru.md.msc.rest.award.model.response.AwardResponse
 
-data class UserResponse(
+data class UserAwardResponse(
 	val id: Long = 0,
 	val dept: Dept? = null,
 	val firstname: String = "",
@@ -19,5 +21,8 @@ data class UserResponse(
 	val mainImg: String? = null,
 	val roles: Set<RoleUser> = emptySet(),
 	val images: List<BaseImageResponse> = emptyList(),
-	val archive: Boolean = false
+	val archive: Boolean = false,
+	val activities: List<ActivityResponse> = emptyList(),
+	val awards: List<AwardResponse> = emptyList(),
+
 )

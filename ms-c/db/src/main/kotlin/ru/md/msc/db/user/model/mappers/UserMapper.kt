@@ -2,13 +2,15 @@ package ru.md.msc.db.user.model.mappers
 
 import ru.md.base_db.mapper.toBaseImage
 import ru.md.msc.db.award.model.mapper.toActivityOnlyAward
-import ru.md.msc.db.award.model.mapper.toAwardOnlyImages
+import ru.md.msc.db.award.model.mapper.toAwardLazy
 import ru.md.msc.db.dept.model.mappers.toDept
 import ru.md.msc.db.dept.model.mappers.toDeptEntity
 import ru.md.msc.db.dept.model.mappers.toDeptLazy
+import ru.md.msc.db.user.model.UserAwardEntity
 import ru.md.msc.db.user.model.UserEntity
 import ru.md.msc.domain.dept.model.Dept
 import ru.md.msc.domain.user.model.User
+import ru.md.msc.domain.user.model.UserAward
 
 fun User.toUserEntity(create: Boolean = false) = UserEntity(
 	id = if (create) null else id,
@@ -78,7 +80,7 @@ fun UserEntity.toUser() = User(
 	images = images.map { it.toBaseImage() }
 )
 
-fun UserEntity.toUserActivity() = User(
+fun UserAwardEntity.toUserAward() = UserAward(
 	id = id ?: 0,
 	dept = dept?.toDeptLazy(),
 	authEmail = authEmail,
@@ -90,10 +92,10 @@ fun UserEntity.toUserActivity() = User(
 	mainImg = mainImg,
 	archive = archive,
 	images = images.map { it.toBaseImage() },
-	activities = activities.map { it.toActivityOnlyAward() }
+	awards = awards.map { it.toAwardLazy() }
 )
 
-fun UserEntity.toUserAward() = User(
+fun UserAwardEntity.toUserActivity() = UserAward(
 	id = id ?: 0,
 	dept = dept?.toDeptLazy(),
 	authEmail = authEmail,
@@ -105,5 +107,5 @@ fun UserEntity.toUserAward() = User(
 	mainImg = mainImg,
 	archive = archive,
 	images = images.map { it.toBaseImage() },
-	awards = awards.map { it.toAwardOnlyImages() }
+	activities = activities.map { it.toActivityOnlyAward() },
 )

@@ -5,7 +5,7 @@ import ru.md.base_rest.model.mapper.toBaseImageResponse
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.rest.award.model.response.AwardResponse
 import ru.md.msc.rest.dept.mappers.toDeptResponse
-import ru.md.msc.rest.user.mappers.toUserResponseWithAwardAndActivity
+import ru.md.msc.rest.user.mappers.toUserResponse
 
 fun Award.toAwardResponseWithUsers() = AwardResponse(
 	id = id,
@@ -18,7 +18,7 @@ fun Award.toAwardResponseWithUsers() = AwardResponse(
 	state = state,
 	dept = dept.toDeptResponse(),
 	images = images.map { it.toBaseImageResponse() },
-	users = users.map { it.toUserResponseWithAwardAndActivity() }
+	users = users.map { it.toUserResponse() }
 )
 
 fun Award.toAwardResponse() = AwardResponse(

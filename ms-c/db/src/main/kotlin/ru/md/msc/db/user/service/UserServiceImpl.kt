@@ -33,6 +33,7 @@ const val ROOT_DEPT_ID = 1L
 @Transactional
 class UserServiceImpl(
 	private val userRepository: UserRepository,
+	private val userAwardRepository: UserAwardRepository,
 	private val userDetailsRepository: UserDetailsRepository,
 	private val roleRepository: RoleRepository,
 	private val deptRepository: DeptRepository,
@@ -286,14 +287,14 @@ class UserServiceImpl(
 		return userRepository.genderCount(deptsIds = deptsIds)
 	}
 
-	override fun getUsersWithActivity(deptId: Long, baseQuery: BaseQuery): List<User> {
+	override fun getUsersWithActivity(deptId: Long, baseQuery: BaseQuery): List<UserAward> {
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
-		return userRepository.findByDeptIdIn(deptsIds = deptsIds).map { it.toUserActivity() }
+		return userAwardRepository.findByDeptIdIn(deptsIds = deptsIds).map { it.toUserActivity() }
 	}
 
-	override fun getUsersWithAward(deptId: Long, baseQuery: BaseQuery): List<User> {
+	override fun getUsersWithAward(deptId: Long, baseQuery: BaseQuery): List<UserAward> {
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
-		return userRepository.findByDeptIdIn(deptsIds = deptsIds).map { it.toUserAward() }
+		return userAwardRepository.findByDeptIdIn(deptsIds = deptsIds).map { it.toUserAward() }
 	}
 
 	override fun getUsersWithAwardCount(deptId: Long, baseQuery: BaseQuery): PageResult<User> {

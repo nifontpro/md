@@ -9,6 +9,7 @@ import ru.md.msc.domain.user.model.excel.AddUserReport
 class UserContext : BaseClientContext() {
 	var userDetails: UserDetails = UserDetails()
 	var users: List<User> = emptyList()
+	var usersAwards: List<UserAward> = emptyList()
 	var notValidRole: RoleUser? = null
 	var deleteDeptId: Long? = null // При удалении собственного профиля владельца id его отдела
 

@@ -5,6 +5,7 @@ import ru.md.base_domain.rest.baseResponse
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.model.GenderCount
 import ru.md.msc.domain.user.model.UserSettings
+import ru.md.msc.rest.user.model.response.UserAwardResponse
 import ru.md.msc.rest.user.model.response.UserDetailsDeptResponse
 import ru.md.msc.rest.user.model.response.UserDetailsResponse
 import ru.md.msc.rest.user.model.response.UserResponse
@@ -23,7 +24,12 @@ fun UserContext.toTransportUserDetailsDept(): BaseResponse<UserDetailsDeptRespon
 }
 
 fun UserContext.toTransportUsersResponse(): BaseResponse<List<UserResponse>> {
-	return baseResponse(users.map { it.toUserResponseWithAwardAndActivity() })
+//	return baseResponse(users.map { it.toUserResponseWithAwardAndActivity() })
+	return baseResponse(users.map { it.toUserResponse() })
+}
+
+fun UserContext.toTransportUsersAwardsResponse(): BaseResponse<List<UserAwardResponse>> {
+	return baseResponse(usersAwards.map { it.toUserAwardResponse() })
 }
 
 fun UserContext.toTransportGenderCount(): BaseResponse<GenderCount> {

@@ -26,6 +26,12 @@ class UserTest(
 ) {
 
 	@Test
+	fun usersWithAwardTest() {
+		val users = userService.getUsersWithAward(deptId = 3, baseQuery = BaseQuery())
+		println(users)
+	}
+
+	@Test
 	fun formatEmailValid() {
 		val email = "sas22d@asd2.ru"
 		val isValid = isValidEmail(email)

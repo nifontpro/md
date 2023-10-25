@@ -12,7 +12,7 @@ fun ICorChainDsl<UserContext>.getUsersWithActivityByDept(title: String) = worker
 	on { state == ContextState.RUNNING }
 
 	handle {
-		users = userService.getUsersWithActivity(deptId = deptId, baseQuery = baseQuery)
+		usersAwards = userService.getUsersWithActivity(deptId = deptId, baseQuery = baseQuery)
 	}
 
 	except {
