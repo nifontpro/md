@@ -1,28 +1,27 @@
-package ru.md.msc.domain.user.biz.workers
+package ru.md.shop.domain.product.biz.workers
 
 import ru.md.base_domain.biz.proc.ContextState
-import ru.md.cor.ICorChainDsl
-import ru.md.cor.worker
 import ru.md.base_domain.errors.ImageNotFoundException
 import ru.md.base_domain.errors.deleteImageError
 import ru.md.base_domain.errors.imageNotFoundError
-import ru.md.msc.domain.user.biz.proc.UserContext
+import ru.md.cor.ICorChainDsl
+import ru.md.cor.worker
+import ru.md.shop.domain.product.biz.proc.ProductContext
 
-fun ICorChainDsl<UserContext>.deleteUserImageFromDb(title: String) = worker {
+fun ICorChainDsl<ProductContext>.deleteProductImageFromDb(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
 
 	handle {
-		baseImage = userService.deleteImage(userId = userId, imageId = imageId)
+		baseImage = productService.deleteImage(productId = productId, imageId = imageId)
 	}
 
 	except {
-		log.error(it.message)
+		log.info(it.message)
 		when (it) {
 			is ImageNotFoundException -> imageNotFoundError()
 			else -> deleteImageError()
 		}
 	}
-
 }

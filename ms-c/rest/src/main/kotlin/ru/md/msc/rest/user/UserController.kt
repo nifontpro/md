@@ -18,8 +18,8 @@ import ru.md.msc.domain.user.model.UserSettings
 import ru.md.msc.domain.user.model.excel.AddUserReport
 import ru.md.msc.rest.user.excel.excelProcess
 import ru.md.base_rest.image.baseImageProcess
-import ru.md.msc.rest.base.mappers.toTransportBaseImageResponse
-import ru.md.msc.rest.base.mappers.toTransportUnit
+import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
+import ru.md.base_rest.model.mapper.toTransportUnit
 import ru.md.msc.rest.user.mappers.*
 import ru.md.msc.rest.user.model.request.*
 import ru.md.msc.rest.user.model.response.UserAwardResponse

@@ -14,7 +14,7 @@ import ru.md.msc.db.medal.model.mapper.toMedalDetailsEntity
 import ru.md.msc.db.medal.repo.MedalDetailsRepository
 import ru.md.msc.db.medal.repo.MedalImageRepository
 import ru.md.msc.db.medal.repo.MedalRepository
-import ru.md.msc.domain.base.biz.ImageNotFoundException
+import ru.md.base_domain.errors.ImageNotFoundException
 import ru.md.msc.domain.medal.biz.proc.MedalNotFoundException
 import ru.md.msc.domain.medal.model.Medal
 import ru.md.msc.domain.medal.model.MedalDetails

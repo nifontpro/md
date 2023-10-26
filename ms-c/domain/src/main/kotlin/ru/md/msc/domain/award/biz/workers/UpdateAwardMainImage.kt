@@ -4,7 +4,7 @@ import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.proc.AwardContext
-import ru.md.msc.domain.base.biz.updateMainImageError
+import ru.md.base_domain.errors.updateMainImageError
 
 fun ICorChainDsl<AwardContext>.updateAwardMainImage(title: String) = worker {
 

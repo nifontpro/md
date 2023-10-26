@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service
 import ru.md.base_db.mapper.toBaseImage
 import ru.md.base_db.mapper.toPageRequest
 import ru.md.base_db.mapper.toPageResult
+import ru.md.base_domain.errors.ImageNotFoundException
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
@@ -77,10 +78,12 @@ class ProductServiceImpl(
 	override fun addImage(productId: Long, baseImage: BaseImage): BaseImage {
 		val productImageEntity = ProductImageEntity(
 			productId = productId,
+			originUrl = baseImage.originUrl,
+			originKey = baseImage.originKey,
 			normalUrl = baseImage.normalUrl,
 			normalKey = baseImage.normalKey,
-			miniUrl = baseImage.miniUrl ?: "",
-			miniKey = baseImage.miniKey ?: "",
+			miniUrl = baseImage.miniUrl,
+			miniKey = baseImage.miniKey,
 			type = baseImage.type,
 			createdAt = LocalDateTime.now()
 		)
@@ -92,14 +95,14 @@ class ProductServiceImpl(
 	override fun setMainImage(productId: Long): BaseImage? {
 		val productDetailsEntity = productDetailsRepository.findByIdOrNull(productId) ?: throw ProductNotFoundException()
 		val productEntity = productDetailsEntity.productEntity
-		val images = productDetailsEntity.images
 
-		var productImageEntity = images.firstOrNull() ?: run {
+		var productImageEntity = productDetailsEntity.images.firstOrNull() ?: run {
 			productEntity.mainImg = null
+			productEntity.normImg = null
 			return null
 		}
 
-		images.forEach {
+		productDetailsEntity.images.forEach {
 			if (it.createdAt > productImageEntity.createdAt) {
 				productImageEntity = it
 			} else if (it.main) {
@@ -109,14 +112,14 @@ class ProductServiceImpl(
 
 		productImageEntity.main = true
 		productEntity.mainImg = productImageEntity.miniUrl
+		productEntity.normImg = productImageEntity.normalUrl
 		return productImageEntity.toBaseImage()
 	}
 
 	@Transactional
 	override fun deleteImage(productId: Long, imageId: Long): BaseImage {
 		val productImageEntity = productImageRepository.findByIdAndProductId(productId = productId, imageId = imageId) ?: run {
-//			throw ImageNotFoundException()
-			throw Exception()
+			throw ImageNotFoundException()
 		}
 		productImageRepository.delete(productImageEntity)
 		return productImageEntity.toBaseImage()

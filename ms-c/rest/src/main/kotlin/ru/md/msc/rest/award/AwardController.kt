@@ -20,8 +20,8 @@ import ru.md.msc.rest.award.model.response.ActivityResponse
 import ru.md.msc.rest.award.model.response.AwardDetailsResponse
 import ru.md.msc.rest.award.model.response.AwardResponse
 import ru.md.base_rest.image.baseImageProcess
-import ru.md.msc.rest.base.mappers.toTransportBaseImageResponse
-import ru.md.msc.rest.base.mappers.toTransportUnit
+import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
+import ru.md.base_rest.model.mapper.toTransportUnit
 
 @RestController
 @RequestMapping("award")

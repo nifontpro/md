@@ -1,12 +1,13 @@
 package ru.md.shop.domain.product.biz.proc
 
+import ru.md.base_domain.biz.proc.BaseMedalsContext
 import ru.md.base_domain.biz.proc.IBaseCommand
-import ru.md.shop.domain.base.biz.BaseShopContext
 import ru.md.shop.domain.product.model.Product
 import ru.md.shop.domain.product.model.ProductDetails
 import ru.md.shop.domain.product.service.ProductService
 
-class ProductContext : BaseShopContext() {
+class ProductContext : BaseMedalsContext() {
+	var productId: Long = 0
 	var product: Product = Product()
 	var productDetails: ProductDetails = ProductDetails()
 	var products: List<Product> = emptyList()

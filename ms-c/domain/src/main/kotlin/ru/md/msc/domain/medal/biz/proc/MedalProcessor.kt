@@ -13,11 +13,11 @@ import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptLevel
 import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
 import ru.md.base_domain.biz.validate.validateImageId
-import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
+import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateDeptIdAndAdminDeptLevelChain
-import ru.md.msc.domain.base.workers.image.addImageToS3
-import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
-import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
+import ru.md.base_domain.image.biz.workers.addImageToS3
+import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
+import ru.md.base_domain.image.biz.workers.deleteBaseImagesFromS3
 import ru.md.msc.domain.base.workers.image.getGalleryItemByClient
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.medal.biz.validate.validateMedalId

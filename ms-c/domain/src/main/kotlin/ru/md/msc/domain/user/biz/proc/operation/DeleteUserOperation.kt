@@ -8,7 +8,7 @@ import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
 import ru.md.base_domain.biz.validate.validateUserId
 import ru.md.msc.domain.base.workers.chain.validateSameOwnerAndAdminModifyUser
 import ru.md.msc.domain.base.workers.findModifyUserAndGetRolesAndDeptId
-import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
+import ru.md.base_domain.image.biz.workers.deleteBaseImagesFromS3
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.workers.deleteUser

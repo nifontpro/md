@@ -2,13 +2,18 @@ package ru.md.shop.domain.product.biz.proc
 
 import org.springframework.stereotype.Component
 import ru.md.base_domain.biz.proc.IBaseProcessor
+import ru.md.base_domain.biz.validate.validateDeptId
+import ru.md.base_domain.biz.validate.validateImageId
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
-import ru.md.base_domain.client.MicroClient
+import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
+import ru.md.base_domain.image.biz.workers.addImageToS3
+import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
+import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.rootChain
-import ru.md.shop.domain.base.validate.validateDeptId
+import ru.md.cor.worker
 import ru.md.shop.domain.product.biz.validate.validateProductId
 import ru.md.shop.domain.product.biz.validate.validateProductName
 import ru.md.shop.domain.product.biz.validate.validateProductPrice
@@ -18,14 +23,15 @@ import ru.md.shop.domain.product.service.ProductService
 @Component
 class ProductProcessor(
 	private val productService: ProductService,
-	private val microClient: MicroClient,
+	private val baseS3Repository: BaseS3Repository,
+//	private val microClient: MicroClient,
 ) : IBaseProcessor<ProductContext> {
 
 	override suspend fun exec(ctx: ProductContext) = businessChain.exec(ctx.also {
 		it.productService = productService
+		it.baseS3Repository = baseS3Repository
 //		it.deptService = deptService
 //		it.medalService = medalService
-//		it.s3Repository = s3Repository
 //		it.microClient = microClient
 //		it.messageService = messageService
 	})
@@ -66,22 +72,24 @@ class ProductProcessor(
 			}
 
 			operation("Добавление изображения", ProductCommand.IMG_ADD) {
-//				worker("Получение id сущности") { medalId = fileData.entityId }
+				worker("Получение id сущности") { productId = fileData.entityId }
+				validateProductId("Проверяем productId")
 //				validateProductIdAndAccessToProductChain()
-//				prepareProductImagePrefixUrl("Получаем префикс изображения")
-//				addImageToS3("Сохраняем изображение в s3")
-//				addProductImageToDb("Сохраняем ссылки на изображение в БД")
-//				updateProductMainImage("Обновление основного изображения")
-//				deleteS3ImageOnFailingChain()
-//				getProductByIdDetails("Получаем медаль с детализацией")
+				prepareProductImagePrefixUrl("Получаем префикс изображения")
+				addImageToS3("Сохраняем изображение в s3")
+				addProductImageToDb("Сохраняем ссылки на изображение в БД")
+				updateProductMainImage("Обновление основного изображения")
+				deleteS3ImageOnFailingChain()
+				getProductDetailsById("Получаем приз")
 			}
 
 			operation("Удаление изображения", ProductCommand.IMG_DELETE) {
-//				validateImageId("Проверка imageId")
+				validateImageId("Проверка imageId")
+				validateProductId("Проверяем productId")
 //				validateProductIdAndAccessToProductChain()
-//				deleteProductImageFromDb("Удаляем изображение из БД")
-//				deleteBaseImageFromS3("Удаляем изображение из s3")
-//				updateProductMainImage("Обновление основного изображения")
+				deleteProductImageFromDb("Удаляем изображение из БД")
+				deleteBaseImageFromS3("Удаляем изображение из s3")
+				updateProductMainImage("Обновление основного изображения")
 			}
 
 			finishOperation()

@@ -1,14 +1,14 @@
-package ru.md.msc.domain.base.workers.image
+package ru.md.base_domain.image.biz.workers
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ru.md.base_domain.biz.proc.BaseMedalsContext
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.base.biz.BaseClientContext
 
-fun <T : BaseClientContext> ICorChainDsl<T>.deleteBaseImagesFromS3(title: String) = worker {
+fun <T : BaseMedalsContext> ICorChainDsl<T>.deleteBaseImagesFromS3(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
 	handle {

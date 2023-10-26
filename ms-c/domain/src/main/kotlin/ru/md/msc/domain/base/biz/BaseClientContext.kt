@@ -9,7 +9,6 @@ import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.email.EmailService
 import ru.md.msc.domain.msg.model.UserMsg
 import ru.md.msc.domain.msg.service.MessageService
-import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.msc.domain.user.service.UserService
 
 abstract class BaseClientContext(
@@ -28,9 +27,8 @@ abstract class BaseClientContext(
 
 	lateinit var userService: UserService
 	lateinit var deptService: DeptService
-	lateinit var baseS3Repository: BaseS3Repository
 	lateinit var messageService: MessageService
 	lateinit var emailService: EmailService
 
-	val log: Logger = LoggerFactory.getLogger(BaseClientContext::class.java)
+	override val log: Logger = LoggerFactory.getLogger(BaseClientContext::class.java)
 }

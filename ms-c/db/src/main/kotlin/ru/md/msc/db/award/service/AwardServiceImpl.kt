@@ -25,7 +25,7 @@ import ru.md.msc.domain.award.biz.proc.AlreadyActionException
 import ru.md.msc.domain.award.biz.proc.AwardNotFoundException
 import ru.md.msc.domain.award.model.*
 import ru.md.msc.domain.award.service.AwardService
-import ru.md.msc.domain.base.biz.ImageNotFoundException
+import ru.md.base_domain.errors.ImageNotFoundException
 import java.time.LocalDateTime
 
 @Service

@@ -3,7 +3,7 @@ package ru.md.msc.domain.user.biz.workers
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.base.biz.addImageError
+import ru.md.base_domain.errors.addImageError
 import ru.md.msc.domain.user.biz.proc.UserContext
 
 fun ICorChainDsl<UserContext>.addUserImageToDb(title: String) = worker {

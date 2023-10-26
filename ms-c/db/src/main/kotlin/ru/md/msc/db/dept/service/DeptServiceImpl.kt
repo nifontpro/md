@@ -15,7 +15,7 @@ import ru.md.base_db.dept.model.mappers.toDeptLazy
 import ru.md.msc.db.dept.repo.DeptDetailsRepository
 import ru.md.msc.db.dept.repo.DeptImageRepository
 import ru.md.msc.db.dept.repo.DeptRepository
-import ru.md.msc.domain.base.biz.ImageNotFoundException
+import ru.md.base_domain.errors.ImageNotFoundException
 import ru.md.msc.domain.dept.biz.proc.DeptNotFoundException
 import ru.md.msc.domain.dept.biz.proc.TopLevelDeptNotFoundException
 import ru.md.base_domain.dept.model.Dept

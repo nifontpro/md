@@ -12,7 +12,7 @@ import ru.md.msc.domain.medal.biz.proc.MedalCommand
 import ru.md.msc.domain.medal.biz.proc.MedalContext
 import ru.md.msc.domain.medal.biz.proc.MedalProcessor
 import ru.md.base_rest.image.baseImageProcess
-import ru.md.msc.rest.base.mappers.toTransportBaseImageResponse
+import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
 import ru.md.msc.rest.medal.mappers.fromTransport
 import ru.md.msc.rest.medal.mappers.toTransportMedalDetails
 import ru.md.msc.rest.medal.model.request.*

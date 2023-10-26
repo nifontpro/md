@@ -3,9 +3,9 @@ package ru.md.msc.domain.medal.biz.workers
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.base.biz.ImageNotFoundException
-import ru.md.msc.domain.base.biz.deleteImageError
-import ru.md.msc.domain.base.biz.imageNotFoundError
+import ru.md.base_domain.errors.ImageNotFoundException
+import ru.md.base_domain.errors.deleteImageError
+import ru.md.base_domain.errors.imageNotFoundError
 import ru.md.msc.domain.medal.biz.proc.MedalContext
 
 fun ICorChainDsl<MedalContext>.deleteMedalImageFromDb(title: String) = worker {

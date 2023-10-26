@@ -26,13 +26,13 @@ import ru.md.base_domain.biz.validate.validateAdminRole
 import ru.md.base_domain.biz.validate.validateDeptId
 import ru.md.base_domain.biz.validate.validateImageId
 import ru.md.base_domain.biz.validate.validateUserId
-import ru.md.msc.domain.base.workers.chain.deleteS3ImageOnFailingChain
+import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateDeptIdAndAdminDeptLevelChain
 import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
 import ru.md.msc.domain.base.workers.getRootDeptId
-import ru.md.msc.domain.base.workers.image.addImageToS3
-import ru.md.msc.domain.base.workers.image.deleteBaseImageFromS3
-import ru.md.msc.domain.base.workers.image.deleteBaseImagesFromS3
+import ru.md.base_domain.image.biz.workers.addImageToS3
+import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
+import ru.md.base_domain.image.biz.workers.deleteBaseImagesFromS3
 import ru.md.msc.domain.base.workers.image.getGalleryItemByClient
 import ru.md.msc.domain.base.workers.msg.sendMessage
 import ru.md.msc.domain.base.workers.msg.sendMessageToEmail

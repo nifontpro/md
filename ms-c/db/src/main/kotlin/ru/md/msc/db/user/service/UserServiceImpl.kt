@@ -19,7 +19,7 @@ import ru.md.msc.db.user.model.mappers.*
 import ru.md.base_db.user.model.RoleEntity
 import ru.md.msc.db.user.repo.*
 import ru.md.msc.domain.award.model.ActionType
-import ru.md.msc.domain.base.biz.ImageNotFoundException
+import ru.md.base_domain.errors.ImageNotFoundException
 import ru.md.base_domain.dept.model.DeptType
 import ru.md.base_domain.user.model.RoleUser
 import ru.md.base_domain.user.model.User
@@ -254,6 +254,7 @@ class UserServiceImpl(
 		val userEntity = userRepository.findByIdOrNull(userId) ?: throw UserNotFoundException()
 		val images = userEntity.images
 		var userImageEntity = images.firstOrNull() ?: run {
+			// +
 			userEntity.mainImg = null
 			return null
 		}
@@ -266,6 +267,7 @@ class UserServiceImpl(
 			}
 		}
 		userEntity.mainImg = userImageEntity.miniUrl
+		// +
 		userImageEntity.main = true
 		return userImageEntity.toBaseImage()
 	}

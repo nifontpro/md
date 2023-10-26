@@ -1,7 +1,10 @@
 package ru.md.base_domain.biz.proc
 
 import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.base_domain.user.model.User
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 abstract class BaseMedalsContext(
 	var authUser: User = User(),
@@ -26,7 +29,7 @@ abstract class BaseMedalsContext(
 
 //	lateinit var userService: UserService
 //	lateinit var deptService: DeptService
-//	lateinit var s3Repository: S3Repository
+	lateinit var baseS3Repository: BaseS3Repository
 
-
+	open val log: Logger = LoggerFactory.getLogger(BaseMedalsContext::class.java)
 }

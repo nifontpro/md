@@ -6,7 +6,7 @@ import ru.md.base_domain.gallery.request.GetItemByIdRequest
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.BaseClientContext
-import ru.md.msc.domain.base.biz.getGalleryItemMsError
+import ru.md.base_domain.errors.getGalleryItemMsError
 
 fun <T : BaseClientContext> ICorChainDsl<T>.getGalleryItemByClient(title: String) = worker {
 

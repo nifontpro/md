@@ -1,14 +1,14 @@
-package ru.md.msc.domain.base.workers.image
+package ru.md.base_domain.image.biz.workers
 
+import ru.md.base_domain.biz.proc.BaseMedalsContext
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.image.model.ImageType
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.base.biz.BaseClientContext
-import ru.md.msc.domain.base.biz.s3Error
+import ru.md.base_domain.errors.s3Error
 
-fun <T : BaseClientContext> ICorChainDsl<T>.addImageToS3(title: String) = worker {
+fun <T : BaseMedalsContext> ICorChainDsl<T>.addImageToS3(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }

@@ -12,8 +12,8 @@ import ru.md.msc.domain.dept.biz.proc.DeptCommand
 import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.domain.dept.biz.proc.DeptProcessor
 import ru.md.base_rest.image.baseImageProcess
-import ru.md.msc.rest.base.mappers.toTransportBaseImageResponse
-import ru.md.msc.rest.base.mappers.toTransportUnit
+import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
+import ru.md.base_rest.model.mapper.toTransportUnit
 import ru.md.msc.rest.dept.mappers.fromTransport
 import ru.md.msc.rest.dept.mappers.toTransportDeptDetails
 import ru.md.msc.rest.dept.mappers.toTransportDeptResponse

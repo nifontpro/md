@@ -1,23 +1,27 @@
 package ru.md.shop.rest.product
 
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.rest.BaseResponse
 import ru.md.base_rest.authProcess
+import ru.md.base_rest.image.baseImageProcess
+import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
 import ru.md.base_rest.model.request.AUTH
+import ru.md.base_rest.model.response.BaseImageResponse
+import ru.md.base_rest.toLongOr0
 import ru.md.base_rest.utils.JwtUtils
+import ru.md.shop.domain.product.biz.proc.ProductCommand
+import ru.md.shop.domain.product.biz.proc.ProductContext
 import ru.md.shop.domain.product.biz.proc.ProductProcessor
 import ru.md.shop.domain.product.model.Product
 import ru.md.shop.rest.product.mappers.fromTransport
 import ru.md.shop.rest.product.mappers.toTransportProductDetails
 import ru.md.shop.rest.product.mappers.toTransportProducts
-import ru.md.shop.rest.product.model.request.CreateProductRequest
-import ru.md.shop.rest.product.model.request.GetProductByDeptRequest
-import ru.md.shop.rest.product.model.request.GetProductByIdRequest
-import ru.md.shop.rest.product.model.request.UpdateProductRequest
+import ru.md.shop.rest.product.model.request.*
 import ru.md.shop.rest.product.model.response.ProductDetailsResponse
 
 @RestController
-@RequestMapping("shop")
+@RequestMapping("product")
 class ProductController(
 	private val productProcessor: ProductProcessor,
 	private val jwtUtils: JwtUtils,
@@ -79,7 +83,7 @@ class ProductController(
 		)
 	}
 
-//
+	//
 //	@PostMapping("delete")
 //	private suspend fun update(
 //		@RequestBody request: DeleteMedalRequest,
@@ -94,51 +98,37 @@ class ProductController(
 //		)
 //	}
 //
-//	@PostMapping("img_add")
-//	suspend fun imageAdd(
-//		@RequestHeader(name = AUTH) bearerToken: String,
-//		@RequestPart("file") file: MultipartFile,
-//		@RequestPart("authId") authId: String,
-//		@RequestPart("medalId") medalId: String,
-//	): BaseResponse<BaseImageResponse> {
-//		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
-//		val context = MedalContext().apply { command = MedalCommand.IMG_ADD }
-//		return imageProcess(
-//			authData = authData,
-//			context = context,
-//			processor = medalProcessor,
-//			multipartFile = file,
-//			authId = authId.toLongOr0(),
-//			entityId = medalId.toLongOr0(),
-//		)
-//	}
-//
-//	@PostMapping("img_delete")
-//	private suspend fun imageDelete(
-//		@RequestHeader(name = AUTH) bearerToken: String,
-//		@RequestBody request: DeleteMedalImageRequest
-//	): BaseResponse<BaseImageResponse> {
-//		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-//		return authProcess(
-//			processor = medalProcessor,
-//			authRequest = baseRequest,
-//			fromTransport = { fromTransport(it) },
-//			toTransport = { toTransportBaseImageResponse() }
-//		)
-//	}
-//
-//	@PostMapping("img_gal")
-//	private suspend fun imageAddFromGallery(
-//		@RequestHeader(name = AUTH) bearerToken: String,
-//		@RequestBody request: AddMedalImageFromGalleryRequest
-//	): BaseResponse<BaseImageResponse> {
-//		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-//		return authProcess(
-//			processor = medalProcessor,
-//			authRequest = baseRequest,
-//			fromTransport = { fromTransport(it) },
-//			toTransport = { toTransportBaseImageResponse() }
-//		)
-//	}
+	@PostMapping("img_add")
+	suspend fun imageAdd(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestPart("file") file: MultipartFile,
+		@RequestPart("authId") authId: String,
+		@RequestPart("productId") productId: String,
+	): BaseResponse<BaseImageResponse> {
+		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
+		val context = ProductContext().apply { command = ProductCommand.IMG_ADD }
+		return baseImageProcess(
+			authData = authData,
+			context = context,
+			processor = productProcessor,
+			multipartFile = file,
+			authId = authId.toLongOr0(),
+			entityId = productId.toLongOr0(),
+		)
+	}
+
+	@PostMapping("img_delete")
+	private suspend fun imageDelete(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: DeleteProductImageRequest
+	): BaseResponse<BaseImageResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = productProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportBaseImageResponse() }
+		)
+	}
 
 }

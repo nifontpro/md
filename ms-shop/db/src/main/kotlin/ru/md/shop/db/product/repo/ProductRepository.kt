@@ -15,8 +15,8 @@ interface ProductRepository : JpaRepository<ProductEntity, Long> {
 	@Query("delete from ProductEntity p where p.id = :id")
 	override fun deleteById(id: Long)
 
-	@Query("select p.deptId from ProductEntity p where p.id = :id")
-	fun findDeptId(id: Long): Long?
+	@Query("select p.deptId from ProductEntity p where p.id = :productId")
+	fun findDeptId(productId: Long): Long?
 
 	fun findByDeptId(deptId: Long, pageable: Pageable): Page<ProductEntity>
 

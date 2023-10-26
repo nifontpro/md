@@ -33,6 +33,7 @@ dependencies {
 	implementation(project(":base:base_db"))
 	implementation(project(":base:base_domain"))
 	implementation(project(":base:base_client"))
+	implementation(project(":base:base_s3"))
 
 	implementation(project(":ms-shop:domain"))
 	implementation(project(":ms-shop:rest"))

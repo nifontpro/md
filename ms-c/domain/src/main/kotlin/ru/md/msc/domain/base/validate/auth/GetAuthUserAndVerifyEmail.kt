@@ -6,7 +6,7 @@ import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.BaseClientContext
-import ru.md.msc.domain.base.biz.notValidAuthIdError
+import ru.md.base_domain.errors.notValidAuthIdError
 import ru.md.msc.domain.user.biz.proc.getUserError
 
 fun <T : BaseClientContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: String) = worker {

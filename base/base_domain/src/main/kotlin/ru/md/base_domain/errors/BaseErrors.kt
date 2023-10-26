@@ -1,10 +1,10 @@
-package ru.md.msc.domain.base.biz
+package ru.md.base_domain.errors
 
 import ru.md.base_domain.biz.helper.*
+import ru.md.base_domain.biz.proc.BaseMedalsContext
 
 
-fun BaseClientContext.notValidAuthIdError() {
-	log.error("notValidAuthIdError: authId=$authId")
+fun BaseMedalsContext.notValidAuthIdError() {
 	fail(
 		errorUnauthorized(
 			role = "authId not valid",
@@ -13,7 +13,7 @@ fun BaseClientContext.notValidAuthIdError() {
 	)
 }
 
-fun BaseClientContext.imageNotFoundError() {
+fun BaseMedalsContext.imageNotFoundError() {
 	fail(
 		errorDb(
 			repository = "image",
@@ -24,7 +24,7 @@ fun BaseClientContext.imageNotFoundError() {
 	)
 }
 
-fun BaseClientContext.addImageError() {
+fun BaseMedalsContext.addImageError() {
 	fail(
 		errorDb(
 			repository = "image",
@@ -34,7 +34,7 @@ fun BaseClientContext.addImageError() {
 	)
 }
 
-fun BaseClientContext.deleteImageError() {
+fun BaseMedalsContext.deleteImageError() {
 	fail(
 		errorDb(
 			repository = "image",
@@ -44,7 +44,7 @@ fun BaseClientContext.deleteImageError() {
 	)
 }
 
-fun BaseClientContext.updateMainImageError() {
+fun BaseMedalsContext.updateMainImageError() {
 	fail(
 		errorDb(
 			repository = "image",
@@ -54,7 +54,7 @@ fun BaseClientContext.updateMainImageError() {
 	)
 }
 
-fun BaseClientContext.s3Error() {
+fun BaseMedalsContext.s3Error() {
 	fail(
 		errorDb(
 			repository = "s3",
@@ -64,7 +64,7 @@ fun BaseClientContext.s3Error() {
 	)
 }
 
-fun BaseClientContext.getGalleryItemMsError() {
+fun BaseMedalsContext.getGalleryItemMsError() {
 	fail(
 		otherError(
 			code = "ms-get gallery item",
