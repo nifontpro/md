@@ -13,7 +13,7 @@ interface UserService {
 	fun deleteById(userId: Long, deptId: Long?)
 	fun update(userDetails: UserDetails, isAuthUserHasAdminRole: Boolean): UserDetails
 	fun doesOwnerWithEmailExist(email: String): Boolean
-	fun findById(userId: Long): User?
+//	fun findById(userId: Long): User?
 	fun findByAuthEmailWithDept(authEmail: String): List<User>
 	fun findByIdDetails(userId: Long): UserDetails?
 	fun addImage(userId: Long, baseImage: BaseImage): BaseImage

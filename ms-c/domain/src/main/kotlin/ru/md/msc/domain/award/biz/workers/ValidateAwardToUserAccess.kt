@@ -6,7 +6,7 @@ import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.award.biz.proc.AwardContext
-import ru.md.msc.domain.dept.biz.proc.getDeptAuthIOError
+import ru.md.base_domain.dept.biz.errors.getDeptAuthIOError
 
 /**
  * Проверка доступности награждения сотрудника определенной наградой.
@@ -24,7 +24,7 @@ fun ICorChainDsl<AwardContext>.validateAwardToUserAccess(title: String) = worker
 		if (deptId == user.dept?.id) return@handle
 
 		val auth = try {
-			deptService.validateDeptChild(upId = deptId, downId = user.dept?.id ?: 0)
+			baseDeptService.validateDeptChild(upId = deptId, downId = user.dept?.id ?: 0)
 		} catch (e: Exception) {
 			getDeptAuthIOError()
 			return@handle

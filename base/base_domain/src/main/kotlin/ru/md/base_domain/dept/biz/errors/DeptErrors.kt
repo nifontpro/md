@@ -1,11 +1,11 @@
-package ru.md.msc.domain.dept.biz.proc
+package ru.md.base_domain.dept.biz.errors
 
 import ru.md.base_domain.biz.helper.errorDb
 import ru.md.base_domain.biz.helper.errorUnauthorized
 import ru.md.base_domain.biz.helper.fail
-import ru.md.msc.domain.base.biz.BaseClientContext
+import ru.md.base_domain.biz.proc.BaseMedalsContext
 
-fun BaseClientContext.deptNotFound() {
+fun BaseMedalsContext.deptNotFound() {
 	fail(
 		errorDb(
 			repository = "dept",
@@ -15,7 +15,7 @@ fun BaseClientContext.deptNotFound() {
 	)
 }
 
-fun BaseClientContext.rootDeptNotFound() {
+fun BaseMedalsContext.rootDeptNotFound() {
 	fail(
 		errorDb(
 			repository = "dept",
@@ -25,7 +25,7 @@ fun BaseClientContext.rootDeptNotFound() {
 	)
 }
 
-fun BaseClientContext.topLevelDeptNotFound() {
+fun BaseMedalsContext.topLevelDeptNotFound() {
 	fail(
 		errorDb(
 			repository = "dept",
@@ -35,7 +35,7 @@ fun BaseClientContext.topLevelDeptNotFound() {
 	)
 }
 
-fun BaseClientContext.getDeptError() {
+fun BaseMedalsContext.getDeptError() {
 	fail(
 		errorDb(
 			repository = "dept",
@@ -45,7 +45,7 @@ fun BaseClientContext.getDeptError() {
 	)
 }
 
-fun BaseClientContext.getDeptAuthIOError() {
+fun BaseMedalsContext.getDeptAuthIOError() {
 	fail(
 		errorDb(
 			repository = "dept",
@@ -55,7 +55,7 @@ fun BaseClientContext.getDeptAuthIOError() {
 	)
 }
 
-fun BaseClientContext.deptAuthError() {
+fun BaseMedalsContext.deptAuthError() {
 	fail(
 		errorUnauthorized(
 			role = "dept",

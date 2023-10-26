@@ -3,22 +3,22 @@ package ru.md.msc.db.dept.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import ru.md.base_db.dept.model.DeptImageEntity
+import ru.md.base_db.dept.model.mappers.toDeptLazy
+import ru.md.base_db.dept.repo.BaseDeptRepository
 import ru.md.base_db.mapper.toBaseImage
 import ru.md.base_db.mapper.toSort
+import ru.md.base_domain.dept.biz.errors.DeptNotFoundException
+import ru.md.base_domain.dept.biz.errors.TopLevelDeptNotFoundException
+import ru.md.base_domain.dept.model.Dept
+import ru.md.base_domain.errors.ImageNotFoundException
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.model.BaseOrder
-import ru.md.base_db.dept.model.DeptImageEntity
-import ru.md.base_db.dept.model.mappers.toDept
 import ru.md.msc.db.dept.model.mappers.toDeptDetails
 import ru.md.msc.db.dept.model.mappers.toDeptDetailsEntity
-import ru.md.base_db.dept.model.mappers.toDeptLazy
 import ru.md.msc.db.dept.repo.DeptDetailsRepository
 import ru.md.msc.db.dept.repo.DeptImageRepository
 import ru.md.msc.db.dept.repo.DeptRepository
-import ru.md.base_domain.errors.ImageNotFoundException
-import ru.md.msc.domain.dept.biz.proc.DeptNotFoundException
-import ru.md.msc.domain.dept.biz.proc.TopLevelDeptNotFoundException
-import ru.md.base_domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
 import ru.md.msc.domain.dept.service.DeptService
 import java.time.LocalDateTime
@@ -27,6 +27,7 @@ import java.time.LocalDateTime
 @Transactional
 class DeptServiceImpl(
 	private val deptRepository: DeptRepository,
+	private val baseDeptRepository: BaseDeptRepository,
 	private val deptDetailsRepository: DeptDetailsRepository,
 	private val deptImageRepository: DeptImageRepository,
 ) : DeptService {
@@ -54,45 +55,16 @@ class DeptServiceImpl(
 		return oldDeptDetailsEntity.toDeptDetails()
 	}
 
-	/**
-	 * Проверка, является ли отдел [downId] потомком [upId] в дереве отделов
-	 */
-	override fun validateDeptChild(upId: Long, downId: Long): Boolean {
-		return deptRepository.upTreeHasDeptId(downId = downId, upId = upId)
-	}
-
-	/**
-	 * Проверка, является ли сотрудник [userId] потомком отдела [upId] в дереве отделов
-	 */
-	override fun validateUserLevel(upId: Long, userId: Long): Boolean {
-		return deptRepository.checkUserChild(userId = userId, upId = upId)
-	}
-
-	/**
-	 * Получить ids всех элементов поддерева отделов, включая вершину
-	 */
-	override fun findSubTreeIds(deptId: Long): List<Long> {
-		return deptRepository.subTreeIds(deptId = deptId)
-	}
-
 	override fun findSubTreeDepts(deptId: Long, orders: List<BaseOrder>): List<Dept> {
-		val ids = deptRepository.subTreeIds(deptId = deptId)
+		val ids = baseDeptRepository.subTreeIds(deptId = deptId)
 		val depts = deptRepository.findByIdIn(ids = ids, sort = orders.toSort())
 		return depts.map { it.toDeptLazy() }
 	}
 
-	override fun findTopLevelDeptId(deptId: Long): Long {
-		return deptRepository.getTopLevelId(deptId = deptId) ?: throw TopLevelDeptNotFoundException()
-	}
-
-	override fun findTopLevelDept(deptId: Long): Dept {
-		val topDeptId = deptRepository.getTopLevelId(deptId = deptId) ?: throw TopLevelDeptNotFoundException()
-		return deptRepository.findByIdOrNull(topDeptId)?.toDept() ?: throw TopLevelDeptNotFoundException()
-	}
 
 	override fun getTopLevelTreeDepts(deptId: Long, orders: List<BaseOrder>): List<Dept> {
-		val topLevelId = findTopLevelDeptId(deptId = deptId)
-		val ids = deptRepository.subTreeIds(deptId = topLevelId)
+		val topLevelId = baseDeptRepository.getTopLevelId(deptId = deptId) ?: throw TopLevelDeptNotFoundException()
+		val ids = baseDeptRepository.subTreeIds(deptId = topLevelId)
 		val depts = deptRepository.findByIdIn(ids = ids, sort = orders.toSort())
 		return depts.map { it.toDeptLazy() }
 	}
@@ -115,13 +87,6 @@ class DeptServiceImpl(
 
 	override fun deleteById(deptId: Long) {
 		deptRepository.deleteById(deptId)
-	}
-
-	/**
-	 * Получение id отдела корневого Владельца
-	 */
-	override fun getRootId(deptId: Long): Long? {
-		return deptRepository.getOwnerRootId(deptId = deptId)
 	}
 
 	override fun addImage(deptId: Long, baseImage: BaseImage): BaseImage {

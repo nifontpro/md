@@ -3,8 +3,8 @@ package ru.md.msc.domain.base.workers.chain
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.chain
 import ru.md.msc.domain.base.biz.BaseClientContext
-import ru.md.msc.domain.base.validate.auth.validateAuthDeptDownLevel
-import ru.md.msc.domain.base.validate.auth.validateAuthDeptLevel
+import ru.md.base_domain.biz.validate.validateAuthDeptDownLevel
+import ru.md.base_domain.biz.validate.validateAuthDeptLevel
 import ru.md.base_domain.biz.validate.validateAdminRole
 
 /**

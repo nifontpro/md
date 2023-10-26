@@ -5,7 +5,7 @@ import ru.md.cor.worker
 import ru.md.base_domain.biz.helper.errorValidation
 import ru.md.base_domain.biz.helper.fail
 import ru.md.base_domain.biz.proc.ContextState
-import ru.md.msc.domain.user.biz.proc.getUserError
+import ru.md.base_domain.user.biz.errors.getUserError
 import ru.md.msc.domain.user.biz.proc.UserContext
 
 fun ICorChainDsl<UserContext>.validateOwnerByEmailExist(title: String) = worker {

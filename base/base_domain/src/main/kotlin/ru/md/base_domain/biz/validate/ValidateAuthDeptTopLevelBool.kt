@@ -1,17 +1,17 @@
-package ru.md.msc.domain.base.validate.auth.bool
+package ru.md.base_domain.biz.validate
 
+import ru.md.base_domain.biz.proc.BaseMedalsContext
 import ru.md.base_domain.biz.proc.ContextState
+import ru.md.base_domain.dept.biz.errors.getDeptAuthIOError
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.base.biz.BaseClientContext
-import ru.md.msc.domain.dept.biz.proc.getDeptAuthIOError
 
 /**
  * Проверка, имеет ли авторизованный пользователь доступ к верхнему доступному отделу.
  * Используется только для просмотра данных!
  * Возвращает isAuth
  */
-fun <T : BaseClientContext> ICorChainDsl<T>.validateAuthDeptTopLevelForViewBool(title: String) = worker {
+fun <T : BaseMedalsContext> ICorChainDsl<T>.validateAuthDeptTopLevelForViewBool(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
 
@@ -21,8 +21,8 @@ fun <T : BaseClientContext> ICorChainDsl<T>.validateAuthDeptTopLevelForViewBool(
 			isAuth = true
 			return@handle
 		}
-		val topLevelDeptId = deptService.findTopLevelDeptId(authUserDeptId)
-		isAuth = deptService.validateDeptChild(upId = topLevelDeptId, downId = deptId)
+		val topLevelDeptId = baseDeptService.findTopLevelDeptId(authUserDeptId)
+		isAuth = baseDeptService.validateDeptChild(upId = topLevelDeptId, downId = deptId)
 	}
 
 	except {

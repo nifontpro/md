@@ -17,13 +17,15 @@ import ru.md.msc.db.user.model.UserDetailsEntity
 import ru.md.base_db.user.model.UserImageEntity
 import ru.md.msc.db.user.model.mappers.*
 import ru.md.base_db.user.model.RoleEntity
+import ru.md.base_db.user.model.mappers.toUser
+import ru.md.base_db.user.model.mappers.toUserWithDeptOnly
 import ru.md.msc.db.user.repo.*
 import ru.md.msc.domain.award.model.ActionType
 import ru.md.base_domain.errors.ImageNotFoundException
 import ru.md.base_domain.dept.model.DeptType
 import ru.md.base_domain.user.model.RoleUser
 import ru.md.base_domain.user.model.User
-import ru.md.msc.domain.user.biz.proc.UserNotFoundException
+import ru.md.base_domain.user.biz.errors.UserNotFoundException
 import ru.md.msc.domain.user.model.*
 import ru.md.msc.domain.user.service.UserService
 import java.time.LocalDateTime
@@ -213,9 +215,9 @@ class UserServiceImpl(
 		return res.toPageResult { it.toUserWithDeptOnly() }
 	}
 
-	override fun findById(userId: Long): User? {
-		return userRepository.findByIdOrNull(userId)?.toUserOnlyRoles()
-	}
+//	override fun findById(userId: Long): User? {
+//		return userRepository.findByIdOrNull(userId)?.toUserOnlyRoles()
+//	}
 
 	override fun findByIdDetails(userId: Long): UserDetails? {
 		return userDetailsRepository.findByUserId(userId)?.toUserDetails()

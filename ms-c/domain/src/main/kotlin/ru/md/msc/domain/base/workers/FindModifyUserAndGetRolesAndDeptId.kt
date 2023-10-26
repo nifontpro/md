@@ -4,8 +4,8 @@ import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.base.biz.BaseClientContext
-import ru.md.msc.domain.user.biz.proc.getUserError
-import ru.md.msc.domain.user.biz.proc.userNotFoundError
+import ru.md.base_domain.user.biz.errors.getUserError
+import ru.md.base_domain.user.biz.errors.userNotFoundError
 import ru.md.base_domain.user.model.RoleUser
 
 fun <T : BaseClientContext> ICorChainDsl<T>.findModifyUserAndGetRolesAndDeptId(title: String) = worker {
@@ -13,7 +13,7 @@ fun <T : BaseClientContext> ICorChainDsl<T>.findModifyUserAndGetRolesAndDeptId(t
 	on { state == ContextState.RUNNING }
 	handle {
 
-		modifyUser = userService.findById(userId = userId) ?: run {
+		modifyUser = baseUserService.findById(userId = userId) ?: run {
 			userNotFoundError()
 			return@handle
 		}

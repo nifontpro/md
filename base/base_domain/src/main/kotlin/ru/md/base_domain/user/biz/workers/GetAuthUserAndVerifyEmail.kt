@@ -1,15 +1,15 @@
-package ru.md.msc.domain.base.validate.auth
+package ru.md.base_domain.user.biz.workers
 
 import ru.md.base_domain.biz.helper.errorUnauthorized
 import ru.md.base_domain.biz.helper.fail
+import ru.md.base_domain.biz.proc.BaseMedalsContext
 import ru.md.base_domain.biz.proc.ContextState
+import ru.md.base_domain.errors.getAuthUserError
+import ru.md.base_domain.errors.notValidAuthIdError
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.base.biz.BaseClientContext
-import ru.md.base_domain.errors.notValidAuthIdError
-import ru.md.msc.domain.user.biz.proc.getUserError
 
-fun <T : BaseClientContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: String) = worker {
+fun <T : BaseMedalsContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
 	handle {
@@ -19,14 +19,13 @@ fun <T : BaseClientContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: Str
 			return@handle
 		}
 
-		authUser = userService.findById(authId) ?: run {
+		authUser = baseUserService.findById(authId) ?: run {
 			notValidAuthIdError()
 			return@handle
 		}
 
 		log.info("authUser.authEmail ${authUser.authEmail}")
 		log.info("authEmail $authEmail")
-
 
 		if (authUser.authEmail != authEmail) {
 			fail(
@@ -40,6 +39,6 @@ fun <T : BaseClientContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: Str
 	}
 
 	except {
-		getUserError()
+		getAuthUserError()
 	}
 }

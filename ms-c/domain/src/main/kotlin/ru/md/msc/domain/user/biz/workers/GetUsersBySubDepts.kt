@@ -5,7 +5,7 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.base_domain.biz.helper.pageFun
 import ru.md.msc.domain.user.biz.proc.UserContext
-import ru.md.msc.domain.user.biz.proc.getUserError
+import ru.md.base_domain.user.biz.errors.getUserError
 
 fun ICorChainDsl<UserContext>.getUsersBySubDepts(title: String) = worker {
 

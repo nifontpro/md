@@ -2,11 +2,12 @@ package ru.md.shop.domain.product.biz.proc
 
 import org.springframework.stereotype.Component
 import ru.md.base_domain.biz.proc.IBaseProcessor
-import ru.md.base_domain.biz.validate.validateDeptId
-import ru.md.base_domain.biz.validate.validateImageId
+import ru.md.base_domain.dept.biz.validate.validateDeptId
+import ru.md.base_domain.image.biz.validate.validateImageId
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
+import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.base_domain.image.biz.workers.addImageToS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
@@ -23,17 +24,16 @@ import ru.md.shop.domain.product.service.ProductService
 @Component
 class ProductProcessor(
 	private val productService: ProductService,
+	private val baseDeptService: BaseDeptService,
 	private val baseS3Repository: BaseS3Repository,
 //	private val microClient: MicroClient,
 ) : IBaseProcessor<ProductContext> {
 
 	override suspend fun exec(ctx: ProductContext) = businessChain.exec(ctx.also {
 		it.productService = productService
+		it.baseDeptService = baseDeptService
 		it.baseS3Repository = baseS3Repository
-//		it.deptService = deptService
-//		it.medalService = medalService
 //		it.microClient = microClient
-//		it.messageService = messageService
 	})
 
 	companion object {

@@ -1,16 +1,11 @@
-package ru.md.msc.db.user.model.mappers
+package ru.md.base_db.user.model.mappers
 
-import ru.md.base_db.mapper.toBaseImage
-import ru.md.msc.db.award.model.mapper.toActivityOnlyAward
-import ru.md.msc.db.award.model.mapper.toAwardLazy
 import ru.md.base_db.dept.model.mappers.toDept
 import ru.md.base_db.dept.model.mappers.toDeptEntity
-import ru.md.base_db.dept.model.mappers.toDeptLazy
-import ru.md.msc.db.user.model.UserAwardEntity
+import ru.md.base_db.mapper.toBaseImage
 import ru.md.base_db.user.model.UserEntity
 import ru.md.base_domain.dept.model.Dept
 import ru.md.base_domain.user.model.User
-import ru.md.msc.domain.user.model.UserAward
 
 fun User.toUserEntity(create: Boolean = false) = UserEntity(
 	id = if (create) null else id,
@@ -78,34 +73,4 @@ fun UserEntity.toUser() = User(
 	archive = archive,
 	roles = roles.map { it.roleUser }.toSet(),
 	images = images.map { it.toBaseImage() }
-)
-
-fun UserAwardEntity.toUserAward() = UserAward(
-	id = id ?: 0,
-	dept = dept?.toDeptLazy(),
-	authEmail = authEmail,
-	firstname = firstname,
-	patronymic = patronymic,
-	lastname = lastname,
-	gender = gender,
-	post = post,
-	mainImg = mainImg,
-	archive = archive,
-	images = images.map { it.toBaseImage() },
-	awards = awards.map { it.toAwardLazy() }
-)
-
-fun UserAwardEntity.toUserActivity() = UserAward(
-	id = id ?: 0,
-	dept = dept?.toDeptLazy(),
-	authEmail = authEmail,
-	firstname = firstname,
-	patronymic = patronymic,
-	lastname = lastname,
-	gender = gender,
-	post = post,
-	mainImg = mainImg,
-	archive = archive,
-	images = images.map { it.toBaseImage() },
-	activities = activities.map { it.toActivityOnlyAward() },
 )

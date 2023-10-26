@@ -1,8 +1,8 @@
 package ru.md.msc.domain.user.biz.proc
 
-import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.base_domain.biz.helper.errorDb
 import ru.md.base_domain.biz.helper.fail
+import ru.md.msc.domain.base.biz.BaseClientContext
 
 fun userCreateErrorExt() = errorDb(
 	repository = "user",
@@ -28,30 +28,6 @@ fun BaseClientContext.userUpdateError() {
 	)
 }
 
-fun userNotFoundErrorExt() = errorDb(
-	repository = "user",
-	violationCode = "not found",
-	description = "Сотрудник не найден"
-)
-
-fun BaseClientContext.userNotFoundError() {
-	fail(
-		userNotFoundErrorExt()
-	)
-}
-
-fun BaseClientContext.getUserError() {
-	fail(
-		getUserErrorExt()
-	)
-}
-
-fun getUserErrorExt() = errorDb(
-	repository = "user",
-	violationCode = "get error",
-	description = "Ошибка получения профиля сотрудника"
-)
-
 fun UserContext.getUserCountError() {
 	fail(
 		errorDb(
@@ -61,5 +37,3 @@ fun UserContext.getUserCountError() {
 		)
 	)
 }
-
-class UserNotFoundException(message: String = "") : RuntimeException(message)

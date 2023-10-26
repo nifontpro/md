@@ -4,8 +4,8 @@ import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.user.biz.proc.UserContext
-import ru.md.msc.domain.user.biz.proc.getUserError
-import ru.md.msc.domain.user.biz.proc.userNotFoundError
+import ru.md.base_domain.user.biz.errors.getUserError
+import ru.md.base_domain.user.biz.errors.userNotFoundError
 
 fun ICorChainDsl<UserContext>.getUserDetailsById(title: String) = worker {
 

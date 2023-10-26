@@ -1,11 +1,11 @@
 package ru.md.msc.db.dept.service
 
 import org.springframework.stereotype.Service
-import ru.md.msc.db.dept.repo.DeptRepository
+import ru.md.base_db.dept.repo.BaseDeptRepository
 
 @Service
 class DeptUtil(
-	private val deptRepository: DeptRepository,
+	private val baseDeptRepository: BaseDeptRepository,
 ) {
 	/**
 	 * Получение списка отделов от текущей вершины дерева
@@ -16,10 +16,10 @@ class DeptUtil(
 	 */
 	fun getDepts(deptId: Long, subdepts: Boolean, nearSub: Boolean = false): List<Long> {
 		return if (subdepts) {
-			deptRepository.subTreeIds(deptId = deptId)
+			baseDeptRepository.subTreeIds(deptId = deptId)
 		} else {
 			if (nearSub) {
-				deptRepository.findChildIdsByParentId(parentId = deptId)
+				baseDeptRepository.findChildIdsByParentId(parentId = deptId)
 			} else {
 				listOf(deptId)
 			}
@@ -31,7 +31,7 @@ class DeptUtil(
 	 * deptId может быть в любом месте дерева
 	 */
 	fun getAllDeptIds(deptId: Long): List<Long> {
-		val rootId = deptRepository.getOwnerRootId(deptId = deptId) ?: return emptyList()
+		val rootId = baseDeptRepository.getOwnerRootId(deptId = deptId) ?: return emptyList()
 		return getDepts(deptId = rootId, subdepts = true)
 	}
 }

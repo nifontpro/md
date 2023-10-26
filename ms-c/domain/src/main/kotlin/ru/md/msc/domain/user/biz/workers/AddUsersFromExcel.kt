@@ -8,6 +8,9 @@ import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.base_domain.dept.model.Dept
+import ru.md.base_domain.user.biz.errors.UserNotFoundException
+import ru.md.base_domain.user.biz.errors.getUserErrorExt
+import ru.md.base_domain.user.biz.errors.userNotFoundErrorExt
 import ru.md.msc.domain.user.biz.proc.*
 import ru.md.msc.domain.user.biz.validate.*
 import ru.md.base_domain.user.model.RoleUser

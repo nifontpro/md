@@ -3,6 +3,15 @@ package ru.md.base_domain.errors
 import ru.md.base_domain.biz.helper.*
 import ru.md.base_domain.biz.proc.BaseMedalsContext
 
+fun BaseMedalsContext.getAuthUserError() {
+	fail(
+		errorDb(
+			repository = "user",
+			violationCode = "get auth",
+			description = "Ошибка получения авторизованного пользователя"
+		)
+	)
+}
 
 fun BaseMedalsContext.notValidAuthIdError() {
 	fail(

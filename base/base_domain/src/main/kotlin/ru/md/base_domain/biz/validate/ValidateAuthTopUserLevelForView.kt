@@ -1,26 +1,25 @@
-package ru.md.msc.domain.base.validate.auth
+package ru.md.base_domain.biz.validate
 
 import ru.md.base_domain.biz.helper.errorDb
 import ru.md.base_domain.biz.helper.errorUnauthorized
 import ru.md.base_domain.biz.helper.fail
+import ru.md.base_domain.biz.proc.BaseMedalsContext
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.base.biz.BaseClientContext
 
 /**
- * Проверка доступа авторизованного пользователя к сотруднику
+ * Проверка доступа авторизованного пользователя к сотруднику для просмотра данных
  */
-fun <T : BaseClientContext> ICorChainDsl<T>.validateAuthUserLevel(title: String) = worker {
+fun <T : BaseMedalsContext> ICorChainDsl<T>.validateAuthUserTopLevelForView(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
 	handle {
-
+		val authUserDeptId = authUser.dept?.id ?: throw Exception()
 		if (authUser.id == userId) return@handle
+		val topLevelDeptId = baseDeptService.findTopLevelDeptId(authUserDeptId)
 
-		val auth = deptService.validateUserLevel(upId = authUser.dept?.id ?: 0, userId = userId)
-
-		if (!auth) {
+		if (!baseDeptService.validateUserLevel(upId = topLevelDeptId, userId = userId)) {
 			fail(
 				errorUnauthorized(
 					role = "userId",

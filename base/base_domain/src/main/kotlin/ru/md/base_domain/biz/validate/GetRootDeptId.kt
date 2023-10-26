@@ -1,18 +1,18 @@
-package ru.md.msc.domain.base.workers
+package ru.md.base_domain.biz.validate
 
 import ru.md.base_domain.biz.helper.errorDb
 import ru.md.base_domain.biz.helper.fail
+import ru.md.base_domain.biz.proc.BaseMedalsContext
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.base.biz.BaseClientContext
 
-fun <T : BaseClientContext> ICorChainDsl<T>.getRootDeptId(title: String) = worker {
+fun <T : BaseMedalsContext> ICorChainDsl<T>.getRootDeptId(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
 
 	handle {
-		rootDeptId = deptService.getRootId(deptId) ?: run {
+		rootDeptId = baseDeptService.getRootId(deptId) ?: run {
 			fail(
 				errorDb(
 					repository = "dept",

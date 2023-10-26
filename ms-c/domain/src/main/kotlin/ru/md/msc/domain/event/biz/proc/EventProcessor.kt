@@ -7,12 +7,14 @@ import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
 import ru.md.cor.rootChain
 import ru.md.cor.worker
-import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
-import ru.md.msc.domain.base.validate.auth.validateAuthDeptLevel
-import ru.md.msc.domain.base.validate.auth.validateAuthDeptTopLevelForView
-import ru.md.msc.domain.base.validate.auth.validateAuthUserTopLevelForView
-import ru.md.base_domain.biz.validate.validateDeptId
-import ru.md.base_domain.biz.validate.validateUserId
+import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
+import ru.md.base_domain.biz.validate.validateAuthDeptLevel
+import ru.md.base_domain.biz.validate.validateAuthDeptTopLevelForView
+import ru.md.base_domain.biz.validate.validateAuthUserTopLevelForView
+import ru.md.base_domain.dept.biz.validate.validateDeptId
+import ru.md.base_domain.user.biz.validate.validateUserId
+import ru.md.base_domain.dept.service.BaseDeptService
+import ru.md.base_domain.user.service.BaseUserService
 import ru.md.msc.domain.base.workers.chain.validateSameAndAdminModifyUser
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.event.biz.validate.validateEventId
@@ -22,12 +24,16 @@ import ru.md.msc.domain.user.service.UserService
 
 @Component
 class EventProcessor(
+	private val baseDeptService: BaseDeptService,
+	private val baseUserService: BaseUserService,
 	private val userService: UserService,
 	private val deptService: DeptService,
 	private val eventService: EventService
 ) : IBaseProcessor<EventsContext> {
 
 	override suspend fun exec(ctx: EventsContext) = businessChain.exec(ctx.also {
+		it.baseDeptService = baseDeptService
+		it.baseUserService = baseUserService
 		it.userService = userService
 		it.deptService = deptService
 		it.eventService = eventService

@@ -1,9 +1,9 @@
 package ru.md.msc.domain.user.biz.workers
 
 import ru.md.base_domain.biz.proc.ContextState
+import ru.md.base_domain.dept.biz.errors.*
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.dept.biz.proc.*
 import ru.md.msc.domain.user.biz.proc.UserContext
 
 fun ICorChainDsl<UserContext>.prepareUserImagePrefixUrl(title: String) = worker {
@@ -13,7 +13,7 @@ fun ICorChainDsl<UserContext>.prepareUserImagePrefixUrl(title: String) = worker 
 
 	handle {
 		deptId = authUser.dept?.id ?: throw DeptNotFoundException()
-		rootDeptId = deptService.getRootId(deptId = deptId) ?: throw RootDeptNotFoundException()
+		rootDeptId = baseDeptService.getRootId(deptId = deptId) ?: throw RootDeptNotFoundException()
 		prefixUrl = "R$rootDeptId/D$deptId/U$userId"
 	}
 

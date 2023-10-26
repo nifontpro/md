@@ -6,9 +6,9 @@ import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.chain
 import ru.md.cor.worker
-import ru.md.msc.domain.base.validate.auth.bool.validateAuthDeptTopLevelForViewBool
-import ru.md.msc.domain.base.validate.auth.getAuthUserAndVerifyEmail
-import ru.md.base_domain.biz.validate.validateDeptId
+import ru.md.base_domain.biz.validate.validateAuthDeptTopLevelForViewBool
+import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
+import ru.md.base_domain.dept.biz.validate.validateDeptId
 import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.domain.dept.biz.workers.getDeptsByParentId
 import ru.md.msc.domain.dept.biz.workers.getTopLevelDeptByDeptId

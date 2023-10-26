@@ -4,9 +4,9 @@ import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.dept.biz.proc.DeptContext
-import ru.md.msc.domain.dept.biz.proc.RootDeptNotFoundException
-import ru.md.msc.domain.dept.biz.proc.getDeptError
-import ru.md.msc.domain.dept.biz.proc.rootDeptNotFound
+import ru.md.base_domain.dept.biz.errors.RootDeptNotFoundException
+import ru.md.base_domain.dept.biz.errors.getDeptError
+import ru.md.base_domain.dept.biz.errors.rootDeptNotFound
 
 fun ICorChainDsl<DeptContext>.prepareDeptImagePrefixUrl(title: String) = worker {
 
@@ -14,7 +14,7 @@ fun ICorChainDsl<DeptContext>.prepareDeptImagePrefixUrl(title: String) = worker 
 	on { state == ContextState.RUNNING }
 
 	handle {
-		rootDeptId = deptService.getRootId(deptId = deptId) ?: throw RootDeptNotFoundException()
+		rootDeptId = baseDeptService.getRootId(deptId = deptId) ?: throw RootDeptNotFoundException()
 		prefixUrl = "R$rootDeptId/D$deptId/IMAGES"
 	}
 

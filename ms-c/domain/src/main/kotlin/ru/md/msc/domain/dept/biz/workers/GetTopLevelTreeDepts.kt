@@ -4,9 +4,9 @@ import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.dept.biz.proc.DeptContext
-import ru.md.msc.domain.dept.biz.proc.TopLevelDeptNotFoundException
-import ru.md.msc.domain.dept.biz.proc.getDeptError
-import ru.md.msc.domain.dept.biz.proc.topLevelDeptNotFound
+import ru.md.base_domain.dept.biz.errors.TopLevelDeptNotFoundException
+import ru.md.base_domain.dept.biz.errors.getDeptError
+import ru.md.base_domain.dept.biz.errors.topLevelDeptNotFound
 
 fun ICorChainDsl<DeptContext>.getTopLevelTreeDepts(title: String) = worker {
 

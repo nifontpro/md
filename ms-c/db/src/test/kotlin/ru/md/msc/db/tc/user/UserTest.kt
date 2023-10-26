@@ -8,19 +8,21 @@ import org.springframework.boot.test.context.SpringBootTest
 import ru.md.base_domain.model.BaseOrder
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.Direction
+import ru.md.base_domain.user.model.RoleUser
+import ru.md.base_domain.user.service.BaseUserService
 import ru.md.msc.db.tc.TestBeans
 import ru.md.msc.db.tc.ownerEmail
 import ru.md.msc.db.user.repo.RoleRepository
 import ru.md.msc.db.user.repo.UserRepository
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.user.biz.validate.isValidEmail
-import ru.md.base_domain.user.model.RoleUser
 import ru.md.msc.domain.user.service.UserService
 
 @SpringBootTest(classes = [TestBeans::class])
 class UserTest(
 	@Autowired private val deptService: DeptService,
 	@Autowired private val userService: UserService,
+	@Autowired private val baseUserService: BaseUserService,
 	@Autowired private val roleRepository: RoleRepository,
 	@Autowired private val userRepository: UserRepository
 ) {
@@ -80,7 +82,7 @@ class UserTest(
 			userId = 1,
 			roleUser = RoleUser.OWNER
 		)
-		assertEquals(1,count)
+		assertEquals(1, count)
 	}
 
 	@Test
@@ -89,7 +91,7 @@ class UserTest(
 			userId = 2,
 			roleUser = RoleUser.OWNER
 		)
-		assertEquals(0,count)
+		assertEquals(0, count)
 	}
 
 	@Test
@@ -97,7 +99,7 @@ class UserTest(
 	fun userToArchive() {
 		val userId = 2L
 		userRepository.moveUserToArchive(userId = userId)
-		val user = userService.findById(userId = userId)
+		val user = baseUserService.findById(userId = userId)
 		assertEquals(true, user?.archive)
 	}
 }

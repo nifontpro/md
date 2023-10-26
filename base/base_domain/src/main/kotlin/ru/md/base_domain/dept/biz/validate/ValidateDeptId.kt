@@ -1,4 +1,4 @@
-package ru.md.base_domain.biz.validate
+package ru.md.base_domain.dept.biz.validate
 
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker

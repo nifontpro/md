@@ -1,4 +1,4 @@
-package ru.md.base_domain.biz.validate
+package ru.md.base_domain.user.biz.validate
 
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
@@ -6,15 +6,15 @@ import ru.md.base_domain.biz.helper.errorValidation
 import ru.md.base_domain.biz.helper.fail
 import ru.md.base_domain.biz.proc.BaseMedalsContext
 
-fun <T : BaseMedalsContext> ICorChainDsl<T>.validateImageId(title: String) = worker {
+fun <T : BaseMedalsContext> ICorChainDsl<T>.validateUserId(title: String) = worker {
 	this.title = title
-	on { imageId < 1 }
+	on { userId < 1 }
 	handle {
 		fail(
 			errorValidation(
-				field = "imageId",
+				field = "userId",
 				violationCode = "not valid",
-				description = "Неверный imageId"
+				description = "Неверный userId"
 			)
 		)
 	}

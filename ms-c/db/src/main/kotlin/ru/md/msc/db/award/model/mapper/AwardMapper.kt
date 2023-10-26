@@ -5,7 +5,7 @@ import ru.md.msc.db.award.model.AwardEntity
 import ru.md.base_db.dept.model.mappers.toDept
 import ru.md.base_db.dept.model.mappers.toDeptEntity
 import ru.md.base_db.dept.model.mappers.toDeptLazy
-import ru.md.msc.db.user.model.mappers.toUserLazy
+import ru.md.base_db.user.model.mappers.toUserLazy
 import ru.md.msc.domain.award.model.Award
 import ru.md.base_domain.dept.model.Dept
 

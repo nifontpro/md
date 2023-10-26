@@ -6,7 +6,7 @@ import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.dept.biz.proc.DeptContext
-import ru.md.msc.domain.dept.biz.proc.getDeptError
+import ru.md.base_domain.dept.biz.errors.getDeptError
 
 fun ICorChainDsl<DeptContext>.validateDeptNameExist(title: String) = worker {
 	this.title = title
