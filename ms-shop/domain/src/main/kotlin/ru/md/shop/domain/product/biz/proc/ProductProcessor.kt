@@ -2,6 +2,9 @@ package ru.md.shop.domain.product.biz.proc
 
 import org.springframework.stereotype.Component
 import ru.md.base_domain.biz.proc.IBaseProcessor
+import ru.md.base_domain.biz.validate.chain.validateDeptIdAndAdminDeptLevelChain
+import ru.md.base_domain.biz.validate.validateAdminRole
+import ru.md.base_domain.biz.validate.validateAuthDeptLevel
 import ru.md.base_domain.dept.biz.validate.validateDeptId
 import ru.md.base_domain.image.biz.validate.validateImageId
 import ru.md.base_domain.biz.workers.finishOperation
@@ -12,6 +15,8 @@ import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.base_domain.image.biz.workers.addImageToS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
 import ru.md.base_domain.s3.repo.BaseS3Repository
+import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
+import ru.md.base_domain.user.service.BaseUserService
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.rootChain
 import ru.md.cor.worker
@@ -25,6 +30,7 @@ import ru.md.shop.domain.product.service.ProductService
 class ProductProcessor(
 	private val productService: ProductService,
 	private val baseDeptService: BaseDeptService,
+	private val baseUserService: BaseUserService,
 	private val baseS3Repository: BaseS3Repository,
 //	private val microClient: MicroClient,
 ) : IBaseProcessor<ProductContext> {
@@ -32,6 +38,7 @@ class ProductProcessor(
 	override suspend fun exec(ctx: ProductContext) = businessChain.exec(ctx.also {
 		it.productService = productService
 		it.baseDeptService = baseDeptService
+		it.baseUserService = baseUserService
 		it.baseS3Repository = baseS3Repository
 //		it.microClient = microClient
 	})
@@ -42,16 +49,14 @@ class ProductProcessor(
 			initStatus()
 
 			operation("Создать приз", ProductCommand.CREATE) {
-				validateDeptId("Проверяем deptId")
-				validateAndTrimFields()
-				// Auth
+				validateAndTrimProductFields()
+				validateDeptIdAndAdminDeptLevelChain()
 				createProduct("Создаем приз")
 			}
 
 			operation("Обновить приз", ProductCommand.UPDATE) {
-				validateProductId("Проверяем productId")
-				validateAndTrimFields()
-				// Auth
+				validateAndTrimProductFields()
+				validateProductIdAndAccessToProductChain()
 				updateProduct("Обновляем приз")
 			}
 
@@ -68,13 +73,15 @@ class ProductProcessor(
 			operation("Удалить приз", ProductCommand.DELETE) {
 				validateProductId("Проверяем productId")
 				getProductDetailsById("Получаем приз")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				worker("Получаем deptId") { deptId = productDetails.product.deptId }
+				validateAuthDeptLevel("Проверка доступа к отделу")
 				deleteProduct("Удаляем приз")
 			}
 
 			operation("Добавление изображения", ProductCommand.IMG_ADD) {
 				worker("Получение id сущности") { productId = fileData.entityId }
-				validateProductId("Проверяем productId")
-//				validateProductIdAndAccessToProductChain()
+				validateProductIdAndAccessToProductChain()
 				prepareProductImagePrefixUrl("Получаем префикс изображения")
 				addImageToS3("Сохраняем изображение в s3")
 				addProductImageToDb("Сохраняем ссылки на изображение в БД")
@@ -85,8 +92,7 @@ class ProductProcessor(
 
 			operation("Удаление изображения", ProductCommand.IMG_DELETE) {
 				validateImageId("Проверка imageId")
-				validateProductId("Проверяем productId")
-//				validateProductIdAndAccessToProductChain()
+				validateProductIdAndAccessToProductChain()
 				deleteProductImageFromDb("Удаляем изображение из БД")
 				deleteBaseImageFromS3("Удаляем изображение из s3")
 				updateProductMainImage("Обновление основного изображения")
@@ -95,7 +101,15 @@ class ProductProcessor(
 			finishOperation()
 		}.build()
 
-		private fun ICorChainDsl<ProductContext>.validateAndTrimFields() {
+		private fun ICorChainDsl<ProductContext>.validateProductIdAndAccessToProductChain() {
+			validateProductId("Проверяем productId")
+			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+			validateAdminRole("Проверяем наличие прав Администратора")
+			findDeptIdByProductId("Получаем deptId")
+			validateAuthDeptLevel("Проверка доступа к отделу")
+		}
+
+		private fun ICorChainDsl<ProductContext>.validateAndTrimProductFields() {
 			validateProductName("Проверяем название")
 			validateProductPrice("Проверяем цену")
 			trimFieldProductDetails("Очищаем поля")

@@ -83,21 +83,20 @@ class ProductController(
 		)
 	}
 
-	//
-//	@PostMapping("delete")
-//	private suspend fun update(
-//		@RequestBody request: DeleteMedalRequest,
-//		@RequestHeader(name = AUTH) bearerToken: String
-//	): BaseResponse<MedalDetailsResponse> {
-//		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-//		return authProcess(
-//			processor = medalProcessor,
-//			authRequest = baseRequest,
-//			fromTransport = { fromTransport(it) },
-//			toTransport = { toTransportMedalDetails() }
-//		)
-//	}
-//
+	@PostMapping("delete")
+	private suspend fun update(
+		@RequestBody request: DeleteProductRequest,
+		@RequestHeader(name = AUTH) bearerToken: String
+	): BaseResponse<ProductDetailsResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = productProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportProductDetails() }
+		)
+	}
+
 	@PostMapping("img_add")
 	suspend fun imageAdd(
 		@RequestHeader(name = AUTH) bearerToken: String,

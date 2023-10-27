@@ -39,6 +39,7 @@ fun <T : BaseMedalsContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: Str
 	}
 
 	except {
+		log.error(it.message)
 		getAuthUserError()
 	}
 }

@@ -1,5 +1,6 @@
 package ru.md.base_db.dept.service
 
+import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.base_db.dept.model.mappers.toDept
@@ -38,6 +39,7 @@ class BaseDeptServiceImpl(
 		return baseDeptRepository.getTopLevelId(deptId = deptId) ?: throw TopLevelDeptNotFoundException()
 	}
 
+	@Transactional
 	override fun findTopLevelDept(deptId: Long): Dept {
 		val topDeptId = baseDeptRepository.getTopLevelId(deptId = deptId) ?: throw TopLevelDeptNotFoundException()
 		return baseDeptRepository.findByIdOrNull(topDeptId)?.toDept() ?: throw TopLevelDeptNotFoundException()

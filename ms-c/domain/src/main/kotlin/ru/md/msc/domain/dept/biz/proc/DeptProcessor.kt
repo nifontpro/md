@@ -14,7 +14,7 @@ import ru.md.base_domain.dept.biz.validate.validateDeptId
 import ru.md.base_domain.image.biz.validate.validateImageId
 import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
-import ru.md.msc.domain.base.workers.chain.validateDeptIdAndAdminDeptLevelChain
+import ru.md.base_domain.biz.validate.chain.validateDeptIdAndAdminDeptLevelChain
 import ru.md.base_domain.image.biz.workers.addImageToS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImagesFromS3

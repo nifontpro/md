@@ -28,7 +28,7 @@ import ru.md.base_domain.image.biz.validate.validateImageId
 import ru.md.base_domain.user.biz.validate.validateUserId
 import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
-import ru.md.msc.domain.base.workers.chain.validateDeptIdAndAdminDeptLevelChain
+import ru.md.base_domain.biz.validate.chain.validateDeptIdAndAdminDeptLevelChain
 import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
 import ru.md.base_domain.biz.validate.getRootDeptId
 import ru.md.base_domain.image.biz.workers.addImageToS3
@@ -84,13 +84,13 @@ class AwardProcessor(
 
 			operation("Обновить награду", AwardCommand.UPDATE) {
 				validateMainAwardFieldChain()
-				validateAccessToAwardChain()
+				validateAwardIdAndAccessToAwardChain()
 				trimFieldAwardDetails("Очищаем поля")
 				updateAward("Обновляем награду")
 			}
 
 			operation("Получить по id", AwardCommand.GET_BY_ID_DETAILS) {
-				validateViewAccessToAwardChain()
+				validateAwardIdAndViewAccessToAwardChain()
 				getAwardByIdDetails("Получаем детальную награду")
 			}
 
@@ -105,7 +105,7 @@ class AwardProcessor(
 			}
 
 			operation("Удалить награду", AwardCommand.DELETE) {
-				validateAccessToAwardChain()
+				validateAwardIdAndAccessToAwardChain()
 				getAwardByIdDetails("Получаем детальную награду")
 				deleteAward("Удаляем")
 				worker("Подготовка к удалению изображений") { baseImages = awardDetails.award.images }
@@ -133,7 +133,7 @@ class AwardProcessor(
 
 			operation("Удаление изображения", AwardCommand.IMG_DELETE) {
 				validateImageId("Проверка imageId")
-				validateAccessToAwardChain()
+				validateAwardIdAndAccessToAwardChain()
 				deleteAwardImageFromDb("Удаляем изображение из БД")
 				deleteBaseImageFromS3("Удаляем изображение из s3")
 				updateAwardMainImage("Обновление основного изображения")
@@ -180,7 +180,7 @@ class AwardProcessor(
 				validatePageParamsChain()
 				setActionByAwardValidSortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверка списка полей сортировки")
-				validateViewAccessToAwardChain()
+				validateAwardIdAndViewAccessToAwardChain()
 				getUsersByActiveAward("Получаем награды сотрудника")
 			}
 
@@ -255,7 +255,7 @@ class AwardProcessor(
 		}.build()
 
 		private fun ICorChainDsl<AwardContext>.validateAccessAndDeleteOldImages() {
-			validateAccessToAwardChain()
+			validateAwardIdAndAccessToAwardChain()
 			// Удаляем старые изображения
 			getAwardByIdDetails("Получаем детальную награду")
 			worker("Подготовка к удалению изображений") { baseImages = awardDetails.award.images }
@@ -268,7 +268,7 @@ class AwardProcessor(
 			validateAwardDates("Проверяем даты")
 		}
 
-		private fun ICorChainDsl<AwardContext>.validateAccessToAwardChain() {
+		private fun ICorChainDsl<AwardContext>.validateAwardIdAndAccessToAwardChain() {
 			validateAwardId("Проверяем awardId")
 			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 			validateAdminRole("Проверяем наличие прав Администратора")
@@ -276,11 +276,11 @@ class AwardProcessor(
 			validateAuthDeptLevel("Проверка доступа к отделу")
 		}
 
-		private fun ICorChainDsl<AwardContext>.validateViewAccessToAwardChain() {
+		private fun ICorChainDsl<AwardContext>.validateAwardIdAndViewAccessToAwardChain() {
 			validateAwardId("Проверяем awardId")
-			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-			findDeptIdByAwardId("Получаем deptId")
-			validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
+//			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+//			findDeptIdByAwardId("Получаем deptId")
+//			validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 		}
 
 	}

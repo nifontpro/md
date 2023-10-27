@@ -24,8 +24,14 @@ fun ProductContext.fromTransport(request: CreateProductRequest) {
 	)
 }
 
+fun ProductContext.fromTransport(request: DeleteProductRequest) {
+	command = ProductCommand.DELETE
+	authId = request.authId
+	productId = request.productId
+}
+
 fun ProductContext.fromTransport(request: UpdateProductRequest) {
-	command = ProductCommand.CREATE
+	command = ProductCommand.UPDATE
 	authId = request.authId
 	productId = request.productId
 
