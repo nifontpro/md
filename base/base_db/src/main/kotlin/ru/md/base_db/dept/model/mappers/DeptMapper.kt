@@ -1,6 +1,6 @@
 package ru.md.base_db.dept.model.mappers
 
-import ru.md.base_db.mapper.toBaseImage
+import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.base_db.dept.model.DeptEntity
 import ru.md.base_domain.dept.model.Dept
 

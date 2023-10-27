@@ -48,3 +48,16 @@ CREATE TABLE IF NOT EXISTS shop.product_image
         ON DELETE CASCADE
 )
     INHERITS (md.base_image);;
+
+CREATE TABLE IF NOT EXISTS shop.user_pay
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    user_id bigint NOT NULL,
+    balance integer NOT NULL DEFAULT 0,
+    created_at timestamp without time zone NOT NULL DEFAULT now(),
+    CONSTRAINT user_pay_pkey PRIMARY KEY (id),
+    CONSTRAINT user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES users.user_data (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+);;

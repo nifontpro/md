@@ -1,4 +1,4 @@
-package ru.md.shop.test
+package ru.md.shop.db
 
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection

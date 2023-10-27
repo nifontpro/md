@@ -1,11 +1,11 @@
 package ru.md.msc.rest.user.excel
 
 import org.springframework.web.multipart.MultipartFile
-import ru.md.base_domain.rest.BaseResponse
-import ru.md.base_domain.rest.baseResponse
-import ru.md.base_rest.emailNotVerified
-import ru.md.base_rest.fileContentTypeError
-import ru.md.base_rest.fileSaveError
+import ru.md.base_domain.model.BaseResponse
+import ru.md.base_domain.model.baseResponse
+import ru.md.base_rest.base.emailNotVerified
+import ru.md.base_rest.base.fileContentTypeError
+import ru.md.base_rest.base.fileSaveError
 import ru.md.base_rest.utils.AuthData
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext

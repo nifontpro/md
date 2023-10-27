@@ -1,6 +1,6 @@
 package ru.md.msc.db.award.model.mapper
 
-import ru.md.base_db.mapper.toBaseImage
+import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.msc.db.award.model.AwardEntity
 import ru.md.base_db.dept.model.mappers.toDept
 import ru.md.base_db.dept.model.mappers.toDeptEntity

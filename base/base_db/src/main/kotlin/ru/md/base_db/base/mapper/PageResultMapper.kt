@@ -1,4 +1,4 @@
-package ru.md.base_db.mapper
+package ru.md.base_db.base.mapper
 
 import org.springframework.data.domain.Page
 import ru.md.base_domain.model.PageInfo

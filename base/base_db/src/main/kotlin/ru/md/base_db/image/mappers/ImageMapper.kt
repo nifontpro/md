@@ -1,4 +1,4 @@
-package ru.md.base_db.mapper
+package ru.md.base_db.image.mappers
 
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.image.model.IBaseImage

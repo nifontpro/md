@@ -1,7 +1,7 @@
 package ru.md.msc.db.user.model.mappers
 
 import ru.md.base_db.dept.model.mappers.toDeptLazy
-import ru.md.base_db.mapper.toBaseImage
+import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.msc.db.award.model.mapper.toActivityOnlyAward
 import ru.md.msc.db.award.model.mapper.toAwardLazy
 import ru.md.msc.db.user.model.UserAwardEntity

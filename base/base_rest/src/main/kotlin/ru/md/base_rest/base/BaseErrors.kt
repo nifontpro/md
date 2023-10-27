@@ -1,4 +1,4 @@
-package ru.md.base_rest
+package ru.md.base_rest.base
 
 import ru.md.base_domain.biz.helper.ContextError
 import ru.md.base_domain.biz.proc.BaseContext

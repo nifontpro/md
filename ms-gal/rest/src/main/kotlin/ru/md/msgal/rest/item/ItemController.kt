@@ -4,11 +4,11 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.gallery.GalleryItem
 import ru.md.base_domain.gallery.request.GetItemByIdRequest
-import ru.md.base_domain.rest.BaseResponse
-import ru.md.base_rest.authProcess
+import ru.md.base_domain.model.BaseResponse
+import ru.md.base_rest.base.authProcess
 import ru.md.base_rest.model.request.AUTH
-import ru.md.base_rest.process
-import ru.md.base_rest.toLongOr0
+import ru.md.base_rest.base.process
+import ru.md.base_rest.base.toLongOr0
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msgal.domain.item.biz.proc.ItemProcessor
 import ru.md.msgal.rest.item.mappers.fromTransport

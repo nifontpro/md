@@ -1,8 +1,7 @@
 package ru.md.shop.db.product.model.mappers
 
-import ru.md.base_db.mapper.toBaseImage
+import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.shop.db.product.model.ProductDetailsEntity
-import ru.md.shop.domain.product.model.Product
 import ru.md.shop.domain.product.model.ProductDetails
 
 fun ProductDetails.toProductDetailsEntity() = ProductDetailsEntity(
@@ -13,7 +12,7 @@ fun ProductDetails.toProductDetailsEntity() = ProductDetailsEntity(
 )
 
 fun ProductDetailsEntity.toProductDetails() = ProductDetails(
-	product = productEntity?.toProduct() ?: Product(),
+	product = productEntity.toProduct(),
 	description = description,
 	siteUrl = siteUrl,
 	createdAt = createdAt,

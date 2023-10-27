@@ -1,6 +1,6 @@
 package ru.md.msc.rest.award.mappers
 
-import ru.md.base_domain.model.converter.toLocalDateTimeUTC
+import ru.md.base_domain.model.mappers.toLocalDateTimeUTC
 import ru.md.base_rest.model.mapper.toBaseQuery
 import ru.md.msc.domain.award.biz.proc.AwardCommand
 import ru.md.msc.domain.award.biz.proc.AwardContext

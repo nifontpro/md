@@ -4,11 +4,11 @@ package ru.md.msc.rest.user
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import ru.md.base_domain.rest.BaseResponse
-import ru.md.base_rest.authProcess
+import ru.md.base_domain.model.BaseResponse
+import ru.md.base_rest.base.authProcess
 import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.model.response.BaseImageResponse
-import ru.md.base_rest.toLongOr0
+import ru.md.base_rest.base.toLongOr0
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext

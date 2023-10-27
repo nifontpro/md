@@ -1,4 +1,4 @@
-package ru.md.base_rest
+package ru.md.base_rest.utils
 
 import org.imgscalr.Scalr
 import org.springframework.web.multipart.MultipartFile

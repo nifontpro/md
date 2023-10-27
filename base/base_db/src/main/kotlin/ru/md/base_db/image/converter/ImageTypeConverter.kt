@@ -1,4 +1,4 @@
-package ru.md.base_db.converter
+package ru.md.base_db.image.converter
 
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter

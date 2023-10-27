@@ -3,12 +3,16 @@ package ru.md.base_rest.image
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.biz.proc.BaseMedalsContext
 import ru.md.base_domain.biz.proc.IBaseProcessor
-import ru.md.base_domain.rest.BaseResponse
-import ru.md.base_domain.rest.baseResponse
-import ru.md.base_rest.*
+import ru.md.base_domain.model.BaseResponse
+import ru.md.base_domain.model.baseResponse
+import ru.md.base_rest.base.emailNotVerified
+import ru.md.base_rest.base.fileContentTypeError
+import ru.md.base_rest.base.imageSaveError
 import ru.md.base_rest.model.mapper.toBaseImageResponse
 import ru.md.base_rest.model.response.BaseImageResponse
 import ru.md.base_rest.utils.AuthData
+import ru.md.base_rest.utils.ImageSaveException
+import ru.md.base_rest.utils.saveImageFile
 import java.io.File
 
 // Допустимые типы файлов to возможность сжатия

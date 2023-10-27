@@ -1,6 +1,6 @@
 package ru.md.msc.db.medal.model.mapper
 
-import ru.md.base_db.mapper.toBaseImage
+import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.msc.db.medal.model.MedalDetailsEntity
 import ru.md.msc.domain.medal.model.MedalDetails
 

@@ -1,7 +1,7 @@
 package ru.md.msc.rest.dept.mappers
 
-import ru.md.base_domain.rest.BaseResponse
-import ru.md.base_domain.rest.baseResponse
+import ru.md.base_domain.model.BaseResponse
+import ru.md.base_domain.model.baseResponse
 import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.rest.dept.model.response.DeptDetailsResponse
 import ru.md.msc.rest.dept.model.response.DeptResponse

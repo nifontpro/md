@@ -3,7 +3,7 @@ package ru.md.msgal.db.folder.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import ru.md.base_db.mapper.toSort
+import ru.md.base_db.base.mapper.toSort
 import ru.md.base_domain.model.BaseOrder
 import ru.md.msgal.db.folder.model.mapper.toFolder
 import ru.md.msgal.db.folder.model.mapper.toFolderEntity

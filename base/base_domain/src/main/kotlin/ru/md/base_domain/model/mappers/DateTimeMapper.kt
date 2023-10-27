@@ -1,4 +1,4 @@
-package ru.md.base_domain.model.converter
+package ru.md.base_domain.model.mappers
 
 import java.time.Instant
 import java.time.LocalDateTime

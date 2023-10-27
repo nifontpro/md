@@ -1,6 +1,6 @@
 package ru.md.msgal.rest.folder.mappers
 
-import ru.md.base_domain.model.converter.toEpochMilliUTC
+import ru.md.base_domain.model.mappers.toEpochMilliUTC
 import ru.md.msgal.domain.folder.model.Folder
 import ru.md.msgal.rest.folder.model.response.FolderResponse
 

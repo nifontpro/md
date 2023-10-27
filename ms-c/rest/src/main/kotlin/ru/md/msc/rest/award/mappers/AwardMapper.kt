@@ -1,6 +1,6 @@
 package ru.md.msc.rest.award.mappers
 
-import ru.md.base_domain.model.converter.toEpochMilliUTC
+import ru.md.base_domain.model.mappers.toEpochMilliUTC
 import ru.md.base_rest.model.mapper.toBaseImageResponse
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.rest.award.model.response.AwardResponse

@@ -1,7 +1,7 @@
 package ru.md.msc.rest.user.mappers
 
-import ru.md.base_domain.rest.BaseResponse
-import ru.md.base_domain.rest.baseResponse
+import ru.md.base_domain.model.BaseResponse
+import ru.md.base_domain.model.baseResponse
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.model.GenderCount
 import ru.md.msc.domain.user.model.UserSettings

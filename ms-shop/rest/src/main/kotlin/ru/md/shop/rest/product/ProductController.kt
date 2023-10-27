@@ -2,13 +2,13 @@ package ru.md.shop.rest.product
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import ru.md.base_domain.rest.BaseResponse
-import ru.md.base_rest.authProcess
+import ru.md.base_domain.model.BaseResponse
+import ru.md.base_rest.base.authProcess
 import ru.md.base_rest.image.baseImageProcess
 import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
 import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.model.response.BaseImageResponse
-import ru.md.base_rest.toLongOr0
+import ru.md.base_rest.base.toLongOr0
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.shop.domain.product.biz.proc.ProductCommand
 import ru.md.shop.domain.product.biz.proc.ProductContext

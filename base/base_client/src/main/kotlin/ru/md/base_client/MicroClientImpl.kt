@@ -15,7 +15,7 @@ import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
 import org.springframework.web.reactive.function.client.awaitBody
 import ru.md.base_domain.client.MicroClient
-import ru.md.base_domain.rest.BaseResponse
+import ru.md.base_domain.model.BaseResponse
 
 /**
  * Компонент для получения данных из других микросервисов

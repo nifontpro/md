@@ -1,28 +1,26 @@
-package ru.md.shop.db.pay.model
+package ru.md.base_db.pay.model
 
 import jakarta.persistence.*
-import java.sql.Timestamp
+import java.time.LocalDateTime
 import java.util.*
 
 @Entity
 @Table(name = "user_pay", schema = "shop", catalog = "medalist")
-class UserPayEntity {
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+class UserPayEntity(
+
 	@Id
-	@Column(name = "id")
-	var id: Long = 0
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	var id: Long? = null,
 
-	@Basic
 	@Column(name = "user_id")
-	var userId: Long = 0
+	var userId: Long = 0,
 
-	@Basic
-	@Column(name = "balance")
-	var balance = 0
+	var balance: Int = 0,
 
-	@Basic
 	@Column(name = "created_at")
-	var createdAt: Timestamp? = null
+	var createdAt: LocalDateTime = LocalDateTime.now(),
+
+	) {
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true
 		if (other == null || javaClass != other.javaClass) return false

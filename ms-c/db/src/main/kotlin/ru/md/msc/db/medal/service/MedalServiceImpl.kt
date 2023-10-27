@@ -3,7 +3,7 @@ package ru.md.msc.db.medal.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import ru.md.base_db.mapper.toBaseImage
+import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.base_domain.gallery.SmallItem
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.image.model.ImageType

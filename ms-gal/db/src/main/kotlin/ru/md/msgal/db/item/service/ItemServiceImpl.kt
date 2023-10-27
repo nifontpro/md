@@ -3,8 +3,8 @@ package ru.md.msgal.db.item.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import ru.md.base_db.mapper.toPageRequest
-import ru.md.base_db.mapper.toPageResult
+import ru.md.base_db.base.mapper.toPageRequest
+import ru.md.base_db.base.mapper.toPageResult
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
 import ru.md.msgal.db.item.model.mapper.toItem

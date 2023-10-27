@@ -1,6 +1,6 @@
 package ru.md.msc.rest.event.mappers
 
-import ru.md.base_domain.model.converter.toEpochMilliUTC
+import ru.md.base_domain.model.mappers.toEpochMilliUTC
 import ru.md.msc.domain.event.model.BaseEvent
 import ru.md.msc.rest.event.model.response.BaseEventResponse
 import ru.md.msc.rest.event.model.response.EventType

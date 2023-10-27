@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service
 import ru.md.base_db.dept.model.DeptImageEntity
 import ru.md.base_db.dept.model.mappers.toDeptLazy
 import ru.md.base_db.dept.repo.BaseDeptRepository
-import ru.md.base_db.mapper.toBaseImage
-import ru.md.base_db.mapper.toSort
+import ru.md.base_db.image.mappers.toBaseImage
+import ru.md.base_db.base.mapper.toSort
 import ru.md.base_domain.dept.biz.errors.DeptNotFoundException
 import ru.md.base_domain.dept.biz.errors.TopLevelDeptNotFoundException
 import ru.md.base_domain.dept.model.Dept

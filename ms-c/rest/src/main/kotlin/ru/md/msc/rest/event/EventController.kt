@@ -1,8 +1,8 @@
 package ru.md.msc.rest.event
 
 import org.springframework.web.bind.annotation.*
-import ru.md.base_domain.rest.BaseResponse
-import ru.md.base_rest.authProcess
+import ru.md.base_domain.model.BaseResponse
+import ru.md.base_rest.base.authProcess
 import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.event.biz.proc.EventProcessor
