@@ -12,6 +12,7 @@ fun Dept.toDeptResponse() = DeptResponse(
 	topLevel = topLevel,
 	level = level,
 	mainImg = mainImg,
+	normImg = normImg,
 	type = type,
 	images = images.map { it.toBaseImageResponse() }
 )

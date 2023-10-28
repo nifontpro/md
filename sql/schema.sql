@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS dep.dept
     code text COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::text,
     classname text COLLATE pg_catalog."default",
     main_img text COLLATE pg_catalog."default",
+    norm_img text COLLATE pg_catalog."default",
     top_level boolean NOT NULL DEFAULT false,
     level integer NOT NULL DEFAULT 0,
     CONSTRAINT dept_pkey PRIMARY KEY (id),
@@ -298,6 +299,7 @@ CREATE TABLE IF NOT EXISTS users.user_data
     dept_id bigint NOT NULL,
     post text COLLATE pg_catalog."default",
     main_img text COLLATE pg_catalog."default",
+    norm_img text COLLATE pg_catalog."default",
     archive boolean NOT NULL DEFAULT false,
     CONSTRAINT user_data_pkey PRIMARY KEY (id),
     CONSTRAINT dept_id_fkey FOREIGN KEY (dept_id)
@@ -365,6 +367,7 @@ CREATE TABLE IF NOT EXISTS md.award
     name text COLLATE pg_catalog."default" NOT NULL,
     type_code text COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::text,
     main_img text COLLATE pg_catalog."default",
+    norm_img text COLLATE pg_catalog."default",
     score integer NOT NULL DEFAULT 1,
     CONSTRAINT dept_id_fkey FOREIGN KEY (dept_id)
         REFERENCES dep.dept (id) MATCH SIMPLE
@@ -526,15 +529,3 @@ CREATE TABLE IF NOT EXISTS msg.user_msg
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 );;
-
-
-
-
-
-
-
-
-
-
-
-

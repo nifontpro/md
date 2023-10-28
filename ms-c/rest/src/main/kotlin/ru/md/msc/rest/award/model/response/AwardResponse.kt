@@ -10,6 +10,7 @@ data class AwardResponse(
 	val id: Long = 0,
 	val name: String = "",
 	val mainImg: String? = null,
+	val normImg: String? = null,
 	val type: AwardType = AwardType.UNDEF,
 	val startDate: Long? = null,
 	val endDate: Long? = null,

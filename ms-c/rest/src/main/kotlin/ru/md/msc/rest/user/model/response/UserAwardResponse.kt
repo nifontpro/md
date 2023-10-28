@@ -19,6 +19,7 @@ data class UserAwardResponse(
 	val awardCount: Long = 0,
 	val scores: Long = 0,
 	val mainImg: String? = null,
+	val normImg: String? = null,
 	val roles: Set<RoleUser> = emptySet(),
 	val images: List<BaseImageResponse> = emptyList(),
 	val archive: Boolean = false,

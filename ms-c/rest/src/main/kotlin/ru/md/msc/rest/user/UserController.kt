@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.model.BaseResponse
 import ru.md.base_rest.base.authProcess
+import ru.md.base_rest.base.toLongOr0
+import ru.md.base_rest.image.baseImageProcess
+import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
 import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.model.response.BaseImageResponse
-import ru.md.base_rest.base.toLongOr0
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
@@ -17,9 +19,6 @@ import ru.md.msc.domain.user.model.GenderCount
 import ru.md.msc.domain.user.model.UserSettings
 import ru.md.msc.domain.user.model.excel.AddUserReport
 import ru.md.msc.rest.user.excel.excelProcess
-import ru.md.base_rest.image.baseImageProcess
-import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
-import ru.md.base_rest.model.mapper.toTransportUnit
 import ru.md.msc.rest.user.mappers.*
 import ru.md.msc.rest.user.model.request.*
 import ru.md.msc.rest.user.model.response.UserAwardResponse
@@ -321,19 +320,19 @@ class UserController(
 	/**
 	 * !!!! Set ADMIN role
 	 */
-	@PostMapping("admin/img")
-	private suspend fun setMainImages(
-		@RequestHeader(name = AUTH) bearerToken: String,
-		@RequestBody request: SetMainUserImagesRequest
-	): BaseResponse<Unit> {
-		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return authProcess(
-			processor = userProcessor,
-			authRequest = baseRequest,
-			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportUnit() }
-		)
-	}
+//	@PostMapping("admin/img")
+//	private suspend fun setMainImages(
+//		@RequestHeader(name = AUTH) bearerToken: String,
+//		@RequestBody request: SetMainUserImagesRequest
+//	): BaseResponse<Unit> {
+//		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+//		return authProcess(
+//			processor = userProcessor,
+//			authRequest = baseRequest,
+//			fromTransport = { fromTransport(it) },
+//			toTransport = { toTransportUnit() }
+//		)
+//	}
 
 	@PostMapping("has_owner")
 	private suspend fun hasUserOwnerRole(

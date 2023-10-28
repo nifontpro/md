@@ -29,6 +29,7 @@ fun UserEntity.toUserOnlyRoles() = User(
 	gender = gender,
 	post = post,
 	mainImg = mainImg,
+	normImg = normImg,
 	archive = archive,
 	roles = roles.map { it.roleUser }.toSet(),
 )
@@ -44,6 +45,7 @@ fun UserEntity.toUserLazy() = User(
 	gender = gender,
 	post = post,
 	mainImg = mainImg,
+	normImg = normImg,
 	archive = archive,
 )
 
@@ -57,6 +59,7 @@ fun UserEntity.toUserWithDeptOnly() = User(
 	gender = gender,
 	post = post,
 	mainImg = mainImg,
+	normImg = normImg,
 	archive = archive,
 )
 
@@ -70,6 +73,7 @@ fun UserEntity.toUser() = User(
 	gender = gender,
 	post = post,
 	mainImg = mainImg,
+	normImg = normImg,
 	archive = archive,
 	roles = roles.map { it.roleUser }.toSet(),
 	images = images.map { it.toBaseImage() }

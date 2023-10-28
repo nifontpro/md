@@ -4,9 +4,11 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.model.BaseResponse
 import ru.md.base_rest.base.authProcess
+import ru.md.base_rest.base.toLongOr0
+import ru.md.base_rest.image.baseImageProcess
+import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
 import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.model.response.BaseImageResponse
-import ru.md.base_rest.base.toLongOr0
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.award.biz.proc.AwardCommand
 import ru.md.msc.domain.award.biz.proc.AwardContext
@@ -19,9 +21,6 @@ import ru.md.msc.rest.award.model.request.*
 import ru.md.msc.rest.award.model.response.ActivityResponse
 import ru.md.msc.rest.award.model.response.AwardDetailsResponse
 import ru.md.msc.rest.award.model.response.AwardResponse
-import ru.md.base_rest.image.baseImageProcess
-import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
-import ru.md.base_rest.model.mapper.toTransportUnit
 
 @RestController
 @RequestMapping("award")
@@ -430,18 +429,18 @@ class AwardController(
 	 * !!!! Set ADMIN role
 	 * Обновление основных изображений у медалей
 	 */
-	@PostMapping("admin/img")
-	private suspend fun setMainImages(
-		@RequestHeader(name = AUTH) bearerToken: String,
-		@RequestBody request: SetMainAwardImagesRequest
-	): BaseResponse<Unit> {
-		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return authProcess(
-			processor = awardProcessor,
-			authRequest = baseRequest,
-			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportUnit() }
-		)
-	}
+//	@PostMapping("admin/img")
+//	private suspend fun setMainImages(
+//		@RequestHeader(name = AUTH) bearerToken: String,
+//		@RequestBody request: SetMainAwardImagesRequest
+//	): BaseResponse<Unit> {
+//		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+//		return authProcess(
+//			processor = awardProcessor,
+//			authRequest = baseRequest,
+//			fromTransport = { fromTransport(it) },
+//			toTransport = { toTransportUnit() }
+//		)
+//	}
 
 }

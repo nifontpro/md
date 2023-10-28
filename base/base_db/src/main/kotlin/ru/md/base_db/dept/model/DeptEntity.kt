@@ -26,6 +26,9 @@ class DeptEntity(
 	@Column(name = "main_img")
 	var mainImg: String? = null,
 
+	@Column(name = "norm_img")
+	var normImg: String? = null,
+
 	@Column(name = "code")
 	val type: DeptType = DeptType.UNDEF,
 

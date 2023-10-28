@@ -16,6 +16,7 @@ data class User(
 	val roles: Set<RoleUser> = emptySet(),
 	val images: List<BaseImage> = emptyList(),
 	val mainImg: String? = null,
+	val normImg: String? = null,
 	val archive: Boolean = false,
 	val awardCount: Long = 0,
 	val scores: Long = 0,

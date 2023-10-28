@@ -11,6 +11,7 @@ data class DeptResponse(
 	val topLevel: Boolean = false,
 	val level: Int = 0,
 	var mainImg: String? = null,
+	val normImg: String? = null,
 	val type: DeptType = DeptType.UNDEF,
 	val images: List<BaseImageResponse> = emptyList(),
 )

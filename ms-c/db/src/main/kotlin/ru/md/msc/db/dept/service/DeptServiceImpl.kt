@@ -115,21 +115,23 @@ class DeptServiceImpl(
 
 	override fun setMainImage(deptId: Long): BaseImage? {
 		val deptEntity = deptRepository.findByIdOrNull(deptId) ?: throw DeptNotFoundException()
-		val images = deptEntity.images
-		var deptImageEntity = images.firstOrNull() ?: run {
+		var deptImageEntity = deptEntity.images.firstOrNull() ?: run {
 			deptEntity.mainImg = null
+			deptEntity.normImg = null
 			return null
 		}
 
-		images.forEach {
+		deptEntity.images.forEach {
 			if (it.createdAt > deptImageEntity.createdAt) {
 				deptImageEntity = it
 			} else if (it.main) {
 				it.main = false
 			}
 		}
-		deptEntity.mainImg = deptImageEntity.miniUrl
+
 		deptImageEntity.main = true
+		deptEntity.mainImg = if (deptImageEntity.miniUrl!=null) deptImageEntity.miniUrl else deptImageEntity.normalUrl
+		deptEntity.normImg = deptImageEntity.normalUrl
 		return deptImageEntity.toBaseImage()
 	}
 

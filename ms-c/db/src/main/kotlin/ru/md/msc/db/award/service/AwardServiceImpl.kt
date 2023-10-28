@@ -3,11 +3,11 @@ package ru.md.msc.db.award.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import ru.md.base_db.dept.repo.BaseDeptRepository
-import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.base_db.base.mapper.toPageRequest
 import ru.md.base_db.base.mapper.toPageResult
 import ru.md.base_db.base.mapper.toSearchOrNull
+import ru.md.base_db.dept.repo.BaseDeptRepository
+import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.base_domain.errors.ImageNotFoundException
 import ru.md.base_domain.gallery.SmallItem
 import ru.md.base_domain.image.model.BaseImage
@@ -204,13 +204,13 @@ class AwardServiceImpl(
 
 	override fun setMainImage(awardId: Long): BaseImage? {
 		val awardEntity = awardRepository.findByIdOrNull(awardId) ?: throw AwardNotFoundException()
-		val images = awardEntity.images
-		var awardImageEntity = images.firstOrNull() ?: run {
+		var awardImageEntity = awardEntity.images.firstOrNull() ?: run {
 			awardEntity.mainImg = null
+			awardEntity.normImg = null
 			return null
 		}
 
-		images.forEach {
+		awardEntity.images.forEach {
 			if (it.createdAt > awardImageEntity.createdAt) {
 				awardImageEntity = it
 			} else if (it.main) {
@@ -219,7 +219,8 @@ class AwardServiceImpl(
 		}
 
 		awardImageEntity.main = true
-		awardEntity.mainImg = awardImageEntity.miniUrl
+		awardEntity.mainImg = if (awardImageEntity.miniUrl != null) awardImageEntity.miniUrl else awardImageEntity.normalUrl
+		awardEntity.normImg = awardImageEntity.normalUrl
 		return awardImageEntity.toBaseImage()
 	}
 

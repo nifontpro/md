@@ -29,6 +29,9 @@ class UserEntity(
 	@Column(name = "main_img")
 	var mainImg: String? = null,
 
+	@Column(name = "norm_img")
+	var normImg: String? = null,
+
 	@Column(name = "gender_code")
 	var gender: Gender = Gender.UNDEF,
 

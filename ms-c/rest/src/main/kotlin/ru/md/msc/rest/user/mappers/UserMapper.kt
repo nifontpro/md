@@ -22,6 +22,7 @@ fun UserAward.toUserAwardResponse() = UserAwardResponse(
 	awardCount = awardCount,
 	scores = scores,
 	mainImg = mainImg,
+	normImg = normImg,
 	archive = archive,
 	activities = activities.map { it.toActivityResponse() },
 	awards = awards.map { it.toAwardResponse() },
@@ -41,5 +42,6 @@ fun User.toUserResponse() = UserResponse(
 	awardCount = awardCount,
 	scores = scores,
 	mainImg = mainImg,
+	normImg = normImg,
 	archive = archive,
 )

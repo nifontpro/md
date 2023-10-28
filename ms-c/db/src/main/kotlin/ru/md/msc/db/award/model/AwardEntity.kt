@@ -5,9 +5,9 @@ import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import org.hibernate.annotations.Formula
 import org.hibernate.annotations.WhereJoinTable
-import ru.md.msc.db.award.model.image.AwardImageEntity
 import ru.md.base_db.dept.model.DeptEntity
 import ru.md.base_db.user.model.UserEntity
+import ru.md.msc.db.award.model.image.AwardImageEntity
 import ru.md.msc.domain.award.model.AwardState
 import ru.md.msc.domain.award.model.AwardType
 import java.time.LocalDateTime
@@ -34,6 +34,9 @@ class AwardEntity(
 
 	@Column(name = "main_img")
 	var mainImg: String? = null,
+
+	@Column(name = "norm_img")
+	var normImg: String? = null,
 
 	@Column(name = "type_code")
 	var type: AwardType = AwardType.UNDEF,

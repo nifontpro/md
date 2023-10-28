@@ -1,37 +1,27 @@
-package ru.md.shop.db.pay
+package ru.md.shop.db
 
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import ru.md.base_domain.pay.service.BaseUserPayService
-import ru.md.shop.db.TestBeans
+
 
 @SpringBootTest(classes = [TestBeans::class])
-class PayTest(
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class BeforeAndAfterAnnotationsUnitTest(
 	@Autowired private val baseUserPayService: BaseUserPayService,
 ) {
 
-	companion object {
-		@JvmStatic
-		@AfterAll
-		fun afterAllTest() {
-			println("Tests end.")
-		}
-
-		@JvmStatic
-		@BeforeAll
-		fun before() {
-			println("Before tests")
-		}
+	@BeforeAll
+	fun setup() {
+		println("BEFORE")
 	}
 
-
-	@Test
-	fun test() {
-		assertEquals(1, 1)
+	@AfterAll
+	fun teardown() {
+		println("AFTER")
+		val ub = baseUserPayService.getPayData(userId = 3)
+		println("Balance = ${ub.balance}")
 	}
 
 	@Test
@@ -47,6 +37,6 @@ class PayTest(
 			userId = userId, delta = -10
 		)
 		val userPay = baseUserPayService.getPayData(userId = userId)
-		assertEquals(140, userPay.balance)
+		Assertions.assertEquals(140, userPay.balance)
 	}
 }

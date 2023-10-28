@@ -260,8 +260,8 @@ class UserServiceImpl(
 		val userEntity = userRepository.findByIdOrNull(userId) ?: throw UserNotFoundException()
 		val images = userEntity.images
 		var userImageEntity = images.firstOrNull() ?: run {
-			// +
 			userEntity.mainImg = null
+			userEntity.normImg = null
 			return null
 		}
 
@@ -272,9 +272,10 @@ class UserServiceImpl(
 				it.main = false
 			}
 		}
-		userEntity.mainImg = userImageEntity.miniUrl
-		// +
+
 		userImageEntity.main = true
+		userEntity.mainImg = if (userImageEntity.miniUrl != null) userImageEntity.miniUrl else userImageEntity.normalUrl
+		userEntity.normImg = userImageEntity.normalUrl
 		return userImageEntity.toBaseImage()
 	}
 
