@@ -16,7 +16,8 @@ fun ActivityEntity.toActivity() = Activity(
 	actionType = actionType,
 	activ = activ,
 	dept = user?.dept?.toDept(),
-	authId = authId
+	authId = authId,
+	awardScore = awardScore
 )
 
 fun ActivityEntity.toActivityOnlyAward() = Activity(
@@ -25,7 +26,8 @@ fun ActivityEntity.toActivityOnlyAward() = Activity(
 	award = award?.toAwardLazy(),
 	actionType = actionType,
 	activ = activ,
-	authId = authId
+	authId = authId,
+	awardScore = awardScore,
 )
 
 fun ActivityEntity.toActivityOnlyUser() = Activity(
@@ -34,7 +36,8 @@ fun ActivityEntity.toActivityOnlyUser() = Activity(
 	user = user?.toUser(),
 	actionType = actionType,
 	activ = activ,
-	authId = authId
+	authId = authId,
+	awardScore = awardScore,
 )
 
 fun ActivityEntity.toActivityUserLazy() = Activity(
@@ -44,7 +47,8 @@ fun ActivityEntity.toActivityUserLazy() = Activity(
 	award = award?.toAwardLazy() ?: Award(),
 	actionType = actionType,
 	activ = activ,
-	authId = authId
+	authId = authId,
+	awardScore = awardScore,
 )
 
 fun Activity.toActivityEntity(create: Boolean = false) = ActivityEntity(
@@ -54,5 +58,6 @@ fun Activity.toActivityEntity(create: Boolean = false) = ActivityEntity(
 	award = award?.toAwardEntity(),
 	actionType = actionType,
 	activ = activ,
-	authId = authId
+	authId = authId,
+	awardScore = awardScore,
 )

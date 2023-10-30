@@ -10,12 +10,11 @@ values (null, '/', 'R', 'ROOT'),
 ;;
 
 insert into dep.dept_details (dept_id, description)
-values
-    (1, 'ROOT DEPT'),
-    (2, 'Descr. dept 2'),
-    (3, 'Descr. dept 3'),
-    (4, 'Descr. dept 4'),
-    (5, 'Descr. dept 5')
+values (1, 'ROOT DEPT'),
+       (2, 'Descr. dept 2'),
+       (3, 'Descr. dept 3'),
+       (4, 'Descr. dept 4'),
+       (5, 'Descr. dept 5')
 ;;
 
 -- USERS
@@ -36,25 +35,29 @@ values (1, 'Owner User 1 - dept 2'),
 
 insert into users.user_roles (user_id, role_code)
 values (1, 'O'),
-       (1,'A'),
-       (1,'U'),
-       (2,'U'),
-       (3,'U'),
-       (4,'U')
+       (1, 'A'),
+       (1, 'U'),
+       (2, 'U'),
+       (3, 'U'),
+       (4, 'U')
 ;;
 
 -- AWARDS
 
 insert into md.award(dept_id, name, start_date, end_date, type_code, main_img)
-values (3, 'Award a1-d3', '2023-01-01', '2024-01-01', 'P', 'https://sun9-76.userapi.com/impg/nsvppU3QjXd_JZXaT4-PSBEiHkLKtKMyOjVfYQ/uh-9Seyagjg.jpg?size=888x828&quality=96&sign=98445680dd6e52fd86d636244719704f&c_uniq_tag=jRYqhUs8XdRwbaOFaNkn1Y3Q4qYo-l9qyYW_0MtBTK0&type=album')
+values (3, 'Award a1-d3', '2023-01-01', '2024-01-01', 'P',
+        'https://sun9-76.userapi.com/impg/nsvppU3QjXd_JZXaT4-PSBEiHkLKtKMyOjVfYQ/uh-9Seyagjg.jpg?size=888x828&quality=96&sign=98445680dd6e52fd86d636244719704f&c_uniq_tag=jRYqhUs8XdRwbaOFaNkn1Y3Q4qYo-l9qyYW_0MtBTK0&type=album'),
+       (3, 'Award a2-d3', '2023-01-01', '2024-01-01', 'S',
+        'https://sun9-76.userapi.com/impg/nsvppU3QjXd_JZXaT4-PSBEiHkLKtKMyOjVfYQ/uh-9Seyagjg.jpg?size=888x828&quality=96&sign=98445680dd6e52fd86d636244719704f&c_uniq_tag=jRYqhUs8XdRwbaOFaNkn1Y3Q4qYo-l9qyYW_0MtBTK0&type=album')
 ;;
 
 insert into md.award_details (award_id, description)
-values (1, 'a1')
+values (1, 'a1'),
+       (2, 'a2')
 ;;
 
 insert into md.activity (date, user_id, award_id, action_code, is_activ, auth_id)
-values ('2023-01-01', 2, 1, 'P', false,  1),
+values ('2023-01-01', 2, 1, 'P', false, 1),
        ('2023-01-02', 2, 1, 'A', false, 1),
        ('2023-01-03', 2, 1, 'D', false, 1),
        ('2023-01-04', 2, 1, 'A', true, 1),

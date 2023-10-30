@@ -9,7 +9,7 @@ import ru.md.msc.domain.award.model.ActionType
 
 fun ICorChainDsl<AwardContext>.validateActionType(title: String) = worker {
 	this.title = title
-	on { actionType == ActionType.UNDEF }
+	on { actionType in listOf(ActionType.UNDEF, ActionType.DELETE) }
 	handle {
 		fail(
 			errorValidation(

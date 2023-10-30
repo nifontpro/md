@@ -5,13 +5,12 @@ import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import org.hibernate.annotations.Where
 import org.hibernate.annotations.WhereJoinTable
-import ru.md.msc.db.award.model.ActivityEntity
-import ru.md.msc.db.award.model.AwardEntity
 import ru.md.base_db.dept.model.DeptEntity
 import ru.md.base_db.user.model.UserEntity
 import ru.md.base_db.user.model.UserImageEntity
-import ru.md.base_db.user.model.RoleEntity
 import ru.md.base_domain.user.model.Gender
+import ru.md.msc.db.award.model.ActivityEntity
+import ru.md.msc.db.award.model.AwardEntity
 import java.io.Serializable
 import java.util.*
 

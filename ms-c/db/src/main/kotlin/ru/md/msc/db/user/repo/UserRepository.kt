@@ -51,12 +51,6 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 	@Query("delete from UserEntity u where u.id = :userId")
 	override fun deleteById(userId: Long)
 
-	/**
-	 * Найти id отдела сотрудника
-	 */
-	@Query("select u.dept.id from UserEntity u where u.id = :userId")
-	fun findDeptId(userId: Long): Long?
-
 //	/**
 //	 * Найти parentId отдела сотрудника
 //	 */

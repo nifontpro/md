@@ -21,12 +21,14 @@ fun ICorChainDsl<AwardContext>.addAwardAction(title: String) = worker {
 
 		val newActivity = Activity(
 			user = user,
+//			user = User(id = userId),
 			award = award,
 			date = LocalDateTime.now(),
 			actionType = actionType,
 			activ = actionType == ActionType.NOMINEE || actionType == ActionType.AWARD,
 			dept = user.dept,
-			authId = authId
+			authId = authId,
+			awardScore = if (actionType == ActionType.AWARD) award.score else 0,
 		)
 		activity = awardService.sendActivity(activity = newActivity)
 	}

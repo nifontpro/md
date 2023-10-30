@@ -13,4 +13,5 @@ data class Activity(
 	val activ: Boolean = true,
 	val dept: Dept? = null,
 	val authId: Long = 0,
+	val awardScore: Int = 0,
 )

@@ -70,7 +70,7 @@ class ProductController(
 	}
 
 	@PostMapping("get_dept")
-	private suspend fun getById(
+	private suspend fun getByDept(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetProductByDeptRequest
 	): BaseResponse<List<Product>> {
@@ -84,7 +84,7 @@ class ProductController(
 	}
 
 	@PostMapping("delete")
-	private suspend fun update(
+	private suspend fun delete(
 		@RequestBody request: DeleteProductRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<ProductDetailsResponse> {

@@ -32,6 +32,9 @@ class AwardEntity(
 
 	var name: String = "",
 
+	@Column(name = "short_descript")
+	var shortDescription: String? = null,
+
 	@Column(name = "main_img")
 	var mainImg: String? = null,
 

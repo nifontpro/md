@@ -7,6 +7,7 @@ data class UpdateAwardRequest(
 	val awardId: Long = 0,
 
 	val name: String = "",
+	val shortDescription: String? = null,
 	val type: AwardType = AwardType.UNDEF,
 	val startDate: Long = 0,
 	val endDate: Long = 0,

@@ -7,5 +7,3 @@ import ru.md.msc.db.ClientApplication
 fun main(args: Array<String>) {
 	fromApplication<ClientApplication>().with(TestBeans::class).run(*args)
 }
-
-

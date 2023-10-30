@@ -69,6 +69,9 @@ class ActivityEntity(
 	@Column(name = "auth_id")
 	var authId: Long = 0,
 
+	@Column(name = "award_score")
+	var awardScore: Int = 0,
+
 	) {
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true

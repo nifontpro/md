@@ -16,6 +16,7 @@ fun AwardContext.fromTransport(request: CreateAwardRequest) {
 
 	award = Award(
 		name = request.name,
+		shortDescription = request.shortDescription,
 		type = request.type,
 		startDate = request.startDate.toLocalDateTimeUTC(),
 		endDate = request.endDate.toLocalDateTimeUTC(),
@@ -38,6 +39,7 @@ fun AwardContext.fromTransport(request: UpdateAwardRequest) {
 	award = Award(
 		id = awardId,
 		name = request.name,
+		shortDescription = request.shortDescription,
 		type = request.type,
 		startDate = request.startDate.toLocalDateTimeUTC(),
 		endDate = request.endDate.toLocalDateTimeUTC(),

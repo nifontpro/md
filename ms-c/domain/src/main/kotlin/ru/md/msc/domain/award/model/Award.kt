@@ -8,6 +8,7 @@ import java.time.LocalDateTime
 data class Award(
 	val id: Long = 0,
 	val name: String = "",
+	val shortDescription: String? = null,
 	val mainImg: String? = null,
 	val normImg: String? = null,
 	val type: AwardType = AwardType.UNDEF,

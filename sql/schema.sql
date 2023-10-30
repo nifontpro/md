@@ -369,6 +369,7 @@ CREATE TABLE IF NOT EXISTS md.award
     main_img text COLLATE pg_catalog."default",
     norm_img text COLLATE pg_catalog."default",
     score integer NOT NULL DEFAULT 1,
+    short_descript text COLLATE pg_catalog."default",
     CONSTRAINT dept_id_fkey FOREIGN KEY (dept_id)
         REFERENCES dep.dept (id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -409,6 +410,7 @@ CREATE TABLE IF NOT EXISTS md.activity
     action_code text COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::text,
     is_activ boolean NOT NULL,
     auth_id bigint NOT NULL,
+    award_score integer NOT NULL DEFAULT 0,
     CONSTRAINT auth_id_fkey FOREIGN KEY (auth_id)
         REFERENCES users.user_data (id) MATCH SIMPLE
         ON UPDATE NO ACTION

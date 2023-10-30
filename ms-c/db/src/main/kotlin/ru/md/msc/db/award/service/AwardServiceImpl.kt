@@ -14,6 +14,8 @@ import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.image.model.ImageType
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
+import ru.md.base_domain.pay.service.BaseUserPayService
+import ru.md.base_domain.user.biz.errors.UserNotFoundException
 import ru.md.msc.db.award.model.image.AwardImageEntity
 import ru.md.msc.db.award.model.mapper.*
 import ru.md.msc.db.award.repo.ActivityRepository
@@ -37,6 +39,7 @@ class AwardServiceImpl(
 	private val activityRepository: ActivityRepository,
 	private val baseDeptRepository: BaseDeptRepository,
 	private val deptUtil: DeptUtil,
+	private val baseUserPayService: BaseUserPayService,
 ) : AwardService {
 
 	override fun create(awardDetails: AwardDetails): AwardDetails {
@@ -51,6 +54,7 @@ class AwardServiceImpl(
 		}
 		with(oldAwardDetailsEntity) {
 			award.name = awardDetails.award.name
+			award.shortDescription = awardDetails.award.shortDescription
 			award.type = awardDetails.award.type
 			award.startDate = awardDetails.award.startDate
 			award.endDate = awardDetails.award.endDate
@@ -116,8 +120,6 @@ class AwardServiceImpl(
 			awardType = AwardType.PERIOD
 		)
 
-		println("excludeAwardIds = $excludeAwardIds")
-
 		val pageRequest = baseQuery.toPageRequest()
 		val deptsIds = baseDeptRepository.subTreeIds(deptId = deptId)
 
@@ -147,8 +149,6 @@ class AwardServiceImpl(
 			actionType = ActionType.AWARD,
 			awardType = AwardType.SIMPLE
 		)
-
-		println("excludeAwardIds = $excludeAwardIds")
 
 		val pageRequest = baseQuery.toPageRequest()
 		val deptsIds = baseDeptRepository.subTreeIds(deptId = deptId)
@@ -236,12 +236,14 @@ class AwardServiceImpl(
 	 * Сохраняем действие с наградой
 	 */
 	override fun sendActivity(activity: Activity): Activity {
+		val award = activity.award ?: throw AwardNotFoundException()
 		val activities = activityRepository.findByUserIdAndAwardId(
 			userId = activity.user?.id ?: 0, awardId = activity.award?.id ?: 0
 		)
+
 		activities.forEach {
 			if (it.activ) {
-				if (it.actionType == activity.actionType) {
+				if (it.actionType == activity.actionType && award.type == AwardType.PERIOD) {
 					throw AlreadyActionException()
 				}
 				it.activ = false
@@ -249,6 +251,16 @@ class AwardServiceImpl(
 		}
 		val activityEntity = activity.toActivityEntity(create = true)
 		activityRepository.save(activityEntity)
+
+		if (activity.actionType == ActionType.AWARD) {
+			val userId = activity.user?.id ?: throw UserNotFoundException()
+			baseUserPayService.changeBalance(
+				userId = userId,
+				delta = award.score,
+				comment = "Пополнение баланса за награду ${award.name}"
+			)
+		}
+
 		return activityEntity.toActivity()
 	}
 

@@ -11,3 +11,7 @@ values
     (1, 'Описание 1 приза', 'https://site1.ru'),
     (2, 'Описание 2 приза', 'https://site2.ru')
 ;;
+
+insert into shop.user_pay(user_id, balance)
+values
+    (2, 33)

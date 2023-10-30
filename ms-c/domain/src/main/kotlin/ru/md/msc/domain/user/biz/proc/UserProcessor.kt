@@ -26,6 +26,7 @@ import ru.md.base_domain.image.biz.workers.addImageToS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.base_domain.s3.repo.BaseS3Repository
+import ru.md.base_domain.user.biz.workers.getDeptIdByUserId
 import ru.md.base_domain.user.service.BaseUserService
 import ru.md.msc.domain.user.biz.proc.operation.deleteUserOperation
 import ru.md.msc.domain.user.biz.validate.*

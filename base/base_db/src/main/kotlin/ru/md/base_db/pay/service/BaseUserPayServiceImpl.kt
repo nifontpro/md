@@ -1,11 +1,11 @@
 package ru.md.base_db.pay.service
 
 import jakarta.transaction.Transactional
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import ru.md.base_db.pay.model.UserPayEntity
-import ru.md.base_db.pay.model.mappers.toUserPay
 import ru.md.base_db.pay.repo.BaseUserPayRepo
-import ru.md.base_domain.pay.model.UserPay
 import ru.md.base_domain.pay.service.BaseUserPayService
 
 @Service
@@ -14,18 +14,19 @@ class BaseUserPayServiceImpl(
 ) : BaseUserPayService {
 
 	@Transactional
-	override fun changeBalance(userId: Long, delta: Int, comment: String?) {
+	override fun changeBalance(userId: Long, delta: Int, comment: String?): Int {
 		val userPayEntity = baseUserPayRepo.findByUserId(userId) ?: run {
 			val newUserPayEntity = UserPayEntity(userId = userId, balance = delta)
 			baseUserPayRepo.save(newUserPayEntity)
-			return
+			return delta
 		}
 		userPayEntity.balance += delta
+		log.info("Пополнение баланса пользователя $userId на $delta, остаток: ${userPayEntity.balance}")
+		return userPayEntity.balance
 	}
 
-	override fun getPayData(userId: Long): UserPay {
-		val userPayEntity = baseUserPayRepo.findByUserId(userId) ?: throw Exception()
-		return userPayEntity.toUserPay()
+	companion object {
+		val log: Logger = LoggerFactory.getLogger(BaseUserPayService::class.java)
 	}
 
 }
