@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS shop.product
     dept_id bigint NOT NULL,
     name text COLLATE pg_catalog."default" NOT NULL,
     price integer NOT NULL,
+    all_count integer NOT NULL DEFAULT 0,
     main_img text COLLATE pg_catalog."default",
     norm_img text COLLATE pg_catalog."default",
     CONSTRAINT product_pkey PRIMARY KEY (id),

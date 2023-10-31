@@ -1,12 +1,12 @@
 package ru.md.msc.rest.award.mappers
 
+import ru.md.base_domain.dept.model.Dept
 import ru.md.base_domain.model.mappers.toLocalDateTimeUTC
 import ru.md.base_rest.model.mapper.toBaseQuery
 import ru.md.msc.domain.award.biz.proc.AwardCommand
 import ru.md.msc.domain.award.biz.proc.AwardContext
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.domain.award.model.AwardDetails
-import ru.md.base_domain.dept.model.Dept
 import ru.md.msc.rest.award.model.request.*
 
 fun AwardContext.fromTransport(request: CreateAwardRequest) {
@@ -16,7 +16,7 @@ fun AwardContext.fromTransport(request: CreateAwardRequest) {
 
 	award = Award(
 		name = request.name,
-		shortDescription = request.shortDescription,
+		description = request.description,
 		type = request.type,
 		startDate = request.startDate.toLocalDateTimeUTC(),
 		endDate = request.endDate.toLocalDateTimeUTC(),
@@ -26,7 +26,6 @@ fun AwardContext.fromTransport(request: CreateAwardRequest) {
 
 	awardDetails = AwardDetails(
 		award = award,
-		description = request.description,
 		criteria = request.criteria,
 	)
 }
@@ -39,7 +38,7 @@ fun AwardContext.fromTransport(request: UpdateAwardRequest) {
 	award = Award(
 		id = awardId,
 		name = request.name,
-		shortDescription = request.shortDescription,
+		description = request.description,
 		type = request.type,
 		startDate = request.startDate.toLocalDateTimeUTC(),
 		endDate = request.endDate.toLocalDateTimeUTC(),
@@ -48,7 +47,6 @@ fun AwardContext.fromTransport(request: UpdateAwardRequest) {
 
 	awardDetails = AwardDetails(
 		award = award,
-		description = request.description,
 		criteria = request.criteria,
 	)
 }

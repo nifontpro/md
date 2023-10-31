@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import ru.md.msc.db.award.model.ActivityEntity
 import ru.md.msc.domain.award.model.*
-import ru.md.msc.domain.dept.model.CountByDept
 import java.time.LocalDateTime
 
 @Repository
@@ -26,7 +25,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		(coalesce(:minDate, null) is null or a.date >= :minDate) and
 		(coalesce(:maxDate, null) is null or a.date <= :maxDate) and 
 		((:filter is null) or
-			(upper(a.award.name) like upper(:filter))
+			(upper(a.award.name) like :filter)
 		)
 		"""
 	)
@@ -48,8 +47,8 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		(coalesce(:minDate, null) is null or a.date >= :minDate) and
 		(coalesce(:maxDate, null) is null or a.date <= :maxDate) and 
 		((:filter is null) or (
-			upper(a.user.lastname) like upper(:filter) or 
-			upper(a.user.firstname) like upper(:filter)
+			upper(a.user.lastname) like :filter or 
+			upper(a.user.firstname) like :filter
 		))
 		"""
 	)
@@ -72,8 +71,8 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		a.award.id = :awardId and a.activ and 
 		(:actionType is null or a.actionType = :actionType) and 
 		((:filter is null) or (
-			upper(a.user.lastname) like upper(:filter) or 
-			upper(a.user.firstname) like upper(:filter)
+			upper(a.user.lastname) like :filter or 
+			upper(a.user.firstname) like :filter
 		))
 		"""
 	)
@@ -93,7 +92,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		a.user.id = :userId and a.activ and a.award.type = :awardType and
 		(:actionType is null or a.actionType = :actionType) and 
 		((:filter is null) or (
-			upper(a.award.name) like upper(:filter) 
+			upper(a.award.name) like :filter 
 		))
 		"""
 	)
@@ -113,9 +112,9 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		(coalesce(:maxDate, null) is null or a.date <= :maxDate) and 
 		(:awardState is null or a.award.state = :awardState) and
 		((:filter is null) or (
-			upper(a.user.lastname) like upper(:filter) or 
-			upper(a.user.firstname) like upper(:filter) or 
-			upper(a.award.name) like upper(:filter)
+			upper(a.user.lastname) like :filter or 
+			upper(a.user.firstname) like :filter or 
+			upper(a.award.name) like :filter
 		))
 	"""
 	)

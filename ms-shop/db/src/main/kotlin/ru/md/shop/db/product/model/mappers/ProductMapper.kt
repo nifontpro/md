@@ -8,6 +8,7 @@ fun Product.toProductEntity() = ProductEntity(
 	deptId = deptId,
 	name = name,
 	price = price,
+	count = count,
 	mainImg = mainImg,
 	normImg = normImg
 )
@@ -17,6 +18,7 @@ fun ProductEntity.toProduct() = Product(
 	deptId = deptId,
 	name = name,
 	price = price,
+	count = count,
 	mainImg = mainImg,
 	normImg = normImg
 )

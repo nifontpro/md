@@ -286,6 +286,37 @@ END;
 
 $BODY$;;
 
+CREATE OR REPLACE FUNCTION dep.get_company_level_id(
+    dept_id bigint)
+    RETURNS bigint
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+    curent_id bigint := $1;
+    c_id bigint;
+    curent_level int;
+    company_level bigint;
+
+BEGIN
+    WHILE curent_id IS NOT NULL LOOP
+            SELECT id, parent_id, level
+            INTO c_id, curent_id, curent_level
+            FROM dep.dept where id = curent_id;
+
+            IF curent_level = 2
+            THEN
+                company_level := c_id;
+                EXIT;
+            END IF;
+
+        END LOOP;
+    RETURN company_level;
+END;
+
+$BODY$;;
+
 -- USERS
 
 CREATE TABLE IF NOT EXISTS users.user_data
@@ -369,7 +400,7 @@ CREATE TABLE IF NOT EXISTS md.award
     main_img text COLLATE pg_catalog."default",
     norm_img text COLLATE pg_catalog."default",
     score integer NOT NULL DEFAULT 1,
-    short_descript text COLLATE pg_catalog."default",
+    description text COLLATE pg_catalog."default",
     CONSTRAINT dept_id_fkey FOREIGN KEY (dept_id)
         REFERENCES dep.dept (id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -379,7 +410,6 @@ CREATE TABLE IF NOT EXISTS md.award
 CREATE TABLE IF NOT EXISTS md.award_details
 (
     award_id bigint NOT NULL,
-    description text COLLATE pg_catalog."default",
     criteria text COLLATE pg_catalog."default",
     created_at timestamp without time zone DEFAULT now(),
     CONSTRAINT award_details_pkey PRIMARY KEY (award_id),

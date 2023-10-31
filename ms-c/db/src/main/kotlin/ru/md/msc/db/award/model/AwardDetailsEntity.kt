@@ -12,8 +12,6 @@ class AwardDetailsEntity(
 	@Column(name = "award_id")
 	var id: Long? = null,
 
-	var description: String? = null,
-
 	var criteria: String? = null,
 
 	@Column(name = "created_at")
@@ -29,10 +27,10 @@ class AwardDetailsEntity(
 		if (this === other) return true
 		if (other == null || javaClass != other.javaClass) return false
 		val that = other as AwardDetailsEntity
-		return id == that.id && description == that.description && criteria == that.criteria && createdAt == that.createdAt
+		return id == that.id  && criteria == that.criteria && createdAt == that.createdAt
 	}
 
 	override fun hashCode(): Int {
-		return Objects.hash(id, description, criteria, createdAt)
+		return Objects.hash(id, criteria, createdAt)
 	}
 }

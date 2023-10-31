@@ -5,8 +5,8 @@ insert into dep.dept
 values (null, '/', 'R', 'ROOT'),
        (1, 'Owner Dept id=2', 'U', 'Owner Dept'),
        (2, 'Dept 3, id=3', 'D', 'Dept'),
-       (2, 'Dept 4, id=4', 'D', 'Dept'),
-       (2, 'Dept 5, id=5', 'D', 'Dept')
+       (3, 'Dept 4, id=4', 'D', 'Dept'),
+       (4, 'Dept 5, id=5', 'D', 'Dept')
 ;;
 
 insert into dep.dept_details (dept_id, description)
@@ -39,19 +39,20 @@ values (1, 'O'),
        (1, 'U'),
        (2, 'U'),
        (3, 'U'),
+       (4, 'A'),
        (4, 'U')
 ;;
 
 -- AWARDS
 
-insert into md.award(dept_id, name, start_date, end_date, type_code, main_img)
-values (3, 'Award a1-d3', '2023-01-01', '2024-01-01', 'P',
+insert into md.award(dept_id, name, description, start_date, end_date, type_code, main_img)
+values (3, 'Award a1-d3', 'a1', '2023-01-01', '2024-01-01', 'P',
         'https://sun9-76.userapi.com/impg/nsvppU3QjXd_JZXaT4-PSBEiHkLKtKMyOjVfYQ/uh-9Seyagjg.jpg?size=888x828&quality=96&sign=98445680dd6e52fd86d636244719704f&c_uniq_tag=jRYqhUs8XdRwbaOFaNkn1Y3Q4qYo-l9qyYW_0MtBTK0&type=album'),
-       (3, 'Award a2-d3', '2023-01-01', '2024-01-01', 'S',
+       (3, 'Award a2-d3', 'a2', '2023-01-01', '2024-01-01', 'S',
         'https://sun9-76.userapi.com/impg/nsvppU3QjXd_JZXaT4-PSBEiHkLKtKMyOjVfYQ/uh-9Seyagjg.jpg?size=888x828&quality=96&sign=98445680dd6e52fd86d636244719704f&c_uniq_tag=jRYqhUs8XdRwbaOFaNkn1Y3Q4qYo-l9qyYW_0MtBTK0&type=album')
 ;;
 
-insert into md.award_details (award_id, description)
+insert into md.award_details (award_id, criteria)
 values (1, 'a1'),
        (2, 'a2')
 ;;

@@ -5,6 +5,7 @@ data class Product (
 	val deptId: Long = 0,
 	val name: String = "",
 	val price: Int = 0,
+	val count: Int = 0,
 	val mainImg: String? = null,
 	val normImg: String? = null,
 )

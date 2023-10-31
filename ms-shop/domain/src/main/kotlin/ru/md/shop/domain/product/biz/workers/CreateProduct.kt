@@ -13,6 +13,7 @@ fun ICorChainDsl<ProductContext>.createProduct(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
+		productDetails = productDetails.copy(product = product.copy(deptId = deptId))
 		productDetails = productService.create(productDetails)
 	}
 

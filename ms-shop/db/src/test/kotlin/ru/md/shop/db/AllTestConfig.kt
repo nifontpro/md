@@ -4,14 +4,14 @@ import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import ru.md.base_domain.pay.service.BaseUserPayService
-import ru.md.shop.domain.pay.service.UserPayService
+import ru.md.shop.domain.pay.service.PayService
 
 
 @SpringBootTest(classes = [TestBeans::class])
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class BeforeAndAfterAnnotationsUnitTest(
 	@Autowired private val baseUserPayService: BaseUserPayService,
-	@Autowired private val userPayService: UserPayService,
+	@Autowired private val payService: PayService,
 ) {
 
 	@BeforeAll
@@ -22,7 +22,7 @@ class BeforeAndAfterAnnotationsUnitTest(
 	@AfterAll
 	fun teardown() {
 		println("AFTER")
-		val ub = userPayService.getPayData(userId = 3)
+		val ub = payService.getUserPayData(userId = 3)
 		println("Balance = ${ub.balance}")
 	}
 
@@ -38,7 +38,7 @@ class BeforeAndAfterAnnotationsUnitTest(
 		baseUserPayService.changeBalance(
 			userId = userId, delta = -10
 		)
-		val userPay = userPayService.getPayData(userId = userId)
+		val userPay = payService.getUserPayData(userId = userId)
 		Assertions.assertEquals(140, userPay.balance)
 	}
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import ru.md.base_db.base.mapper.toPageRequest
 import ru.md.base_db.base.mapper.toPageResult
 import ru.md.base_db.base.mapper.toSearch
-import ru.md.base_db.base.mapper.toSearchOrNull
+import ru.md.base_db.base.mapper.toSearchUpperOrNull
 import ru.md.base_db.dept.model.DeptEntity
 import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.base_db.user.model.RoleEntity
@@ -200,7 +200,7 @@ class UserServiceImpl(
 		val pageRequest = baseQuery.toPageRequest()
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 
-		val filter = baseQuery.filter.toSearchOrNull()
+		val filter = baseQuery.filter.toSearchUpperOrNull()
 
 		val excludeUsersIds = activityRepository.findActivityUserIdsByAwardId(
 			awardId = awardId,
@@ -307,7 +307,7 @@ class UserServiceImpl(
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		val users = userRepository.findUsersWithAwardCount(
 			deptsIds = deptsIds,
-			filter = baseQuery.filter.toSearchOrNull(),
+			filter = baseQuery.filter.toSearchUpperOrNull(),
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 			pageable = baseQuery.toPageRequest()

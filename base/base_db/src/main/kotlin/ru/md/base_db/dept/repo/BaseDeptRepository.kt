@@ -36,6 +36,12 @@ interface BaseDeptRepository : JpaRepository<DeptEntity, Long> {
 	fun getOwnerRootId(deptId: Long): Long?
 
 	/**
+	 * Получить отдел компании (level = 2) от текущего [deptId]
+	 */
+	@Query("select * from dep.get_company_level_id(:deptId)", nativeQuery = true)
+	fun getCompanyDeptId(deptId: Long): Long?
+
+	/**
 	 * Получить отдел верхнего уровня просмотра (top-level) от текущего [deptId]
 	 */
 	@Query("select * from dep.get_top_level_id(:deptId)", nativeQuery = true)

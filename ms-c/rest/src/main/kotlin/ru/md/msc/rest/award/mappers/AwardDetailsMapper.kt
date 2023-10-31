@@ -6,7 +6,6 @@ import ru.md.msc.rest.award.model.response.AwardDetailsResponse
 
 fun AwardDetails.toAwardDetailsResponse() = AwardDetailsResponse(
 	award = award.toAwardResponseWithUsers(),
-	description = description,
 	criteria = criteria,
 	createdAt = createdAt?.toEpochMilliUTC()
 )

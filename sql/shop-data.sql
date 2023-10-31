@@ -1,9 +1,9 @@
 -- DEPTS
 
 insert into shop.product
-    (dept_id, name, price)
-values (3, 'Приз 1 отдела 3', 100),
-       (3, 'Приз 2 отдела 3', 40)
+    (dept_id, name, price, all_count)
+values (3, 'Приз 1 отдела 3', 100, 10),
+       (3, 'Приз 2 отдела 3', 40, 5)
 ;;
 
 insert into shop.product_details (product_id, description, site_url)

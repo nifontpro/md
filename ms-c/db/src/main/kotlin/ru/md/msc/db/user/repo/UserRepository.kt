@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
-import ru.md.msc.db.user.model.IUser
 import ru.md.base_db.user.model.UserEntity
+import ru.md.msc.db.user.model.IUser
 import ru.md.msc.domain.user.model.GenderCount
 import java.time.LocalDateTime
 
@@ -34,8 +34,8 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 	@Query("""from UserEntity u where u.dept.id in :deptsIds and 
 		((:notExclude = true) or (u.id not in :usersIds)) and
 		((:filter is null) or (
-			upper(u.lastname) like upper(:filter) or 
-			upper(u.firstname) like upper(:filter)
+			upper(u.lastname) like :filter or 
+			upper(u.firstname) like :filter
 		))
 
 	""")
@@ -101,15 +101,15 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 		from users.user_data u left join dep.dept d on u.dept_id = d.id
 		where u.dept_id in (:deptsIds) and
 		((:filter is null) or (
-			upper(u.lastname) like upper(:filter) or 
-			upper(u.firstname) like upper(:filter)
+			upper(u.lastname) like :filter or 
+			upper(u.firstname) like :filter
 		))
 	""",
 		countQuery = """
 			select count(*) from users.user_data u where u.dept_id in :deptsIds and
 		((:filter is null) or (
-			upper(u.lastname) like upper(:filter) or 
-			upper(u.firstname) like upper(:filter)
+			upper(u.lastname) like :filter or 
+			upper(u.firstname) like :filter
 		))
 		""", nativeQuery = true
 	)

@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import ru.md.base_domain.pay.service.BaseUserPayService
 import ru.md.shop.db.TestBeans
-import ru.md.shop.domain.pay.service.UserPayService
+import ru.md.shop.domain.pay.service.PayService
 
 @SpringBootTest(classes = [TestBeans::class])
 class PayTest(
 	@Autowired private val baseUserPayService: BaseUserPayService,
-	@Autowired private val userPayService: UserPayService,
+	@Autowired private val payService: PayService,
 ) {
 
 	companion object {
@@ -48,7 +48,7 @@ class PayTest(
 		baseUserPayService.changeBalance(
 			userId = userId, delta = -10
 		)
-		val userPay = userPayService.getPayData(userId = userId)
+		val userPay = payService.getUserPayData(userId = userId)
 		assertEquals(140, userPay.balance)
 	}
 }

@@ -9,4 +9,5 @@ interface BaseDeptService {
 	fun findTopLevelDeptId(deptId: Long): Long
 	fun findTopLevelDept(deptId: Long): Dept
 	fun getRootId(deptId: Long): Long?
+	fun getCompanyDeptId(deptId: Long): Long
 }

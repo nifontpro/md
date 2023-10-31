@@ -15,13 +15,12 @@ fun ICorChainDsl<AwardContext>.trimFieldAwardDetails(title: String) = worker {
 
 		award = award.copy(
 			name = award.name.trim(),
-			shortDescription = award.shortDescription?.trim(),
+			description = award.description?.trim(),
 			endDate = if (award.type == AwardType.SIMPLE) award.startDate else award.endDate,
 		)
 
 		awardDetails = awardDetails.copy(
 			award = award,
-			description = awardDetails.description?.trim(),
 			criteria = awardDetails.criteria?.trim()
 		)
 	}

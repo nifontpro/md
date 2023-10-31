@@ -24,8 +24,7 @@ fun <T : BaseMedalsContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: Str
 			return@handle
 		}
 
-		log.info("authUser.authEmail ${authUser.authEmail}")
-		log.info("authEmail $authEmail")
+		log.info("authUser: $authUser")
 
 		if (authUser.authEmail != authEmail) {
 			fail(

@@ -13,8 +13,8 @@ fun ProductContext.fromTransport(request: CreateProductRequest) {
 
 	product = Product(
 		name = request.name,
-		deptId = deptId,
 		price = request.price,
+		count = request.count,
 	)
 
 	productDetails = ProductDetails(
@@ -40,6 +40,7 @@ fun ProductContext.fromTransport(request: UpdateProductRequest) {
 		name = request.name,
 		deptId = deptId,
 		price = request.price,
+		count = request.count,
 	)
 
 	productDetails = ProductDetails(
@@ -56,7 +57,7 @@ fun ProductContext.fromTransport(request: GetProductByIdRequest) {
 }
 
 fun ProductContext.fromTransport(request: GetProductByDeptRequest) {
-	command = ProductCommand.GET_BY_DEPT
+	command = ProductCommand.GET_BY_COMPANY
 	authId = request.authId
 	deptId = request.deptId
 }

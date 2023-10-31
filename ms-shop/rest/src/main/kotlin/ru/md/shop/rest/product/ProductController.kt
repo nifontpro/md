@@ -69,7 +69,7 @@ class ProductController(
 		)
 	}
 
-	@PostMapping("get_dept")
+	@PostMapping("get_company")
 	private suspend fun getByDept(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetProductByDeptRequest

@@ -10,7 +10,7 @@ import ru.md.msc.rest.user.mappers.toUserResponse
 fun Award.toAwardResponseWithUsers() = AwardResponse(
 	id = id,
 	name = name,
-	shortDescription = shortDescription,
+	description = description,
 	type = type,
 	mainImg = mainImg,
 	normImg = normImg,
@@ -26,7 +26,7 @@ fun Award.toAwardResponseWithUsers() = AwardResponse(
 fun Award.toAwardResponse() = AwardResponse(
 	id = id,
 	name = name,
-	shortDescription = shortDescription,
+	description = description,
 	type = type,
 	mainImg = mainImg,
 	normImg = normImg,

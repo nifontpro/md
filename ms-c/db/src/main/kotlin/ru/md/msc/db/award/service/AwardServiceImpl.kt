@@ -5,7 +5,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.base_db.base.mapper.toPageRequest
 import ru.md.base_db.base.mapper.toPageResult
-import ru.md.base_db.base.mapper.toSearchOrNull
+import ru.md.base_db.base.mapper.toSearchUpperOrNull
 import ru.md.base_db.dept.repo.BaseDeptRepository
 import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.base_domain.errors.ImageNotFoundException
@@ -54,11 +54,10 @@ class AwardServiceImpl(
 		}
 		with(oldAwardDetailsEntity) {
 			award.name = awardDetails.award.name
-			award.shortDescription = awardDetails.award.shortDescription
+			award.description = awardDetails.award.description
 			award.type = awardDetails.award.type
 			award.startDate = awardDetails.award.startDate
 			award.endDate = awardDetails.award.endDate
-			description = awardDetails.description
 			criteria = awardDetails.criteria
 		}
 		return oldAwardDetailsEntity.toAwardDetails()
@@ -89,7 +88,7 @@ class AwardServiceImpl(
 				state = awardState,
 				minDate = baseQuery.minDate,
 				maxDate = baseQuery.maxDate,
-				filter = baseQuery.filter.toSearchOrNull(),
+				filter = baseQuery.filter.toSearchUpperOrNull(),
 				pageable = pageRequest
 			).toPageResult { it.toAwardWithDeptAndUsers() }
 		} else {
@@ -98,7 +97,7 @@ class AwardServiceImpl(
 				state = awardState,
 				minDate = baseQuery.minDate,
 				maxDate = baseQuery.maxDate,
-				filter = baseQuery.filter.toSearchOrNull(),
+				filter = baseQuery.filter.toSearchUpperOrNull(),
 				pageable = pageRequest
 			).toPageResult { it.toAwardOnlyDept() }
 		}
@@ -111,7 +110,7 @@ class AwardServiceImpl(
 		baseQuery: BaseQuery
 	): PageResult<Award> {
 
-		val filter = baseQuery.filter.toSearchOrNull()
+		val filter = baseQuery.filter.toSearchUpperOrNull()
 
 		val excludeAwardIds = activityRepository.findActivityAwardIdsByUserId(
 			userId = userId,
@@ -141,7 +140,7 @@ class AwardServiceImpl(
 		baseQuery: BaseQuery
 	): PageResult<Award> {
 
-		val filter = baseQuery.filter.toSearchOrNull()
+		val filter = baseQuery.filter.toSearchUpperOrNull()
 
 		val excludeAwardIds = activityRepository.findActivityAwardIdsByUserId(
 			userId = userId,
@@ -273,7 +272,7 @@ class AwardServiceImpl(
 			userId = userId,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
-			filter = baseQuery.filter.toSearchOrNull(),
+			filter = baseQuery.filter.toSearchUpperOrNull(),
 			awardType = awardType,
 			pageable = baseQuery.toPageRequest()
 		)
@@ -289,7 +288,7 @@ class AwardServiceImpl(
 			awardId = awardId,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
-			filter = baseQuery.filter.toSearchOrNull(),
+			filter = baseQuery.filter.toSearchUpperOrNull(),
 			actionType = actionType,
 			pageable = baseQuery.toPageRequest()
 		)
@@ -308,7 +307,7 @@ class AwardServiceImpl(
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 			awardState = awardState,
-			filter = baseQuery.filter.toSearchOrNull(),
+			filter = baseQuery.filter.toSearchUpperOrNull(),
 			pageable = pageRequest
 		)
 		return activities.toPageResult { it.toActivity() }

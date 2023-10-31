@@ -12,6 +12,7 @@ abstract class BaseMedalsContext(
 	var authUser: User = User(),
 	var user: User = User(),
 	var isAuthUserHasAdminRole: Boolean = false,
+	var isAuthUserHasOwnerRole: Boolean = false,
 
 	var authId: Long = 0,
 	var userId: Long = 0,

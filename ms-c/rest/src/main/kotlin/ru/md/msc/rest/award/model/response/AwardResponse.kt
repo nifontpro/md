@@ -9,7 +9,7 @@ import ru.md.msc.rest.user.model.response.UserResponse
 data class AwardResponse(
 	val id: Long = 0,
 	val name: String = "",
-	val shortDescription: String? = null,
+	val description: String? = null,
 	val mainImg: String? = null,
 	val normImg: String? = null,
 	val type: AwardType = AwardType.UNDEF,

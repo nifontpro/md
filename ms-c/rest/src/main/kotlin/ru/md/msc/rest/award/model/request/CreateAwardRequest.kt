@@ -7,12 +7,11 @@ data class CreateAwardRequest(
 	val deptId: Long = 0,
 
 	val name: String = "",
-	val shortDescription: String? = null,
+	val description: String? = null,
 	val type: AwardType = AwardType.UNDEF,
 	val startDate: Long = 0,
 	val endDate: Long = 0,
 	val score: Int = 1,
 
-	val description: String? = null,
 	val criteria: String? = null
 )

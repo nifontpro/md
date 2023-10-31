@@ -35,6 +35,16 @@ fun BaseMedalsContext.topLevelDeptNotFound() {
 	)
 }
 
+fun BaseMedalsContext.companyDeptNotFoundError() {
+	fail(
+		errorDb(
+			repository = "dept",
+			violationCode = "company id not found",
+			description = "Id Компании не найден"
+		)
+	)
+}
+
 fun BaseMedalsContext.getDeptError() {
 	fail(
 		errorDb(
@@ -65,5 +75,6 @@ fun BaseMedalsContext.deptAuthError() {
 }
 
 class RootDeptNotFoundException(message: String = "") : RuntimeException(message)
+class CompanyDeptNotFoundException(message: String = "") : RuntimeException(message)
 class DeptNotFoundException(message: String = "") : RuntimeException(message)
 class TopLevelDeptNotFoundException(message: String = "") : RuntimeException(message)

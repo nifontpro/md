@@ -16,7 +16,7 @@ import ru.md.shop.db.product.model.mappers.toProductDetails
 import ru.md.shop.db.product.model.mappers.toProductDetailsEntity
 import ru.md.shop.db.product.repo.ProductDetailsRepository
 import ru.md.shop.db.product.repo.ProductImageRepository
-import ru.md.shop.db.product.repo.ProductRepository
+import ru.md.shop.db.product.repo.ProductRepo
 import ru.md.shop.domain.product.biz.proc.ProductNotFoundException
 import ru.md.shop.domain.product.model.Product
 import ru.md.shop.domain.product.model.ProductDetails
@@ -25,7 +25,7 @@ import java.time.LocalDateTime
 
 @Service
 class ProductServiceImpl(
-	private val productRepository: ProductRepository,
+	private val productRepo: ProductRepo,
 	private val productDetailsRepository: ProductDetailsRepository,
 	private val productImageRepository: ProductImageRepository,
 ) : ProductService {
@@ -55,7 +55,7 @@ class ProductServiceImpl(
 
 	@Transactional
 	override fun deleteById(productId: Long) {
-		productRepository.deleteById(productId)
+		productRepo.deleteById(productId)
 	}
 
 	override fun findProductDetailsById(productId: Long): ProductDetails {
@@ -64,11 +64,11 @@ class ProductServiceImpl(
 	}
 
 	override fun findDeptIdByProductId(productId: Long): Long {
-		return productRepository.findDeptId(productId) ?: throw ProductNotFoundException()
+		return productRepo.findDeptId(productId) ?: throw ProductNotFoundException()
 	}
 
 	override fun findByDeptId(deptId: Long, baseQuery: BaseQuery): PageResult<Product> {
-		val res = productRepository.findByDeptId(
+		val res = productRepo.findByDeptId(
 			deptId = deptId, pageable = baseQuery.toPageRequest()
 		)
 		return res.toPageResult { it.toProduct() }

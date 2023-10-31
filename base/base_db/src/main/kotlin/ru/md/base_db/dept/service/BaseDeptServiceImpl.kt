@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service
 import ru.md.base_db.dept.model.mappers.toDept
 import ru.md.base_domain.dept.model.Dept
 import ru.md.base_db.dept.repo.BaseDeptRepository
+import ru.md.base_domain.dept.biz.errors.CompanyDeptNotFoundException
 import ru.md.base_domain.dept.biz.errors.TopLevelDeptNotFoundException
 import ru.md.base_domain.dept.service.BaseDeptService
 
@@ -50,6 +51,13 @@ class BaseDeptServiceImpl(
 	 */
 	override fun getRootId(deptId: Long): Long? {
 		return baseDeptRepository.getOwnerRootId(deptId = deptId)
+	}
+
+	/**
+	 * Получить отдел компании (level = 2) от текущего [deptId]
+	 */
+	override fun getCompanyDeptId(deptId: Long): Long {
+		return baseDeptRepository.getCompanyDeptId(deptId = deptId) ?: throw CompanyDeptNotFoundException()
 	}
 
 }

@@ -37,4 +37,5 @@ fun ProductContext.getProductError() {
 //
 
 class ProductNotFoundException(message: String = "") : RuntimeException(message)
+class InsufficientProductQuantityException(message: String = "") : RuntimeException(message)
 //class AlreadyActionException(message: String = "") : RuntimeException(message)

@@ -1,31 +1,29 @@
 package ru.md.shop.db.pay.model
 
 import jakarta.persistence.*
-import java.sql.Timestamp
+import java.time.LocalDateTime
 import java.util.*
 
 @Entity
 @Table(name = "trash", schema = "shop", catalog = "medalist")
-class TrashEntity {
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+class TrashEntity(
+
 	@Id
-	@Column(name = "id")
-	var id: Long = 0
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	var id: Long = 0,
 
 	@Column(name = "user_id")
-	var userId: Long = 0
+	var userId: Long = 0,
 
-	@Basic
 	@Column(name = "product_id")
-	var productId: Long = 0
+	var productId: Long = 0,
 
-	@Basic
 	@Column(name = "add_at")
-	var addAt: Timestamp? = null
+	var addAt: LocalDateTime = LocalDateTime.now(),
 
-	@Basic
-	@Column(name = "quantity")
-	var quantity = 0
+	var quantity: Int = 0
+) {
+
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true
 		if (other == null || javaClass != other.javaClass) return false

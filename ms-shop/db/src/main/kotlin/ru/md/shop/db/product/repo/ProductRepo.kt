@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository
 import ru.md.shop.db.product.model.ProductEntity
 
 @Repository
-interface ProductRepository : JpaRepository<ProductEntity, Long> {
+interface ProductRepo : JpaRepository<ProductEntity, Long> {
 
 	@Modifying
 	@Query("delete from ProductEntity p where p.id = :id")

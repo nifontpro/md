@@ -20,6 +20,9 @@ class ProductEntity(
 	@Column(name = "price")
 	var price: Int = 0,
 
+	@Column(name = "all_count")
+	var count: Int = 0,
+
 	@Column(name = "main_img")
 	var mainImg: String? = null,
 

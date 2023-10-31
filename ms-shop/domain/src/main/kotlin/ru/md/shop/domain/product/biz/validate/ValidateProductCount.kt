@@ -6,15 +6,15 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.shop.domain.product.biz.proc.ProductContext
 
-fun ICorChainDsl<ProductContext>.validateProductId(title: String) = worker {
+fun ICorChainDsl<ProductContext>.validateProductCount(title: String) = worker {
 	this.title = title
-	on { productId < 1 }
+	on { product.count < 0 }
 	handle {
 		fail(
 			errorValidation(
-				field = "productId",
-				violationCode = "not valid",
-				description = "Неверный id приза"
+				field = "count",
+				violationCode = "out of range",
+				description = "Количество должно быть положительным"
 			)
 		)
 	}

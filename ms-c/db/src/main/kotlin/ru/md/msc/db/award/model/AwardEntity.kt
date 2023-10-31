@@ -32,8 +32,7 @@ class AwardEntity(
 
 	var name: String = "",
 
-	@Column(name = "short_descript")
-	var shortDescription: String? = null,
+	var description: String? = null,
 
 	@Column(name = "main_img")
 	var mainImg: String? = null,
@@ -88,11 +87,11 @@ class AwardEntity(
 		if (other == null || javaClass != other.javaClass) return false
 		val award = other as AwardEntity
 		return id == award.id && dept?.id == award.dept?.id && startDate == award.startDate &&
-				endDate == award.endDate && name == award.name && type == award.type
+				endDate == award.endDate && name == award.name && description == award.description && type == award.type
 	}
 
 	override fun hashCode(): Int {
-		return Objects.hash(id, startDate, endDate, name, type, dept?.id)
+		return Objects.hash(id, startDate, endDate, name, description, type, dept?.id)
 	}
 
 	override fun toString(): String {

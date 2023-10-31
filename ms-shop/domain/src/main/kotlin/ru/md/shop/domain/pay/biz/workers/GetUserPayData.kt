@@ -15,7 +15,7 @@ fun ICorChainDsl<PayContext>.getUserPayData(title: String) = worker {
 
 	handle {
 		log.info("userId = $userId")
-		userPay = userPayService.getPayData(userId)
+		userPay = payService.getUserPayData(userId)
 	}
 
 	except {
