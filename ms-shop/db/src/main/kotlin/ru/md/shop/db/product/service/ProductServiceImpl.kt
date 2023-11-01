@@ -63,10 +63,6 @@ class ProductServiceImpl(
 		return productDetailsEntity.toProductDetails()
 	}
 
-	override fun findDeptIdByProductId(productId: Long): Long {
-		return productRepo.findDeptId(productId) ?: throw ProductNotFoundException()
-	}
-
 	override fun findByDeptId(deptId: Long, baseQuery: BaseQuery): PageResult<Product> {
 		val res = productRepo.findByDeptId(
 			deptId = deptId, pageable = baseQuery.toPageRequest()

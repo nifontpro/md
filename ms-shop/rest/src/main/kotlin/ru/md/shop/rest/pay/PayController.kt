@@ -8,6 +8,7 @@ import ru.md.base_rest.utils.JwtUtils
 import ru.md.shop.domain.pay.biz.proc.PayProcessor
 import ru.md.shop.rest.pay.mappers.fromTransport
 import ru.md.shop.rest.pay.mappers.toTransportUserPayResponse
+import ru.md.shop.rest.pay.model.request.BuyRequest
 import ru.md.shop.rest.pay.model.request.GetUserPayRequest
 import ru.md.shop.rest.pay.model.response.UserPayResponse
 
@@ -21,6 +22,20 @@ class PayController(
 	@PostMapping("user_pay")
 	private suspend fun getUserPay(
 		@RequestBody request: GetUserPayRequest,
+		@RequestHeader(name = AUTH) bearerToken: String
+	): BaseResponse<UserPayResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = payProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportUserPayResponse() }
+		)
+	}
+
+	@PostMapping("buy")
+	private suspend fun buy(
+		@RequestBody request: BuyRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<UserPayResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)

@@ -10,7 +10,7 @@ class AwardStateConverter : AttributeConverter<AwardState, String> {
 	override fun convertToDatabaseColumn(deptType: AwardState): String = deptType.code
 
 	override fun convertToEntityAttribute(code: String): AwardState {
-		return AwardState.values().find {
+		return AwardState.entries.find {
 			it.code == code
 		} ?: AwardState.ERROR
 	}

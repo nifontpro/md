@@ -10,7 +10,7 @@ class ActionCodeConverter : AttributeConverter<ActionType, String> {
 	override fun convertToDatabaseColumn(actionType: ActionType): String = actionType.code
 
 	override fun convertToEntityAttribute(code: String): ActionType {
-		return ActionType.values().find {
+		return ActionType.entries.find {
 			it.code == code
 		} ?: ActionType.UNDEF
 	}

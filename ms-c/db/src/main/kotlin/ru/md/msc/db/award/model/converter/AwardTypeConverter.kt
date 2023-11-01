@@ -10,7 +10,7 @@ class AwardTypeConverter : AttributeConverter<AwardType, String> {
 	override fun convertToDatabaseColumn(deptType: AwardType): String = deptType.code
 
 	override fun convertToEntityAttribute(code: String): AwardType {
-		return AwardType.values().find {
+		return AwardType.entries.find {
 			it.code == code
 		} ?: AwardType.UNDEF
 	}

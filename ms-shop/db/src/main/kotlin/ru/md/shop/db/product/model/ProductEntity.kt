@@ -20,7 +20,7 @@ class ProductEntity(
 	@Column(name = "price")
 	var price: Int = 0,
 
-	@Column(name = "all_count")
+	@Column(name = "qnt")
 	var count: Int = 0,
 
 	@Column(name = "main_img")

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.base_domain.biz.validate.validateAdminRole
 import ru.md.base_domain.biz.validate.validateAuthDeptLevel
-import ru.md.base_domain.image.biz.validate.validateImageId
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
@@ -13,6 +12,7 @@ import ru.md.base_domain.dept.biz.workers.getCompanyDeptIdByAuthUser
 import ru.md.base_domain.dept.biz.workers.getCompanyIdByDeptId
 import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
+import ru.md.base_domain.image.biz.validate.validateImageId
 import ru.md.base_domain.image.biz.workers.addImageToS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
 import ru.md.base_domain.s3.repo.BaseS3Repository
@@ -23,8 +23,10 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
-import ru.md.shop.domain.product.biz.validate.validateProductCount
+import ru.md.shop.domain.base.biz.validate.chain.validateProductIdAndAccessToProductChain
 import ru.md.shop.domain.base.biz.validate.validateProductId
+import ru.md.shop.domain.base.service.BaseProductService
+import ru.md.shop.domain.product.biz.validate.validateProductCount
 import ru.md.shop.domain.product.biz.validate.validateProductName
 import ru.md.shop.domain.product.biz.validate.validateProductPrice
 import ru.md.shop.domain.product.biz.workers.*
@@ -33,18 +35,18 @@ import ru.md.shop.domain.product.service.ProductService
 @Component
 class ProductProcessor(
 	private val productService: ProductService,
+	private val baseProductService: BaseProductService,
 	private val baseDeptService: BaseDeptService,
 	private val baseUserService: BaseUserService,
 	private val baseS3Repository: BaseS3Repository,
-//	private val microClient: MicroClient,
 ) : IBaseProcessor<ProductContext> {
 
 	override suspend fun exec(ctx: ProductContext) = businessChain.exec(ctx.also {
 		it.productService = productService
+		it.baseProductService = baseProductService
 		it.baseDeptService = baseDeptService
 		it.baseUserService = baseUserService
 		it.baseS3Repository = baseS3Repository
-//		it.microClient = microClient
 	})
 
 	companion object {
@@ -116,14 +118,6 @@ class ProductProcessor(
 				on { !isAuthUserHasOwnerRole }
 				getCompanyDeptIdByAuthUser("Получаем deptId Компании")
 			}
-		}
-
-		private fun ICorChainDsl<ProductContext>.validateProductIdAndAccessToProductChain() {
-			validateProductId("Проверяем productId")
-			getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-			validateAdminRole("Проверяем наличие прав Администратора")
-			findDeptIdByProductId("Получаем deptId")
-			validateAuthDeptLevel("Проверка доступа к отделу")
 		}
 
 		private fun ICorChainDsl<ProductContext>.validateAndTrimProductFields() {

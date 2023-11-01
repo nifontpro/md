@@ -14,7 +14,7 @@ fun ICorChainDsl<ProductContext>.prepareProductImagePrefixUrl(title: String) = w
 	on { state == ContextState.RUNNING }
 
 	handle {
-		deptId = productService.findDeptIdByProductId(productId)
+		deptId = baseProductService.findDeptIdByProductId(productId)
 		prefixUrl = "D$deptId/P$productId"
 	}
 

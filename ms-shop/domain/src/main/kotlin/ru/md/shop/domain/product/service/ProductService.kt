@@ -11,7 +11,6 @@ interface ProductService {
 	fun update(productDetails: ProductDetails): ProductDetails
 	fun deleteById(productId: Long)
 	fun findProductDetailsById(productId: Long): ProductDetails
-	fun findDeptIdByProductId(productId: Long): Long
 	fun addImage(productId: Long, baseImage: BaseImage): BaseImage
 	fun setMainImage(productId: Long): BaseImage?
 	fun deleteImage(productId: Long, imageId: Long): BaseImage

@@ -2,9 +2,7 @@ package ru.md.shop.db.pay.repo
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
-import ru.md.shop.db.pay.model.TrashEntity
+import ru.md.shop.db.pay.model.PayDataEntity
 
 @Repository
-interface TrashRepo : JpaRepository<TrashEntity, Long> {
-
-}
+interface PayDataRepo : JpaRepository<PayDataEntity, Long>

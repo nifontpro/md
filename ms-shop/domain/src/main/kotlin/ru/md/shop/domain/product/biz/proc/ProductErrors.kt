@@ -3,8 +3,9 @@ package ru.md.shop.domain.product.biz.proc
 import ru.md.base_domain.biz.helper.ContextError
 import ru.md.base_domain.biz.helper.errorDb
 import ru.md.base_domain.biz.helper.fail
+import ru.md.shop.domain.base.biz.proc.ShopContext
 
-fun ProductContext.productNotFoundError() {
+fun ShopContext.productNotFoundError() {
 	fail(
 		errorDb(
 			repository = "product",
@@ -15,7 +16,7 @@ fun ProductContext.productNotFoundError() {
 	)
 }
 
-fun ProductContext.getProductError() {
+fun ShopContext.getProductError() {
 	fail(
 		errorDb(
 			repository = "product",
@@ -24,17 +25,6 @@ fun ProductContext.getProductError() {
 		)
 	)
 }
-
-//fun AwardContext.getAwardCountError() {
-//	fail(
-//		errorDb(
-//			repository = "award",
-//			violationCode = "count error",
-//			description = "Ошибка получения количества наград"
-//		)
-//	)
-//}
-//
 
 class ProductNotFoundException(message: String = "") : RuntimeException(message)
 class InsufficientProductQuantityException(message: String = "") : RuntimeException(message)

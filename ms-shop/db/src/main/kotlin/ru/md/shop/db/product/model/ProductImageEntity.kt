@@ -13,7 +13,7 @@ class ProductImageEntity(
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	override var id: Long = 0,
+	override var id: Long? = null,
 
 	@Column(name = "image_url")
 	override var normalUrl: String? = null,

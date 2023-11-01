@@ -10,18 +10,22 @@ import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.user.biz.validate.validateUserId
 import ru.md.base_domain.user.service.BaseUserService
 import ru.md.cor.rootChain
+import ru.md.shop.domain.base.biz.validate.chain.validateProductIdAndAccessToProductChain
+import ru.md.shop.domain.base.service.BaseProductService
 import ru.md.shop.domain.pay.biz.workers.getUserPayData
 import ru.md.shop.domain.pay.service.PayService
 
 @Component
 class PayProcessor(
 	private val payService: PayService,
+	private val baseProductService: BaseProductService,
 	private val baseDeptService: BaseDeptService,
 	private val baseUserService: BaseUserService,
 ) : IBaseProcessor<PayContext> {
 
 	override suspend fun exec(ctx: PayContext) = businessChain.exec(ctx.also {
 		it.payService = payService
+		it.baseProductService = baseProductService
 		it.baseDeptService = baseDeptService
 		it.baseUserService = baseUserService
 	})
@@ -37,8 +41,8 @@ class PayProcessor(
 				getUserPayData("Получаем баланс счета")
 			}
 
-			operation("Добавить приз в корзину", PayCommand.ADD_TO_TRASH) {
-
+			operation("Купить товар", PayCommand.BUY) {
+				validateProductIdAndAccessToProductChain()
 			}
 
 			finishOperation()
