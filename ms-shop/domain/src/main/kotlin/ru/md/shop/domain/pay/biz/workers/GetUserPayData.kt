@@ -14,7 +14,6 @@ fun ICorChainDsl<PayContext>.getUserPayData(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-		log.info("userId = $userId")
 		userPay = payService.getUserPayData(userId)
 	}
 

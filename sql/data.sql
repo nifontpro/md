@@ -4,7 +4,7 @@ insert into dep.dept
     (parent_id, name, code, classname)
 values (null, '/', 'R', 'ROOT'),
        (1, 'Owner Dept id=2', 'U', 'Owner Dept'),
-       (2, 'Dept 3, id=3', 'D', 'Dept'),
+       (2, 'Company 3, id=3', 'D', 'Dept'),
        (3, 'Dept 4, id=4', 'D', 'Dept'),
        (4, 'Dept 5, id=5', 'D', 'Dept')
 ;;
@@ -21,16 +21,16 @@ values (1, 'ROOT DEPT'),
 
 insert into users.user_data (dept_id, firstname, lastname, auth_email)
 values (2, 'Owner User 1 - dept 2', 'User 1', 'necmedals@yandex.ru'),
-       (3, 'User 2 - dept 3', 'User 2', 'nifontbus@yandex.ru'),
-       (3, 'User 3 - dept 3', 'User 3', 'family.medalist@gmail.com'),
-       (4, 'User 4 - dept 4', 'User 4', 'necmedals@yandex.ru')
+       (4, 'User 2 - dept 4', 'User 2', 'necmedals@yandex.ru'),
+       (4, 'User 3 - dept 4', 'User 3', 'necmedals@yandex.ru'),
+       (5, 'User 4 - dept 5', 'User 4', 'necmedals@yandex.ru')
 ;;
 
 insert into users.user_details (user_id, description)
 values (1, 'Owner User 1 - dept 2'),
-       (2, 'User 2 - dept 3'),
-       (3, 'User 3 - dept 3'),
-       (4, 'User 4 - dept 4')
+       (2, 'User 2 - dept 4'),
+       (3, 'User 3 - dept 4'),
+       (4, 'User 4 - dept 5')
 ;;
 
 insert into users.user_roles (user_id, role_code)
@@ -39,7 +39,7 @@ values (1, 'O'),
        (1, 'U'),
        (2, 'U'),
        (3, 'U'),
-       (4, 'A'),
+       (3, 'A'),
        (4, 'U')
 ;;
 

@@ -23,7 +23,7 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
-import ru.md.shop.domain.base.biz.validate.chain.validateProductIdAndAccessToProductChain
+import ru.md.shop.domain.base.biz.validate.chain.validateProductIdAndAdminAccessToProductChain
 import ru.md.shop.domain.base.biz.validate.validateProductId
 import ru.md.shop.domain.base.service.BaseProductService
 import ru.md.shop.domain.product.biz.validate.validateProductCount
@@ -64,7 +64,7 @@ class ProductProcessor(
 
 			operation("Обновить приз", ProductCommand.UPDATE) {
 				validateAndTrimProductFields()
-				validateProductIdAndAccessToProductChain()
+				validateProductIdAndAdminAccessToProductChain()
 				updateProduct("Обновляем приз")
 			}
 
@@ -80,13 +80,13 @@ class ProductProcessor(
 			}
 
 			operation("Удалить приз", ProductCommand.DELETE) {
-				validateProductIdAndAccessToProductChain()
+				validateProductIdAndAdminAccessToProductChain()
 				deleteProduct("Удаляем приз")
 			}
 
 			operation("Добавление изображения", ProductCommand.IMG_ADD) {
 				worker("Получение id сущности") { productId = fileData.entityId }
-				validateProductIdAndAccessToProductChain()
+				validateProductIdAndAdminAccessToProductChain()
 				prepareProductImagePrefixUrl("Получаем префикс изображения")
 				addImageToS3("Сохраняем изображение в s3")
 				addProductImageToDb("Сохраняем ссылки на изображение в БД")
@@ -97,7 +97,7 @@ class ProductProcessor(
 
 			operation("Удаление изображения", ProductCommand.IMG_DELETE) {
 				validateImageId("Проверка imageId")
-				validateProductIdAndAccessToProductChain()
+				validateProductIdAndAdminAccessToProductChain()
 				deleteProductImageFromDb("Удаляем изображение из БД")
 				deleteBaseImageFromS3("Удаляем изображение из s3")
 				updateProductMainImage("Обновление основного изображения")

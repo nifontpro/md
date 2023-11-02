@@ -6,6 +6,7 @@ import ru.md.base_domain.biz.proc.BaseMedalsContext
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.base_domain.errors.getAuthUserError
 import ru.md.base_domain.errors.notValidAuthIdError
+import ru.md.base_domain.user.model.RoleUser
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 
@@ -35,6 +36,8 @@ fun <T : BaseMedalsContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: Str
 			)
 			return@handle
 		}
+
+		isAuthUserHasAdminRole = authUser.roles.find { it == RoleUser.ADMIN } != null
 	}
 
 	except {

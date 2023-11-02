@@ -9,7 +9,10 @@ import ru.md.shop.domain.product.model.Product
 
 fun PayDataEntity.toPayData() = PayData(
 	id = id ?: 0,
-	dateOp = dateOp,
 	user = userEntity?.toUserLazy() ?: User(),
-	product = productEntity?.toProduct() ?: Product()
+	product = productEntity?.toProduct() ?: Product(),
+	dateOp = dateOp,
+	price = price,
+	payCode = payCode,
+	isActive = isActive,
 )

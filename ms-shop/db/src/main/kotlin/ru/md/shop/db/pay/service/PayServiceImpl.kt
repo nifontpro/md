@@ -9,10 +9,12 @@ import ru.md.base_db.user.model.UserEntity
 import ru.md.base_domain.pay.model.UserPay
 import ru.md.shop.db.base.repo.BaseProductRepo
 import ru.md.shop.db.pay.model.PayDataEntity
+import ru.md.shop.db.pay.model.mappers.toPayData
 import ru.md.shop.db.pay.repo.PayDataRepo
 import ru.md.shop.domain.pay.biz.proc.InsufficientUserBalanceException
 import ru.md.shop.domain.pay.biz.proc.UserPayNotFoundException
 import ru.md.shop.domain.pay.model.PayCode
+import ru.md.shop.domain.pay.model.PayData
 import ru.md.shop.domain.pay.service.PayService
 import ru.md.shop.domain.product.biz.proc.ProductNotFoundException
 import java.time.LocalDateTime
@@ -31,7 +33,7 @@ class PayServiceImpl(
 	}
 
 	@Transactional
-	override fun buyProduct(productId: Long, userId: Long): UserPay {
+	override fun payProduct(productId: Long, userId: Long): PayData {
 		val productEntity = baseProductRepo.findByIdOrNull(productId) ?: throw ProductNotFoundException()
 		val userPayEntity = baseUserPayRepo.findByUserId(userId) ?: throw UserPayNotFoundException()
 		val price = productEntity.price
@@ -50,7 +52,8 @@ class PayServiceImpl(
 		payDataRepo.save(payDataEntity)
 
 		userPayEntity.balance -= price
-		return userPayEntity.toUserPay()
+		productEntity.count -= 1
+		return payDataEntity.toPayData()
 	}
 
 }

@@ -2,7 +2,7 @@ package ru.md.shop.rest.pay.mappers
 
 import ru.md.shop.domain.pay.biz.proc.PayCommand
 import ru.md.shop.domain.pay.biz.proc.PayContext
-import ru.md.shop.rest.pay.model.request.BuyRequest
+import ru.md.shop.rest.pay.model.request.PayProductRequest
 import ru.md.shop.rest.pay.model.request.GetUserPayRequest
 
 fun PayContext.fromTransport(request: GetUserPayRequest) {
@@ -11,8 +11,8 @@ fun PayContext.fromTransport(request: GetUserPayRequest) {
 	userId = request.userId
 }
 
-fun PayContext.fromTransport(request: BuyRequest) {
-	command = PayCommand.BUY
+fun PayContext.fromTransport(request: PayProductRequest) {
+	command = PayCommand.PAY_PRODUCT
 	authId = request.authId
 	productId = request.productId
 }

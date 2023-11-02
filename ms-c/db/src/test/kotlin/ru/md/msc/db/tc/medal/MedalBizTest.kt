@@ -5,20 +5,18 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import ru.md.base_domain.dept.model.Dept
 import ru.md.msc.db.tc.TestBeans
 import ru.md.msc.db.tc.ownerEmail
-import ru.md.base_domain.dept.model.Dept
 import ru.md.msc.domain.medal.biz.proc.MedalCommand
 import ru.md.msc.domain.medal.biz.proc.MedalContext
 import ru.md.msc.domain.medal.biz.proc.MedalProcessor
 import ru.md.msc.domain.medal.model.Medal
 import ru.md.msc.domain.medal.model.MedalDetails
-import ru.md.msc.domain.medal.service.MedalService
 
 @SpringBootTest(classes = [TestBeans::class])
 class MedalBizTest(
 	@Autowired private val medalProcessor: MedalProcessor,
-	@Autowired private val medalService: MedalService
 ) {
 
 	@Test
