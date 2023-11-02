@@ -12,6 +12,7 @@ interface PayService {
 	fun getPaysData(
 		deptId: Long,
 		userId: Long,
+		userIdNotPresent: Boolean,
 		baseQuery: BaseQuery = BaseQuery(),
 		payCode: PayCode? = null,
 		isActive: Boolean? = null

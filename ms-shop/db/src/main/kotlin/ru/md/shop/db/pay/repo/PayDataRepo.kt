@@ -17,7 +17,7 @@ interface PayDataRepo : JpaRepository<PayDataEntity, Long> {
 	@Query(
 		"""
 		from PayDataEntity p where p.productEntity.deptId = :deptId and
-		p.userEntity.id = :userId and 
+		(:userIdNotPresent = true or p.userEntity.id = :userId) and 
 		(:isActive is null or p.isActive = :isActive) and
 		(:payCode is null or p.payCode = :payCode) and
 		(coalesce(:minDate, null) is null or p.dateOp >= :minDate) and 
@@ -28,6 +28,7 @@ interface PayDataRepo : JpaRepository<PayDataEntity, Long> {
 	fun findPaysDataByCompany(
 		deptId: Long,
 		userId: Long,
+		userIdNotPresent: Boolean,
 		isActive: Boolean? = null,
 		payCode: PayCode? = null,
 		minDate: LocalDateTime? = null,

@@ -19,11 +19,13 @@ fun <T : BaseMedalsContext> ICorChainDsl<T>.validateUserIdSameOrAdminDeptLevelCh
 		on { isAuthUserHasAdminRole }
 		chain {
 			on { userId != authId }
+			worker("Сохраняем deptId") { tempLong = deptId }
 			validateUserId("Проверка userId")
 			getDeptIdByUserId("Находим отдел для авторизации")
 			validateDeptId("Проверяем deptId")
 			validateAdminRole("Проверка наличия прав Администратора")
 			validateAuthDeptLevel("Проверка доступа к отделу")
+			worker("Восстанавливаем deptId") { deptId = tempLong }
 		}
 
 	}

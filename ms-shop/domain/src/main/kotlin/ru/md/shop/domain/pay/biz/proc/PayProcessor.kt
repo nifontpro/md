@@ -69,6 +69,7 @@ class PayProcessor(
 						worker("") { userId = authUser.id }
 					}
 				}
+				worker("") { log.info("UNP: $userIdNotPresent, userId: $userId ") }
 
 				findCompanyDeptIdByOwnerOrAuthUserChain()
 				getPaysData("Получаем платежные документы")

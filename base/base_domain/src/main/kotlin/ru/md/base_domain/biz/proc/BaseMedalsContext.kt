@@ -18,6 +18,7 @@ abstract class BaseMedalsContext(
 	var userId: Long = 0,
 	var deptId: Long = 0,
 	var rootDeptId: Long = 0,
+	var tempLong: Long = 0,
 
 	var imageId: Long = 0,
 	var baseImage: BaseImage = BaseImage(),
