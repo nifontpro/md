@@ -3,28 +3,23 @@ package ru.md.shop.domain.product.biz.proc
 import org.springframework.stereotype.Component
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.base_domain.biz.validate.validateAdminRole
-import ru.md.base_domain.biz.validate.validateAuthDeptLevel
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
-import ru.md.base_domain.dept.biz.validate.validateDeptId
-import ru.md.base_domain.dept.biz.workers.getCompanyDeptIdByAuthUser
-import ru.md.base_domain.dept.biz.workers.getCompanyIdByDeptId
 import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.base_domain.image.biz.validate.validateImageId
 import ru.md.base_domain.image.biz.workers.addImageToS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
 import ru.md.base_domain.s3.repo.BaseS3Repository
-import ru.md.base_domain.user.biz.workers.findOwnerRole
 import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
 import ru.md.base_domain.user.service.BaseUserService
 import ru.md.cor.ICorChainDsl
-import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.shop.domain.base.biz.validate.chain.validateProductIdAndAdminAccessToProductChain
 import ru.md.shop.domain.base.biz.validate.validateProductId
+import ru.md.shop.domain.base.biz.workers.findCompanyDeptIdByOwnerOrAuthUserChain
 import ru.md.shop.domain.base.service.BaseProductService
 import ru.md.shop.domain.product.biz.validate.validateProductCount
 import ru.md.shop.domain.product.biz.validate.validateProductName
@@ -105,20 +100,6 @@ class ProductProcessor(
 
 			finishOperation()
 		}.build()
-
-		private fun ICorChainDsl<ProductContext>.findCompanyDeptIdByOwnerOrAuthUserChain() {
-			findOwnerRole("Проверка наличия роли Владельца")
-			chain {
-				on { isAuthUserHasOwnerRole }
-				validateDeptId("Проверка deptId")
-				validateAuthDeptLevel("Проверка доступа к отделу")
-				getCompanyIdByDeptId("Получаем deptId Компании")
-			}
-			chain {
-				on { !isAuthUserHasOwnerRole }
-				getCompanyDeptIdByAuthUser("Получаем deptId Компании")
-			}
-		}
 
 		private fun ICorChainDsl<ProductContext>.validateAndTrimProductFields() {
 			validateProductName("Проверяем название")

@@ -100,4 +100,15 @@ class PayProductTest(
 		assertEquals(true, payContext.errors.size == 0)
 
 	}
+
+	@Test
+	fun getPayDataTest() = runBlocking {
+		val payContext = PayContext().apply {
+			authId = 3
+			authEmail = ownerEmail
+			command = PayCommand.GET_PAYS_DATA
+		}
+		payProcessor.exec(payContext)
+		assertEquals(true, payContext.errors.size == 0)
+	}
 }

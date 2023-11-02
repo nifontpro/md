@@ -16,3 +16,12 @@ fun PayDataEntity.toPayData() = PayData(
 	payCode = payCode,
 	isActive = isActive,
 )
+
+fun PayDataEntity.toPayDataOnlyProduct() = PayData(
+	id = id ?: 0,
+	product = productEntity?.toProduct() ?: Product(),
+	dateOp = dateOp,
+	price = price,
+	payCode = payCode,
+	isActive = isActive,
+)

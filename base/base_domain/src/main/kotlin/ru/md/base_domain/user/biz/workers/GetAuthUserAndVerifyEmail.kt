@@ -38,6 +38,7 @@ fun <T : BaseMedalsContext> ICorChainDsl<T>.getAuthUserAndVerifyEmail(title: Str
 		}
 
 		isAuthUserHasAdminRole = authUser.roles.find { it == RoleUser.ADMIN } != null
+		isAuthUserHasOwnerRole = authUser.roles.find { it == RoleUser.OWNER } != null
 	}
 
 	except {

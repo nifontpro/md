@@ -7,6 +7,11 @@ import ru.md.shop.domain.pay.model.PayCode
 import java.time.LocalDateTime
 import java.util.*
 
+@NamedEntityGraph(
+	name = "payDataWithProduct",
+	attributeNodes = [NamedAttributeNode("productEntity")]
+)
+
 @Entity
 @Table(name = "pay_data", schema = "shop", catalog = "medalist")
 class PayDataEntity(

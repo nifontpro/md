@@ -13,3 +13,7 @@ fun PayContext.toTransportUserPayResponse(): BaseResponse<UserPayResponse> {
 fun PayContext.toTransportPayDataResponse(): BaseResponse<PayDataResponse> {
 	return baseResponse(payData.toPayDataResponse())
 }
+
+fun PayContext.toTransportPaysDataResponse(): BaseResponse<List<PayDataResponse>> {
+	return baseResponse(paysData.map { it.toPayDataResponse() })
+}

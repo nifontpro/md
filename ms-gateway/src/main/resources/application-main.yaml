@@ -34,3 +34,6 @@ spring:
         - predicates:
             - Path=/api/v1/gallery/**
           uri: lb://gallery
+        - predicates:
+            - Path=/api/v1/shop/**
+          uri: lb://shop
