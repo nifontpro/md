@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 data class ProductDetails(
 	val product: Product = Product(),
-	val description: String? = null,
+	val place: String? = null,
 	val siteUrl: String? = null,
 	val createdAt: LocalDateTime = LocalDateTime.now(),
 	val images: List<BaseImage> = emptyList(),

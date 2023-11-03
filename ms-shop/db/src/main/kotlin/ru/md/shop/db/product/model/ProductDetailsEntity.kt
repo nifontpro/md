@@ -13,8 +13,7 @@ class ProductDetailsEntity(
 	@Column(name = "product_id")
 	val productId: Long = 0,
 
-	@Column(name = "description")
-	var description: String? = null,
+	var place: String? = null,
 
 	@Column(name = "site_url")
 	var siteUrl: String? = null,
@@ -38,11 +37,11 @@ class ProductDetailsEntity(
 		if (this === other) return true
 		if (other == null || javaClass != other.javaClass) return false
 		val that = other as ProductDetailsEntity
-		return productId == that.productId && description == that.description && createdAt == that.createdAt
+		return productId == that.productId && place == that.place && createdAt == that.createdAt
 	}
 
 	override fun hashCode(): Int {
-		return Objects.hash(productId, description, createdAt)
+		return Objects.hash(productId, place, createdAt)
 	}
 
 	override fun toString(): String {

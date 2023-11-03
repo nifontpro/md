@@ -8,5 +8,6 @@ data class CreateProductRequest(
 	val price: Int = 0,
 	val count: Int = 0,
 	val description: String? = null,
+	val place: String? = null,
 	val siteUrl: String? = null,
 )

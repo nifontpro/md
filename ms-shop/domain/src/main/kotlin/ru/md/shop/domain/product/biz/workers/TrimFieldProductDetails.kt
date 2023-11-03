@@ -15,11 +15,12 @@ fun ICorChainDsl<ProductContext>.trimFieldProductDetails(title: String) = worker
 
 		product = product.copy(
 			name = product.name.trim(),
+			description = product.description?.trim()
 		)
 
 		productDetails = productDetails.copy(
 			product = product,
-			description = productDetails.description?.trim(),
+			place = productDetails.place?.trim(),
 			siteUrl = productDetails.siteUrl?.trim(),
 			createdAt = LocalDateTime.now()
 		)

@@ -11,6 +11,10 @@ class ProductContext : ShopContext() {
 	var productDetails: ProductDetails = ProductDetails()
 	var products: List<Product> = emptyList()
 
+	//filters
+	var maxPrice: Int? = null
+	var available: Boolean = false
+
 	lateinit var productService: ProductService
 }
 

@@ -3,9 +3,10 @@ package ru.md.shop.db.product.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.base_db.base.mapper.toPageRequest
 import ru.md.base_db.base.mapper.toPageResult
+import ru.md.base_db.base.mapper.toSearchUpperOrNull
+import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.base_domain.errors.ImageNotFoundException
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.model.BaseQuery
@@ -45,8 +46,10 @@ class ProductServiceImpl(
 
 		with(oldProductDetailsEntity) {
 			productEntity.name = productDetails.product.name
+			productEntity.description = productDetails.product.description
 			productEntity.price = productDetails.product.price
-			description = productDetails.description
+			productEntity.count = productDetails.product.count
+			place = productDetails.place
 			siteUrl = productDetails.siteUrl
 		}
 
@@ -63,9 +66,18 @@ class ProductServiceImpl(
 		return productDetailsEntity.toProductDetails()
 	}
 
-	override fun findByDeptId(deptId: Long, baseQuery: BaseQuery): PageResult<Product> {
-		val res = productRepo.findByDeptId(
-			deptId = deptId, pageable = baseQuery.toPageRequest()
+	override fun findByDeptId(
+		deptId: Long,
+		maxPrice: Int?,
+		available: Boolean,
+		baseQuery: BaseQuery
+	): PageResult<Product> {
+		val res = productRepo.findByCompany(
+			deptId = deptId,
+			maxPrice = maxPrice,
+			available = available,
+			filter = baseQuery.filter.toSearchUpperOrNull(),
+			pageable = baseQuery.toPageRequest()
 		)
 		return res.toPageResult { it.toProduct() }
 	}
@@ -114,9 +126,10 @@ class ProductServiceImpl(
 
 	@Transactional
 	override fun deleteImage(productId: Long, imageId: Long): BaseImage {
-		val productImageEntity = productImageRepository.findByIdAndProductId(productId = productId, imageId = imageId) ?: run {
-			throw ImageNotFoundException()
-		}
+		val productImageEntity =
+			productImageRepository.findByIdAndProductId(productId = productId, imageId = imageId) ?: run {
+				throw ImageNotFoundException()
+			}
 		productImageRepository.delete(productImageEntity)
 		return productImageEntity.toBaseImage()
 	}

@@ -6,9 +6,10 @@ CREATE TABLE IF NOT EXISTS shop.product
     dept_id bigint NOT NULL,
     name text COLLATE pg_catalog."default" NOT NULL,
     price integer NOT NULL,
-    qnt integer NOT NULL DEFAULT 0,
     main_img text COLLATE pg_catalog."default",
     norm_img text COLLATE pg_catalog."default",
+    qnt integer NOT NULL DEFAULT 0,
+    description text COLLATE pg_catalog."default",
     CONSTRAINT product_pkey PRIMARY KEY (id),
     CONSTRAINT dept_id_fkey FOREIGN KEY (dept_id)
         REFERENCES dep.dept (id) MATCH SIMPLE
@@ -19,7 +20,7 @@ CREATE TABLE IF NOT EXISTS shop.product
 CREATE TABLE IF NOT EXISTS shop.product_details
 (
     product_id bigint NOT NULL,
-    description text COLLATE pg_catalog."default",
+    place text COLLATE pg_catalog."default",
     created_at timestamp without time zone NOT NULL DEFAULT now(),
     site_url text COLLATE pg_catalog."default",
     CONSTRAINT product_details_pkey PRIMARY KEY (product_id),

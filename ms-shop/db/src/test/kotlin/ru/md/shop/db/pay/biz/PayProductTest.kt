@@ -47,7 +47,7 @@ class PayProductTest(
 			product = newProduct
 			productDetails = ProductDetails(
 				product = product,
-				description = "test description"
+				place = "test description"
 			)
 			command = ProductCommand.CREATE
 		}

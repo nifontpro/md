@@ -7,7 +7,7 @@ import ru.md.shop.rest.product.model.response.ProductDetailsResponse
 
 fun ProductDetails.toProductDetailsResponse() = ProductDetailsResponse(
 	product = product,
-	description = description,
+	place = place,
 	siteUrl = siteUrl,
 	createdAt = createdAt.toEpochMilliUTC(),
 	images = images.map { it.toBaseImageResponse() }

@@ -1,3 +1,5 @@
+@file:Suppress("KDocUnresolvedReference")
+
 package ru.md.shop.rest.product
 
 import org.springframework.web.bind.annotation.*
@@ -69,10 +71,27 @@ class ProductController(
 		)
 	}
 
+	/**
+	 * Получение списка призов.
+	 * [deptId] - необходимо заполнить для Владельца, для определения конкретной компании.
+	 * Может быть указан любой отдел компании, бэк сам определит id компании.
+	 * Для всех остальных пользователей поле игнорируется (определяется автоматически).
+	 *
+	 * [maxPrice] - Фильтр по цене
+	 * [available] - Фильтр по доступности (true- только в наличии, по умолчанию - false)
+	 * [baseRequest]:
+	 *  [filter] - фильтрация по имени приза (необязателен)
+	 *  Параметры пагинации [page], [pageSize] - необязательны, по умолчанию 0 и 100 соответственно
+	 *  Допустимые поля для сортировки:
+	 *        "name",
+	 *        "price",
+	 *        "count",
+	 *        "description",
+	 */
 	@PostMapping("get_company")
 	private suspend fun getByDept(
 		@RequestHeader(name = AUTH) bearerToken: String,
-		@RequestBody request: GetProductByDeptRequest
+		@RequestBody request: GetProductByCompanyRequest
 	): BaseResponse<List<Product>> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(

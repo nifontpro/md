@@ -14,10 +14,10 @@ class ProductEntity(
 	@Column(name = "dept_id")
 	var deptId: Long = 0,
 
-	@Column(name = "name")
 	var name: String = "",
 
-	@Column(name = "price")
+	var description: String? = null,
+
 	var price: Int = 0,
 
 	@Column(name = "qnt")

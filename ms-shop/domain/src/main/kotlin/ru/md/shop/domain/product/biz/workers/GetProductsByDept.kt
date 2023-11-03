@@ -14,7 +14,12 @@ fun ICorChainDsl<ProductContext>.getProductsByDept(title: String) = worker {
 
 	handle {
 		products = pageFun {
-			productService.findByDeptId(deptId = deptId, baseQuery = baseQuery)
+			productService.findByDeptId(
+				deptId = deptId,
+				maxPrice = maxPrice,
+				available = available,
+				baseQuery = baseQuery
+			)
 		}
 	}
 

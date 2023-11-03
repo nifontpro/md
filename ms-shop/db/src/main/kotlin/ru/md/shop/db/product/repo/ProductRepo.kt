@@ -15,6 +15,20 @@ interface ProductRepo : JpaRepository<ProductEntity, Long> {
 	@Query("delete from ProductEntity p where p.id = :id")
 	override fun deleteById(id: Long)
 
-	fun findByDeptId(deptId: Long, pageable: Pageable): Page<ProductEntity>
+	@Query(
+		"""
+		from ProductEntity p where p.deptId = :deptId and
+		(:maxPrice is null or p.price <= :maxPrice) and
+		(:available = false  or p.count > 0) and
+		(:filter is null or (upper(p.name) like :filter))
+	"""
+	)
+	fun findByCompany(
+		deptId: Long,
+		maxPrice: Int? = null,
+		available: Boolean = false,
+		filter: String? = null,
+		pageable: Pageable,
+	): Page<ProductEntity>
 
 }

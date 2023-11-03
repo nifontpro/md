@@ -14,5 +14,10 @@ interface ProductService {
 	fun addImage(productId: Long, baseImage: BaseImage): BaseImage
 	fun setMainImage(productId: Long): BaseImage?
 	fun deleteImage(productId: Long, imageId: Long): BaseImage
-	fun findByDeptId(deptId: Long, baseQuery: BaseQuery): PageResult<Product>
+	fun findByDeptId(
+		deptId: Long,
+		maxPrice: Int? = null,
+		available: Boolean = false,
+		baseQuery: BaseQuery
+	): PageResult<Product>
 }

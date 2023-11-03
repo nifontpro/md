@@ -1,5 +1,6 @@
 package ru.md.shop.rest.product.mappers
 
+import ru.md.base_rest.model.mapper.toBaseQuery
 import ru.md.shop.domain.product.biz.proc.ProductCommand
 import ru.md.shop.domain.product.biz.proc.ProductContext
 import ru.md.shop.domain.product.model.Product
@@ -13,13 +14,14 @@ fun ProductContext.fromTransport(request: CreateProductRequest) {
 
 	product = Product(
 		name = request.name,
+		description = request.description,
 		price = request.price,
 		count = request.count,
 	)
 
 	productDetails = ProductDetails(
 		product = product,
-		description = request.description,
+		place = request.place,
 		siteUrl = request.siteUrl,
 	)
 }
@@ -38,6 +40,7 @@ fun ProductContext.fromTransport(request: UpdateProductRequest) {
 	product = Product(
 		id = productId,
 		name = request.name,
+		description = request.description,
 		deptId = deptId,
 		price = request.price,
 		count = request.count,
@@ -45,7 +48,7 @@ fun ProductContext.fromTransport(request: UpdateProductRequest) {
 
 	productDetails = ProductDetails(
 		product = product,
-		description = request.description,
+		place = request.place,
 		siteUrl = request.siteUrl,
 	)
 }
@@ -56,10 +59,13 @@ fun ProductContext.fromTransport(request: GetProductByIdRequest) {
 	productId = request.productId
 }
 
-fun ProductContext.fromTransport(request: GetProductByDeptRequest) {
+fun ProductContext.fromTransport(request: GetProductByCompanyRequest) {
 	command = ProductCommand.GET_BY_COMPANY
 	authId = request.authId
 	deptId = request.deptId
+	baseQuery = request.baseRequest.toBaseQuery()
+	maxPrice = request.maxPrice
+	available = request.available
 }
 
 fun ProductContext.fromTransport(request: DeleteProductImageRequest) {

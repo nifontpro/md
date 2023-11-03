@@ -9,6 +9,7 @@ import ru.md.base_domain.biz.workers.operation
 import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
 import ru.md.base_domain.user.service.BaseUserService
+import ru.md.cor.ICorChainDsl
 import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
@@ -37,7 +38,7 @@ class PayProcessor(
 
 	companion object {
 
-		private val businessChain = rootChain<PayContext> {
+		private val businessChain = rootChain {
 			initStatus()
 
 			operation("Получит баланс счета сотрудника", PayCommand.GET_USER_PAY) {
@@ -53,29 +54,30 @@ class PayProcessor(
 
 			operation("Получить платежные данные", PayCommand.GET_PAYS_DATA) {
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-
-				/**
-				 * Получение userId или возможное игнорирование его Администратором
-				 * в случае вывода всех платежных данных
-				 */
-				chain {
-					on { !userIdNotPresent }
-					validateUserIdSameOrAdminDeptLevelChain()
-				}
-				chain {
-					on { userIdNotPresent }
-					chain {
-						on { !isAuthUserHasAdminRole }
-						worker("") { userId = authUser.id }
-					}
-				}
-				worker("") { log.info("UNP: $userIdNotPresent, userId: $userId ") }
-
+				findUserIdOrIgnoreByAdmin()
 				findCompanyDeptIdByOwnerOrAuthUserChain()
 				getPaysData("Получаем платежные документы")
 			}
 
 			finishOperation()
 		}.build()
+
+		private fun ICorChainDsl<PayContext>.findUserIdOrIgnoreByAdmin() {
+			/**
+			 * Получение userId или возможное игнорирование его Администратором
+			 * в случае вывода всех платежных данных
+			 */
+			chain {
+				on { !userIdNotPresent }
+				validateUserIdSameOrAdminDeptLevelChain()
+			}
+			chain {
+				on { userIdNotPresent }
+				chain {
+					on { !isAuthUserHasAdminRole }
+					worker("") { userId = authUser.id }
+				}
+			}
+		}
 	}
 }
