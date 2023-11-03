@@ -14,13 +14,14 @@ fun ProductContext.fromTransport(request: CreateProductRequest) {
 
 	product = Product(
 		name = request.name,
-		description = request.description,
+		shortDescription = request.shortDescription,
 		price = request.price,
 		count = request.count,
 	)
 
 	productDetails = ProductDetails(
 		product = product,
+		description = request.description,
 		place = request.place,
 		siteUrl = request.siteUrl,
 	)
@@ -40,7 +41,7 @@ fun ProductContext.fromTransport(request: UpdateProductRequest) {
 	product = Product(
 		id = productId,
 		name = request.name,
-		description = request.description,
+		shortDescription = request.shortDescription,
 		deptId = deptId,
 		price = request.price,
 		count = request.count,
@@ -48,6 +49,7 @@ fun ProductContext.fromTransport(request: UpdateProductRequest) {
 
 	productDetails = ProductDetails(
 		product = product,
+		description = request.description,
 		place = request.place,
 		siteUrl = request.siteUrl,
 	)

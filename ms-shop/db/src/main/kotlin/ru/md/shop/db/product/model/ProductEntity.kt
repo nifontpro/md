@@ -16,7 +16,8 @@ class ProductEntity(
 
 	var name: String = "",
 
-	var description: String? = null,
+	@Column(name = "short_description")
+	var shortDescription: String? = null,
 
 	var price: Int = 0,
 

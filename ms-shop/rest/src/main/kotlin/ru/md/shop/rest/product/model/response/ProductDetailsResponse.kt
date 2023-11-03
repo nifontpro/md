@@ -5,6 +5,7 @@ import ru.md.shop.domain.product.model.Product
 
 data class ProductDetailsResponse(
 	val product: Product = Product(),
+	val description: String? = null,
 	val place: String? = null,
 	val siteUrl: String? = null,
 	val createdAt: Long = 0,

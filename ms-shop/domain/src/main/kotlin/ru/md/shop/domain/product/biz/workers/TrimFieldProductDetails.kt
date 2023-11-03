@@ -15,7 +15,7 @@ fun ICorChainDsl<ProductContext>.trimFieldProductDetails(title: String) = worker
 
 		product = product.copy(
 			name = product.name.trim(),
-			description = product.description?.trim()
+			shortDescription = product.shortDescription?.trim()
 		)
 
 		productDetails = productDetails.copy(

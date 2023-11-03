@@ -46,9 +46,10 @@ class ProductServiceImpl(
 
 		with(oldProductDetailsEntity) {
 			productEntity.name = productDetails.product.name
-			productEntity.description = productDetails.product.description
+			productEntity.shortDescription = productDetails.product.shortDescription
 			productEntity.price = productDetails.product.price
 			productEntity.count = productDetails.product.count
+			description = productDetails.description
 			place = productDetails.place
 			siteUrl = productDetails.siteUrl
 		}

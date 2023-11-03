@@ -15,6 +15,8 @@ class ProductDetailsEntity(
 
 	var place: String? = null,
 
+	var description: String? = null,
+
 	@Column(name = "site_url")
 	var siteUrl: String? = null,
 

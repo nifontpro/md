@@ -6,6 +6,7 @@ import ru.md.shop.domain.product.model.ProductDetails
 
 fun ProductDetails.toProductDetailsEntity() = ProductDetailsEntity(
 	productEntity = product.toProductEntity(),
+	description = description,
 	place = place,
 	siteUrl = siteUrl,
 	createdAt = createdAt
@@ -13,6 +14,7 @@ fun ProductDetails.toProductDetailsEntity() = ProductDetailsEntity(
 
 fun ProductDetailsEntity.toProductDetails() = ProductDetails(
 	product = productEntity.toProduct(),
+	description = description,
 	place = place,
 	siteUrl = siteUrl,
 	createdAt = createdAt,
