@@ -15,7 +15,6 @@ class PayContext : ShopContext() {
 	// filters:
 	var payCode: PayCode? = null
 	var isActive: Boolean? = null
-	var userIdNotPresent: Boolean = false
 
 	lateinit var payService: PayService
 	//	lateinit var baseUserPayService: BaseUserPayService

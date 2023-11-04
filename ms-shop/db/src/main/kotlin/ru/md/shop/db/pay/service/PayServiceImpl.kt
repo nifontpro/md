@@ -64,7 +64,6 @@ class PayServiceImpl(
 	override fun getPaysData(
 		deptId: Long,
 		userId: Long,
-		userIdNotPresent: Boolean,
 		baseQuery: BaseQuery,
 		payCode: PayCode?,
 		isActive: Boolean?
@@ -72,7 +71,6 @@ class PayServiceImpl(
 		return payDataRepo.findPaysDataByCompany(
 			deptId = deptId,
 			userId = userId,
-			userIdNotPresent = userIdNotPresent,
 			isActive = isActive,
 			payCode = payCode,
 			minDate = baseQuery.minDate,

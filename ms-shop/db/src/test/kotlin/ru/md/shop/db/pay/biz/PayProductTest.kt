@@ -106,7 +106,6 @@ class PayProductTest(
 		val payContext = PayContext().apply {
 			authId = 3
 			authEmail = ownerEmail
-			userIdNotPresent = true
 			command = PayCommand.GET_PAYS_DATA
 		}
 		payProcessor.exec(payContext)
@@ -120,7 +119,6 @@ class PayProductTest(
 			authId = 1
 			authEmail = ownerEmail
 			deptId = 3
-			userIdNotPresent = true
 			command = PayCommand.GET_PAYS_DATA
 		}
 		payProcessor.exec(payContext)
@@ -145,7 +143,6 @@ class PayProductTest(
 		val payContext = PayContext().apply {
 			authId = 2
 			authEmail = ownerEmail
-			userIdNotPresent = true
 			command = PayCommand.GET_PAYS_DATA
 		}
 		payProcessor.exec(payContext)

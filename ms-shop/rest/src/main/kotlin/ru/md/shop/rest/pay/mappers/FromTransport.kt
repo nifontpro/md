@@ -22,10 +22,7 @@ fun PayContext.fromTransport(request: PayProductRequest) {
 fun PayContext.fromTransport(request: GetPaysDataRequest) {
 	command = PayCommand.GET_PAYS_DATA
 	authId = request.authId
-	userId = request.userId ?: run {
-		userIdNotPresent = true
-		0
-	}
+	userId = request.userId
 	deptId = request.deptId
 	payCode = request.payCode
 	isActive = request.isActive

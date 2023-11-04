@@ -17,7 +17,6 @@ fun ICorChainDsl<PayContext>.getPaysData(title: String) = worker {
 			payService.getPaysData(
 				deptId = deptId,
 				userId = userId,
-				userIdNotPresent = userIdNotPresent,
 				baseQuery = baseQuery,
 				payCode = payCode,
 				isActive = isActive

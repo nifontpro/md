@@ -70,17 +70,14 @@ class PayProcessor(
 			 * в случае вывода всех платежных данных
 			 */
 			chain {
-				on { !userIdNotPresent }
+				on { userId != 0L }
 				validateUserIdSameOrAdminDeptLevelChain()
 			}
 			chain {
-				on { userIdNotPresent }
+				on { userId == 0L }
 				chain {
 					on { !isAuthUserHasAdminRole }
-					worker("") {
-						userId = authUser.id
-						userIdNotPresent = false
-					}
+					worker("") { userId = authUser.id }
 				}
 			}
 		}
