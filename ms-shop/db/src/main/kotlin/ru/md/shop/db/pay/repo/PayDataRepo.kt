@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 @Repository
 interface PayDataRepo : JpaRepository<PayDataEntity, Long> {
 
-	@EntityGraph("payDataWithProduct")
+	@EntityGraph("payDataWithUserAndProduct")
 	@Query(
 		"""
 		from PayDataEntity p where p.productEntity.deptId = :deptId and

@@ -38,7 +38,7 @@ class PayProcessor(
 
 	companion object {
 
-		private val businessChain = rootChain {
+		private val businessChain = rootChain<PayContext> {
 			initStatus()
 
 			operation("Получит баланс счета сотрудника", PayCommand.GET_USER_PAY) {
@@ -56,6 +56,8 @@ class PayProcessor(
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				findUserIdOrIgnoreByAdmin()
 				findCompanyDeptIdByOwnerOrAuthUserChain()
+				worker("") { log.info("deptId = $deptId") }
+				worker("") { log.info("userId = $userId") }
 				getPaysData("Получаем платежные документы")
 			}
 
@@ -75,7 +77,10 @@ class PayProcessor(
 				on { userIdNotPresent }
 				chain {
 					on { !isAuthUserHasAdminRole }
-					worker("") { userId = authUser.id }
+					worker("") {
+						userId = authUser.id
+						userIdNotPresent = false
+					}
 				}
 			}
 		}

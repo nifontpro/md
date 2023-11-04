@@ -102,10 +102,50 @@ class PayProductTest(
 	}
 
 	@Test
-	fun getPayDataTest() = runBlocking {
+	fun getAdminPayDataTest() = runBlocking {
 		val payContext = PayContext().apply {
 			authId = 3
 			authEmail = ownerEmail
+			userIdNotPresent = true
+			command = PayCommand.GET_PAYS_DATA
+		}
+		payProcessor.exec(payContext)
+		println(payContext.errors)
+		assertEquals(true, payContext.errors.size == 0)
+	}
+
+	@Test
+	fun getOwnerPayDataTest() = runBlocking {
+		val payContext = PayContext().apply {
+			authId = 1
+			authEmail = ownerEmail
+			deptId = 3
+			userIdNotPresent = true
+			command = PayCommand.GET_PAYS_DATA
+		}
+		payProcessor.exec(payContext)
+		println(payContext.errors)
+		assertEquals(true, payContext.errors.size == 0)
+	}
+
+	@Test
+	fun getUserWithIdPayDataTest() = runBlocking {
+		val payContext = PayContext().apply {
+			authId = 2
+			authEmail = ownerEmail
+			userId = 3
+			command = PayCommand.GET_PAYS_DATA
+		}
+		payProcessor.exec(payContext)
+		assertEquals(true, payContext.errors.size == 0)
+	}
+
+	@Test
+	fun getUserPayDataTest() = runBlocking {
+		val payContext = PayContext().apply {
+			authId = 2
+			authEmail = ownerEmail
+			userIdNotPresent = true
 			command = PayCommand.GET_PAYS_DATA
 		}
 		payProcessor.exec(payContext)

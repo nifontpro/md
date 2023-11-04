@@ -15,7 +15,6 @@ import ru.md.base_domain.pay.model.UserPay
 import ru.md.shop.db.base.repo.BaseProductRepo
 import ru.md.shop.db.pay.model.PayDataEntity
 import ru.md.shop.db.pay.model.mappers.toPayData
-import ru.md.shop.db.pay.model.mappers.toPayDataOnlyProduct
 import ru.md.shop.db.pay.repo.PayDataRepo
 import ru.md.shop.domain.pay.biz.proc.InsufficientUserBalanceException
 import ru.md.shop.domain.pay.biz.proc.UserPayNotFoundException
@@ -80,7 +79,7 @@ class PayServiceImpl(
 			maxDate = baseQuery.maxDate,
 			filter = baseQuery.filter.toSearchUpperOrNull(),
 			pageable = baseQuery.toPageRequest()
-		).toPageResult { it.toPayDataOnlyProduct() }
+		).toPageResult { it.toPayData() }
 	}
 
 }

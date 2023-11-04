@@ -12,6 +12,14 @@ import java.util.*
 	attributeNodes = [NamedAttributeNode("productEntity")]
 )
 
+@NamedEntityGraph(
+	name = "payDataWithUserAndProduct",
+	attributeNodes = [
+		NamedAttributeNode("userEntity"),
+		NamedAttributeNode("productEntity"),
+	]
+)
+
 @Entity
 @Table(name = "pay_data", schema = "shop", catalog = "medalist")
 class PayDataEntity(

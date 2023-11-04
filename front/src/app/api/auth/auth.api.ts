@@ -44,7 +44,7 @@ export const authApi = createApi({
             async onQueryStarted(args, {dispatch, queryFulfilled}) {
                 try {
                     const {data} = await queryFulfilled;
-                    await dispatch(authActions.setAuthData(data));
+                    dispatch(authActions.setAuthData(data));
                 } catch (error) {
                     console.error(`ERROR LOGIN!`, error)
                 }
@@ -65,7 +65,7 @@ export const authApi = createApi({
             async onQueryStarted(args, {dispatch, queryFulfilled}) {
                 try {
                     await queryFulfilled;
-                    await dispatch(authActions.setNoAuth());
+                    dispatch(authActions.setNoAuth());
                 } catch (error) {
                     console.error(`Error LOGOUT!`, error);
                 }
