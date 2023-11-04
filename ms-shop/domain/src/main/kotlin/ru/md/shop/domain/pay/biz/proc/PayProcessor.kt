@@ -68,7 +68,14 @@ class PayProcessor(
 			/**
 			 * Получение userId или возможное игнорирование его Администратором
 			 * в случае вывода всех платежных данных
+			 * доступ по deptId должен быть проверен другим запросом
 			 */
+			chain {
+				on { !isAuthUserHasAdminRole }
+				worker("") { userId = authUser.id }
+			}
+			/*
+			// То же, в изолированном виде с проверкой доступа к отделу
 			chain {
 				on { userId != 0L }
 				validateUserIdSameOrAdminDeptLevelChain()
@@ -79,7 +86,7 @@ class PayProcessor(
 					on { !isAuthUserHasAdminRole }
 					worker("") { userId = authUser.id }
 				}
-			}
+			 */
 		}
 	}
 }
