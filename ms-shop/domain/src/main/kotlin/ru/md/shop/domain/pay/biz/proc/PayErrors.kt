@@ -48,5 +48,6 @@ fun PayContext.insufficientUserBalanceError() {
 }
 
 class UserPayNotFoundException(message: String = "") : RuntimeException(message)
+class PayDataNotFoundException(message: String = "") : RuntimeException(message)
 class InsufficientUserBalanceException(message: String = "") : RuntimeException(message)
 

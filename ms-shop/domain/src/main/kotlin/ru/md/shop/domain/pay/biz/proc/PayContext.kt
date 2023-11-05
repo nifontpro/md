@@ -12,8 +12,10 @@ class PayContext : ShopContext() {
 	var payData: PayData = PayData()
 	var paysData: List<PayData> = emptyList()
 
+	var payDataId: Long = 0
+
 	// filters:
-	var payCode: PayCode? = null
+	var payCode: PayCode = PayCode.UNDEF
 	var isActive: Boolean? = null
 
 	lateinit var payService: PayService
@@ -25,4 +27,5 @@ enum class PayCommand : IBaseCommand {
 	GET_USER_PAY,
 	PAY_PRODUCT,
 	GET_PAYS_DATA,
+	ADD_OPERATION
 }

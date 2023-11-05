@@ -15,11 +15,15 @@ import ru.md.base_domain.pay.model.UserPay
 import ru.md.shop.db.base.repo.BaseProductRepo
 import ru.md.shop.db.pay.model.PayDataEntity
 import ru.md.shop.db.pay.model.mappers.toPayData
+import ru.md.shop.db.pay.model.mappers.toPayDataEntity
+import ru.md.shop.db.pay.model.mappers.toPayDataWithUserDept
 import ru.md.shop.db.pay.repo.PayDataRepo
 import ru.md.shop.domain.pay.biz.proc.InsufficientUserBalanceException
+import ru.md.shop.domain.pay.biz.proc.PayDataNotFoundException
 import ru.md.shop.domain.pay.biz.proc.UserPayNotFoundException
 import ru.md.shop.domain.pay.model.PayCode
 import ru.md.shop.domain.pay.model.PayData
+import ru.md.shop.domain.pay.model.toSearch
 import ru.md.shop.domain.pay.service.PayService
 import ru.md.shop.domain.product.biz.proc.ProductNotFoundException
 import java.time.LocalDateTime
@@ -65,19 +69,41 @@ class PayServiceImpl(
 		deptId: Long,
 		userId: Long,
 		baseQuery: BaseQuery,
-		payCode: PayCode?,
+		payCode: PayCode,
 		isActive: Boolean?
 	): PageResult<PayData> {
 		return payDataRepo.findPaysDataByCompany(
 			deptId = deptId,
 			userId = userId,
 			isActive = isActive,
-			payCode = payCode,
+			payCode = payCode.toSearch(),
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 			filter = baseQuery.filter.toSearchUpperOrNull(),
 			pageable = baseQuery.toPageRequest()
 		).toPageResult { it.toPayData() }
+	}
+
+	override fun findById(payDataId: Long): PayData {
+		val payDataEntity = payDataRepo.findByIdWithUserDept(payDataId) ?: throw PayDataNotFoundException()
+		return payDataEntity.toPayDataWithUserDept()
+	}
+
+	@Transactional
+	override fun addOperation(payData: PayData, payCode: PayCode): PayData {
+		val payDataEntity = payData.toPayDataEntity()
+		val newPayDataEntity = PayDataEntity(
+			dateOp = LocalDateTime.now(),
+			userEntity = payDataEntity.userEntity,
+			productEntity = payDataEntity.productEntity,
+			price = -payData.price,
+			payCode = payCode,
+			isActive = true
+		)
+		payDataEntity.isActive = false
+		payDataRepo.save(newPayDataEntity)
+		payDataRepo.save(payDataEntity)
+		return newPayDataEntity.toPayDataWithUserDept()
 	}
 
 }

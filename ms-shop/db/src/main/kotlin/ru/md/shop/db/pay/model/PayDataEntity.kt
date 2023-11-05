@@ -20,6 +20,15 @@ import java.util.*
 	]
 )
 
+@NamedEntityGraph(
+	name = "payDataWithUserDeptAndProduct",
+	attributeNodes = [
+		NamedAttributeNode("userEntity", subgraph = "userWithDeptSubgraph"),
+		NamedAttributeNode("productEntity"),
+	],
+	subgraphs = [NamedSubgraph(name = "userWithDeptSubgraph", attributeNodes = [NamedAttributeNode("dept")])]
+)
+
 @Entity
 @Table(name = "pay_data", schema = "shop", catalog = "medalist")
 class PayDataEntity(

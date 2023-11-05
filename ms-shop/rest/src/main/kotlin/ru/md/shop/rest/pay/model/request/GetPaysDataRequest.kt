@@ -7,7 +7,7 @@ data class GetPaysDataRequest(
 	val authId: Long = 0,
 	val userId: Long = 0, // Указать, если вызов делает Администратор
 	val deptId: Long = 0, // Указать, если вызов делает Владелец
-	val payCode: PayCode? = null,
+	val payCode: PayCode = PayCode.UNDEF,
 	val isActive: Boolean? = null,
 	val baseRequest: BaseRequest = BaseRequest()
 )

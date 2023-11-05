@@ -16,9 +16,7 @@ import ru.md.cor.worker
 import ru.md.shop.domain.base.biz.validate.chain.validateProductIdAndAccessToProductChain
 import ru.md.shop.domain.base.biz.workers.findCompanyDeptIdByOwnerOrAuthUserChain
 import ru.md.shop.domain.base.service.BaseProductService
-import ru.md.shop.domain.pay.biz.workers.getPaysData
-import ru.md.shop.domain.pay.biz.workers.getUserPayData
-import ru.md.shop.domain.pay.biz.workers.payProduct
+import ru.md.shop.domain.pay.biz.workers.*
 import ru.md.shop.domain.pay.service.PayService
 
 @Component
@@ -38,7 +36,7 @@ class PayProcessor(
 
 	companion object {
 
-		private val businessChain = rootChain<PayContext> {
+		private val businessChain = rootChain {
 			initStatus()
 
 			operation("Получит баланс счета сотрудника", PayCommand.GET_USER_PAY) {
@@ -56,9 +54,12 @@ class PayProcessor(
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				findUserIdOrIgnoreByAdmin()
 				findCompanyDeptIdByOwnerOrAuthUserChain()
-				worker("") { log.info("deptId = $deptId") }
-				worker("") { log.info("userId = $userId") }
 				getPaysData("Получаем платежные документы")
+			}
+
+			operation("Новая операция", PayCommand.ADD_OPERATION) {
+				getPayDataById("Получаем платежку")
+				addOperation("Добавляем операцию")
 			}
 
 			finishOperation()

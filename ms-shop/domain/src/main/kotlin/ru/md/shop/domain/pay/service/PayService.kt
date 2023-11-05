@@ -13,7 +13,10 @@ interface PayService {
 		deptId: Long,
 		userId: Long,
 		baseQuery: BaseQuery = BaseQuery(),
-		payCode: PayCode? = null,
+		payCode: PayCode = PayCode.UNDEF,
 		isActive: Boolean? = null
 	): PageResult<PayData>
+
+	fun findById(payDataId: Long): PayData
+	fun addOperation(payData: PayData, payCode: PayCode): PayData
 }

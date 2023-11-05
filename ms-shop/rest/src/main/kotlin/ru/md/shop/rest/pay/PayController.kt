@@ -10,6 +10,7 @@ import ru.md.shop.rest.pay.mappers.fromTransport
 import ru.md.shop.rest.pay.mappers.toTransportPayDataResponse
 import ru.md.shop.rest.pay.mappers.toTransportPaysDataResponse
 import ru.md.shop.rest.pay.mappers.toTransportUserPayResponse
+import ru.md.shop.rest.pay.model.request.AddOperationRequest
 import ru.md.shop.rest.pay.model.request.GetPaysDataRequest
 import ru.md.shop.rest.pay.model.request.GetUserPayRequest
 import ru.md.shop.rest.pay.model.request.PayProductRequest
@@ -62,6 +63,20 @@ class PayController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportPaysDataResponse() }
+		)
+	}
+
+	@PostMapping("add")
+	private suspend fun addOperation(
+		@RequestBody request: AddOperationRequest,
+		@RequestHeader(name = AUTH) bearerToken: String
+	): BaseResponse<PayDataResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = payProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportPayDataResponse() }
 		)
 	}
 
