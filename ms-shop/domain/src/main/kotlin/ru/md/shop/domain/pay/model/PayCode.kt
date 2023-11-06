@@ -4,7 +4,8 @@ enum class PayCode(val code: String) {
 	PAY("P"),
 	GIVEN("G"),
 	RETURN("R"),
-	UNDEF("N")
+	UNDEF("N");
+
+	fun toSearch(): PayCode? = if (this == UNDEF) null else this
 }
 
-fun PayCode.toSearch(): PayCode? = if (this == PayCode.UNDEF) null else this

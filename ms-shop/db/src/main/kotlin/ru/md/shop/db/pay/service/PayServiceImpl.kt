@@ -23,7 +23,6 @@ import ru.md.shop.domain.pay.biz.proc.PayDataNotFoundException
 import ru.md.shop.domain.pay.biz.proc.UserPayNotFoundException
 import ru.md.shop.domain.pay.model.PayCode
 import ru.md.shop.domain.pay.model.PayData
-import ru.md.shop.domain.pay.model.toSearch
 import ru.md.shop.domain.pay.service.PayService
 import ru.md.shop.domain.product.biz.proc.ProductNotFoundException
 import java.time.LocalDateTime
@@ -53,9 +52,10 @@ class PayServiceImpl(
 			dateOp = LocalDateTime.now(),
 			userEntity = UserEntity(id = userId),
 			productEntity = productEntity,
-			price = price,
+			price = -price,
 			payCode = PayCode.PAY,
-			isActive = true
+			isActive = true,
+			isBalance = true
 		)
 
 		payDataRepo.save(payDataEntity)
@@ -81,7 +81,7 @@ class PayServiceImpl(
 			maxDate = baseQuery.maxDate,
 			filter = baseQuery.filter.toSearchUpperOrNull(),
 			pageable = baseQuery.toPageRequest()
-		).toPageResult { it.toPayData() }
+		).toPageResult { it.toPayDataWithUserDept() }
 	}
 
 	override fun findById(payDataId: Long): PayData {
@@ -90,19 +90,47 @@ class PayServiceImpl(
 	}
 
 	@Transactional
-	override fun addOperation(payData: PayData, payCode: PayCode): PayData {
+	override fun giveProduct(payData: PayData): PayData {
+		val payDataEntity = payData.toPayDataEntity()
+		val newPayDataEntity = PayDataEntity(
+			dateOp = LocalDateTime.now(),
+			userEntity = payDataEntity.userEntity,
+			productEntity = payDataEntity.productEntity,
+			price = payData.price,
+			payCode = PayCode.GIVEN,
+			isActive = true,
+			isBalance = false
+		)
+		payDataEntity.isActive = false
+		payDataRepo.save(payDataEntity)
+		payDataRepo.save(newPayDataEntity)
+		return newPayDataEntity.toPayDataWithUserDept()
+	}
+
+	@Transactional
+	override fun returnProduct(payData: PayData): PayData {
 		val payDataEntity = payData.toPayDataEntity()
 		val newPayDataEntity = PayDataEntity(
 			dateOp = LocalDateTime.now(),
 			userEntity = payDataEntity.userEntity,
 			productEntity = payDataEntity.productEntity,
 			price = -payData.price,
-			payCode = payCode,
-			isActive = true
+			payCode = PayCode.RETURN,
+			isActive = true,
+			isBalance = true
 		)
-		payDataEntity.isActive = false
 		payDataRepo.save(newPayDataEntity)
+
+		val userPayEntity = baseUserPayRepo.findByUserId(payData.user.id) ?: throw UserPayNotFoundException()
+		userPayEntity.balance += -payData.price
+
+		payDataEntity.isActive = false
+		payDataEntity.productEntity?.let { product ->
+			product.count += 1
+			baseProductRepo.save(product)
+		} ?: throw ProductNotFoundException()
 		payDataRepo.save(payDataEntity)
+
 		return newPayDataEntity.toPayDataWithUserDept()
 	}
 

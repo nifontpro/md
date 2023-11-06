@@ -18,5 +18,6 @@ interface PayService {
 	): PageResult<PayData>
 
 	fun findById(payDataId: Long): PayData
-	fun addOperation(payData: PayData, payCode: PayCode): PayData
+	fun giveProduct(payData: PayData): PayData
+	fun returnProduct(payData: PayData): PayData
 }

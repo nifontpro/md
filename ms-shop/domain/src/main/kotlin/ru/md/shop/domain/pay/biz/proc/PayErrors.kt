@@ -26,12 +26,12 @@ fun PayContext.getUserPayError() {
 	)
 }
 
-fun PayContext.payProductError() {
+fun PayContext.addPayDataError() {
 	fail(
 		errorDb(
 			repository = "pay",
-			violationCode = "product",
-			description = "Ошибка покупки приза"
+			violationCode = "add",
+			description = "Ошибка добавления платежной операции"
 		)
 	)
 }

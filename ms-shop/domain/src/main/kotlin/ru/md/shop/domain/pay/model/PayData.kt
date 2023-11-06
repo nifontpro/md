@@ -12,4 +12,5 @@ data class PayData(
 	val price: Int = 0,
 	val payCode: PayCode = PayCode.UNDEF,
 	val isActive: Boolean = false,
+	val isBalance: Boolean = false,
 )

@@ -10,10 +10,7 @@ import ru.md.shop.rest.pay.mappers.fromTransport
 import ru.md.shop.rest.pay.mappers.toTransportPayDataResponse
 import ru.md.shop.rest.pay.mappers.toTransportPaysDataResponse
 import ru.md.shop.rest.pay.mappers.toTransportUserPayResponse
-import ru.md.shop.rest.pay.model.request.AddOperationRequest
-import ru.md.shop.rest.pay.model.request.GetPaysDataRequest
-import ru.md.shop.rest.pay.model.request.GetUserPayRequest
-import ru.md.shop.rest.pay.model.request.PayProductRequest
+import ru.md.shop.rest.pay.model.request.*
 import ru.md.shop.rest.pay.model.response.PayDataResponse
 import ru.md.shop.rest.pay.model.response.UserPayResponse
 
@@ -66,9 +63,26 @@ class PayController(
 		)
 	}
 
-	@PostMapping("add")
-	private suspend fun addOperation(
-		@RequestBody request: AddOperationRequest,
+	/**
+	 * Выдать приз Сотруднику Администратором.
+	 */
+	@PostMapping("give_admin")
+	private suspend fun giveProductAdmin(
+		@RequestBody request: GiveProductRequest,
+		@RequestHeader(name = AUTH) bearerToken: String
+	): BaseResponse<PayDataResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = payProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportPayDataResponse() }
+		)
+	}
+
+	@PostMapping("return_admin")
+	private suspend fun returnProductAdmin(
+		@RequestBody request: AdminReturnProductRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<PayDataResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)

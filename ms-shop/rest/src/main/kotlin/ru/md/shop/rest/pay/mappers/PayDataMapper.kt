@@ -9,7 +9,7 @@ fun PayData.toPayDataResponse() = PayDataResponse(
 	dateOp = dateOp.toEpochMilliUTC(),
 	user = user,
 	product = product,
-	price = price,
+	price = if (isBalance) price else 0,
 	payCode = payCode,
-	isActive = isActive
+	isActive = isActive,
 )

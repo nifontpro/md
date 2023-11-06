@@ -24,7 +24,7 @@ fun ICorChainDsl<PayContext>.payProduct(title: String) = worker {
 			is ProductNotFoundException -> productNotFoundError()
 			is UserPayNotFoundException -> userPayNotFoundError()
 			is InsufficientUserBalanceException -> insufficientUserBalanceError()
-			else -> payProductError()
+			else -> addPayDataError()
 		}
 	}
 }

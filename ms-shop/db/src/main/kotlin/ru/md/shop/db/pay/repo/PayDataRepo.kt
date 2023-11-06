@@ -19,7 +19,7 @@ interface PayDataRepo : JpaRepository<PayDataEntity, Long> {
 	""")
 	fun findByIdWithUserDept(payId: Long): PayDataEntity?
 
-	@EntityGraph("payDataWithUserAndProduct")
+	@EntityGraph("payDataWithUserDeptAndProduct")
 	@Query(
 		"""
 		from PayDataEntity p where p.productEntity.deptId = :deptId and

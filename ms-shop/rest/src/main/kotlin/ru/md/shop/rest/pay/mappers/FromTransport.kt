@@ -3,10 +3,7 @@ package ru.md.shop.rest.pay.mappers
 import ru.md.base_rest.model.mapper.toBaseQuery
 import ru.md.shop.domain.pay.biz.proc.PayCommand
 import ru.md.shop.domain.pay.biz.proc.PayContext
-import ru.md.shop.rest.pay.model.request.AddOperationRequest
-import ru.md.shop.rest.pay.model.request.GetPaysDataRequest
-import ru.md.shop.rest.pay.model.request.GetUserPayRequest
-import ru.md.shop.rest.pay.model.request.PayProductRequest
+import ru.md.shop.rest.pay.model.request.*
 
 fun PayContext.fromTransport(request: GetUserPayRequest) {
 	command = PayCommand.GET_USER_PAY
@@ -30,9 +27,15 @@ fun PayContext.fromTransport(request: GetPaysDataRequest) {
 	baseQuery = request.baseRequest.toBaseQuery()
 }
 
-fun PayContext.fromTransport(request: AddOperationRequest) {
-	command = PayCommand.ADD_OPERATION
+fun PayContext.fromTransport(request: GiveProductRequest) {
+	command = PayCommand.ADMIN_GIVE_PRODUCT
 	authId = request.authId
 	payDataId = request.payId
-	payCode = request.payCode
 }
+
+fun PayContext.fromTransport(request: AdminReturnProductRequest) {
+	command = PayCommand.ADMIN_RETURN_PRODUCT
+	authId = request.authId
+	payDataId = request.payId
+}
+

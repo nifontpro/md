@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS shop.pay_data
     price integer NOT NULL DEFAULT 0,
     pay_code text COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::text,
     is_active boolean NOT NULL DEFAULT false,
+    is_balance boolean NOT NULL DEFAULT false,
     CONSTRAINT pay_data_pkey PRIMARY KEY (id),
     CONSTRAINT product_id_fkey FOREIGN KEY (product_id)
         REFERENCES shop.product (id) MATCH SIMPLE

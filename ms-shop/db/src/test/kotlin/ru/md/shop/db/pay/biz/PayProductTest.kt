@@ -64,11 +64,10 @@ class PayProductTest(
 		}
 		payProcessor.exec(payContext)
 		val payData = payContext.payData
-		println(payData)
 
 		assertEquals(PayCode.PAY, payData.payCode)
 		assertEquals(newProductId, payData.product.id)
-		assertEquals(newProduct.price, payData.price)
+		assertEquals(newProduct.price, -payData.price)
 		assertEquals(true, payData.isActive)
 
 		// Просмотр собственного баланса (userId не нужен)
@@ -99,6 +98,35 @@ class PayProductTest(
 		payProcessor.exec(payContext)
 		assertEquals(true, payContext.errors.size == 0)
 
+		payContext = PayContext().apply {
+			// Выдаем продукт со склада Админом
+			authId = 3
+			authEmail = ownerEmail
+			payDataId = payData.id
+			command = PayCommand.ADMIN_GIVE_PRODUCT
+		}
+		payProcessor.exec(payContext)
+		val givenPayData = payContext.payData
+
+		payContext = PayContext().apply {
+			// Возврат выданного продукта через Админа
+			authId = 3
+			authEmail = ownerEmail
+			payDataId = givenPayData.id
+			command = PayCommand.ADMIN_RETURN_PRODUCT
+		}
+		payProcessor.exec(payContext)
+
+		// Просмотр собственного баланса (userId не нужен)
+		// После возврата продукта должен быть равен начальному значению
+		payContext = PayContext().apply {
+			authId = 2
+			authEmail = ownerEmail
+			command = PayCommand.GET_USER_PAY
+		}
+		payProcessor.exec(payContext)
+		assertEquals(true, payContext.errors.size == 0)
+		assertEquals(initUserBalance, payContext.userPay.balance)
 	}
 
 	@Test

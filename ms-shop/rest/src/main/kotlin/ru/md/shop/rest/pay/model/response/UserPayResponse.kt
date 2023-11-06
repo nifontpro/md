@@ -1,8 +1,8 @@
 package ru.md.shop.rest.pay.model.response
 
 data class UserPayResponse(
-	var id: Long,
-	var userId: Long,
-	var balance: Int,
-	var createdAt: Long,
+	val id: Long,
+	val userId: Long,
+	val balance: Int,
+	val createdAt: Long,
 )

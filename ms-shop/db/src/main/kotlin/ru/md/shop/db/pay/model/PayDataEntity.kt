@@ -56,6 +56,9 @@ class PayDataEntity(
 	@Column(name = "is_active")
 	var isActive: Boolean = false,
 
+	@Column(name = "is_balance")
+	var isBalance: Boolean = false,
+
 	) {
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true

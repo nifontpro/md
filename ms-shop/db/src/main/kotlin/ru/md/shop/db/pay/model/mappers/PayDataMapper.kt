@@ -18,6 +18,7 @@ fun PayData.toPayDataEntity() = PayDataEntity(
 	price = price,
 	payCode = payCode,
 	isActive = isActive,
+	isBalance = isBalance,
 )
 
 fun PayDataEntity.toPayData() = PayData(
@@ -28,6 +29,7 @@ fun PayDataEntity.toPayData() = PayData(
 	price = price,
 	payCode = payCode,
 	isActive = isActive,
+	isBalance = isBalance,
 )
 
 fun PayDataEntity.toPayDataWithUserDept() = PayData(
@@ -38,13 +40,15 @@ fun PayDataEntity.toPayDataWithUserDept() = PayData(
 	price = price,
 	payCode = payCode,
 	isActive = isActive,
+	isBalance = isBalance,
 )
 
-fun PayDataEntity.toPayDataOnlyProduct() = PayData(
-	id = id ?: 0,
-	product = productEntity?.toProduct() ?: Product(),
-	dateOp = dateOp,
-	price = price,
-	payCode = payCode,
-	isActive = isActive,
-)
+//fun PayDataEntity.toPayDataOnlyProduct() = PayData(
+//	id = id ?: 0,
+//	product = productEntity?.toProduct() ?: Product(),
+//	dateOp = dateOp,
+//	price = price,
+//	payCode = payCode,
+//	isActive = isActive,
+//	isBalance = isBalance,
+//)
