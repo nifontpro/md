@@ -20,7 +20,7 @@ import ru.md.base_domain.user.biz.validate.validateUserId
 import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.msc.domain.base.workers.chain.validateAdminModifyUserByRoleChain
-import ru.md.msc.domain.base.workers.chain.validatePageParamsChain
+import ru.md.base_domain.biz.validate.chain.validatePageParamsChain
 import ru.md.msc.domain.base.workers.chain.validateSameAndAdminModifyUser
 import ru.md.base_domain.image.biz.workers.addImageToS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3

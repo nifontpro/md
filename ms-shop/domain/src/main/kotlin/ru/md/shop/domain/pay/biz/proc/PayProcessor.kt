@@ -2,9 +2,11 @@ package ru.md.shop.domain.pay.biz.proc
 
 import org.springframework.stereotype.Component
 import ru.md.base_domain.biz.proc.IBaseProcessor
+import ru.md.base_domain.biz.validate.chain.validatePageParamsChain
 import ru.md.base_domain.biz.validate.chain.validateUserIdSameOrAdminDeptLevelChain
 import ru.md.base_domain.biz.validate.validateAdminRole
 import ru.md.base_domain.biz.validate.validateAuthDeptLevel
+import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
@@ -19,6 +21,8 @@ import ru.md.cor.worker
 import ru.md.shop.domain.base.biz.validate.chain.validateProductIdAndAccessToProductChain
 import ru.md.shop.domain.base.biz.workers.findCompanyDeptIdByOwnerOrAuthUserChain
 import ru.md.shop.domain.base.service.BaseProductService
+import ru.md.shop.domain.pay.biz.validate.validatePayDataEqAthUser
+import ru.md.shop.domain.pay.biz.validate.validatePayDataId
 import ru.md.shop.domain.pay.biz.validate.validatePayDataPayCodeGIVEN
 import ru.md.shop.domain.pay.biz.validate.validatePayDataPayCodePAY
 import ru.md.shop.domain.pay.biz.workers.*
@@ -56,6 +60,9 @@ class PayProcessor(
 			}
 
 			operation("Получить платежные данные", PayCommand.GET_PAYS_DATA) {
+				validatePageParamsChain()
+				setGetPaysDataSortedFields("Устанавливаем сортировочные поля")
+				validateSortedFields("Проверяем сортировочные поля")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				findUserIdOrIgnoreByAdmin()
 				findCompanyDeptIdByOwnerOrAuthUserChain()
@@ -63,6 +70,7 @@ class PayProcessor(
 			}
 
 			operation("Выдача приза Админом", PayCommand.ADMIN_GIVE_PRODUCT) {
+				validatePayDataId("Проверяем payDataId")
 				getPayDataById("Получаем платежку")
 				validatePayDataPayCodePAY("Проверяем состояние операции - PAY")
 				validateAdminAccessToPayData()
@@ -70,10 +78,20 @@ class PayProcessor(
 			}
 
 			operation("Возврат приза Админом", PayCommand.ADMIN_RETURN_PRODUCT) {
+				validatePayDataId("Проверяем payDataId")
 				getPayDataById("Получаем платежку")
 				validatePayDataPayCodeGIVEN("Проверяем состояние операции - GIVEN")
 				validateAdminAccessToPayData()
-				returnGivenProductByAdmin("Админ возвращает приз")
+				returnProduct("Возвращаем приз")
+			}
+
+			operation("Возврат приза Админом", PayCommand.USER_RETURN_PRODUCT) {
+				validatePayDataId("Проверяем payDataId")
+				getPayDataById("Получаем платежку")
+				validatePayDataPayCodePAY("Проверяем состояние операции - PAY")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				validatePayDataEqAthUser("Проверка, чтоб операция принадлежала пользователю")
+				returnProduct("Возвращаем приз")
 			}
 
 			finishOperation()

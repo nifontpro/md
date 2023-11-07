@@ -30,12 +30,18 @@ fun PayContext.fromTransport(request: GetPaysDataRequest) {
 fun PayContext.fromTransport(request: GiveProductRequest) {
 	command = PayCommand.ADMIN_GIVE_PRODUCT
 	authId = request.authId
-	payDataId = request.payId
+	payDataId = request.payDataId
 }
 
 fun PayContext.fromTransport(request: AdminReturnProductRequest) {
 	command = PayCommand.ADMIN_RETURN_PRODUCT
 	authId = request.authId
-	payDataId = request.payId
+	payDataId = request.payDataId
+}
+
+fun PayContext.fromTransport(request: UserReturnProductRequest) {
+	command = PayCommand.USER_RETURN_PRODUCT
+	authId = request.authId
+	payDataId = request.payDataId
 }
 

@@ -6,7 +6,7 @@ import ru.md.cor.worker
 import ru.md.shop.domain.pay.biz.proc.PayContext
 import ru.md.shop.domain.pay.biz.proc.addPayDataError
 
-fun ICorChainDsl<PayContext>.returnGivenProductByAdmin(title: String) = worker {
+fun ICorChainDsl<PayContext>.returnProduct(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }

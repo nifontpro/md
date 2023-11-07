@@ -29,4 +29,5 @@ enum class PayCommand : IBaseCommand {
 	GET_PAYS_DATA,
 	ADMIN_GIVE_PRODUCT,
 	ADMIN_RETURN_PRODUCT,
+	USER_RETURN_PRODUCT,
 }

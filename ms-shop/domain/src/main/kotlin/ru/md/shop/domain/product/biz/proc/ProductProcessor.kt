@@ -2,6 +2,7 @@ package ru.md.shop.domain.product.biz.proc
 
 import org.springframework.stereotype.Component
 import ru.md.base_domain.biz.proc.IBaseProcessor
+import ru.md.base_domain.biz.validate.chain.validatePageParamsChain
 import ru.md.base_domain.biz.validate.validateAdminRole
 import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.base_domain.biz.workers.finishOperation
@@ -70,6 +71,7 @@ class ProductProcessor(
 			}
 
 			operation("Получить призы в компании", ProductCommand.GET_BY_COMPANY) {
+				validatePageParamsChain()
 				setProductByCompanySortedFields("Устанавливаем допустимые поля сортировки")
 				validateSortedFields("Проверяем сортировочные поля")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
