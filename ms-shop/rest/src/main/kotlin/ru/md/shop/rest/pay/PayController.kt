@@ -99,7 +99,7 @@ class PayController(
 	/**
 	 * Возврат еще не выданного приза Сотрудником с возвратом ему средств на счет.
 	 * Операцию выполняет сам Сотрудник.
-	 * [payDataId] - номер платежной операции при выдаче приза
+	 * [payDataId] - номер платежной операции при покупке приза
 	 */
 	@PostMapping("return_user")
 	private suspend fun returnProductUser(
