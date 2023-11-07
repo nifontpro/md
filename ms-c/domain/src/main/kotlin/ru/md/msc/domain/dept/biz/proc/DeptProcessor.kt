@@ -109,7 +109,7 @@ class DeptProcessor(
 				validateDeptIdAndAdminDeptLevelChain()
 				getDeptDetailsById("Получаем отдел")
 				deleteDept("Удаляем отдел")
-				worker("Подготовка к удалению изображений") { baseImages = deptDetails.dept.images }
+				worker("Подготовка к удалению изображений") { baseImages = deptDetails.images }
 				deleteBaseImagesFromS3("Удаляем все изображения")
 			}
 

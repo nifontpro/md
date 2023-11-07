@@ -1,10 +1,10 @@
 package ru.md.msc.rest.dept.mappers
 
-import ru.md.base_rest.model.mapper.toBaseImageResponse
 import ru.md.base_domain.dept.model.Dept
+import ru.md.base_rest.model.response.BaseImageResponse
 import ru.md.msc.rest.dept.model.response.DeptResponse
 
-fun Dept.toDeptResponse() = DeptResponse(
+fun Dept.toDeptResponse(images: List<BaseImageResponse> = emptyList()) = DeptResponse(
 	id = id,
 	parentId = parentId,
 	name = name,
@@ -14,5 +14,5 @@ fun Dept.toDeptResponse() = DeptResponse(
 	mainImg = mainImg,
 	normImg = normImg,
 	type = type,
-	images = images.map { it.toBaseImageResponse() }
+	images = images
 )

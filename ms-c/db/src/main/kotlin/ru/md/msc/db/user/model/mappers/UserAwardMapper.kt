@@ -1,6 +1,6 @@
 package ru.md.msc.db.user.model.mappers
 
-import ru.md.base_db.dept.model.mappers.toDeptLazy
+import ru.md.base_db.dept.model.mappers.toDept
 import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.msc.db.award.model.mapper.toActivityOnlyAward
 import ru.md.msc.db.award.model.mapper.toAwardLazy
@@ -9,7 +9,7 @@ import ru.md.msc.domain.user.model.UserAward
 
 fun UserAwardEntity.toUserAward() = UserAward(
 	id = id ?: 0,
-	dept = dept?.toDeptLazy(),
+	dept = dept?.toDept(),
 	authEmail = authEmail,
 	firstname = firstname,
 	patronymic = patronymic,
@@ -24,7 +24,7 @@ fun UserAwardEntity.toUserAward() = UserAward(
 
 fun UserAwardEntity.toUserActivity() = UserAward(
 	id = id ?: 0,
-	dept = dept?.toDeptLazy(),
+	dept = dept?.toDept(),
 	authEmail = authEmail,
 	firstname = firstname,
 	patronymic = patronymic,

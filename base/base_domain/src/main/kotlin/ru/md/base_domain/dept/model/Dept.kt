@@ -1,7 +1,5 @@
 package ru.md.base_domain.dept.model
 
-import ru.md.base_domain.image.model.BaseImage
-
 data class Dept(
 	val id: Long = 0,
 	val parentId: Long = 0,
@@ -12,5 +10,4 @@ data class Dept(
 	var mainImg: String? = null,
 	val normImg: String? = null,
 	val type: DeptType = DeptType.UNDEF,
-	val images: List<BaseImage> = emptyList(),
 )

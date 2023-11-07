@@ -17,6 +17,12 @@ values (1, 'ROOT DEPT'),
        (5, 'Descr. dept 5')
 ;;
 
+insert into dep.dept_image(dept_id, image_url, image_key, type_code, main, mini_url, mini_key, origin_url, origin_key)
+values (3, 'url1', 'key1', 'U', true, 'm1', 'mk1', 'o1', 'ok1'),
+       (3, 'url2', 'key2', 'U', false, 'm2', 'mk2', 'o2', 'ok2'),
+       (3, 'url3', 'key3', 'U', false, 'm3', 'mk3', 'o3', 'ok3')
+;;
+
 -- USERS
 
 insert into users.user_data (dept_id, firstname, lastname, auth_email)

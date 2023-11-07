@@ -3,11 +3,11 @@ package ru.md.msc.db.dept.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import ru.md.base_db.base.mapper.toSort
 import ru.md.base_db.dept.model.DeptImageEntity
-import ru.md.base_db.dept.model.mappers.toDeptLazy
+import ru.md.base_db.dept.model.mappers.toDept
 import ru.md.base_db.dept.repo.BaseDeptRepository
 import ru.md.base_db.image.mappers.toBaseImage
-import ru.md.base_db.base.mapper.toSort
 import ru.md.base_domain.dept.biz.errors.DeptNotFoundException
 import ru.md.base_domain.dept.biz.errors.TopLevelDeptNotFoundException
 import ru.md.base_domain.dept.model.Dept
@@ -42,11 +42,9 @@ class DeptServiceImpl(
 		val oldDeptDetailsEntity =
 			deptDetailsRepository.findByIdOrNull(deptDetails.dept.id) ?: throw DeptNotFoundException()
 		with(oldDeptDetailsEntity) {
-			dept?.let {
-				it.name = deptDetails.dept.name
-				it.classname = deptDetails.dept.classname
-				it.topLevel = deptDetails.dept.topLevel
-			}
+			dept.name = deptDetails.dept.name
+			dept.classname = deptDetails.dept.classname
+			dept.topLevel = deptDetails.dept.topLevel
 			address = deptDetails.address
 			email = deptDetails.email
 			phone = deptDetails.phone
@@ -58,7 +56,7 @@ class DeptServiceImpl(
 	override fun findSubTreeDepts(deptId: Long, orders: List<BaseOrder>): List<Dept> {
 		val ids = baseDeptRepository.subTreeIds(deptId = deptId)
 		val depts = deptRepository.findByIdIn(ids = ids, sort = orders.toSort())
-		return depts.map { it.toDeptLazy() }
+		return depts.map { it.toDept() }
 	}
 
 
@@ -66,7 +64,7 @@ class DeptServiceImpl(
 		val topLevelId = baseDeptRepository.getTopLevelId(deptId = deptId) ?: throw TopLevelDeptNotFoundException()
 		val ids = baseDeptRepository.subTreeIds(deptId = topLevelId)
 		val depts = deptRepository.findByIdIn(ids = ids, sort = orders.toSort())
-		return depts.map { it.toDeptLazy() }
+		return depts.map { it.toDept() }
 	}
 
 	/**
@@ -74,7 +72,7 @@ class DeptServiceImpl(
 	 */
 	override fun getDeptsByParentId(parentId: Long, orders: List<BaseOrder>): List<Dept> {
 		val depts = deptRepository.findByParentId(parentId = parentId, sort = orders.toSort())
-		return depts.map { it.toDeptLazy() }
+		return depts.map { it.toDept() }
 	}
 
 	override fun findByIdDetails(deptId: Long): DeptDetails? {
@@ -82,7 +80,7 @@ class DeptServiceImpl(
 	}
 
 	override fun findById(deptId: Long): Dept? {
-		return deptRepository.findByIdOrNull(deptId)?.toDeptLazy()
+		return deptRepository.findByIdOrNull(deptId)?.toDept()
 	}
 
 	override fun deleteById(deptId: Long) {
@@ -114,14 +112,16 @@ class DeptServiceImpl(
 	}
 
 	override fun setMainImage(deptId: Long): BaseImage? {
-		val deptEntity = deptRepository.findByIdOrNull(deptId) ?: throw DeptNotFoundException()
-		var deptImageEntity = deptEntity.images.firstOrNull() ?: run {
+		val deptDetailsEntity = deptDetailsRepository.findByIdOrNull(deptId) ?: throw DeptNotFoundException()
+		val deptEntity = deptDetailsEntity.dept
+
+		var deptImageEntity = deptDetailsEntity.images.firstOrNull() ?: run {
 			deptEntity.mainImg = null
 			deptEntity.normImg = null
 			return null
 		}
 
-		deptEntity.images.forEach {
+		deptDetailsEntity.images.forEach {
 			if (it.createdAt > deptImageEntity.createdAt) {
 				deptImageEntity = it
 			} else if (it.main) {
@@ -130,7 +130,8 @@ class DeptServiceImpl(
 		}
 
 		deptImageEntity.main = true
-		deptEntity.mainImg = if (deptImageEntity.miniUrl!=null) deptImageEntity.miniUrl else deptImageEntity.normalUrl
+		deptEntity.mainImg =
+			if (deptImageEntity.miniUrl != null) deptImageEntity.miniUrl else deptImageEntity.normalUrl
 		deptEntity.normImg = deptImageEntity.normalUrl
 		return deptImageEntity.toBaseImage()
 	}

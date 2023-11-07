@@ -2,6 +2,7 @@ package ru.md.msc.db.dept.model
 
 import jakarta.persistence.*
 import ru.md.base_db.dept.model.DeptEntity
+import ru.md.base_db.dept.model.DeptImageEntity
 import java.time.LocalDateTime
 import java.util.*
 
@@ -25,14 +26,19 @@ class DeptDetailsEntity(
 	var description: String? = null,
 
 	@Column(name = "created_at")
-	val createdAt: LocalDateTime? = null,
+	var createdAt: LocalDateTime? = null,
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER, optional = false, cascade = [CascadeType.PERSIST])
 	@JoinColumn(name = "dept_id")
 	@MapsId
-	val dept: DeptEntity? = null,
+	var dept: DeptEntity,
 
-	) {
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "dept_id")
+	@OrderBy("id DESC")
+	val images: List<DeptImageEntity> = emptyList()
+
+) {
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true
 		if (other == null || javaClass != other.javaClass) return false

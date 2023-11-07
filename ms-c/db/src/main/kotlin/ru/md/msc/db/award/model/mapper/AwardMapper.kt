@@ -2,7 +2,6 @@ package ru.md.msc.db.award.model.mapper
 
 import ru.md.base_db.dept.model.mappers.toDept
 import ru.md.base_db.dept.model.mappers.toDeptEntity
-import ru.md.base_db.dept.model.mappers.toDeptLazy
 import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.base_db.user.model.mappers.toUserLazy
 import ru.md.base_domain.dept.model.Dept
@@ -35,7 +34,7 @@ fun AwardEntity.toAwardOnlyDept() = Award(
 	endDate = endDate,
 	score = score,
 	state = state,
-	dept = dept?.toDeptLazy() ?: Dept(),
+	dept = dept?.toDept() ?: Dept(),
 )
 
 fun AwardEntity.toAwardWithDeptAndUsers() = Award(
@@ -49,23 +48,8 @@ fun AwardEntity.toAwardWithDeptAndUsers() = Award(
 	endDate = endDate,
 	score = score,
 	state = state,
-	dept = dept?.toDeptLazy() ?: Dept(),
+	dept = dept?.toDept() ?: Dept(),
 	users = users.map { it.toUserLazy() }
-)
-
-fun AwardEntity.toAwardOnlyImages() = Award(
-	id = id ?: 0,
-	name = name,
-	description = description,
-	type = type,
-	mainImg = mainImg,
-	normImg = normImg,
-	startDate = startDate,
-	endDate = endDate,
-	score = score,
-	state = state,
-	dept = Dept(id = dept?.id ?: 0),
-	images = images.map { it.toBaseImage() }
 )
 
 fun AwardEntity.toAwardLazy() = Award(

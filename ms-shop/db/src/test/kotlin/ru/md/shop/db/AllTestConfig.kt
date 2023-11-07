@@ -29,6 +29,8 @@ class BeforeAndAfterAnnotationsUnitTest(
 	@Test
 	fun changeBalanceTest() {
 		val userId = 3L
+		val initBalance = payService.getUserPayData(userId = userId).balance
+
 		baseUserPayService.changeBalance(
 			userId = userId, delta = 100
 		)
@@ -39,6 +41,6 @@ class BeforeAndAfterAnnotationsUnitTest(
 			userId = userId, delta = -10
 		)
 		val userPay = payService.getUserPayData(userId = userId)
-		Assertions.assertEquals(140, userPay.balance)
+		Assertions.assertEquals(initBalance + 100 + 50 - 10, userPay.balance)
 	}
 }

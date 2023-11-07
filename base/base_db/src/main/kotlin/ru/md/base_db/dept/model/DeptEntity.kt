@@ -35,11 +35,6 @@ class DeptEntity(
 //	@OneToOne(mappedBy = "dept", fetch = FetchType.LAZY, optional = false)
 //	val details: DeptDetailsEntity? = null,
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "dept_id")
-	@OrderBy("id DESC")
-	val images: MutableList<DeptImageEntity> = mutableListOf(),
-
 //	@OneToMany(mappedBy = "dept", fetch = FetchType.LAZY)
 //	@Fetch(FetchMode.SUBSELECT)
 //	val users: List<UserEntity> = emptyList()

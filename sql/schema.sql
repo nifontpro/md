@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS md.base_image
     image_key text COLLATE pg_catalog."default",
     type_code text COLLATE pg_catalog."default",
     main boolean,
-    created_at timestamp without time zone,
+    created_at timestamp without time zone DEFAULT now(),
     mini_url text COLLATE pg_catalog."default",
     mini_key text COLLATE pg_catalog."default",
     origin_url text COLLATE pg_catalog."default",
