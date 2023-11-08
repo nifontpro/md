@@ -4,7 +4,9 @@ import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.shop.domain.pay.biz.proc.*
+import ru.md.shop.domain.product.biz.proc.InsufficientProductQuantityException
 import ru.md.shop.domain.product.biz.proc.ProductNotFoundException
+import ru.md.shop.domain.product.biz.proc.insufficientProductError
 import ru.md.shop.domain.product.biz.proc.productNotFoundError
 
 fun ICorChainDsl<PayContext>.payProduct(title: String) = worker {
@@ -23,6 +25,7 @@ fun ICorChainDsl<PayContext>.payProduct(title: String) = worker {
 		when (it) {
 			is ProductNotFoundException -> productNotFoundError()
 			is UserPayNotFoundException -> userPayNotFoundError()
+			is InsufficientProductQuantityException -> insufficientProductError()
 			is InsufficientUserBalanceException -> insufficientUserBalanceError()
 			else -> addPayDataError()
 		}

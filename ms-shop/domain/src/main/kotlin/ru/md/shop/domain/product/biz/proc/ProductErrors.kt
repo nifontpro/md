@@ -26,6 +26,15 @@ fun ShopContext.getProductError() {
 	)
 }
 
+fun ShopContext.insufficientProductError() {
+	fail(
+		errorDb(
+			repository = "product",
+			violationCode = "insufficient",
+			description = "Приза нет в наличии"
+		)
+	)
+}
+
 class ProductNotFoundException(message: String = "") : RuntimeException(message)
 class InsufficientProductQuantityException(message: String = "") : RuntimeException(message)
-//class AlreadyActionException(message: String = "") : RuntimeException(message)

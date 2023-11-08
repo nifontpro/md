@@ -24,6 +24,7 @@ import ru.md.shop.domain.pay.biz.proc.UserPayNotFoundException
 import ru.md.shop.domain.pay.model.PayCode
 import ru.md.shop.domain.pay.model.PayData
 import ru.md.shop.domain.pay.service.PayService
+import ru.md.shop.domain.product.biz.proc.InsufficientProductQuantityException
 import ru.md.shop.domain.product.biz.proc.ProductNotFoundException
 import java.time.LocalDateTime
 
@@ -43,6 +44,7 @@ class PayServiceImpl(
 	@Transactional
 	override fun payProduct(productId: Long, userId: Long): PayData {
 		val productEntity = baseProductRepo.findByIdOrNull(productId) ?: throw ProductNotFoundException()
+		if (productEntity.count < 1) throw InsufficientProductQuantityException()
 		val userPayEntity = baseUserPayRepo.findByUserId(userId) ?: throw UserPayNotFoundException()
 		val price = productEntity.price
 

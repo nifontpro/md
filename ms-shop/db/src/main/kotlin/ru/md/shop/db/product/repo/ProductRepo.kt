@@ -19,7 +19,7 @@ interface ProductRepo : JpaRepository<ProductEntity, Long> {
 		"""
 		from ProductEntity p where p.deptId = :deptId and
 		(:maxPrice is null or p.price <= :maxPrice) and
-		(:available = false  or p.count > 0) and
+		(:available = false or p.count > 0) and
 		(:filter is null or (upper(p.name) like :filter))
 	"""
 	)
