@@ -2,11 +2,25 @@ package ru.md.msc.domain.award.biz.proc
 
 import org.springframework.stereotype.Component
 import ru.md.base_domain.biz.proc.IBaseProcessor
-import ru.md.base_domain.biz.validate.validateSortedFields
+import ru.md.base_domain.biz.validate.*
+import ru.md.base_domain.biz.validate.chain.validateDeptIdAndAdminDeptLevelChain
+import ru.md.base_domain.biz.validate.chain.validatePageParamsChain
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
 import ru.md.base_domain.client.MicroClient
+import ru.md.base_domain.dept.biz.validate.validateDeptId
+import ru.md.base_domain.dept.service.BaseDeptService
+import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
+import ru.md.base_domain.image.biz.validate.validateImageId
+import ru.md.base_domain.image.biz.workers.addImageToS3
+import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
+import ru.md.base_domain.image.biz.workers.deleteBaseImagesFromS3
+import ru.md.base_domain.s3.repo.BaseS3Repository
+import ru.md.base_domain.user.biz.validate.validateUserId
+import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
+import ru.md.base_domain.user.biz.workers.getUserById
+import ru.md.base_domain.user.service.BaseUserService
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.rootChain
 import ru.md.cor.worker
@@ -18,31 +32,12 @@ import ru.md.msc.domain.award.biz.workers.sort.setActionByDeptValidSortedFields
 import ru.md.msc.domain.award.biz.workers.sort.setActionByUserValidSortedFields
 import ru.md.msc.domain.award.biz.workers.sort.setAwardWithDeptValidSortedFields
 import ru.md.msc.domain.award.service.AwardService
-import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
-import ru.md.base_domain.biz.validate.validateAuthDeptLevel
-import ru.md.base_domain.biz.validate.validateAuthDeptTopLevelForView
-import ru.md.base_domain.biz.validate.validateAuthUserTopLevelForView
-import ru.md.base_domain.biz.validate.validateAdminRole
-import ru.md.base_domain.dept.biz.validate.validateDeptId
-import ru.md.base_domain.image.biz.validate.validateImageId
-import ru.md.base_domain.user.biz.validate.validateUserId
-import ru.md.base_domain.dept.service.BaseDeptService
-import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
-import ru.md.base_domain.biz.validate.chain.validateDeptIdAndAdminDeptLevelChain
-import ru.md.base_domain.biz.validate.chain.validatePageParamsChain
-import ru.md.base_domain.biz.validate.getRootDeptId
-import ru.md.base_domain.image.biz.workers.addImageToS3
-import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
-import ru.md.base_domain.image.biz.workers.deleteBaseImagesFromS3
 import ru.md.msc.domain.base.workers.image.getGalleryItemByClient
 import ru.md.msc.domain.base.workers.msg.sendMessage
 import ru.md.msc.domain.base.workers.msg.sendMessageToEmail
 import ru.md.msc.domain.dept.service.DeptService
 import ru.md.msc.domain.email.EmailService
 import ru.md.msc.domain.msg.service.MessageService
-import ru.md.base_domain.s3.repo.BaseS3Repository
-import ru.md.base_domain.user.biz.workers.getUserById
-import ru.md.base_domain.user.service.BaseUserService
 import ru.md.msc.domain.user.service.UserService
 
 @Component
@@ -108,7 +103,7 @@ class AwardProcessor(
 				validateAwardIdAndAccessToAwardChain()
 				getAwardByIdDetails("Получаем детальную награду")
 				deleteAward("Удаляем")
-				worker("Подготовка к удалению изображений") { baseImages = awardDetails.award.images }
+				worker("Подготовка к удалению изображений") { baseImages = awardDetails.images }
 				deleteBaseImagesFromS3("Удаляем все изображения")
 			}
 
@@ -258,7 +253,7 @@ class AwardProcessor(
 			validateAwardIdAndAccessToAwardChain()
 			// Удаляем старые изображения
 			getAwardByIdDetails("Получаем детальную награду")
-			worker("Подготовка к удалению изображений") { baseImages = awardDetails.award.images }
+			worker("Подготовка к удалению изображений") { baseImages = awardDetails.images }
 			deleteBaseImagesFromS3("Удаляем все изображения")
 		}
 

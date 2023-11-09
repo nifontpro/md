@@ -1,6 +1,7 @@
 package ru.md.msc.db.award.model
 
 import jakarta.persistence.*
+import ru.md.msc.db.award.model.image.AwardImageEntity
 import java.time.LocalDateTime
 import java.util.*
 
@@ -17,12 +18,18 @@ class AwardDetailsEntity(
 	@Column(name = "created_at")
 	val createdAt: LocalDateTime? = null,
 
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
-	@MapsId
+	@OneToOne(fetch = FetchType.LAZY, optional = false, cascade = [CascadeType.PERSIST])
 	@JoinColumn(name = "award_id")
-	val award: AwardEntity
+	@MapsId
+	val award: AwardEntity,
 
-) {
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "award_id")
+	@OrderBy("id DESC")
+//	@Fetch(FetchMode.SUBSELECT)
+	val images: List<AwardImageEntity> = emptyList(),
+
+	) {
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true
 		if (other == null || javaClass != other.javaClass) return false

@@ -21,12 +21,13 @@ class ProductTest(
 
 	@Test
 	fun getByCompanyTest() = runBlocking {
+		val filterStr = "Product getByCompanyTest"
 		var productContext = ProductContext().apply {
 			// Создаем новый продукт сотрудником с правами Администратора
 			authId = 3
 			authEmail = ownerEmail
 			product = Product(
-				name = "Test product 1",
+				name = "$filterStr 1",
 				price = 100,
 				count = 10
 			)
@@ -44,7 +45,7 @@ class ProductTest(
 			authId = 3
 			authEmail = ownerEmail
 			product = Product(
-				name = "Test Product 2",
+				name = "$filterStr 2",
 				price = 50,
 				count = 0
 			)
@@ -61,7 +62,7 @@ class ProductTest(
 			authId = 3
 			authEmail = ownerEmail
 			product = Product(
-				name = "Test Product 3",
+				name = "$filterStr 3",
 				price = 30,
 				count = 3
 			)
@@ -79,7 +80,7 @@ class ProductTest(
 			authEmail = ownerEmail
 
 			baseQuery = BaseQuery(
-				filter = "test pro"
+				filter = filterStr
 			)
 
 			command = ProductCommand.GET_BY_COMPANY
@@ -90,12 +91,11 @@ class ProductTest(
 		assertEquals(1, productContext.products.count { it.id == newProduct2Id })
 
 		productContext = ProductContext().apply {
-			// Создаем новый продукт сотрудником с правами Администратора
 			authId = 2
 			authEmail = ownerEmail
 
 			baseQuery = BaseQuery(
-				filter = "test pro"
+				filter = filterStr
 			)
 			available = true
 
@@ -105,12 +105,11 @@ class ProductTest(
 		assertEquals(2, productContext.products.size)
 
 		productContext = ProductContext().apply {
-			// Создаем новый продукт сотрудником с правами Администратора
 			authId = 2
 			authEmail = ownerEmail
 
 			baseQuery = BaseQuery(
-				filter = "test pro"
+				filter = filterStr
 			)
 			available = true
 			maxPrice = 30

@@ -7,7 +7,6 @@ import org.hibernate.annotations.Formula
 import org.hibernate.annotations.WhereJoinTable
 import ru.md.base_db.dept.model.DeptEntity
 import ru.md.base_db.user.model.UserEntity
-import ru.md.msc.db.award.model.image.AwardImageEntity
 import ru.md.msc.domain.award.model.AwardState
 import ru.md.msc.domain.award.model.AwardType
 import java.time.LocalDateTime
@@ -65,12 +64,6 @@ class AwardEntity(
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "dept_id")
 	var dept: DeptEntity? = null,
-
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "award_id")
-	@OrderBy("id DESC")
-//	@Fetch(FetchMode.SUBSELECT)
-	val images: List<AwardImageEntity> = emptyList(),
 
 	@Fetch(FetchMode.SUBSELECT)
 	@ManyToMany(fetch = FetchType.LAZY)

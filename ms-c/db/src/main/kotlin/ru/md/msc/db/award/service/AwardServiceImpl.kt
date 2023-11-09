@@ -99,7 +99,7 @@ class AwardServiceImpl(
 				maxDate = baseQuery.maxDate,
 				filter = baseQuery.filter.toSearchUpperOrNull(),
 				pageable = pageRequest
-			).toPageResult { it.toAwardOnlyDept() }
+			).toPageResult { it.toAward() }
 		}
 	}
 
@@ -131,7 +131,7 @@ class AwardServiceImpl(
 			excludeAwardIds = excludeAwardIds,
 			pageable = pageRequest
 		)
-		return awards.toPageResult { it.toAwardOnlyDept() }
+		return awards.toPageResult { it.toAward() }
 	}
 
 	override fun findSimpleAwardUserAvailable(
@@ -161,7 +161,7 @@ class AwardServiceImpl(
 			excludeAwardIds = excludeAwardIds,
 			pageable = pageRequest
 		)
-		return awards.toPageResult { it.toAwardOnlyDept() }
+		return awards.toPageResult { it.toAward() }
 	}
 
 	override fun findDeptIdByAwardId(awardId: Long): Long {
@@ -202,14 +202,16 @@ class AwardServiceImpl(
 	}
 
 	override fun setMainImage(awardId: Long): BaseImage? {
-		val awardEntity = awardRepository.findByIdOrNull(awardId) ?: throw AwardNotFoundException()
-		var awardImageEntity = awardEntity.images.firstOrNull() ?: run {
+		val awardDetailsEntity = awardDetailsRepository.findByIdOrNull(awardId) ?: throw AwardNotFoundException()
+		val awardEntity = awardDetailsEntity.award
+
+		var awardImageEntity = awardDetailsEntity.images.firstOrNull() ?: run {
 			awardEntity.mainImg = null
 			awardEntity.normImg = null
 			return null
 		}
 
-		awardEntity.images.forEach {
+		awardDetailsEntity.images.forEach {
 			if (it.createdAt > awardImageEntity.createdAt) {
 				awardImageEntity = it
 			} else if (it.main) {

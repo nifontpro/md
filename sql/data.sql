@@ -18,9 +18,9 @@ values (1, 'ROOT DEPT'),
 ;;
 
 insert into dep.dept_image(dept_id, image_url, image_key, type_code, main, mini_url, mini_key, origin_url, origin_key)
-values (3, 'url1', 'key1', 'U', true, 'm1', 'mk1', 'o1', 'ok1'),
+values (3, 'url1', 'key1', 'U', false, 'm1', 'mk1', 'o1', 'ok1'),
        (3, 'url2', 'key2', 'U', false, 'm2', 'mk2', 'o2', 'ok2'),
-       (3, 'url3', 'key3', 'U', false, 'm3', 'mk3', 'o3', 'ok3')
+       (3, 'url3', 'key3', 'U', true, 'm3', 'mk3', 'o3', 'ok3')
 ;;
 
 -- USERS
@@ -68,6 +68,13 @@ insert into md.award_details (award_id, criteria)
 values (1, 'a1'),
        (2, 'a2')
 ;;
+
+insert into md.award_image(award_id, image_url, image_key, type_code, main, mini_url, mini_key, origin_url, origin_key)
+values (1, 'url1', 'key1', 'U', false, 'm1', 'mk1', 'o1', 'ok1'),
+       (1, 'url2', 'key2', 'U', false, 'm2', 'mk2', 'o2', 'ok2'),
+       (1, 'url3', 'key3', 'U', true, 'm3', 'mk3', 'o3', 'ok3')
+;;
+
 
 insert into md.activity (date, user_id, award_id, action_code, is_activ, auth_id)
 values ('2023-01-01', 2, 1, 'P', false, 1),

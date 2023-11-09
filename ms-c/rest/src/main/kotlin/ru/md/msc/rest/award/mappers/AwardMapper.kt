@@ -1,7 +1,7 @@
 package ru.md.msc.rest.award.mappers
 
 import ru.md.base_domain.model.mappers.toEpochMilliUTC
-import ru.md.base_rest.model.mapper.toBaseImageResponse
+import ru.md.base_rest.model.response.BaseImageResponse
 import ru.md.msc.domain.award.model.Award
 import ru.md.msc.rest.award.model.response.AwardResponse
 import ru.md.msc.rest.dept.mappers.toDeptResponse
@@ -19,11 +19,10 @@ fun Award.toAwardResponseWithUsers() = AwardResponse(
 	score = score,
 	state = state,
 	dept = dept.toDeptResponse(),
-	images = images.map { it.toBaseImageResponse() },
 	users = users.map { it.toUserResponse() }
 )
 
-fun Award.toAwardResponse() = AwardResponse(
+fun Award.toAwardResponse(images: List<BaseImageResponse> = emptyList()) = AwardResponse(
 	id = id,
 	name = name,
 	description = description,
@@ -35,5 +34,5 @@ fun Award.toAwardResponse() = AwardResponse(
 	score = score,
 	state = state,
 	dept = dept.toDeptResponse(),
-	images = images.map { it.toBaseImageResponse() },
+	images = images,
 )
