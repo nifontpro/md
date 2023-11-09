@@ -26,7 +26,7 @@ fun ICorChainDsl<UserContext>.deleteUserOperation() {
 		chain {
 			on { deleteForever }
 			deleteUser("Удаляем профиль сотрудника")
-			worker("Подготовка к удалению изображений") { baseImages = userDetails.user.images }
+			worker("Подготовка к удалению изображений") { baseImages = userDetails.images }
 			deleteBaseImagesFromS3("Удаляем все изображения")
 		}
 

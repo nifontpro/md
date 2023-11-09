@@ -75,7 +75,7 @@ class UserServiceImpl(
 		)
 
 		deptDetailsRepository.saveAndFlush(deptDetailsEntity)
-		userDetailsEntity.user?.dept = deptEntity
+		userDetailsEntity.user.dept = deptEntity
 		userDetailsRepository.save(userDetailsEntity)
 		addRolesToUserEntity(userDetails, userDetailsEntity)
 
@@ -94,7 +94,7 @@ class UserServiceImpl(
 		deptDetailsRepository.saveAndFlush(newDeptDetailsEntity)
 		return UserDetailsDept(
 			userDetails = userDetailsEntity.toUserDetails(),
-			deptId = newDeptDetailsEntity.dept?.id ?: 0
+			deptId = newDeptDetailsEntity.dept.id ?: 0
 		)
 	}
 
@@ -108,19 +108,17 @@ class UserServiceImpl(
 	override fun update(userDetails: UserDetails, isAuthUserHasAdminRole: Boolean): UserDetails {
 		val oldUserDetailsEntity = userDetailsRepository.findByUserId(userDetails.user.id) ?: throw UserNotFoundException()
 		with(oldUserDetailsEntity) {
-			user?.let {
-				it.firstname = userDetails.user.firstname
-				it.patronymic = userDetails.user.patronymic
-				it.lastname = userDetails.user.lastname
-				if (isAuthUserHasAdminRole) {
-					it.authEmail = userDetails.user.authEmail
-				}
-				it.gender = userDetails.user.gender
-				it.post = userDetails.user.post
-				val targetDeptId = userDetails.user.dept?.id
-				if (targetDeptId != 0L && targetDeptId != oldUserDetailsEntity.user?.dept?.id) {
-					it.dept = DeptEntity(id = userDetails.user.dept?.id)
-				}
+			user.firstname = userDetails.user.firstname
+			user.patronymic = userDetails.user.patronymic
+			user.lastname = userDetails.user.lastname
+			if (isAuthUserHasAdminRole) {
+				user.authEmail = userDetails.user.authEmail
+			}
+			user.gender = userDetails.user.gender
+			user.post = userDetails.user.post
+			val targetDeptId = userDetails.user.dept?.id
+			if (targetDeptId != 0L && targetDeptId != oldUserDetailsEntity.user.dept?.id) {
+				user.dept = DeptEntity(id = userDetails.user.dept?.id)
 			}
 			phone = userDetails.phone
 			address = userDetails.address
@@ -139,12 +137,10 @@ class UserServiceImpl(
 		val oldUserDetailsEntity = userDetailsRepository
 			.findByUserAuthEmail(userDetails.user.authEmail ?: "") ?: throw UserNotFoundException()
 		with(oldUserDetailsEntity) {
-			user?.let {
-				it.firstname = userDetails.user.firstname
-				it.patronymic = userDetails.user.patronymic
-				it.lastname = userDetails.user.lastname
-				it.post = userDetails.user.post
-			}
+			user.firstname = userDetails.user.firstname
+			user.patronymic = userDetails.user.patronymic
+			user.lastname = userDetails.user.lastname
+			user.post = userDetails.user.post
 			phone = userDetails.phone
 //			address = userDetails.address
 			description = userDetails.description
@@ -160,9 +156,9 @@ class UserServiceImpl(
 			RoleEntity(roleUser = roleEnum, user = userDetailsEntity.user)
 		}
 //		userDetailsEntity.user?.roles = roles.toMutableList()
-		userDetailsEntity.user?.roles?.let {
-			it.removeAll { true }
-			it.addAll(roles)
+		userDetailsEntity.user.roles.apply {
+			removeAll { true }
+			addAll(roles)
 		}
 	}
 
@@ -257,8 +253,10 @@ class UserServiceImpl(
 	}
 
 	override fun setMainImage(userId: Long): BaseImage? {
-		val userEntity = userRepository.findByIdOrNull(userId) ?: throw UserNotFoundException()
-		val images = userEntity.images
+		val userDetailsEntity = userDetailsRepository.findByIdOrNull(userId) ?: throw UserNotFoundException()
+		val userEntity = userDetailsEntity.user
+
+		val images = userDetailsEntity.images
 		var userImageEntity = images.firstOrNull() ?: run {
 			userEntity.mainImg = null
 			userEntity.normImg = null

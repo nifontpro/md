@@ -47,11 +47,6 @@ class UserEntity(
 //	@Fetch(FetchMode.SUBSELECT)
 	var roles: MutableList<RoleEntity> = mutableListOf(),
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
-	@JoinColumn(name = "user_id")
-	@OrderBy("id DESC")
-	val images: List<UserImageEntity> = emptyList(),
-
 //	@Fetch(FetchMode.SUBSELECT)
 //	@ManyToMany(fetch = FetchType.LAZY)
 //	@JoinTable(

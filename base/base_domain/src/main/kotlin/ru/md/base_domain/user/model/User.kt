@@ -1,6 +1,5 @@
 package ru.md.base_domain.user.model
 
-import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.dept.model.Dept
 import java.util.Collections.emptySet
 
@@ -14,7 +13,6 @@ data class User(
 	val gender: Gender = Gender.UNDEF,
 	val post: String? = null,
 	val roles: Set<RoleUser> = emptySet(),
-	val images: List<BaseImage> = emptyList(),
 	val mainImg: String? = null,
 	val normImg: String? = null,
 	val archive: Boolean = false,

@@ -1,9 +1,9 @@
 package ru.md.msc.db.user.model.mappers
 
+import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.base_db.user.model.mappers.toUser
 import ru.md.base_db.user.model.mappers.toUserEntity
 import ru.md.msc.db.user.model.UserDetailsEntity
-import ru.md.base_domain.user.model.User
 import ru.md.msc.domain.user.model.UserDetails
 import java.time.LocalDateTime
 
@@ -12,7 +12,8 @@ fun UserDetailsEntity.toUserDetails() = UserDetails(
 	address = address,
 	description = description,
 	createdAt = createdAt,
-	user = user?.toUser() ?: User()
+	user = user.toUser(),
+	images = images.map { it.toBaseImage() }
 )
 
 fun UserDetails.toUserDetailsEntity(create: Boolean = false) = UserDetailsEntity(

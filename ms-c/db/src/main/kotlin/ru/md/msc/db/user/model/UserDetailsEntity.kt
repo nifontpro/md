@@ -2,6 +2,7 @@ package ru.md.msc.db.user.model
 
 import jakarta.persistence.*
 import ru.md.base_db.user.model.UserEntity
+import ru.md.base_db.user.model.UserImageEntity
 import java.io.Serializable
 import java.time.LocalDateTime
 import java.util.*
@@ -34,12 +35,17 @@ class UserDetailsEntity(
 	@Column(name = "created_at")
 	val createdAt: LocalDateTime? = null,
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
+	@OneToOne(fetch = FetchType.EAGER, optional = false, cascade = [CascadeType.PERSIST])
 	@JoinColumn(name = "user_id")
 	@MapsId
-	var user: UserEntity? = null
+	var user: UserEntity,
 
-) : Serializable {
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	@OrderBy("id DESC")
+	val images: List<UserImageEntity> = emptyList(),
+
+	) : Serializable {
 
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true
