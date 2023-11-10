@@ -2,6 +2,7 @@ package ru.md.base_db.user.model.mappers
 
 import ru.md.base_db.dept.model.mappers.toDept
 import ru.md.base_db.dept.model.mappers.toDeptEntity
+import ru.md.base_db.dept.model.mappers.toDeptWithCompany
 import ru.md.base_db.user.model.UserEntity
 import ru.md.base_domain.dept.model.Dept
 import ru.md.base_domain.user.model.User
@@ -51,6 +52,20 @@ fun UserEntity.toUserLazy() = User(
 fun UserEntity.toUserWithDeptOnly() = User(
 	id = id ?: 0,
 	dept = dept?.toDept(),
+	authEmail = authEmail,
+	firstname = firstname,
+	patronymic = patronymic,
+	lastname = lastname,
+	gender = gender,
+	post = post,
+	mainImg = mainImg,
+	normImg = normImg,
+	archive = archive,
+)
+
+fun UserEntity.toUserWithDeptCompanyOnly() = User(
+	id = id ?: 0,
+	dept = dept?.toDeptWithCompany(),
 	authEmail = authEmail,
 	firstname = firstname,
 	patronymic = patronymic,

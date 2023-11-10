@@ -13,5 +13,6 @@ data class DeptResponse(
 	var mainImg: String? = null,
 	val normImg: String? = null,
 	val type: DeptType = DeptType.UNDEF,
+	val companyName: String? = null,
 	val images: List<BaseImageResponse> = emptyList(),
 )

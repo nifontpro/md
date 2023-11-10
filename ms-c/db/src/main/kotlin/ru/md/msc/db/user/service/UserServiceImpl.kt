@@ -11,7 +11,7 @@ import ru.md.base_db.dept.model.DeptEntity
 import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.base_db.user.model.RoleEntity
 import ru.md.base_db.user.model.UserImageEntity
-import ru.md.base_db.user.model.mappers.toUser
+import ru.md.base_db.user.model.mappers.toUserWithDeptCompanyOnly
 import ru.md.base_db.user.model.mappers.toUserWithDeptOnly
 import ru.md.base_domain.dept.model.DeptType
 import ru.md.base_domain.errors.ImageNotFoundException
@@ -172,7 +172,7 @@ class UserServiceImpl(
 
 	override fun findByAuthEmailWithDept(authEmail: String): List<User> {
 		return userRepository.findByAuthEmailIgnoreCase(authEmail = authEmail).map {
-			it.toUser()
+			it.toUserWithDeptCompanyOnly()
 		}
 	}
 

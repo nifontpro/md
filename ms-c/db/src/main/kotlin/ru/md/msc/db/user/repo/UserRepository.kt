@@ -16,7 +16,7 @@ import java.time.LocalDateTime
 @Repository
 interface UserRepository : JpaRepository<UserEntity, Long> {
 
-	@EntityGraph("withDept")
+	@EntityGraph("userWithDeptAndCompany")
 	fun findByAuthEmailIgnoreCase(authEmail: String): List<UserEntity>
 
 	fun countByAuthEmailIgnoreCaseAndDeptIdIn(authEmail: String, deptsIds: List<Long>): Long
@@ -70,8 +70,6 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 		"""
 	)
 	fun genderCount(deptsIds: List<Long>): GenderCount
-
-	fun findByDeptIdIn(deptsIds: List<Long>): List<UserEntity>
 
 	@Suppress("SqlRedundantCodeInCoalesce")
 	@Query(

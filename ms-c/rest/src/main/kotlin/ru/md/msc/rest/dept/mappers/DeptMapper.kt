@@ -14,5 +14,6 @@ fun Dept.toDeptResponse(images: List<BaseImageResponse> = emptyList()) = DeptRes
 	mainImg = mainImg,
 	normImg = normImg,
 	type = type,
+	companyName = companyName,
 	images = images
 )

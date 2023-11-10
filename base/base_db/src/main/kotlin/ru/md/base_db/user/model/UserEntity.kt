@@ -11,6 +11,14 @@ import java.util.*
 	attributeNodes = [NamedAttributeNode("dept")]
 )
 
+@NamedEntityGraph(
+	name = "userWithDeptAndCompany",
+	attributeNodes = [
+		NamedAttributeNode("dept", subgraph = "deptWithCompany"),
+	],
+	subgraphs = [NamedSubgraph(name = "deptWithCompany", attributeNodes = [NamedAttributeNode("company")])]
+)
+
 @Entity
 @Table(name = "user_data", schema = "users", catalog = "medalist")
 class UserEntity(

@@ -15,6 +15,19 @@ fun DeptEntity.toDept() = Dept(
 	normImg = normImg,
 )
 
+fun DeptEntity.toDeptWithCompany() = Dept(
+	id = id ?: 0,
+	parentId = parentId ?: 0,
+	name = name,
+	classname = classname,
+	topLevel = topLevel,
+	level = level,
+	type = type,
+	mainImg = mainImg,
+	normImg = normImg,
+	companyName = company?.name
+)
+
 fun Dept.toDeptEntity(create: Boolean = false) = DeptEntity(
 	id = if (create) null else id,
 	parentId = parentId,

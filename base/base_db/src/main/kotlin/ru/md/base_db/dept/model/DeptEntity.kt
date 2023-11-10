@@ -32,6 +32,10 @@ class DeptEntity(
 	@Column(name = "code")
 	val type: DeptType = DeptType.UNDEF,
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id", insertable = false, updatable = false)
+	val company: CompanyEntity? = null,
+
 //	@OneToOne(mappedBy = "dept", fetch = FetchType.LAZY, optional = false)
 //	val details: DeptDetailsEntity? = null,
 

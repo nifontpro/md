@@ -1,6 +1,7 @@
 package ru.md.shop.db.product
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,13 +15,31 @@ import ru.md.shop.domain.product.biz.proc.ProductProcessor
 import ru.md.shop.domain.product.model.Product
 import ru.md.shop.domain.product.model.ProductDetails
 
+// https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-test/
+
+@ExperimentalCoroutinesApi
 @SpringBootTest(classes = [TestBeans::class])
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ProductTest(
 	@Autowired private val productProcessor: ProductProcessor,
 ) {
 
+//	private val mainThreadSurrogate = newSingleThreadContext("UI thread")
+//
+//	@BeforeAll
+//	fun setUp() {
+//		Dispatchers.setMain(mainThreadSurrogate)
+//	}
+//
+//	@AfterAll
+//	fun tearDown() {
+//		Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
+//		mainThreadSurrogate.close()
+//	}
+
 	@Test
-	fun getByCompanyTest() = runBlocking {
+	fun getByCompanyTest() = runTest {
+//		delay(10_000)
 		val filterStr = "Product getByCompanyTest"
 		var productContext = ProductContext().apply {
 			// Создаем новый продукт сотрудником с правами Администратора
