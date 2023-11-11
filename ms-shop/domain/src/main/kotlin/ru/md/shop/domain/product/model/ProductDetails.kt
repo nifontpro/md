@@ -10,4 +10,5 @@ data class ProductDetails(
 	val siteUrl: String? = null,
 	val createdAt: LocalDateTime = LocalDateTime.now(),
 	val images: List<BaseImage> = emptyList(),
+	val secondImages: List<BaseImage> = emptyList(),
 )

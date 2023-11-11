@@ -11,5 +11,6 @@ fun ProductDetails.toProductDetailsResponse() = ProductDetailsResponse(
 	place = place,
 	siteUrl = siteUrl,
 	createdAt = createdAt.toEpochMilliUTC(),
-	images = images.map { it.toBaseImageResponse() }
+	images = images.map { it.toBaseImageResponse() },
+	secondImages = secondImages.map { it.toBaseImageResponse() }
 )

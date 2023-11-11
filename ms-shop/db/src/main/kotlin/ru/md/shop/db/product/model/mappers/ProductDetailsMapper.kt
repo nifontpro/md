@@ -18,5 +18,6 @@ fun ProductDetailsEntity.toProductDetails() = ProductDetails(
 	place = place,
 	siteUrl = siteUrl,
 	createdAt = createdAt,
-	images = images.map { it.toBaseImage() }
+	images = images.map { it.toBaseImage() },
+	secondImages = secondImages.map { it.toBaseImage() }
 )

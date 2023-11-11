@@ -10,4 +10,5 @@ data class ProductDetailsResponse(
 	val siteUrl: String? = null,
 	val createdAt: Long = 0,
 	val images: List<BaseImageResponse> = emptyList(),
+	val secondImages: List<BaseImageResponse> = emptyList(),
 )
