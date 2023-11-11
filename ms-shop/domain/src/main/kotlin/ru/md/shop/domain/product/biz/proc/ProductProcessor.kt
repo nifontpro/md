@@ -13,6 +13,7 @@ import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.base_domain.image.biz.validate.validateImageId
 import ru.md.base_domain.image.biz.workers.addImageToS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
+import ru.md.base_domain.image.biz.workers.deleteBaseImagesFromS3
 import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
 import ru.md.base_domain.user.service.BaseUserService
@@ -27,11 +28,13 @@ import ru.md.shop.domain.product.biz.validate.validateProductCount
 import ru.md.shop.domain.product.biz.validate.validateProductName
 import ru.md.shop.domain.product.biz.validate.validateProductPrice
 import ru.md.shop.domain.product.biz.workers.*
+import ru.md.shop.domain.product.service.ImageService
 import ru.md.shop.domain.product.service.ProductService
 
 @Component
 class ProductProcessor(
 	private val productService: ProductService,
+	private val imageService: ImageService,
 	private val baseProductService: BaseProductService,
 	private val baseDeptService: BaseDeptService,
 	private val baseUserService: BaseUserService,
@@ -40,6 +43,7 @@ class ProductProcessor(
 
 	override suspend fun exec(ctx: ProductContext) = businessChain.exec(ctx.also {
 		it.productService = productService
+		it.imageService = imageService
 		it.baseProductService = baseProductService
 		it.baseDeptService = baseDeptService
 		it.baseUserService = baseUserService
@@ -81,7 +85,10 @@ class ProductProcessor(
 
 			operation("Удалить приз", ProductCommand.DELETE) {
 				validateProductIdAndAdminAccessToProductChain()
+				getProductDetailsById("Получаем приз")
 				deleteProduct("Удаляем приз")
+				worker("Подготовка к удалению изображений") { baseImages = productDetails.images }
+				deleteBaseImagesFromS3("Удаляем все изображения")
 			}
 
 			operation("Добавление изображения", ProductCommand.IMG_ADD) {
@@ -101,6 +108,23 @@ class ProductProcessor(
 				deleteProductImageFromDb("Удаляем изображение из БД")
 				deleteBaseImageFromS3("Удаляем изображение из s3")
 				updateProductMainImage("Обновление основного изображения")
+			}
+
+			operation("Добавление изображения", ProductCommand.IMG_SECOND_ADD) {
+				worker("Получение id сущности") { productId = fileData.entityId }
+				validateProductIdAndAdminAccessToProductChain()
+				prepareProductSecondImagePrefixUrl("Получаем префикс изображения")
+				addImageToS3("Сохраняем изображение в s3")
+				addProductSecondImageToDb("Сохраняем ссылки на изображение в БД")
+				deleteS3ImageOnFailingChain()
+				getProductDetailsById("Получаем приз")
+			}
+
+			operation("Удаление изображения", ProductCommand.IMG_SECOND_DELETE) {
+				validateImageId("Проверка imageId")
+				validateProductIdAndAdminAccessToProductChain()
+				deleteSecondImageFromDb("Удаляем изображение из БД")
+				deleteBaseImageFromS3("Удаляем изображение из s3")
 			}
 
 			finishOperation()

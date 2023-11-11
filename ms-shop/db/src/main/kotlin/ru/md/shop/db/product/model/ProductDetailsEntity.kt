@@ -31,9 +31,15 @@ class ProductDetailsEntity(
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id")
 	@OrderBy("id DESC")
+//	@Fetch(FetchMode.SUBSELECT)
 	val images: List<ProductImageEntity> = emptyList(),
 
-	): Serializable {
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "product_id")
+	@OrderBy("id DESC")
+	val secondImages: List<SecondImageEntity> = emptyList(),
+
+	) : Serializable {
 
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true

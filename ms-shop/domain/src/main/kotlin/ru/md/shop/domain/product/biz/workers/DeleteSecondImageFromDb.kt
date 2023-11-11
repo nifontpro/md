@@ -8,13 +8,13 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.shop.domain.product.biz.proc.ProductContext
 
-fun ICorChainDsl<ProductContext>.deleteProductImageFromDb(title: String) = worker {
+fun ICorChainDsl<ProductContext>.deleteSecondImageFromDb(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
 
 	handle {
-		baseImage = imageService.deleteImage(productId = productId, imageId = imageId)
+		baseImage = imageService.deleteSecondImage(productId = productId, imageId = imageId)
 	}
 
 	except {

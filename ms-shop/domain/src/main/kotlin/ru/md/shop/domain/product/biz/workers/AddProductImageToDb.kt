@@ -12,7 +12,7 @@ fun ICorChainDsl<ProductContext>.addProductImageToDb(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-		baseImage = productService.addImage(productId = productId, baseImage = baseImage)
+		baseImage = imageService.addImage(productId = productId, baseImage = baseImage)
 	}
 
 	except {

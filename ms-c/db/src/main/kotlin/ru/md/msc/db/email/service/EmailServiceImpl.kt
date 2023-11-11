@@ -9,20 +9,23 @@ import java.net.URL
 
 @Service
 class EmailServiceImpl(
-	@Value("\${mail.username}") private val fromEmail: String,
+	@Value("\${mail.username}") private val username: String,
 	@Value("\${mail.host}") private val host: String,
 	@Value("\${mail.port}") private val port: String,
 	@Value("\${mail.password}") private val password: String,
+	@Value("\${mail.from.email}") private val fromEmail: String,
+	@Value("\${mail.from.name}") private val fromName: String,
+	@Value("\${mail.from.subject}") private val fromSubject: String,
 ): EmailService {
 
 	override fun sendMail(toEmail: String, message: String) {
 		SimpleEmail().apply {
 			hostName = host
 			setSmtpPort(port.toInt())
-			setAuthenticator(DefaultAuthenticator(fromEmail, password))
+			setAuthenticator(DefaultAuthenticator(username, password))
 			isSSLOnConnect = true
-			setFrom(fromEmail)
-			subject = "Медалист"
+			setFrom(fromEmail, fromName)
+			subject = fromSubject
 			setMsg(message)
 			addTo(toEmail)
 			send()
@@ -46,10 +49,10 @@ class EmailServiceImpl(
 		val email = MultiPartEmail().apply {
 			hostName = host
 			setSmtpPort(port.toInt())
-			setAuthenticator(DefaultAuthenticator(fromEmail, password))
+			setAuthenticator(DefaultAuthenticator(username, password))
 			isSSLOnConnect = true
-			setFrom(fromEmail)
-			subject = "Медалист"
+			setFrom(fromEmail, fromName)
+			subject = fromSubject
 			setMsg(message)
 			addTo(toEmail)
 		}
@@ -62,10 +65,10 @@ class EmailServiceImpl(
 		val email = HtmlEmail().apply {
 			hostName = host
 			setSmtpPort(port.toInt())
-			setAuthenticator(DefaultAuthenticator(fromEmail, password))
+			setAuthenticator(DefaultAuthenticator(username, password))
 			isSSLOnConnect = true
-			setFrom(fromEmail)
-			subject = "Медалист"
+			setFrom(fromEmail, fromName)
+			subject = fromSubject
 			addTo(toEmail)
 		}
 

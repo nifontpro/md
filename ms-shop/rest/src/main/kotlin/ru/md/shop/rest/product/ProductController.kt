@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.model.BaseResponse
 import ru.md.base_rest.base.authProcess
+import ru.md.base_rest.base.toLongOr0
 import ru.md.base_rest.image.baseImageProcess
 import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
 import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.model.response.BaseImageResponse
-import ru.md.base_rest.base.toLongOr0
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.shop.domain.product.biz.proc.ProductCommand
 import ru.md.shop.domain.product.biz.proc.ProductContext
@@ -139,6 +139,39 @@ class ProductController(
 	private suspend fun imageDelete(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: DeleteProductImageRequest
+	): BaseResponse<BaseImageResponse> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = productProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportBaseImageResponse() }
+		)
+	}
+
+	@PostMapping("img_sec_add")
+	suspend fun secondImageAdd(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestPart("file") file: MultipartFile,
+		@RequestPart("authId") authId: String,
+		@RequestPart("productId") productId: String,
+	): BaseResponse<BaseImageResponse> {
+		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
+		val context = ProductContext().apply { command = ProductCommand.IMG_SECOND_ADD }
+		return baseImageProcess(
+			authData = authData,
+			context = context,
+			processor = productProcessor,
+			multipartFile = file,
+			authId = authId.toLongOr0(),
+			entityId = productId.toLongOr0(),
+		)
+	}
+
+	@PostMapping("img_sec_del")
+	private suspend fun secondImageDelete(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: DeleteSecondImageRequest
 	): BaseResponse<BaseImageResponse> {
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(

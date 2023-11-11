@@ -38,7 +38,6 @@ import java.time.LocalDateTime
 const val ROOT_DEPT_ID = 1L
 
 @Service
-@Transactional
 class UserServiceImpl(
 	private val userRepository: UserRepository,
 	private val userAwardRepository: UserAwardRepository,
@@ -55,6 +54,7 @@ class UserServiceImpl(
 	/**
 	 * Создание корневого владельца вместе с отделом
 	 */
+	@Transactional
 	override fun createOwner(userDetails: UserDetails): UserDetailsDept {
 
 		val userDetailsEntity = userDetails.toUserDetailsEntity(create = true)
@@ -98,6 +98,7 @@ class UserServiceImpl(
 		)
 	}
 
+	@Transactional
 	override fun create(userDetails: UserDetails): UserDetails {
 		val userDetailsEntity = userDetails.toUserDetailsEntity(create = true)
 		userDetailsRepository.save(userDetailsEntity)
@@ -105,6 +106,7 @@ class UserServiceImpl(
 		return userDetailsEntity.toUserDetails()
 	}
 
+	@Transactional
 	override fun update(userDetails: UserDetails, isAuthUserHasAdminRole: Boolean): UserDetails {
 		val oldUserDetailsEntity = userDetailsRepository.findByUserId(userDetails.user.id) ?: throw UserNotFoundException()
 		with(oldUserDetailsEntity) {
@@ -133,6 +135,7 @@ class UserServiceImpl(
 	/**
 	 * Обновление основных полей с сохранением ролей, изображений и т. д.
 	 */
+	@Transactional
 	override fun simpleUpdate(userDetails: UserDetails): UserDetails {
 		val oldUserDetailsEntity = userDetailsRepository
 			.findByUserAuthEmail(userDetails.user.authEmail ?: "") ?: throw UserNotFoundException()
@@ -162,6 +165,7 @@ class UserServiceImpl(
 		}
 	}
 
+	@Transactional
 	override fun doesOwnerWithEmailExist(email: String): Boolean {
 		val roles = roleRepository.findByRoleUserAndUserAuthEmail(
 			roleUser = RoleUser.OWNER,
@@ -176,6 +180,7 @@ class UserServiceImpl(
 		}
 	}
 
+	@Transactional
 	override fun findBySubDepts(deptId: Long, baseQuery: BaseQuery): PageResult<User> {
 		val pageRequest = baseQuery.toPageRequest()
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
@@ -187,6 +192,7 @@ class UserServiceImpl(
 		return res.toPageResult { it.toUserWithDeptOnly() }
 	}
 
+	@Transactional
 	override fun findByDeptsExclude(
 		deptId: Long,
 		awardId: Long,
@@ -219,15 +225,18 @@ class UserServiceImpl(
 //		return userRepository.findByIdOrNull(userId)?.toUserOnlyRoles()
 //	}
 
+	@Transactional
 	override fun findByIdDetails(userId: Long): UserDetails? {
 		return userDetailsRepository.findByUserId(userId)?.toUserDetails()
 	}
 
+	@Transactional
 	override fun deleteById(userId: Long, deptId: Long?) {
 		userRepository.deleteById(userId)
 		deptId?.let { deptRepository.deleteById(it) } // Если Владелец, удаляем его отдел
 	}
 
+	@Transactional
 	override fun addImage(userId: Long, baseImage: BaseImage): BaseImage {
 		val userImageEntity = UserImageEntity(
 			userId = userId,
@@ -244,6 +253,7 @@ class UserServiceImpl(
 		return userImageEntity.toBaseImage()
 	}
 
+	@Transactional
 	override fun deleteImage(userId: Long, imageId: Long): BaseImage {
 		val userImageEntity = userImageRepository.findByIdAndUserId(userId = userId, imageId = imageId) ?: run {
 			throw ImageNotFoundException()
@@ -252,6 +262,7 @@ class UserServiceImpl(
 		return userImageEntity.toBaseImage()
 	}
 
+	@Transactional
 	override fun setMainImage(userId: Long): BaseImage? {
 		val userDetailsEntity = userDetailsRepository.findByIdOrNull(userId) ?: throw UserNotFoundException()
 		val userEntity = userDetailsEntity.user
@@ -277,6 +288,7 @@ class UserServiceImpl(
 		return userImageEntity.toBaseImage()
 	}
 
+	@Transactional
 	override fun updateAllUserImg() {
 		val users = userRepository.findAll()
 		users.forEach {
@@ -286,21 +298,25 @@ class UserServiceImpl(
 		}
 	}
 
+	@Transactional
 	override fun getGenderCountByDept(deptId: Long, subdepts: Boolean): GenderCount {
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = subdepts)
 		return userRepository.genderCount(deptsIds = deptsIds)
 	}
 
+	@Transactional
 	override fun getUsersWithActivity(deptId: Long, baseQuery: BaseQuery): List<UserAward> {
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		return userAwardRepository.findByDeptIdIn(deptsIds = deptsIds).map { it.toUserActivity() }
 	}
 
+	@Transactional
 	override fun getUsersWithAward(deptId: Long, baseQuery: BaseQuery): List<UserAward> {
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		return userAwardRepository.findByDeptIdIn(deptsIds = deptsIds).map { it.toUserAward() }
 	}
 
+	@Transactional
 	override fun getUsersWithAwardCount(deptId: Long, baseQuery: BaseQuery): PageResult<User> {
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		val users = userRepository.findUsersWithAwardCount(
@@ -313,6 +329,7 @@ class UserServiceImpl(
 		return users.toPageResult { it.toUser() }
 	}
 
+	@Transactional
 	override fun saveSettings(userSettings: UserSettings): UserSettings {
 		val userSettingsEntity = userSettings.toUserSettingsEntity()
 		userSettingsRepository.save(userSettingsEntity)
@@ -326,6 +343,7 @@ class UserServiceImpl(
 	/**
 	 * Проверка, имеет ли сотрудник роль Владельца
 	 */
+	@Transactional
 	override fun doesUserOwnerRole(userId: Long): Boolean {
 		return roleRepository.countByUserIdAndRoleUser(
 			userId = userId,
@@ -333,10 +351,12 @@ class UserServiceImpl(
 		) > 0
 	}
 
+	@Transactional
 	override fun activityByUserExist(userId: Long): Boolean {
 		return activityRepository.countByUserIdAndActiv(userId = userId) > 0
 	}
 
+	@Transactional
 	override fun moveUserToArchive(userId: Long) {
 		userRepository.moveUserToArchive(userId = userId)
 	}
@@ -344,6 +364,7 @@ class UserServiceImpl(
 	/**
 	 * Проверка есть ли заданный email во всем дереве отделов
 	 */
+	@Transactional
 	override fun validateEmail(deptId: Long, email: String): Boolean {
 		val deptIds = deptUtil.getAllDeptIds(deptId)
 		return userRepository.countByAuthEmailIgnoreCaseAndDeptIdIn(
@@ -354,6 +375,7 @@ class UserServiceImpl(
 	/**
 	 * Проверка, существует ли сотрудник с email в отделе
 	 */
+	@Transactional
 	override fun validateByDeptIdAndEmailExist(deptId: Long, email: String): Boolean {
 		return userRepository.countByDeptIdAndAuthEmailIgnoreCase(
 			authEmail = email, deptId = deptId

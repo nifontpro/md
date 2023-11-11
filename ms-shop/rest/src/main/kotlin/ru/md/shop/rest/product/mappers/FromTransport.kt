@@ -76,3 +76,10 @@ fun ProductContext.fromTransport(request: DeleteProductImageRequest) {
 	productId = request.productId
 	imageId = request.imageId
 }
+
+fun ProductContext.fromTransport(request: DeleteSecondImageRequest) {
+	command = ProductCommand.IMG_SECOND_DELETE
+	authId = request.authId
+	productId = request.productId
+	imageId = request.imageId
+}
