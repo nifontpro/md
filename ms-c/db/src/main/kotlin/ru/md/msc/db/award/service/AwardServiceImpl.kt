@@ -268,6 +268,7 @@ class AwardServiceImpl(
 	override fun findActivAwardsByUser(
 		userId: Long,
 		awardType: AwardType?,
+		awardState: AwardState?,
 		baseQuery: BaseQuery
 	): PageResult<Activity> {
 		val activities = activityRepository.findActivityByUserId(
@@ -276,6 +277,7 @@ class AwardServiceImpl(
 			maxDate = baseQuery.maxDate,
 			filter = baseQuery.filter.toSearchUpperOrNull(),
 			awardType = awardType,
+			awardState = awardState,
 			pageable = baseQuery.toPageRequest()
 		)
 		return activities.toPageResult { it.toActivityOnlyAward() }

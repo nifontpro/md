@@ -2,7 +2,6 @@ package ru.md.msc.rest.user.mappers
 
 import ru.md.base_domain.user.model.User
 import ru.md.base_rest.model.mapper.toBaseImageResponse
-import ru.md.base_rest.model.response.BaseImageResponse
 import ru.md.msc.domain.user.model.UserAward
 import ru.md.msc.rest.award.mappers.toActivityResponse
 import ru.md.msc.rest.award.mappers.toAwardResponse
@@ -29,7 +28,7 @@ fun UserAward.toUserAwardResponse() = UserAwardResponse(
 	awards = awards.map { it.toAwardResponse() },
 )
 
-fun User.toUserResponse(baseImages: List<BaseImageResponse> = emptyList()) = UserResponse(
+fun User.toUserResponse() = UserResponse(
 	id = id,
 	dept = dept,
 	firstname = firstname,
@@ -39,7 +38,6 @@ fun User.toUserResponse(baseImages: List<BaseImageResponse> = emptyList()) = Use
 	gender = gender,
 	post = post,
 	roles = roles,
-	images = baseImages,
 	awardCount = awardCount,
 	scores = scores,
 	mainImg = mainImg,

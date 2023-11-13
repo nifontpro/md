@@ -6,13 +6,12 @@ import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.rest.user.model.response.UserDetailsResponse
 
 fun UserDetails.toUserDetailsResponse(): UserDetailsResponse {
-	val baseImages = images.map { it.toBaseImageResponse() }
 	return UserDetailsResponse(
-		user = user.toUserResponse(baseImages),
+		user = user.toUserResponse(),
 		phone = phone,
 		address = address,
 		description = description,
 		createdAt = createdAt?.toEpochMilliUTC(),
-		images = baseImages
+		images = images.map { it.toBaseImageResponse() }
 	)
 }

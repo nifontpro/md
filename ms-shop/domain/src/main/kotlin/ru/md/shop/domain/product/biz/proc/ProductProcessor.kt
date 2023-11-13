@@ -12,8 +12,6 @@ import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.base_domain.image.biz.validate.validateImageId
 import ru.md.base_domain.image.biz.workers.addImageToS3
-import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
-import ru.md.base_domain.image.biz.workers.deleteBaseImagesFromS3
 import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
 import ru.md.base_domain.user.service.BaseUserService
@@ -85,10 +83,7 @@ class ProductProcessor(
 
 			operation("Удалить приз", ProductCommand.DELETE) {
 				validateProductIdAndAdminAccessToProductChain()
-				getProductDetailsById("Получаем приз")
 				deleteProduct("Удаляем приз")
-				worker("Подготовка к удалению изображений") { baseImages = productDetails.images }
-				deleteBaseImagesFromS3("Удаляем все изображения")
 			}
 
 			operation("Добавление изображения", ProductCommand.IMG_ADD) {
@@ -106,7 +101,6 @@ class ProductProcessor(
 				validateImageId("Проверка imageId")
 				validateProductIdAndAdminAccessToProductChain()
 				deleteProductImageFromDb("Удаляем изображение из БД")
-				deleteBaseImageFromS3("Удаляем изображение из s3")
 				updateProductMainImage("Обновление основного изображения")
 			}
 
@@ -124,7 +118,7 @@ class ProductProcessor(
 				validateImageId("Проверка imageId")
 				validateProductIdAndAdminAccessToProductChain()
 				deleteSecondImageFromDb("Удаляем изображение из БД")
-				deleteBaseImageFromS3("Удаляем изображение из s3")
+//				deleteBaseImageFromS3("Удаляем изображение из s3")
 			}
 
 			finishOperation()

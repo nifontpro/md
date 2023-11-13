@@ -22,6 +22,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		from ActivityEntity a where 
 		a.user.id = :userId and a.activ and 
 		(:awardType is null or a.award.type = :awardType) and
+		(:awardState is null or a.award.state = :awardState) and
 		(coalesce(:minDate, null) is null or a.date >= :minDate) and
 		(coalesce(:maxDate, null) is null or a.date <= :maxDate) and 
 		((:filter is null) or
@@ -35,6 +36,7 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		maxDate: LocalDateTime? = null,
 		filter: String? = null,
 		awardType: AwardType? = null,
+		awardState: AwardState? = null,
 		pageable: Pageable
 	): Page<ActivityEntity>
 

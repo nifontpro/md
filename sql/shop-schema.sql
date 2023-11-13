@@ -52,6 +52,27 @@ CREATE TABLE IF NOT EXISTS shop.product_image
 )
     INHERITS (md.base_image);;
 
+CREATE TABLE IF NOT EXISTS shop.second_image
+(
+    -- Inherited from table md.base_image: image_url text COLLATE pg_catalog."default",
+    -- Inherited from table md.base_image: image_key text COLLATE pg_catalog."default",
+    -- Inherited from table md.base_image: type_code text COLLATE pg_catalog."default",
+    -- Inherited from table md.base_image: main boolean,
+    -- Inherited from table md.base_image: created_at timestamp without time zone DEFAULT now(),
+    -- Inherited from table md.base_image: mini_url text COLLATE pg_catalog."default",
+    -- Inherited from table md.base_image: mini_key text COLLATE pg_catalog."default",
+    -- Inherited from table md.base_image: origin_url text COLLATE pg_catalog."default",
+    -- Inherited from table md.base_image: origin_key text COLLATE pg_catalog."default",
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    product_id bigint NOT NULL,
+    CONSTRAINT second_image_pkey PRIMARY KEY (id),
+    CONSTRAINT product_id_fkey FOREIGN KEY (product_id)
+        REFERENCES shop.product (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+)
+    INHERITS (md.base_image);;
+
 CREATE TABLE IF NOT EXISTS shop.user_pay
 (
     id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),

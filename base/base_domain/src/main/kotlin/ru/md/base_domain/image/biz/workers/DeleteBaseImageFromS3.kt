@@ -12,11 +12,10 @@ fun <T : BaseMedalsContext> ICorChainDsl<T>.deleteBaseImageFromS3(title: String)
 	this.title = title
 	on { state == ContextState.RUNNING || deleteImageOnFailing }
 	handle {
-			try {
-				baseS3Repository.deleteBaseImage(baseImage)
-			} catch (e: Exception) {
-				log.error(e.message)
-				log.error("Add ${baseImage.normalKey} to dirty link S3")
-			}
+		baseS3Repository.deleteBaseImage(baseImage)
+	}
+	except {
+		log.error(it.message)
+		log.error("Add ${baseImage.normalKey} to dirty link S3")
 	}
 }

@@ -6,11 +6,10 @@ import ru.md.msc.domain.award.model.AwardDetails
 import ru.md.msc.rest.award.model.response.AwardDetailsResponse
 
 fun AwardDetails.toAwardDetailsResponse(): AwardDetailsResponse {
-	val baseImages = images.map { it.toBaseImageResponse() }
 	return AwardDetailsResponse(
-		award = award.toAwardResponse(baseImages),
+		award = award.toAwardResponse(),
 		criteria = criteria,
 		createdAt = createdAt?.toEpochMilliUTC(),
-		images = baseImages
+		images = images.map { it.toBaseImageResponse() }
 	)
 }

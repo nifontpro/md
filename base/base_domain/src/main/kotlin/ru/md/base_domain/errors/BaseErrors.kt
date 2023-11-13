@@ -73,6 +73,16 @@ fun BaseMedalsContext.s3Error() {
 	)
 }
 
+fun BaseMedalsContext.s3DeleteError() {
+	fail(
+		errorDb(
+			repository = "s3",
+			violationCode = "delete",
+			description = "Ошибка удаления из хранилища объектов s3"
+		)
+	)
+}
+
 fun BaseMedalsContext.getGalleryItemMsError() {
 	fail(
 		otherError(
@@ -85,3 +95,4 @@ fun BaseMedalsContext.getGalleryItemMsError() {
 }
 
 class ImageNotFoundException(message: String = "") : RuntimeException(message)
+class S3DeleteException(message: String = "") : RuntimeException(message)

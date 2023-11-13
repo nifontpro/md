@@ -8,7 +8,7 @@ import ru.md.shop.domain.product.model.ProductDetails
 interface ProductService {
 	fun create(productDetails: ProductDetails): ProductDetails
 	fun update(productDetails: ProductDetails): ProductDetails
-	fun deleteById(productId: Long)
+	suspend fun deleteById(productId: Long): ProductDetails
 	fun findProductDetailsById(productId: Long): ProductDetails
 	fun findByDeptId(
 		deptId: Long,

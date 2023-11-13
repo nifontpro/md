@@ -1,6 +1,8 @@
 package ru.md.shop.db.product.service
 
 import jakarta.transaction.Transactional
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.base_db.base.mapper.toPageRequest
@@ -8,6 +10,7 @@ import ru.md.base_db.base.mapper.toPageResult
 import ru.md.base_db.base.mapper.toSearchUpperOrNull
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
+import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.shop.db.product.model.mappers.toProduct
 import ru.md.shop.db.product.model.mappers.toProductDetails
 import ru.md.shop.db.product.model.mappers.toProductDetailsEntity
@@ -22,6 +25,7 @@ import ru.md.shop.domain.product.service.ProductService
 class ProductServiceImpl(
 	private val productRepo: ProductRepo,
 	private val productDetailsRepository: ProductDetailsRepository,
+	private val baseS3Repository: BaseS3Repository
 ) : ProductService {
 
 	@Transactional
@@ -51,8 +55,18 @@ class ProductServiceImpl(
 	}
 
 	@Transactional
-	override fun deleteById(productId: Long) {
-		productRepo.deleteById(productId)
+	override suspend fun deleteById(productId: Long): ProductDetails {
+		return withContext(Dispatchers.IO) {
+			val productDetailsEntity = productDetailsRepository.findByIdOrNull(productId) ?: run {
+				throw ProductNotFoundException()
+			}
+
+			baseS3Repository.deleteImages(productDetailsEntity.images)
+			baseS3Repository.deleteImages(productDetailsEntity.secondImages)
+
+			productRepo.deleteById(productId)
+			productDetailsEntity.toProductDetails()
+		}
 	}
 
 	override fun findProductDetailsById(productId: Long): ProductDetails {

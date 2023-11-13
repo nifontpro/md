@@ -259,15 +259,16 @@ class AwardController(
 
 	/**
 	 * Получить активные награждения сотрудника userId
-	 * baseRequest:
-	 * Пагинация,
-	 * minDate, maxDate - фильтрация по дате
-	 * filter - фильтрация по названию наград
-	 * Допустимые поля для сортировки:
-	 *      "date",
-	 * 			"actionType",
-	 * 			"award.name",
-	 * 			"award.type"
+	 * фильтры: awardType, awardState
+	 * 	baseRequest:
+	 * 	Пагинация,
+	 * 	minDate, maxDate - фильтрация по дате
+	 * 	filter - фильтрация по названию наград
+	 * 	Допустимые поля для сортировки:
+	 * 	     "date",
+	 * 				"actionType",
+	 * 				"award.name",
+	 * 				"award.type"
 	 */
 	@PostMapping("act_user")
 	private suspend fun getActivAwardByUser(

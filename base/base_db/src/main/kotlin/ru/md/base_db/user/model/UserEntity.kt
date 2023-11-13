@@ -1,6 +1,8 @@
 package ru.md.base_db.user.model
 
 import jakarta.persistence.*
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
 import ru.md.base_db.dept.model.DeptEntity
 import ru.md.base_domain.user.model.Gender
 import java.io.Serializable
@@ -52,23 +54,8 @@ class UserEntity(
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
 	@OrderBy("roleUser ASC")
-//	@Fetch(FetchMode.SUBSELECT)
+	@Fetch(FetchMode.SUBSELECT)
 	var roles: MutableList<RoleEntity> = mutableListOf(),
-
-//	@Fetch(FetchMode.SUBSELECT)
-//	@ManyToMany(fetch = FetchType.LAZY)
-//	@JoinTable(
-//		schema = "md", name = "activity",
-//		joinColumns = [JoinColumn(name = "user_id")],
-//		inverseJoinColumns = [JoinColumn(name = "award_id")]
-//	)
-//	@WhereJoinTable(clause = "is_activ=true and action_code='A'")
-//	val awards: List<AwardEntity> = emptyList(),
-//
-//	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//	@Fetch(FetchMode.SUBSELECT)
-//	@Where(clause = "is_activ=true and action_code='A'")
-//	val activities: List<ActivityEntity> = emptyList(),
 
 	@Column(name = "archive")
 	val archive: Boolean = false

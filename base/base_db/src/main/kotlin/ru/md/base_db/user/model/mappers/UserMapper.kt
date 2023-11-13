@@ -63,7 +63,7 @@ fun UserEntity.toUserWithDeptOnly() = User(
 	archive = archive,
 )
 
-fun UserEntity.toUserWithDeptCompanyOnly() = User(
+fun UserEntity.toUserWithDeptAndCompany() = User(
 	id = id ?: 0,
 	dept = dept?.toDeptWithCompany(),
 	authEmail = authEmail,
@@ -75,6 +75,7 @@ fun UserEntity.toUserWithDeptCompanyOnly() = User(
 	mainImg = mainImg,
 	normImg = normImg,
 	archive = archive,
+	roles = roles.map { it.roleUser }.toSet(),
 )
 
 fun UserEntity.toUser() = User(

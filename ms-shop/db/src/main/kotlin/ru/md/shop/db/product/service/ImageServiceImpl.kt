@@ -1,11 +1,14 @@
 package ru.md.shop.db.product.service
 
 import jakarta.transaction.Transactional
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.base_domain.errors.ImageNotFoundException
 import ru.md.base_domain.image.model.BaseImage
+import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.shop.db.product.model.ProductImageEntity
 import ru.md.shop.db.product.model.SecondImageEntity
 import ru.md.shop.db.product.repo.ProductDetailsRepository
@@ -20,6 +23,7 @@ class ImageServiceImpl(
 	private val productDetailsRepository: ProductDetailsRepository,
 	private val productImageRepository: ProductImageRepository,
 	private val secondImageRepository: SecondImageRepository,
+	private val baseS3Repository: BaseS3Repository
 ) : ImageService {
 
 	@Transactional
@@ -66,13 +70,17 @@ class ImageServiceImpl(
 	}
 
 	@Transactional
-	override fun deleteImage(productId: Long, imageId: Long): BaseImage {
-		val productImageEntity =
-			productImageRepository.findByIdAndProductId(productId = productId, imageId = imageId) ?: run {
-				throw ImageNotFoundException()
-			}
-		productImageRepository.delete(productImageEntity)
-		return productImageEntity.toBaseImage()
+	override suspend fun deleteImage(productId: Long, imageId: Long): BaseImage {
+		return withContext(Dispatchers.IO) {
+			val productImageEntity =
+				productImageRepository.findByIdAndProductId(productId = productId, imageId = imageId) ?: run {
+					throw ImageNotFoundException()
+				}
+			productImageRepository.delete(productImageEntity)
+			val baseImage = productImageEntity.toBaseImage()
+			baseS3Repository.deleteBaseImage(baseImage)
+			baseImage
+		}
 	}
 
 	@Transactional
@@ -93,12 +101,16 @@ class ImageServiceImpl(
 	}
 
 	@Transactional
-	override fun deleteSecondImage(productId: Long, imageId: Long): BaseImage {
-		val secondImageEntity =
-			secondImageRepository.findByIdAndProductId(productId = productId, imageId = imageId) ?: run {
-				throw ImageNotFoundException()
-			}
-		secondImageRepository.delete(secondImageEntity)
-		return secondImageEntity.toBaseImage()
+	override suspend fun deleteSecondImage(productId: Long, imageId: Long): BaseImage {
+		return withContext(Dispatchers.IO) {
+			val secondImageEntity =
+				secondImageRepository.findByIdAndProductId(productId = productId, imageId = imageId) ?: run {
+					throw ImageNotFoundException()
+				}
+			secondImageRepository.delete(secondImageEntity)
+			val baseImage = secondImageEntity.toBaseImage()
+			baseS3Repository.deleteBaseImage(baseImage)
+			baseImage
+		}
 	}
 }

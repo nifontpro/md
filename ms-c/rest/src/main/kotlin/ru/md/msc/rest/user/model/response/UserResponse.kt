@@ -1,6 +1,5 @@
 package ru.md.msc.rest.user.model.response
 
-import ru.md.base_rest.model.response.BaseImageResponse
 import ru.md.base_domain.dept.model.Dept
 import ru.md.base_domain.user.model.Gender
 import ru.md.base_domain.user.model.RoleUser
@@ -19,6 +18,5 @@ data class UserResponse(
 	val mainImg: String? = null,
 	val normImg: String? = null,
 	val roles: Set<RoleUser> = emptySet(),
-	val images: List<BaseImageResponse> = emptyList(),
 	val archive: Boolean = false
 )

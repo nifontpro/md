@@ -14,7 +14,12 @@ fun ICorChainDsl<AwardContext>.getActiveAwardsByUser(title: String) = worker {
 
 	handle {
 		activities = pageFun {
-			awardService.findActivAwardsByUser(userId = userId, awardType = awardType, baseQuery = baseQuery)
+			awardService.findActivAwardsByUser(
+				userId = userId,
+				awardType = awardType,
+				awardState = awardState,
+				baseQuery = baseQuery
+			)
 		}
 	}
 
