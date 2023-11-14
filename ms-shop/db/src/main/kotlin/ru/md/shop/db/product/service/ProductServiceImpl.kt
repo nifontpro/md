@@ -1,10 +1,10 @@
 package ru.md.shop.db.product.service
 
 import jakarta.transaction.Transactional
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.PlatformTransactionManager
+import org.springframework.transaction.support.DefaultTransactionDefinition
 import ru.md.base_db.base.mapper.toPageRequest
 import ru.md.base_db.base.mapper.toPageResult
 import ru.md.base_db.base.mapper.toSearchUpperOrNull
@@ -25,7 +25,8 @@ import ru.md.shop.domain.product.service.ProductService
 class ProductServiceImpl(
 	private val productRepo: ProductRepo,
 	private val productDetailsRepository: ProductDetailsRepository,
-	private val baseS3Repository: BaseS3Repository
+	private val baseS3Repository: BaseS3Repository,
+	private val transactionManager: PlatformTransactionManager,
 ) : ProductService {
 
 	@Transactional
@@ -54,19 +55,18 @@ class ProductServiceImpl(
 		return oldProductDetailsEntity.toProductDetails()
 	}
 
-	@Transactional
-	override suspend fun deleteById(productId: Long): ProductDetails = withContext(Dispatchers.IO) {
+	override suspend fun deleteById(productId: Long): ProductDetails {
 		val productDetailsEntity = productDetailsRepository.findByIdOrNull(productId) ?: run {
 			throw ProductNotFoundException()
 		}
 
+		val transaction = transactionManager.getTransaction(transactionDefinition)
 		productRepo.deleteById(productId)
-		productRepo.flush()
-
 		baseS3Repository.deleteImages(productDetailsEntity.images)
 		baseS3Repository.deleteImages(productDetailsEntity.secondImages)
+		transactionManager.commit(transaction)
 
-		productDetailsEntity.toProductDetails()
+		return productDetailsEntity.toProductDetails()
 	}
 
 	override fun findProductDetailsById(productId: Long): ProductDetails {
@@ -89,4 +89,9 @@ class ProductServiceImpl(
 		)
 		return res.toPageResult { it.toProduct() }
 	}
+
+	companion object {
+		val transactionDefinition = DefaultTransactionDefinition()
+	}
+
 }

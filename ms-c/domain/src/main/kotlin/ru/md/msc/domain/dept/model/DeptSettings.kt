@@ -1,7 +1,7 @@
 package ru.md.msc.domain.dept.model
 
 data class DeptSettings(
-	var id: Long = 0,
-	var deptId: Long = 0,
-	var payName: String = ""
+	val id: Long = 0,
+	val deptId: Long = 0,
+	val payName: String = ""
 )

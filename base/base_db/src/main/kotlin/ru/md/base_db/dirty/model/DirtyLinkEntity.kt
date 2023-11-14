@@ -1,4 +1,4 @@
-package ru.md.base_db.base
+package ru.md.base_db.dirty.model
 
 import jakarta.persistence.*
 import java.time.LocalDateTime

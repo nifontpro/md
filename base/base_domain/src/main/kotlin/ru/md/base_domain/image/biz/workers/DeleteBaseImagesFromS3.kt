@@ -1,8 +1,6 @@
 package ru.md.base_domain.image.biz.workers
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import ru.md.base_domain.biz.proc.BaseMedalsContext
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
@@ -16,13 +14,16 @@ fun <T : BaseMedalsContext> ICorChainDsl<T>.deleteBaseImagesFromS3(title: String
 		/**
 		 * Удаление в фоновом режиме, не задерживая основной процесс
 		 */
-		CoroutineScope(Dispatchers.IO).launch {
+		val supervisor = SupervisorJob()
+		CoroutineScope(Dispatchers.IO + supervisor).launch {
 			baseImages.forEach {
-				try {
-					baseS3Repository.deleteBaseImage(it)
-					log.info("Object ${it.normalKey} deleted")
-				} catch (e: Exception) {
-					log.error("Add ${it.normalKey} to dirty link S3")
+				launch {
+					try {
+						baseS3Repository.deleteBaseImage(it)
+						log.info("Object ${it.normalKey} deleted")
+					} catch (e: Exception) {
+						log.error("Add ${it.normalKey} to dirty link S3")
+					}
 				}
 			}
 			log.info("All Images deleted on ${System.currentTimeMillis()}")

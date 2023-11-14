@@ -3,6 +3,7 @@ package ru.md.base_domain.biz.proc
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import ru.md.base_domain.dept.service.BaseDeptService
+import ru.md.base_domain.dirty.service.DirtyLinkService
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.base_domain.user.model.User
@@ -34,6 +35,7 @@ abstract class BaseMedalsContext(
 	lateinit var baseS3Repository: BaseS3Repository
 	lateinit var baseUserService: BaseUserService
 	lateinit var baseDeptService: BaseDeptService
+	lateinit var dirtyLinkService: DirtyLinkService
 
 	open val log: Logger = LoggerFactory.getLogger(BaseMedalsContext::class.java)
 }

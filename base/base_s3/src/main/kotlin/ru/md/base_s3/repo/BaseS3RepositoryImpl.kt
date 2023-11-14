@@ -44,6 +44,7 @@ class BaseS3RepositoryImpl(
 	}
 
 	fun deleteImage(image: IBaseImage) {
+//		throw S3DeleteException()
 		if (image.type == ImageType.USER) {
 			image.originKey?.let { deleteObject(it) }
 			log.info("Object ${image.originKey} deleted")
@@ -69,7 +70,7 @@ class BaseS3RepositoryImpl(
 	}
 
 	override suspend fun deleteImages(images: List<IBaseImage>) {
-		withContext(Dispatchers.IO) {
+		withContext(Dispatchers.Unconfined) {
 			images.forEach {
 				launch {
 					deleteImage(it)

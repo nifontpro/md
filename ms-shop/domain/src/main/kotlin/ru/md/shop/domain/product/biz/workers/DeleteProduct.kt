@@ -22,6 +22,7 @@ fun ICorChainDsl<ProductContext>.deleteProduct(title: String) = worker {
 
 	except {
 		log.error(it.message)
+		it.printStackTrace()
 		when (it) {
 			is ProductNotFoundException -> productNotFoundError()
 			is S3DeleteException -> s3DeleteError()

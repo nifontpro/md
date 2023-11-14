@@ -1,3 +1,5 @@
+@file:Suppress("KDocUnresolvedReference")
+
 package ru.md.msc.rest.dept
 
 import org.springframework.web.bind.annotation.*
@@ -188,6 +190,13 @@ class DeptController(
 		)
 	}
 
+	/**
+	 * Сохранение настроек на уровне компании
+	 * [deptId] - необходимо заполнить для Владельца, для определения конкретной компании.
+	 *    Может быть указан любой отдел компании, бэк сам определит id компании.
+	 *    Для всех остальных пользователей поле игнорируется (определяется автоматически).
+	 * [payName] - Наименование валюты компании (может быть не заполнено)
+	 */
 	@PostMapping("save_settings")
 	private suspend fun saveSettings(
 		@RequestHeader(name = AUTH) bearerToken: String,
@@ -202,6 +211,12 @@ class DeptController(
 		)
 	}
 
+	/**
+	 * Получение настроек уровня компании
+	 * [deptId] - необходимо заполнить для Владельца, для определения конкретной компании.
+	 *    Может быть указан любой отдел компании, бэк сам определит id компании.
+	 *    Для всех остальных пользователей поле игнорируется (определяется автоматически).
+	 */
 	@PostMapping("get_settings")
 	private suspend fun getSettings(
 		@RequestHeader(name = AUTH) bearerToken: String,

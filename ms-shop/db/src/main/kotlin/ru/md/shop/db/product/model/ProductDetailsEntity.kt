@@ -23,7 +23,7 @@ class ProductDetailsEntity(
 	@Column(name = "created_at")
 	var createdAt: LocalDateTime = LocalDateTime.now(),
 
-	@OneToOne(fetch = FetchType.EAGER, optional = false, cascade = [CascadeType.PERSIST])
+	@OneToOne(fetch = FetchType.EAGER, optional = false, cascade = [CascadeType.ALL])
 	@JoinColumn(name = "product_id")
 	@MapsId
 	var productEntity: ProductEntity,
@@ -35,6 +35,7 @@ class ProductDetailsEntity(
 	val images: List<ProductImageEntity> = emptyList(),
 
 	@OneToMany(fetch = FetchType.EAGER)
+//	@OnDelete(action = OnDeleteAction.NO_ACTION)
 	@JoinColumn(name = "product_id")
 	@OrderBy("id DESC")
 	val secondImages: List<SecondImageEntity> = emptyList(),

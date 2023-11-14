@@ -21,10 +21,7 @@ import ru.md.cor.worker
 import ru.md.shop.domain.base.biz.validate.chain.validateProductIdAndAccessToProductChain
 import ru.md.base_domain.dept.biz.workers.chain.findCompanyDeptIdByOwnerOrAuthUserChain
 import ru.md.shop.domain.base.service.BaseProductService
-import ru.md.shop.domain.pay.biz.validate.validatePayDataEqAthUser
-import ru.md.shop.domain.pay.biz.validate.validatePayDataId
-import ru.md.shop.domain.pay.biz.validate.validatePayDataPayCodeGIVEN
-import ru.md.shop.domain.pay.biz.validate.validatePayDataPayCodePAY
+import ru.md.shop.domain.pay.biz.validate.*
 import ru.md.shop.domain.pay.biz.workers.*
 import ru.md.shop.domain.pay.service.PayService
 
@@ -72,6 +69,7 @@ class PayProcessor(
 			operation("Выдача приза Админом", PayCommand.ADMIN_GIVE_PRODUCT) {
 				validatePayDataId("Проверяем payDataId")
 				getPayDataById("Получаем платежку")
+				validateActivePayData("Проверка выбранной операции на доступность")
 				validatePayDataPayCodePAY("Проверяем состояние операции - PAY")
 				validateAdminAccessToPayData()
 				givePayProductByAdmin("Админ выдает приз")
@@ -80,6 +78,7 @@ class PayProcessor(
 			operation("Возврат приза Админом", PayCommand.ADMIN_RETURN_PRODUCT) {
 				validatePayDataId("Проверяем payDataId")
 				getPayDataById("Получаем платежку")
+				validateActivePayData("Проверка выбранной операции на доступность")
 				validatePayDataPayCodeGIVEN("Проверяем состояние операции - GIVEN")
 				validateAdminAccessToPayData()
 				returnProduct("Возвращаем приз")
@@ -88,6 +87,7 @@ class PayProcessor(
 			operation("Возврат приза Админом", PayCommand.USER_RETURN_PRODUCT) {
 				validatePayDataId("Проверяем payDataId")
 				getPayDataById("Получаем платежку")
+				validateActivePayData("Проверка выбранной операции на доступность")
 				validatePayDataPayCodePAY("Проверяем состояние операции - PAY")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validatePayDataEqAthUser("Проверка, чтоб операция принадлежала пользователю")
