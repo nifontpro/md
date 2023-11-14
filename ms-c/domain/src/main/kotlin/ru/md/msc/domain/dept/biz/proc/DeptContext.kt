@@ -4,11 +4,15 @@ import ru.md.base_domain.biz.proc.IBaseCommand
 import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.base_domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
+import ru.md.msc.domain.dept.model.DeptSettings
 
 class DeptContext : BaseClientContext() {
 	var dept: Dept = Dept()
 	var deptDetails: DeptDetails = DeptDetails()
 	var depts: List<Dept> = emptyList()
+
+	var deptSettings: DeptSettings = DeptSettings()
+
 
 	//	var deptsDetails: List<DeptDetails> = emptyList()
 	var addTestUser: Boolean = false
@@ -26,5 +30,7 @@ enum class DeptCommand : IBaseCommand {
 	UPDATE,
 	IMG_ADD,
 	IMG_DELETE,
+	SAVE_SETTINGS,
+	GET_SETTINGS,
 	SET_MAIN_IMG,
 }

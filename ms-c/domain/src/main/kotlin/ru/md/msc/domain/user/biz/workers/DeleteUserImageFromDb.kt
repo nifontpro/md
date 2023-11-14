@@ -1,11 +1,9 @@
 package ru.md.msc.domain.user.biz.workers
 
 import ru.md.base_domain.biz.proc.ContextState
+import ru.md.base_domain.errors.deleteImageHandler
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.base_domain.errors.ImageNotFoundException
-import ru.md.base_domain.errors.deleteImageError
-import ru.md.base_domain.errors.imageNotFoundError
 import ru.md.msc.domain.user.biz.proc.UserContext
 
 fun ICorChainDsl<UserContext>.deleteUserImageFromDb(title: String) = worker {
@@ -18,11 +16,6 @@ fun ICorChainDsl<UserContext>.deleteUserImageFromDb(title: String) = worker {
 	}
 
 	except {
-		log.error(it.message)
-		when (it) {
-			is ImageNotFoundException -> imageNotFoundError()
-			else -> deleteImageError()
-		}
+		deleteImageHandler(it)
 	}
-
 }

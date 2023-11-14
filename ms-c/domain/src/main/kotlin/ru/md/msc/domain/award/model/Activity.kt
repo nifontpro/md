@@ -12,6 +12,6 @@ data class Activity(
 	val actionType: ActionType = ActionType.UNDEF,
 	val activ: Boolean = true,
 	val dept: Dept? = null,
-	val authId: Long = 0,
+	val authId: Long? = null,
 	val awardScore: Int = 0,
 )

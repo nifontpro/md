@@ -265,10 +265,12 @@ class AwardController(
 	 * 	minDate, maxDate - фильтрация по дате
 	 * 	filter - фильтрация по названию наград
 	 * 	Допустимые поля для сортировки:
-	 * 	     "date",
+	 * 	     	"date",
 	 * 				"actionType",
 	 * 				"award.name",
-	 * 				"award.type"
+	 * 				"award.type",
+	 * 				"award.startDate",
+	 * 				"award.endDate",
 	 */
 	@PostMapping("act_user")
 	private suspend fun getActivAwardByUser(

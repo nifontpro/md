@@ -67,7 +67,7 @@ class ActivityEntity(
 	var activ: Boolean = true,
 
 	@Column(name = "auth_id")
-	var authId: Long = 0,
+	var authId: Long? = null,
 
 	@Column(name = "award_score")
 	var awardScore: Int = 0,

@@ -6,6 +6,7 @@ import ru.md.base_domain.biz.proc.BaseMedalsContext
 import ru.md.base_domain.gallery.SmallItem
 import ru.md.base_domain.user.model.User
 import ru.md.msc.domain.dept.service.DeptService
+import ru.md.msc.domain.dept.service.DeptSettingsService
 import ru.md.msc.domain.email.EmailService
 import ru.md.msc.domain.msg.model.UserMsg
 import ru.md.msc.domain.msg.service.MessageService
@@ -27,6 +28,7 @@ abstract class BaseClientContext(
 
 	lateinit var userService: UserService
 	lateinit var deptService: DeptService
+	lateinit var deptSettingsService: DeptSettingsService
 	lateinit var messageService: MessageService
 	lateinit var emailService: EmailService
 

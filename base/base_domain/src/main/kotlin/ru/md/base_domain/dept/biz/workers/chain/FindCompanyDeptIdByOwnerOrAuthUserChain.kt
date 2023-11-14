@@ -1,4 +1,4 @@
-package ru.md.shop.domain.base.biz.workers
+package ru.md.base_domain.dept.biz.workers.chain
 
 import ru.md.base_domain.biz.proc.BaseMedalsContext
 import ru.md.base_domain.biz.validate.validateAuthDeptLevel

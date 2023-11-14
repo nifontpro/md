@@ -19,7 +19,7 @@ import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.shop.domain.base.biz.validate.chain.validateProductIdAndAccessToProductChain
-import ru.md.shop.domain.base.biz.workers.findCompanyDeptIdByOwnerOrAuthUserChain
+import ru.md.base_domain.dept.biz.workers.chain.findCompanyDeptIdByOwnerOrAuthUserChain
 import ru.md.shop.domain.base.service.BaseProductService
 import ru.md.shop.domain.pay.biz.validate.validatePayDataEqAthUser
 import ru.md.shop.domain.pay.biz.validate.validatePayDataId

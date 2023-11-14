@@ -55,18 +55,18 @@ class ProductServiceImpl(
 	}
 
 	@Transactional
-	override suspend fun deleteById(productId: Long): ProductDetails {
-		return withContext(Dispatchers.IO) {
-			val productDetailsEntity = productDetailsRepository.findByIdOrNull(productId) ?: run {
-				throw ProductNotFoundException()
-			}
-
-			baseS3Repository.deleteImages(productDetailsEntity.images)
-			baseS3Repository.deleteImages(productDetailsEntity.secondImages)
-
-			productRepo.deleteById(productId)
-			productDetailsEntity.toProductDetails()
+	override suspend fun deleteById(productId: Long): ProductDetails = withContext(Dispatchers.IO) {
+		val productDetailsEntity = productDetailsRepository.findByIdOrNull(productId) ?: run {
+			throw ProductNotFoundException()
 		}
+
+		productRepo.deleteById(productId)
+		productRepo.flush()
+
+		baseS3Repository.deleteImages(productDetailsEntity.images)
+		baseS3Repository.deleteImages(productDetailsEntity.secondImages)
+
+		productDetailsEntity.toProductDetails()
 	}
 
 	override fun findProductDetailsById(productId: Long): ProductDetails {

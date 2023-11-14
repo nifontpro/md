@@ -113,6 +113,18 @@ CREATE TABLE IF NOT EXISTS dep.dept_details
         ON DELETE CASCADE
 );;
 
+CREATE TABLE IF NOT EXISTS dep.settings
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    dept_id bigint NOT NULL,
+    pay_name text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT settings_pkey PRIMARY KEY (id),
+    CONSTRAINT dept_id_fkey FOREIGN KEY (dept_id)
+        REFERENCES dep.dept (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+);;
+
 CREATE TABLE IF NOT EXISTS md.base_image
 (
     image_url text COLLATE pg_catalog."default",
@@ -439,7 +451,7 @@ CREATE TABLE IF NOT EXISTS md.activity
     award_id bigint NOT NULL,
     action_code text COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::text,
     is_activ boolean NOT NULL,
-    auth_id bigint NOT NULL,
+    auth_id bigint,
     award_score integer NOT NULL DEFAULT 0,
     CONSTRAINT auth_id_fkey FOREIGN KEY (auth_id)
         REFERENCES users.user_data (id) MATCH SIMPLE

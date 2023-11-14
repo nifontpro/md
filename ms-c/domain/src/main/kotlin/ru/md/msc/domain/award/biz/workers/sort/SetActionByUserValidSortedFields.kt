@@ -11,7 +11,9 @@ fun ICorChainDsl<AwardContext>.setActionByUserValidSortedFields(title: String) =
 			"date",
 			"actionType",
 			"award.name",
-			"award.type"
+			"award.type",
+			"award.startDate",
+			"award.endDate",
 		)
 	}
 }

@@ -20,7 +20,7 @@ import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.shop.domain.base.biz.validate.chain.validateProductIdAndAdminAccessToProductChain
 import ru.md.shop.domain.base.biz.validate.validateProductId
-import ru.md.shop.domain.base.biz.workers.findCompanyDeptIdByOwnerOrAuthUserChain
+import ru.md.base_domain.dept.biz.workers.chain.findCompanyDeptIdByOwnerOrAuthUserChain
 import ru.md.shop.domain.base.service.BaseProductService
 import ru.md.shop.domain.product.biz.validate.validateProductCount
 import ru.md.shop.domain.product.biz.validate.validateProductName
@@ -118,7 +118,6 @@ class ProductProcessor(
 				validateImageId("Проверка imageId")
 				validateProductIdAndAdminAccessToProductChain()
 				deleteSecondImageFromDb("Удаляем изображение из БД")
-//				deleteBaseImageFromS3("Удаляем изображение из s3")
 			}
 
 			finishOperation()

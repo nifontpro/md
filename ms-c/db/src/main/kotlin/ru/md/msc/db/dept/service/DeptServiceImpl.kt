@@ -24,7 +24,6 @@ import ru.md.msc.domain.dept.service.DeptService
 import java.time.LocalDateTime
 
 @Service
-@Transactional
 class DeptServiceImpl(
 	private val deptRepository: DeptRepository,
 	private val baseDeptRepository: BaseDeptRepository,
@@ -32,12 +31,14 @@ class DeptServiceImpl(
 	private val deptImageRepository: DeptImageRepository,
 ) : DeptService {
 
+	@Transactional
 	override fun create(deptDetails: DeptDetails): DeptDetails {
 		val deptDetailsEntity = deptDetails.toDeptDetailsEntity(create = true)
 		deptDetailsRepository.save(deptDetailsEntity)
 		return deptDetailsEntity.toDeptDetails()
 	}
 
+	@Transactional
 	override fun update(deptDetails: DeptDetails): DeptDetails {
 		val oldDeptDetailsEntity =
 			deptDetailsRepository.findByIdOrNull(deptDetails.dept.id) ?: throw DeptNotFoundException()
@@ -52,6 +53,7 @@ class DeptServiceImpl(
 		}
 		return oldDeptDetailsEntity.toDeptDetails()
 	}
+
 
 	override fun findSubTreeDepts(deptId: Long, orders: List<BaseOrder>): List<Dept> {
 		val ids = baseDeptRepository.subTreeIds(deptId = deptId)
@@ -75,6 +77,7 @@ class DeptServiceImpl(
 		return depts.map { it.toDept() }
 	}
 
+	@Transactional
 	override fun findByIdDetails(deptId: Long): DeptDetails? {
 		return deptDetailsRepository.findByIdOrNull(deptId)?.toDeptDetails()
 	}
@@ -83,10 +86,12 @@ class DeptServiceImpl(
 		return deptRepository.findByIdOrNull(deptId)?.toDept()
 	}
 
+	@Transactional
 	override fun deleteById(deptId: Long) {
 		deptRepository.deleteById(deptId)
 	}
 
+	@Transactional
 	override fun addImage(deptId: Long, baseImage: BaseImage): BaseImage {
 		val deptImageEntity = DeptImageEntity(
 			deptId = deptId,
@@ -103,6 +108,7 @@ class DeptServiceImpl(
 		return deptImageEntity.toBaseImage()
 	}
 
+	@Transactional
 	override fun deleteImage(deptId: Long, imageId: Long): BaseImage {
 		val deptImageEntity = deptImageRepository.findByIdAndDeptId(deptId = deptId, imageId = imageId) ?: run {
 			throw ImageNotFoundException()
@@ -111,6 +117,7 @@ class DeptServiceImpl(
 		return deptImageEntity.toBaseImage()
 	}
 
+	@Transactional
 	override fun setMainImage(deptId: Long): BaseImage? {
 		val deptDetailsEntity = deptDetailsRepository.findByIdOrNull(deptId) ?: throw DeptNotFoundException()
 		val deptEntity = deptDetailsEntity.dept
@@ -141,6 +148,7 @@ class DeptServiceImpl(
 	}
 
 	// Service
+	@Transactional
 	override fun updateAllDeptImg() {
 		val depts = deptRepository.findAll()
 		depts.forEach {

@@ -1,11 +1,12 @@
 package ru.md.msc.rest.dept.mappers
 
+import ru.md.base_domain.dept.model.Dept
+import ru.md.base_domain.dept.model.DeptType
 import ru.md.base_rest.model.mapper.toBaseQuery
 import ru.md.msc.domain.dept.biz.proc.DeptCommand
 import ru.md.msc.domain.dept.biz.proc.DeptContext
-import ru.md.base_domain.dept.model.Dept
 import ru.md.msc.domain.dept.model.DeptDetails
-import ru.md.base_domain.dept.model.DeptType
+import ru.md.msc.domain.dept.model.DeptSettings
 import ru.md.msc.rest.dept.model.request.*
 
 fun DeptContext.fromTransport(request: CreateDeptRequest) {
@@ -95,6 +96,19 @@ fun DeptContext.fromTransport(request: DeleteDeptImageRequest) {
 	authId = request.authId
 	deptId = request.deptId
 	imageId = request.imageId
+}
+
+fun DeptContext.fromTransport(request: SaveDeptSettingsRequest) {
+	command = DeptCommand.SAVE_SETTINGS
+	authId = request.authId
+	deptId = request.deptId
+	deptSettings = DeptSettings(payName = request.payName)
+}
+
+fun DeptContext.fromTransport(request: GetDeptSettingsRequest) {
+	command = DeptCommand.GET_SETTINGS
+	authId = request.authId
+	deptId = request.deptId
 }
 
 @Suppress("UNUSED_PARAMETER")

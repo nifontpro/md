@@ -70,17 +70,15 @@ class ImageServiceImpl(
 	}
 
 	@Transactional
-	override suspend fun deleteImage(productId: Long, imageId: Long): BaseImage {
-		return withContext(Dispatchers.IO) {
-			val productImageEntity =
-				productImageRepository.findByIdAndProductId(productId = productId, imageId = imageId) ?: run {
-					throw ImageNotFoundException()
-				}
-			productImageRepository.delete(productImageEntity)
-			val baseImage = productImageEntity.toBaseImage()
-			baseS3Repository.deleteBaseImage(baseImage)
-			baseImage
+	override suspend fun deleteImage(productId: Long, imageId: Long): BaseImage = withContext(Dispatchers.IO) {
+		val productImageEntity = productImageRepository
+			.findByIdAndProductId(productId = productId, imageId = imageId) ?: run {
+			throw ImageNotFoundException()
 		}
+		productImageRepository.delete(productImageEntity)
+		val baseImage = productImageEntity.toBaseImage()
+		baseS3Repository.deleteBaseImage(baseImage)
+		baseImage
 	}
 
 	@Transactional

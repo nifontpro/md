@@ -2,29 +2,31 @@ package ru.md.msc.domain.dept.biz.proc
 
 import org.springframework.stereotype.Component
 import ru.md.base_domain.biz.proc.IBaseProcessor
+import ru.md.base_domain.biz.validate.chain.validateDeptIdAndAdminDeptLevelChain
+import ru.md.base_domain.biz.validate.validateAuthDeptTopLevelForView
 import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
-import ru.md.cor.rootChain
-import ru.md.cor.worker
-import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
-import ru.md.base_domain.biz.validate.validateAuthDeptTopLevelForView
 import ru.md.base_domain.dept.biz.validate.validateDeptId
-import ru.md.base_domain.image.biz.validate.validateImageId
+import ru.md.base_domain.dept.biz.workers.chain.findCompanyDeptIdByOwnerOrAuthUserChain
 import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
-import ru.md.base_domain.biz.validate.chain.validateDeptIdAndAdminDeptLevelChain
+import ru.md.base_domain.image.biz.validate.validateImageId
 import ru.md.base_domain.image.biz.workers.addImageToS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImagesFromS3
+import ru.md.base_domain.s3.repo.BaseS3Repository
+import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
+import ru.md.base_domain.user.service.BaseUserService
+import ru.md.cor.rootChain
+import ru.md.cor.worker
 import ru.md.msc.domain.dept.biz.validate.validateDeptName
 import ru.md.msc.domain.dept.biz.validate.validateDeptNameExist
 import ru.md.msc.domain.dept.biz.workers.*
 import ru.md.msc.domain.dept.biz.workers.chain.getDeptListByParentDeptIdChain
 import ru.md.msc.domain.dept.service.DeptService
-import ru.md.base_domain.s3.repo.BaseS3Repository
-import ru.md.base_domain.user.service.BaseUserService
+import ru.md.msc.domain.dept.service.DeptSettingsService
 import ru.md.msc.domain.user.service.UserService
 
 @Component
@@ -33,6 +35,7 @@ class DeptProcessor(
 	private val baseUserService: BaseUserService,
 	private val userService: UserService,
 	private val deptService: DeptService,
+	private val deptSettingsService: DeptSettingsService,
 	private val baseS3Repository: BaseS3Repository
 ) : IBaseProcessor<DeptContext> {
 
@@ -41,6 +44,7 @@ class DeptProcessor(
 		it.baseUserService = baseUserService
 		it.userService = userService
 		it.deptService = deptService
+		it.deptSettingsService = deptSettingsService
 		it.baseS3Repository = baseS3Repository
 	})
 
@@ -83,7 +87,6 @@ class DeptProcessor(
 				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				getDeptById("Получаем отдел")
 			}
-
 
 			operation("Получить отдел по id с деталями", DeptCommand.GET_DEPT_BY_ID_DETAILS) {
 				validateDeptId("Проверяем deptId")
@@ -129,6 +132,19 @@ class DeptProcessor(
 				deleteDeptImageFromDb("Удаляем изображение")
 				deleteBaseImageFromS3("Удаляем изображение из s3")
 				updateDeptMainImage("Обновление основного изображения")
+			}
+
+			operation("Сохранить настройки", DeptCommand.SAVE_SETTINGS) {
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				findCompanyDeptIdByOwnerOrAuthUserChain()
+				trimFieldDeptSettings("Очищаем поля настроек")
+				saveDeptSettings("Сохраняем настройки отдела")
+			}
+
+			operation("Получить настройки", DeptCommand.GET_SETTINGS) {
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				findCompanyDeptIdByOwnerOrAuthUserChain()
+				getDeptSettings("Получаем настройки")
 			}
 
 			operation("Установить главные изображения у всех", DeptCommand.SET_MAIN_IMG) {

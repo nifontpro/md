@@ -13,10 +13,8 @@ import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.dept.biz.proc.DeptCommand
 import ru.md.msc.domain.dept.biz.proc.DeptContext
 import ru.md.msc.domain.dept.biz.proc.DeptProcessor
-import ru.md.msc.rest.dept.mappers.fromTransport
-import ru.md.msc.rest.dept.mappers.toTransportDeptDetails
-import ru.md.msc.rest.dept.mappers.toTransportDeptResponse
-import ru.md.msc.rest.dept.mappers.toTransportDeptsResponse
+import ru.md.msc.domain.dept.model.DeptSettings
+import ru.md.msc.rest.dept.mappers.*
 import ru.md.msc.rest.dept.model.request.*
 import ru.md.msc.rest.dept.model.response.DeptDetailsResponse
 import ru.md.msc.rest.dept.model.response.DeptResponse
@@ -187,6 +185,34 @@ class DeptController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportBaseImageResponse() }
+		)
+	}
+
+	@PostMapping("save_settings")
+	private suspend fun saveSettings(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: SaveDeptSettingsRequest
+	): BaseResponse<DeptSettings> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = deptProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportDeptSettings() }
+		)
+	}
+
+	@PostMapping("get_settings")
+	private suspend fun getSettings(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: GetDeptSettingsRequest
+	): BaseResponse<DeptSettings> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = deptProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportDeptSettings() }
 		)
 	}
 

@@ -12,5 +12,5 @@ data class ActivityResponse(
 	val actionType: ActionType = ActionType.UNDEF,
 	val activ: Boolean = true,
 	val dept: DeptResponse? = null,
-	val authId: Long = 0,
+	val authId: Long? = null,
 )
