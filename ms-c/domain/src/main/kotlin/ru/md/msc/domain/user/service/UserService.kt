@@ -32,5 +32,6 @@ interface UserService {
 	fun moveUserToArchive(userId: Long)
 	fun validateEmail(deptId: Long, email: String): Boolean
 	fun validateByDeptIdAndEmailExist(deptId: Long, email: String): Boolean
-	fun simpleUpdate(userDetails: UserDetails): UserDetails
+	fun updateFromExcel(userDetails: UserDetails): UserDetails
+	fun findByFullName(fullName: FullName, deptId: Long): UserDetails?
 }

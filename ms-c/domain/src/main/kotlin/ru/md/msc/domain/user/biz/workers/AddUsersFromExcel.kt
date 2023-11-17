@@ -84,7 +84,7 @@ fun ICorChainDsl<UserContext>.addUsersFromExcel(title: String) = worker {
 					if (success) {
 						if (userExist) {
 							try {
-								userDetails = userService.simpleUpdate(userDetails)
+								userDetails = userService.updateFromExcel(userDetails)
 							} catch (e: UserNotFoundException) {
 								log.error(e.message)
 								errors.add(userNotFoundErrorExt())

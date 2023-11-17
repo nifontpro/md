@@ -19,4 +19,5 @@ interface DeptService {
 	fun getDeptsByParentId(parentId: Long, orders: List<BaseOrder>): List<Dept>
 	fun findById(deptId: Long): Dept?
 	fun checkDeptExist(parentId: Long, name: String): Boolean
+	fun findByIdsAndName(ids: List<Long>, name: String): List<Dept>
 }

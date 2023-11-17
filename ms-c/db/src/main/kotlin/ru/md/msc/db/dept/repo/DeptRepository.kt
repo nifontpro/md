@@ -19,4 +19,6 @@ interface DeptRepository : JpaRepository<DeptEntity, Long> {
 	fun findByParentId(parentId: Long, sort: Sort): List<DeptEntity>
 
 	fun countByParentIdAndNameIgnoreCase(parentId: Long, name: String): Int
+
+	fun findByIdInAndNameIgnoreCase(deptsIds: List<Long>, name: String): List<DeptEntity>
 }

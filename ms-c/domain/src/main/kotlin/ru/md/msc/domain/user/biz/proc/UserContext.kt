@@ -5,7 +5,10 @@ import ru.md.base_domain.user.model.RoleUser
 import ru.md.base_domain.user.model.User
 import ru.md.msc.domain.award.model.ActionType
 import ru.md.msc.domain.base.biz.BaseClientContext
-import ru.md.msc.domain.user.model.*
+import ru.md.msc.domain.user.model.GenderCount
+import ru.md.msc.domain.user.model.UserAward
+import ru.md.msc.domain.user.model.UserDetails
+import ru.md.msc.domain.user.model.UserSettings
 import ru.md.msc.domain.user.model.excel.AddUserReport
 
 class UserContext : BaseClientContext() {

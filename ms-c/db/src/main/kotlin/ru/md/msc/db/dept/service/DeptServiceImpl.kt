@@ -91,6 +91,7 @@ class DeptServiceImpl(
 		deptRepository.deleteById(deptId)
 	}
 
+
 	@Transactional
 	override fun addImage(deptId: Long, baseImage: BaseImage): BaseImage {
 		val deptImageEntity = DeptImageEntity(
@@ -156,6 +157,13 @@ class DeptServiceImpl(
 			val img = setMainImage(id)
 			println(img)
 		}
+	}
+
+	override fun findByIdsAndName(ids: List<Long>, name: String): List<Dept> {
+		return deptRepository.findByIdInAndNameIgnoreCase(
+			deptsIds = ids,
+			name = name
+		).map { it.toDept() }
 	}
 
 }

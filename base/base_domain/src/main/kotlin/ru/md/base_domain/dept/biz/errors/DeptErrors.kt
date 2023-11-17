@@ -77,4 +77,5 @@ fun BaseMedalsContext.deptAuthError() {
 class RootDeptNotFoundException(message: String = "") : RuntimeException(message)
 class CompanyDeptNotFoundException(message: String = "") : RuntimeException(message)
 class DeptNotFoundException(message: String = "") : RuntimeException(message)
+class DeptIOException(message: String = "") : RuntimeException(message)
 class TopLevelDeptNotFoundException(message: String = "") : RuntimeException(message)

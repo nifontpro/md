@@ -136,19 +136,22 @@ class UserServiceImpl(
 	 * Обновление основных полей с сохранением ролей, изображений и т. д.
 	 */
 	@Transactional
-	override fun simpleUpdate(userDetails: UserDetails): UserDetails {
-		val oldUserDetailsEntity = userDetailsRepository
-			.findByUserAuthEmail(userDetails.user.authEmail ?: "") ?: throw UserNotFoundException()
+	override fun updateFromExcel(userDetails: UserDetails): UserDetails {
+		val oldUserDetailsEntity = userDetailsRepository.findByIdOrNull(userDetails.user.id) ?: run {
+			println("updateFromExcel: UserNotFoundException")
+			throw UserNotFoundException()
+		}
 		with(oldUserDetailsEntity) {
 			user.firstname = userDetails.user.firstname
 			user.patronymic = userDetails.user.patronymic
 			user.lastname = userDetails.user.lastname
+			println("--> Update post = ${userDetails.user.post}")
 			user.post = userDetails.user.post
 			phone = userDetails.phone
 //			address = userDetails.address
 			description = userDetails.description
 		}
-		return oldUserDetailsEntity.toUserDetails()
+		return oldUserDetailsEntity.toUserDetailsLazy()
 	}
 
 	private fun addRolesToUserEntity(
@@ -179,6 +182,19 @@ class UserServiceImpl(
 		return userRepository.findByAuthEmailIgnoreCase(authEmail = authEmail).map {
 			it.toUserWithDeptAndCompany()
 		}
+	}
+
+	override fun findByFullName(
+		fullName: FullName,
+		deptId: Long
+	): UserDetails? {
+//		return userDetailsRepository.findByUserFirstnameAndUserLastnameAndUserPatronymicAndUserDeptId(
+		return userDetailsRepository.findByFullName(
+			firstname = fullName.firstName,
+			lastName = fullName.lastName,
+			patronymic = fullName.patronymic,
+			deptId = deptId
+		).firstOrNull()?.toUserDetailsLazy()
 	}
 
 	@Transactional

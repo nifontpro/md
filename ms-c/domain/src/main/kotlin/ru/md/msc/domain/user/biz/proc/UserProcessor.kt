@@ -11,6 +11,7 @@ import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
 import ru.md.base_domain.dept.biz.validate.validateDeptId
+import ru.md.base_domain.dept.biz.workers.chain.findCompanyDeptIdByOwnerOrAuthUserChain
 import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.base_domain.image.biz.validate.validateImageId
@@ -81,11 +82,10 @@ class UserProcessor(
 			}
 
 			operation("Добавление сотрудников из таблицы", UserCommand.ADD_FROM_EXCEL) {
-				validateDeptId("Проверка deptId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validateAdminRole("Проверка наличия прав Администратора")
-				validateAuthDeptLevel("Проверка доступа к отделу")
-				addUsersFromExcel("Добавляем сотрудников")
+				findCompanyDeptIdByOwnerOrAuthUserChain()
+				addFromExcel("Добавляем сотрудников")
 			}
 
 			operation("Обновление профиля сотрудника", UserCommand.UPDATE) {
