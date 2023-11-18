@@ -40,6 +40,24 @@ class EventServiceImpl(
 		return userEventEntity.toBaseEvent()
 	}
 
+	override fun addOrUpdateUserEvent(baseEvent: BaseEvent): BaseEvent {
+		val userEventEntity = userEventRepository.findByUserIdAndEventName(
+			userId = baseEvent.userId,
+			eventName = baseEvent.eventName
+		) ?: run {
+			val newUserEventEntity = UserEventEntity(
+				eventDate = baseEvent.eventDate,
+				eventName = baseEvent.eventName,
+				userId = baseEvent.userId,
+			)
+			println("--> ADD NEW EVENT: ${newUserEventEntity.toBaseEvent()}")
+			userEventRepository.save(newUserEventEntity)
+			return newUserEventEntity.toBaseEvent()
+		}
+		println("--> UPDATE EVENT: $baseEvent")
+		return userEventEntity.toBaseEvent()
+	}
+
 	override fun addDeptEvent(deptId: Long, baseEvent: BaseEvent): BaseEvent {
 		val deptEventEntity = DeptEventEntity(
 			eventDate = baseEvent.eventDate,

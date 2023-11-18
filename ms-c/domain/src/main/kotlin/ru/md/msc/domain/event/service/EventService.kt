@@ -15,4 +15,5 @@ interface EventService {
 	fun getUserEventById(eventId: Long): BaseEvent
 	fun getDeptEventById(eventId: Long): BaseEvent
 	fun deleteDeptEventById(eventId: Long)
+	fun addOrUpdateUserEvent(baseEvent: BaseEvent): BaseEvent
 }

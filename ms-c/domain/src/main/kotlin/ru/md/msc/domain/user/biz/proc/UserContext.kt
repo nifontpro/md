@@ -5,6 +5,7 @@ import ru.md.base_domain.user.model.RoleUser
 import ru.md.base_domain.user.model.User
 import ru.md.msc.domain.award.model.ActionType
 import ru.md.msc.domain.base.biz.BaseClientContext
+import ru.md.msc.domain.event.service.EventService
 import ru.md.msc.domain.user.model.GenderCount
 import ru.md.msc.domain.user.model.UserAward
 import ru.md.msc.domain.user.model.UserDetails
@@ -28,6 +29,8 @@ class UserContext : BaseClientContext() {
 	var fileUrl: String = ""
 	val addReport: MutableList<AddUserReport> = mutableListOf()
 	var updateKey: UpdateKey = UpdateKey.USER_TAB_NO
+
+	lateinit var eventService: EventService
 }
 
 enum class UserCommand : IBaseCommand {

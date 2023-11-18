@@ -13,11 +13,15 @@ import ru.md.base_domain.user.model.User
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.dept.model.DeptDetails
+import ru.md.msc.domain.event.model.BaseEvent
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.model.FullName
 import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.domain.user.model.excel.UpdateKey
 import java.io.FileInputStream
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 
@@ -128,7 +132,8 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 						val tabId = colTabId?.let { row.getCellText(it).toLongOrNull() }
 						val post = colPost?.let { row.getCellText(it) }
 						val phone = colPhone?.let { row.getCellText(it) }
-
+						val birthDateStr = colBirthData?.let { row.getCellText(it) }
+//						val jobDateStr = colJobDate?.let { row.getCellText(it) }
 
 						userDetails = UserDetails(
 							user = User(
@@ -158,11 +163,21 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 								)
 							}
 
-							log.warn("findUser: $findUserId")
 							if (findUserId != null) {
 								userDetails = userDetails.copy(user = userDetails.user.copy(id = findUserId))
 								log.info("Обновляем профиль сотрудника \n$userDetails")
 								userService.updateFromExcel(userDetails)
+
+								birthDateStr?.let {
+									val date = it.toDate() // T-C
+									val baseEvent = BaseEvent(
+										eventDate = date,
+										eventName = textBirthday,
+										userId = findUserId
+									)
+									eventService.addOrUpdateUserEvent(baseEvent)
+								}
+
 							} else {
 								log.info("Создаем сотрудника \n$userDetails")
 								userService.create(userDetails)
@@ -172,6 +187,7 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 							// Если был создан новый Отдел, то добавляем Сотрудника в него
 							log.info("Создаем сотрудника\n$userDetails")
 							userService.create(userDetails)
+							// Добавляем события
 						}
 
 
@@ -232,3 +248,7 @@ const val textBirthday = "Дата рождения"
 const val textJobDate = "Дата приема"
 
 fun String.isInt() = this.toIntOrNull()?.let { true } ?: false
+
+fun String.toDate(): LocalDateTime {
+	return LocalDate.parse(this, DateTimeFormatter.ofPattern("dd.MM.yyyy")).atStartOfDay()
+}

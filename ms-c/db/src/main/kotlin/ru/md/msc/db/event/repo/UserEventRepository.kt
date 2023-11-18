@@ -23,4 +23,9 @@ interface UserEventRepository : JpaRepository<UserEventEntity, Long> {
 	)
 	fun findByUserId(userId: Long): List<IShortEvent>
 
+	fun findByUserIdAndEventName(
+		userId: Long,
+		eventName: String
+	): UserEventEntity?
+
 }
