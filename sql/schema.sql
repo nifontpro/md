@@ -358,6 +358,7 @@ CREATE TABLE IF NOT EXISTS users.user_details
     address text COLLATE pg_catalog."default",
     description text COLLATE pg_catalog."default",
     created_at timestamp without time zone DEFAULT now(),
+    tab_id bigint,
     CONSTRAINT user_profile_pkey PRIMARY KEY (user_id),
     CONSTRAINT user_id_fkey FOREIGN KEY (user_id)
         REFERENCES users.user_data (id) MATCH SIMPLE

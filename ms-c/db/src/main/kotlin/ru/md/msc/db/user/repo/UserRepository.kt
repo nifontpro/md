@@ -23,6 +23,22 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 
 	fun countByDeptIdAndAuthEmailIgnoreCase(deptId:Long, authEmail: String): Long
 
+	@Query(
+		"""
+		select u.id from users.user_data u where 
+		u.firstname like :firstname and
+		u.lastname like :lastName and
+		u.patronymic like :patronymic and
+		u.dept_id = :deptId limit 1
+	""", nativeQuery = true
+	)
+	fun findIdByFullNameAndDeptId(
+		firstname: String,
+		lastName: String,
+		patronymic: String,
+		deptId: Long
+	): Long?
+
 	@EntityGraph("withDept")
 	fun findByDeptIdInAndLastnameLikeIgnoreCase(
 		deptsIds: List<Long>,

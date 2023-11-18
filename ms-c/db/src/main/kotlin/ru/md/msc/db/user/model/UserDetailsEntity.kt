@@ -35,6 +35,9 @@ class UserDetailsEntity(
 	@Column(name = "created_at")
 	val createdAt: LocalDateTime? = null,
 
+	@Column(name = "tab_id")
+	var tabId: Long? = null, //  Табельный номер Сотрудника
+
 	@OneToOne(fetch = FetchType.EAGER, optional = false, cascade = [CascadeType.PERSIST])
 	@JoinColumn(name = "user_id")
 	@MapsId

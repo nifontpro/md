@@ -16,6 +16,7 @@ import ru.md.msc.domain.dept.model.DeptDetails
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.model.FullName
 import ru.md.msc.domain.user.model.UserDetails
+import ru.md.msc.domain.user.model.excel.UpdateKey
 import java.io.FileInputStream
 
 fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
@@ -41,6 +42,7 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 				 * Определение позиций основных полей
 				 */
 				var colFioNull: Int? = null
+				var colTabId: Int? = null
 				var colPost: Int? = null
 				var colPhone: Int? = null
 				var colBirthData: Int? = null
@@ -58,6 +60,7 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 								log.info("$rowIdx. ${cell.text}")
 								when (cell.text) {
 									textFio -> colFioNull = rowIdx
+									textTabId -> colTabId = rowIdx
 									textPost -> colPost = rowIdx
 									textPhone -> colPhone = rowIdx
 									textBirthday -> colBirthData = rowIdx
@@ -70,6 +73,7 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 				}
 
 				log.info("colFio = $colFioNull")
+				log.info("colTabId = $colTabId")
 				log.info("colPost = $colPost")
 				log.info("colPhone = $colPhone")
 				log.info("colBirthData = $colBirthData")
@@ -121,8 +125,10 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 							else -> continue // Пустое ФИО, или имен больше
 						}
 
+						val tabId = colTabId?.let { row.getCellText(it).toLongOrNull() }
 						val post = colPost?.let { row.getCellText(it) }
 						val phone = colPhone?.let { row.getCellText(it) }
+
 
 						userDetails = UserDetails(
 							user = User(
@@ -134,19 +140,27 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 								dept = Dept(id = currentDeptId)
 							),
 							phone = phone,
+							tabId = tabId,
 							description = "Профиль загружен автоматически из Excel"
 						)
 
 						if (isDeptFound) {
 							// Если Отдел найден, то ищем Сотрудника в нем
-							// when по типу PK
-							val findUser = userService.findByFullName(
-								fullName = fullName,
-								deptId = currentDeptId
-							)
-							log.warn("findUser: $findUser")
-							if (findUser != null) {
-								userDetails = userDetails.copy(user = userDetails.user.copy(id = findUser.user.id))
+							val findUserId = when {
+								tabId != null && updateKey == UpdateKey.USER_TAB_NO -> userService.findIdByTabIdAndDeptId(
+									tabId = tabId,
+									deptId = currentDeptId
+								)
+
+								else -> userService.findIdByFullNameAndDeptId(
+									fullName = fullName,
+									deptId = currentDeptId
+								)
+							}
+
+							log.warn("findUser: $findUserId")
+							if (findUserId != null) {
+								userDetails = userDetails.copy(user = userDetails.user.copy(id = findUserId))
 								log.info("Обновляем профиль сотрудника \n$userDetails")
 								userService.updateFromExcel(userDetails)
 							} else {
@@ -211,6 +225,7 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 }
 
 const val textFio = "Сотрудник"
+const val textTabId = "Табельный номер"
 const val textPost = "Должность"
 const val textPhone = "Телефон рабочий"
 const val textBirthday = "Дата рождения"

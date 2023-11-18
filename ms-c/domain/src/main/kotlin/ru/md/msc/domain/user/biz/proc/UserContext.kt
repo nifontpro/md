@@ -10,6 +10,7 @@ import ru.md.msc.domain.user.model.UserAward
 import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.domain.user.model.UserSettings
 import ru.md.msc.domain.user.model.excel.AddUserReport
+import ru.md.msc.domain.user.model.excel.UpdateKey
 
 class UserContext : BaseClientContext() {
 	var userDetails: UserDetails = UserDetails()
@@ -26,6 +27,7 @@ class UserContext : BaseClientContext() {
 	var hasOwnerRole: Boolean = false
 	var fileUrl: String = ""
 	val addReport: MutableList<AddUserReport> = mutableListOf()
+	var updateKey: UpdateKey = UpdateKey.USER_TAB_NO
 }
 
 enum class UserCommand : IBaseCommand {

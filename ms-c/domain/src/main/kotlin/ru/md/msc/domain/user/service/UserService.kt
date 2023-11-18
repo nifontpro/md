@@ -33,5 +33,6 @@ interface UserService {
 	fun validateEmail(deptId: Long, email: String): Boolean
 	fun validateByDeptIdAndEmailExist(deptId: Long, email: String): Boolean
 	fun updateFromExcel(userDetails: UserDetails): UserDetails
-	fun findByFullName(fullName: FullName, deptId: Long): UserDetails?
+	fun findIdByFullNameAndDeptId(fullName: FullName, deptId: Long): Long?
+	fun findIdByTabIdAndDeptId(tabId: Long, deptId: Long): Long?
 }

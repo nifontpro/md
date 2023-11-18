@@ -138,18 +138,15 @@ class UserServiceImpl(
 	@Transactional
 	override fun updateFromExcel(userDetails: UserDetails): UserDetails {
 		val oldUserDetailsEntity = userDetailsRepository.findByIdOrNull(userDetails.user.id) ?: run {
-			println("updateFromExcel: UserNotFoundException")
 			throw UserNotFoundException()
 		}
 		with(oldUserDetailsEntity) {
 			user.firstname = userDetails.user.firstname
 			user.patronymic = userDetails.user.patronymic
 			user.lastname = userDetails.user.lastname
-			println("--> Update post = ${userDetails.user.post}")
 			user.post = userDetails.user.post
 			phone = userDetails.phone
-//			address = userDetails.address
-			description = userDetails.description
+			tabId = userDetails.tabId
 		}
 		return oldUserDetailsEntity.toUserDetailsLazy()
 	}
@@ -184,17 +181,25 @@ class UserServiceImpl(
 		}
 	}
 
-	override fun findByFullName(
+	override fun findIdByFullNameAndDeptId(
 		fullName: FullName,
 		deptId: Long
-	): UserDetails? {
-//		return userDetailsRepository.findByUserFirstnameAndUserLastnameAndUserPatronymicAndUserDeptId(
-		return userDetailsRepository.findByFullName(
+	): Long? {
+		return userRepository.findIdByFullNameAndDeptId(
 			firstname = fullName.firstName,
 			lastName = fullName.lastName,
 			patronymic = fullName.patronymic,
 			deptId = deptId
-		).firstOrNull()?.toUserDetailsLazy()
+		)
+	}
+
+	override fun findIdByTabIdAndDeptId(
+		tabId: Long,
+		deptId: Long
+	): Long? {
+		return userDetailsRepository.findIdByTabIdAndDeptId(
+			tabId = tabId, deptId = deptId
+		)
 	}
 
 	@Transactional

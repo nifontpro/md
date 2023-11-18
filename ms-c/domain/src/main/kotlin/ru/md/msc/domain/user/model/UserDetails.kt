@@ -10,5 +10,6 @@ data class UserDetails(
 	val address: String? = null,
 	val description: String? = null,
 	val createdAt: LocalDateTime? = null,
+	var tabId: Long? = null,
 	val images: List<BaseImage> = emptyList(),
 )

@@ -14,19 +14,15 @@ interface UserDetailsRepository : JpaRepository<UserDetailsEntity, Long> {
 
 	@Query(
 		"""
-		from UserDetailsEntity u where 
-		u.user.firstname like :firstname and
-		u.user.lastname like :lastName and
-		u.user.patronymic like :patronymic and
-		u.user.dept.id = :deptId
-	"""
+		select d.user_id from users.user_details d 
+		left join users.user_data u on d.user_id=u.id
+		where d.tab_id=:tabId and u.dept_id=:deptId limit 1
+	""", nativeQuery = true
 	)
-	fun findByFullName(
-		firstname: String,
-		lastName: String,
-		patronymic: String,
+	fun findIdByTabIdAndDeptId(
+		tabId: Long,
 		deptId: Long
-	): List<UserDetailsEntity>
+	): Long?
 
 //	@EntityGraph("withUser")
 //	@Query("""
