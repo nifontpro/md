@@ -34,3 +34,4 @@ fun EventsContext.deleteEventError() {
 }
 
 class EventNotFoundException(message: String = "") : RuntimeException(message)
+class EventIOException(message: String = "") : RuntimeException(message)

@@ -37,3 +37,26 @@ fun UserContext.getUserCountError() {
 		)
 	)
 }
+
+fun UserContext.userDbError() {
+	fail(
+		errorDb(
+			repository = "user",
+			violationCode = "i/o",
+			description = "Ошибка чтения или записи"
+		)
+	)
+}
+
+fun UserContext.userEventError() {
+	fail(
+		errorDb(
+			repository = "user",
+			violationCode = "event i/o",
+			description = "Ошибка чтения или записи событий Сотрудника"
+		)
+	)
+}
+
+class UserIOException(message: String = "") : RuntimeException(message)
+

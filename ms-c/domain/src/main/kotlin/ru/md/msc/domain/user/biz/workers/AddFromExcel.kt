@@ -2,10 +2,12 @@ package ru.md.msc.domain.user.biz.workers
 
 import org.dhatim.fastexcel.reader.ReadableWorkbook
 import ru.md.base_domain.biz.helper.ContextError
+import ru.md.base_domain.biz.helper.errorValidation
 import ru.md.base_domain.biz.helper.fail
 import ru.md.base_domain.biz.helper.otherError
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.base_domain.dept.biz.errors.DeptIOException
+import ru.md.base_domain.dept.biz.errors.deptDbError
 import ru.md.base_domain.dept.model.Dept
 import ru.md.base_domain.dept.model.DeptType
 import ru.md.base_domain.user.model.RoleUser
@@ -13,10 +15,15 @@ import ru.md.base_domain.user.model.User
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.msc.domain.dept.model.DeptDetails
-import ru.md.msc.domain.event.model.BaseEvent
+import ru.md.msc.domain.event.biz.proc.EventIOException
+import ru.md.msc.domain.event.model.UserEvent
 import ru.md.msc.domain.user.biz.proc.UserContext
+import ru.md.msc.domain.user.biz.proc.UserIOException
+import ru.md.msc.domain.user.biz.proc.userDbError
+import ru.md.msc.domain.user.biz.proc.userEventError
 import ru.md.msc.domain.user.model.FullName
 import ru.md.msc.domain.user.model.UserDetails
+import ru.md.msc.domain.user.model.excel.AddUserReport
 import ru.md.msc.domain.user.model.excel.UpdateKey
 import java.io.FileInputStream
 import java.time.LocalDate
@@ -56,9 +63,7 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 					rows.forEachIndexed { idx, row ->
 						currentRow = idx
 						val ch = row.getCellText(0)
-						log.info("--> i: $currentRow, ch: $ch")
 						if (ch == "№") {
-							log.warn("Ключ № найден!")
 							row.getCells(1, row.cellCount).forEach { cell ->
 								val rowIdx = cell.columnIndex
 								log.info("$rowIdx. ${cell.text}")
@@ -76,34 +81,45 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 					}
 				}
 
-				log.info("colFio = $colFioNull")
-				log.info("colTabId = $colTabId")
-				log.info("colPost = $colPost")
-				log.info("colPhone = $colPhone")
-				log.info("colBirthData = $colBirthData")
-				log.info("colJobDate = $colJobDate")
-
-				if (colFioNull == null) throw Exception("Не определена позиция ФИО")
+				if (colFioNull == null) throw ParsePosFIOException("Не определена позиция ФИО")
 				val colFio = colFioNull ?: 0
 
-				var currentDeptId = 0L
+				var currentDept: Dept? = null
 				var isDeptFound = false
 
-//				deptId = authUser.dept?.id ?: throw Exception("Отдел не найден")
-//				val companyId = baseDeptService.getCompanyDeptId(deptId)
-				// deptId - отдел компании, полученный выше по цепочке
 				val deptsIds = baseDeptService.findSubTreeIds(deptId)
 
 				for (i in ++currentRow..maxRowIdx) {
+					val userErrors = mutableListOf<ContextError>()
+					val userEvents = mutableListOf<UserEvent>()
+					var isUpdate = false
+
 					val row = rows[i]
 					val firstRowText = row.getCellText(0)
-					if (firstRowText.isNullOrBlank()) continue // Пустая строка пропускается
+					if (firstRowText.isNullOrBlank()) continue  // Пустая строка пропускается
 
 					if (firstRowText.isInt()) {
 						/**
 						 * Добавление/Обновление Сотрудника
 						 */
-						if (currentDeptId == 0L) continue // Отдел не определен
+						if (currentDept == null) {
+							// Отдел не определен
+							addReport.add(
+								AddUserReport(
+									success = false,
+									userDetails = null,
+									isUpdate = false,
+									errors = listOf(
+										errorValidation(
+											field = "dept",
+											violationCode = "undefined",
+											description = "Не определен Отдел"
+										)
+									)
+								)
+							)
+							continue
+						}
 
 						val fio = row.getCellText(colFio)
 						val fioArr = fio.split(" ")
@@ -126,14 +142,31 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 								lastName = fioArr[0].trim(),
 							)
 
-							else -> continue // Пустое ФИО, или имен больше
+							else -> {
+								// Пустое ФИО, или имен больше
+								addReport.add(
+									AddUserReport(
+										success = false,
+										userDetails = null,
+										isUpdate = false,
+										errors = listOf(
+											errorValidation(
+												field = "fio",
+												violationCode = "not valid",
+												description = "Не верный формат ФИО"
+											)
+										)
+									)
+								)
+								continue
+							}
 						}
 
 						val tabId = colTabId?.let { row.getCellText(it).toLongOrNull() }
 						val post = colPost?.let { row.getCellText(it) }
 						val phone = colPhone?.let { row.getCellText(it) }
 						val birthDateStr = colBirthData?.let { row.getCellText(it) }
-//						val jobDateStr = colJobDate?.let { row.getCellText(it) }
+						val jobDateStr = colJobDate?.let { row.getCellText(it) }
 
 						userDetails = UserDetails(
 							user = User(
@@ -142,7 +175,7 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 								patronymic = fullName.patronymic,
 								roles = setOf(RoleUser.USER),
 								post = post,
-								dept = Dept(id = currentDeptId)
+								dept = currentDept
 							),
 							phone = phone,
 							tabId = tabId,
@@ -152,44 +185,145 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 						if (isDeptFound) {
 							// Если Отдел найден, то ищем Сотрудника в нем
 							val findUserId = when {
-								tabId != null && updateKey == UpdateKey.USER_TAB_NO -> userService.findIdByTabIdAndDeptId(
-									tabId = tabId,
-									deptId = currentDeptId
-								)
+								tabId != null && updateKey == UpdateKey.USER_TAB_NO -> {
+									try {
+										userService.findIdByTabIdAndDeptId(
+											tabId = tabId,
+											deptId = currentDept.id
+										)
+									} catch (e: Exception) {
+										throw UserIOException()
+									}
+								}
 
-								else -> userService.findIdByFullNameAndDeptId(
-									fullName = fullName,
-									deptId = currentDeptId
-								)
+								else -> try {
+									userService.findIdByFullNameAndDeptId(
+										fullName = fullName,
+										deptId = currentDept.id
+									)
+								} catch (e: Exception) {
+									throw UserIOException()
+								}
 							}
 
+							/**
+							 * Обновление профиля Сотрудника
+							 */
 							if (findUserId != null) {
+								isUpdate = true
 								userDetails = userDetails.copy(user = userDetails.user.copy(id = findUserId))
-								log.info("Обновляем профиль сотрудника \n$userDetails")
-								userService.updateFromExcel(userDetails)
+								try {
+									userService.updateFromExcel(userDetails)
+								} catch (e: Exception) {
+									throw UserIOException()
+								}
 
 								birthDateStr?.let {
-									val date = it.toDate() // T-C
-									val baseEvent = BaseEvent(
+									val date = try {
+										it.toDate()
+									} catch (e: Exception) {
+										userErrors.add(parseDateError(it))
+										return@let
+									}
+									val userEvent = UserEvent(
 										eventDate = date,
-										eventName = textBirthday,
+										eventName = dbBirthday,
 										userId = findUserId
 									)
-									eventService.addOrUpdateUserEvent(baseEvent)
+									try {
+										userEvents.add(eventService.addOrUpdateUserEvent(userEvent))
+									} catch (e: Exception) {
+										throw EventIOException()
+									}
+								}
+
+								jobDateStr?.let {
+									val date = try {
+										it.toDate()
+									} catch (e: Exception) {
+										userErrors.add(parseDateError(it))
+										return@let
+									}
+									val userEvent = UserEvent(
+										eventDate = date,
+										eventName = dbJobDate,
+										userId = findUserId
+									)
+									try {
+										userEvents.add(eventService.addOrUpdateUserEvent(userEvent))
+									} catch (e: Exception) {
+										throw EventIOException()
+									}
 								}
 
 							} else {
-								log.info("Создаем сотрудника \n$userDetails")
-								userService.create(userDetails)
+								/**
+								 * Создание нового профиля Сотрудника
+								 */
+								try {
+									userService.create(userDetails)
+								} catch (e: Exception) {
+									throw UserIOException()
+								}
 							}
 
 						} else {
 							// Если был создан новый Отдел, то добавляем Сотрудника в него
-							log.info("Создаем сотрудника\n$userDetails")
-							userService.create(userDetails)
+							try {
+								userDetails = userService.create(userDetails)
+							} catch (e: Exception) {
+								throw UserIOException()
+							}
+
 							// Добавляем события
+							birthDateStr?.let {
+								val date = try {
+									it.toDate()
+								} catch (e: Exception) {
+									userErrors.add(parseDateError(it))
+									return@let
+								}
+								val userEvent = UserEvent(
+									eventDate = date,
+									eventName = dbBirthday,
+									userId = userDetails.user.id
+								)
+								try {
+									userEvents.add(eventService.addOrUpdateUserEvent(userEvent))
+								} catch (e: Exception) {
+									throw EventIOException()
+								}
+							}
+
+							jobDateStr?.let {
+								val date = try {
+									it.toDate()
+								} catch (e: Exception) {
+									userErrors.add(parseDateError(it))
+									return@let
+								}
+								val userEvent = UserEvent(
+									eventDate = date,
+									eventName = dbJobDate,
+									userId = userDetails.user.id
+								)
+								try {
+									userEvents.add(eventService.addOrUpdateUserEvent(userEvent))
+								} catch (e: Exception) {
+									throw EventIOException()
+								}
+							}
 						}
 
+						addReport.add(
+							AddUserReport(
+								success = true,
+								userDetails = userDetails.copy(user = userDetails.user.copy(dept = currentDept)),
+								isUpdate = isUpdate,
+								events = userEvents,
+								errors = userErrors
+							)
+						)
 
 					} else {
 						/**
@@ -198,7 +332,7 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 						val currentDeptName = row.getCellText(0)
 						if (currentDeptName.isNullOrBlank()) continue
 						isDeptFound = true
-						val dept = try {
+						currentDept = try {
 							deptService.findByIdsAndName(ids = deptsIds, name = currentDeptName).firstOrNull() ?: run {
 								isDeptFound = false
 								// Если не находим, то создаем новый
@@ -208,18 +342,13 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 										parentId = deptId,
 										type = DeptType.SIMPLE
 									),
-									description = "Отдел создан автоматически на основе Excel файла"
+									description = "Отдел создан автоматически из Excel файла"
 								)
-								log.info("Создаем новый отдел $currentDeptName")
 								deptService.create(deptDetails).dept
 							}
 						} catch (e: Exception) {
 							throw DeptIOException()
 						}
-
-						log.info("i: $i, dept: $dept")
-						currentDeptId = dept.id
-						log.warn("currentDeptId: $currentDeptId")
 					}
 				}
 
@@ -229,14 +358,30 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 
 	except {
 		log.error(it.message)
-		fail(
-			otherError(
-				description = "Ошибка чтения Excel файла",
-				field = "excel",
-				code = "excel-read error",
-				level = ContextError.Levels.ERROR
+
+		when (it) {
+			is UserIOException -> userDbError()
+			is DeptIOException -> deptDbError()
+			is EventIOException -> userEventError()
+			is ParsePosFIOException -> fail(
+				otherError(
+					description = "Не определена позиция ФИО",
+					field = "fio",
+					code = "undefined pos fio",
+					level = ContextError.Levels.ERROR
+				)
 			)
-		)
+
+			else -> fail(
+				otherError(
+					description = "Ошибка чтения Excel файла",
+					field = "excel",
+					code = "excel-read error",
+					level = ContextError.Levels.ERROR
+				)
+			)
+		}
+
 	}
 }
 
@@ -245,7 +390,18 @@ const val textTabId = "Табельный номер"
 const val textPost = "Должность"
 const val textPhone = "Телефон рабочий"
 const val textBirthday = "Дата рождения"
+const val dbBirthday = "День рождения"
 const val textJobDate = "Дата приема"
+const val dbJobDate = "Прием на работу"
+
+private class ParsePosFIOException(message: String?) : RuntimeException(message)
+
+private fun parseDateError(date: String) = errorValidation(
+	field = "date",
+	violationCode = "not valid",
+	description = "Неверный формат даты: $date"
+)
+
 
 fun String.isInt() = this.toIntOrNull()?.let { true } ?: false
 

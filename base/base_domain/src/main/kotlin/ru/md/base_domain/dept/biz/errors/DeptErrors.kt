@@ -74,6 +74,16 @@ fun BaseMedalsContext.deptAuthError() {
 	)
 }
 
+fun BaseMedalsContext.deptDbError() {
+	fail(
+		errorDb(
+			repository = "dept",
+			violationCode = "i/o",
+			description = "Ошибка чтения или записи"
+		)
+	)
+}
+
 class RootDeptNotFoundException(message: String = "") : RuntimeException(message)
 class CompanyDeptNotFoundException(message: String = "") : RuntimeException(message)
 class DeptNotFoundException(message: String = "") : RuntimeException(message)

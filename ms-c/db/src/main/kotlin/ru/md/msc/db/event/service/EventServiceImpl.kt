@@ -14,12 +14,14 @@ import ru.md.msc.db.event.model.DeptEventEntity
 import ru.md.msc.db.event.model.UserEventEntity
 import ru.md.msc.db.event.model.mappers.toBaseEvent
 import ru.md.msc.db.event.model.mappers.toShortEvent
+import ru.md.msc.db.event.model.mappers.toUserEvent
 import ru.md.msc.db.event.repo.DeptEventRepository
 import ru.md.msc.db.event.repo.UserEventRepository
 import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.msc.domain.event.biz.proc.EventNotFoundException
 import ru.md.msc.domain.event.model.BaseEvent
 import ru.md.msc.domain.event.model.ShortEvent
+import ru.md.msc.domain.event.model.UserEvent
 import ru.md.msc.domain.event.service.EventService
 
 @Service
@@ -40,22 +42,30 @@ class EventServiceImpl(
 		return userEventEntity.toBaseEvent()
 	}
 
-	override fun addOrUpdateUserEvent(baseEvent: BaseEvent): BaseEvent {
+	override fun addUserEvent(userEvent: UserEvent): UserEvent {
+		val userEventEntity = UserEventEntity(
+			eventDate = userEvent.eventDate,
+			eventName = userEvent.eventName,
+			userId = userEvent.userId,
+		)
+		userEventRepository.save(userEventEntity)
+		return userEventEntity.toUserEvent(isUpdate = false)
+	}
+
+	override fun addOrUpdateUserEvent(userEvent: UserEvent): UserEvent {
 		val userEventEntity = userEventRepository.findByUserIdAndEventName(
-			userId = baseEvent.userId,
-			eventName = baseEvent.eventName
+			userId = userEvent.userId,
+			eventName = userEvent.eventName
 		) ?: run {
 			val newUserEventEntity = UserEventEntity(
-				eventDate = baseEvent.eventDate,
-				eventName = baseEvent.eventName,
-				userId = baseEvent.userId,
+				eventDate = userEvent.eventDate,
+				eventName = userEvent.eventName,
+				userId = userEvent.userId,
 			)
-			println("--> ADD NEW EVENT: ${newUserEventEntity.toBaseEvent()}")
 			userEventRepository.save(newUserEventEntity)
-			return newUserEventEntity.toBaseEvent()
+			return newUserEventEntity.toUserEvent(isUpdate = false)
 		}
-		println("--> UPDATE EVENT: $baseEvent")
-		return userEventEntity.toBaseEvent()
+		return userEventEntity.toUserEvent(isUpdate = true)
 	}
 
 	override fun addDeptEvent(deptId: Long, baseEvent: BaseEvent): BaseEvent {
