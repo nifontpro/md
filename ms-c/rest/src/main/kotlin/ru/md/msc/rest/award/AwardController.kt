@@ -2,8 +2,10 @@ package ru.md.msc.rest.award
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import ru.md.base_domain.gallery.SmallItem
 import ru.md.base_domain.model.BaseResponse
 import ru.md.base_rest.base.authProcess
+import ru.md.base_rest.base.process
 import ru.md.base_rest.base.toLongOr0
 import ru.md.base_rest.image.baseImageProcess
 import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
@@ -424,6 +426,18 @@ class AwardController(
 			authRequest = baseRequest,
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportWWAwardsCount() }
+		)
+	}
+
+	@PostMapping("get_item")
+	private suspend fun getGalleryItem(
+		@RequestBody request: GetGalleryRequest
+	): BaseResponse<SmallItem> {
+		return process(
+			processor = awardProcessor,
+			request = request,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportSmallItem() }
 		)
 	}
 

@@ -1,6 +1,8 @@
 package ru.md.msc.domain.award.biz.proc
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
+import org.springframework.web.reactive.function.client.WebClient
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.base_domain.biz.validate.*
 import ru.md.base_domain.biz.validate.chain.validateDeptIdAndAdminDeptLevelChain
@@ -33,6 +35,7 @@ import ru.md.msc.domain.award.biz.workers.sort.setActionByUserValidSortedFields
 import ru.md.msc.domain.award.biz.workers.sort.setAwardWithDeptValidSortedFields
 import ru.md.msc.domain.award.service.AwardService
 import ru.md.msc.domain.base.workers.image.getGalleryItemByClient
+import ru.md.msc.domain.base.workers.image.getGalleryItemTest
 import ru.md.msc.domain.base.workers.msg.sendMessage
 import ru.md.msc.domain.base.workers.msg.sendMessageToEmail
 import ru.md.msc.domain.dept.service.DeptService
@@ -51,6 +54,7 @@ class AwardProcessor(
 	private val microClient: MicroClient,
 	private val messageService: MessageService,
 	private val emailService: EmailService,
+	@Value("\${gallery-server.url}") private val resourceServerURL: String,
 ) : IBaseProcessor<AwardContext> {
 
 	override suspend fun exec(ctx: AwardContext) = businessChain.exec(ctx.also {
@@ -63,6 +67,7 @@ class AwardProcessor(
 		it.microClient = microClient
 		it.messageService = messageService
 		it.emailService = emailService
+		it.msClient = WebClient.create(resourceServerURL)
 	})
 
 	companion object {
@@ -115,6 +120,19 @@ class AwardProcessor(
 				deleteOldAndAddAwardImageToDb("Сохраняем ссылки на изображение в БД")
 				updateAwardMainImage("Обновление основного изображения")
 				deleteS3ImageOnFailingChain()
+			}
+
+			operation("Добавление изображения из галереи", AwardCommand.IMG_ADD_GALLERY) {
+				validateAwardId("Проверяем awardId")
+				validateImageId("Проверка imageId")
+				validateAccessAndDeleteOldImages()
+				getGalleryItemByClient("Получаем объект галереи из мс")
+				addAwardGalleryImageToDb("Сохраняем ссылки на изображение в БД")
+				updateAwardMainImage("Обновление основного изображения")
+			}
+
+			operation("Добавление изображения из галереи", AwardCommand.GET_GALLERY) {
+				getGalleryItemTest("Получаем объект галереи из мс")
 			}
 
 			operation("Добавление изображения из галереи", AwardCommand.IMG_ADD_GALLERY) {

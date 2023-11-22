@@ -1,5 +1,6 @@
 package ru.md.msc.rest.award.mappers
 
+import ru.md.base_domain.gallery.SmallItem
 import ru.md.base_domain.model.BaseResponse
 import ru.md.base_domain.model.baseResponse
 import ru.md.msc.domain.award.biz.proc.AwardContext
@@ -36,4 +37,8 @@ fun AwardContext.toTransportAwardStateCount(): BaseResponse<AwardStateCount> {
 
 fun AwardContext.toTransportWWAwardsCount(): BaseResponse<WWAwardCount> {
 	return baseResponse(wwAwardCount)
+}
+
+fun AwardContext.toTransportSmallItem(): BaseResponse<SmallItem> {
+	return baseResponse(smallItem)
 }

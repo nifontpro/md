@@ -16,6 +16,9 @@ dependencies {
 	implementation(project(":cor"))
 	implementation(project(":base:base_domain"))
 
+	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	testImplementation("io.netty:netty-resolver-dns-native-macos:4.1.101.Final")
+
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")

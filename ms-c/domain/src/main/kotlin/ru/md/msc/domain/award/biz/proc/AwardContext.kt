@@ -32,6 +32,7 @@ enum class AwardCommand : IBaseCommand {
 	GET_BY_DEPT,
 	IMG_ADD,
 	IMG_ADD_GALLERY,
+	GET_GALLERY,
 	IMG_DELETE,
 	ADD_ACTION,
 	GET_ACTIVE_AWARD_BY_USER,

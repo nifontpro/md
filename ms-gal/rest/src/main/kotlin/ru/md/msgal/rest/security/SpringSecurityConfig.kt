@@ -21,6 +21,7 @@ class SpringSecurityConfig {
 		jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(KCRoleConverter())
 
 		http.authorizeHttpRequests()
+			.requestMatchers("/item/get").permitAll()
 			.requestMatchers("/item/get_id").hasAnyRole("micro", "user")
 			.requestMatchers("/item/admin/**").hasAnyRole("admin")
 			.requestMatchers("/folder/admin/**").hasAnyRole("admin")

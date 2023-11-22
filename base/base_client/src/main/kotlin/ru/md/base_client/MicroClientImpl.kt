@@ -5,6 +5,7 @@ import kotlinx.coroutines.sync.withLock
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -65,7 +66,7 @@ class MicroClientImpl(
 	suspend fun postMsRequest(
 		uri: String,
 		body: Any,
-		accessToken: String
+		accessToken: String? = null
 	): BaseResponse<String> {
 		return msClient
 			.post()
@@ -74,9 +75,22 @@ class MicroClientImpl(
 			.headers {
 //				it.set("Authorization", accessToken) // Если с Bearer в строке
 				it.addAll(HttpHeaders().apply {
-					setBearerAuth(accessToken)
+					accessToken?.let { token -> setBearerAuth(token) }
 				})
 			}
+			.retrieve()
+			.awaitBody()
+	}
+
+	override suspend fun <R> postRequest(
+		uri: String,
+		body: Any,
+		type: ParameterizedTypeReference<BaseResponse<R>>
+	): BaseResponse<R>? {
+		return msClient
+			.post()
+			.uri(uri)
+			.bodyValue(body)
 			.retrieve()
 			.awaitBody()
 	}

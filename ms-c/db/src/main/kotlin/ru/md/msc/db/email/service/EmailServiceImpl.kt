@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service
 import ru.md.msc.domain.email.EmailService
 import java.net.URL
 
+const val ssl = true
 
 @Service
 class EmailServiceImpl(
@@ -16,14 +17,15 @@ class EmailServiceImpl(
 	@Value("\${mail.from.email}") private val fromEmail: String,
 	@Value("\${mail.from.name}") private val fromName: String,
 	@Value("\${mail.from.subject}") private val fromSubject: String,
-): EmailService {
+) : EmailService {
 
 	override fun sendMail(toEmail: String, message: String) {
 		SimpleEmail().apply {
 			hostName = host
 			setSmtpPort(port.toInt())
 			setAuthenticator(DefaultAuthenticator(username, password))
-			isSSLOnConnect = true
+			isSSLOnConnect = ssl
+//			setStartTLSEnabled(true)
 			setFrom(fromEmail, fromName)
 			subject = fromSubject
 			setMsg(message)
@@ -35,7 +37,6 @@ class EmailServiceImpl(
 	// https://betacode.net/10147/java-commons-email
 	override fun send(toEmail: String, message: String) {
 		// Create the attachment
-		// Create the attachment
 		val attachment = EmailAttachment()
 		attachment.url = URL(
 			"http://www.apache.org/images/asf_logo_wide.gif"
@@ -45,12 +46,12 @@ class EmailServiceImpl(
 		attachment.name = "Apache logo"
 
 		// Create the email message
-		// Create the email message
 		val email = MultiPartEmail().apply {
 			hostName = host
 			setSmtpPort(port.toInt())
 			setAuthenticator(DefaultAuthenticator(username, password))
-			isSSLOnConnect = true
+			isSSLOnConnect = ssl
+//			setStartTLSEnabled(true)
 			setFrom(fromEmail, fromName)
 			subject = fromSubject
 			setMsg(message)
@@ -66,7 +67,8 @@ class EmailServiceImpl(
 			hostName = host
 			setSmtpPort(port.toInt())
 			setAuthenticator(DefaultAuthenticator(username, password))
-			isSSLOnConnect = true
+			isSSLOnConnect = ssl
+//			setStartTLSEnabled(true)
 			setFrom(fromEmail, fromName)
 			subject = fromSubject
 			addTo(toEmail)

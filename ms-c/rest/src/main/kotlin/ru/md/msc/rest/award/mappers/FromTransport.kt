@@ -174,3 +174,8 @@ fun AwardContext.fromTransport(request: SetMainAwardImagesRequest) {
 	command = AwardCommand.SET_MAIN_IMG
 }
 
+fun AwardContext.fromTransport(request: GetGalleryRequest) {
+	command = AwardCommand.GET_GALLERY
+	imageId = request.itemId
+}
+

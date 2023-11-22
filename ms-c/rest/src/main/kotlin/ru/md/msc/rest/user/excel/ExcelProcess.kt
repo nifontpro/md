@@ -11,6 +11,7 @@ import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.excel.AddUserReport
+import ru.md.msc.domain.user.model.excel.UpdateKey
 import java.io.File
 
 private val mimes = listOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
@@ -21,6 +22,7 @@ suspend fun excelProcess(
 	multipartFile: MultipartFile,
 	authId: Long,
 	deptId: Long,
+	updateKey: UpdateKey,
 ): BaseResponse<List<AddUserReport>> {
 	val context = UserContext().apply {
 		command = UserCommand.ADD_FROM_EXCEL
@@ -51,6 +53,9 @@ suspend fun excelProcess(
 	context.authId = authId
 	context.deptId = deptId
 	context.fileUrl = fileUrl
+	context.updateKey = updateKey
+
+	context.log.info("--> updateKey: $updateKey")
 
 	processor.exec(context)
 	File(fileUrl).delete()
