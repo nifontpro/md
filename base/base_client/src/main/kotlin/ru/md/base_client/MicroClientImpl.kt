@@ -17,8 +17,8 @@ import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
 import org.springframework.web.reactive.function.client.awaitBody
 import ru.md.base_domain.client.MicroClient
-import ru.md.base_domain.errors.extMsGetATError
 import ru.md.base_domain.errors.extMsGetDataError
+import ru.md.base_domain.errors.extMsGetTokenError
 import ru.md.base_domain.model.BaseResponse
 
 /**
@@ -66,27 +66,35 @@ class MicroClientImpl(
 					getAccessToken()
 				} catch (e: Exception) {
 					log.error(e.message)
-					return BaseResponse.error(errors = listOf(extMsGetATError()))
+					return BaseResponse.error(errors = listOf(extMsGetTokenError()))
 				}
 				token = authResponse.accessToken
-				postRequest(
-					uri = uri,
-					body = requestBody,
-					accessToken = accessToken,
-					type = responseType
-				)
+				try {
+					postRequest(
+						uri = uri,
+						body = requestBody,
+						accessToken = accessToken,
+						type = responseType
+					)
+				} catch (e: Exception) {
+					// token - получен, запрос - нет
+					log.error(e.message)
+					BaseResponse.error(errors = listOf(extMsGetDataError()))
+				}
 			} else {
+				// not statusCode == HttpStatus.UNAUTHORIZED
 				log.error(e.message)
 				BaseResponse.error(errors = listOf(extMsGetDataError()))
 			}
 		} catch (e: Exception) {
+			// not WebClientResponseException
 			log.error(e.message)
 			BaseResponse.error(errors = listOf(extMsGetDataError()))
 		}
 	}
 
 	// https://stackoverflow.com/questions/53378161/webflux-webclient-and-generic-types
-	override suspend fun <R> postRequest(
+	private suspend fun <R> postRequest(
 		uri: String,
 		body: Any,
 		accessToken: String?,

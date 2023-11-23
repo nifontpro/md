@@ -9,11 +9,4 @@ interface MicroClient {
 		requestBody: Any,
 		responseType: ParameterizedTypeReference<BaseResponse<R>>
 	): BaseResponse<R>
-
-	suspend fun <R> postRequest(
-		uri: String,
-		body: Any,
-		accessToken: String? = null,
-		type: ParameterizedTypeReference<BaseResponse<R>>
-	): BaseResponse<R>?
 }

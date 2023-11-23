@@ -90,7 +90,7 @@ fun extMsGetDataError() = otherError(
 	level = ContextError.Levels.ERROR
 )
 
-fun extMsGetATError() = otherError(
+fun extMsGetTokenError() = otherError(
 	code = "ms-get token error",
 	description = "Ошибка получения токена для микросервиса",
 	field = "ms",
