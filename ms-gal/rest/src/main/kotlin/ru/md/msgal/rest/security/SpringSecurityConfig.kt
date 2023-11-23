@@ -21,11 +21,9 @@ class SpringSecurityConfig {
 		jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(KCRoleConverter())
 
 		http.authorizeHttpRequests()
-			.requestMatchers("/item/get").permitAll()
-			.requestMatchers("/item/get_id").hasAnyRole("micro", "user")
 			.requestMatchers("/item/admin/**").hasAnyRole("admin")
 			.requestMatchers("/folder/admin/**").hasAnyRole("admin")
-			.anyRequest().hasRole("user")
+			.anyRequest().hasAnyRole("user", "micro")
 			.and() // добавляем новые настройки, не связанные с предыдущими
 			.csrf().disable()
 //			.cors()// Разрешает запросы типа OPTIONS

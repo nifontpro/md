@@ -7,15 +7,14 @@ import ru.md.base_domain.gallery.SmallItem
 import ru.md.base_domain.gallery.request.GetItemByIdRequest
 import ru.md.base_domain.model.BaseResponse
 import ru.md.base_rest.base.authProcess
-import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.base.process
 import ru.md.base_rest.base.toLongOr0
+import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msgal.domain.item.biz.proc.ItemProcessor
 import ru.md.msgal.rest.item.mappers.fromTransport
 import ru.md.msgal.rest.item.mappers.toTransportItems
 import ru.md.msgal.rest.item.mappers.toTransportSmallItem
-import ru.md.msgal.rest.item.mappers.toTransportSmallItemJson
 import ru.md.msgal.rest.item.model.request.GetItemsByFolderRequest
 import ru.md.msgal.rest.item.model.response.ItemResponse
 
@@ -68,18 +67,6 @@ class ItemController(
 	}
 
 	@PostMapping("get_id")
-	private suspend fun getItemById(
-		@RequestBody request: GetItemByIdRequest
-	): BaseResponse<String> {
-		return process(
-			processor = itemProcessor,
-			request = request,
-			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportSmallItemJson() }
-		)
-	}
-
-	@PostMapping("get")
 	private suspend fun getItem(
 		@RequestBody request: GetItemByIdRequest
 	): BaseResponse<SmallItem> {

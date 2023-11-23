@@ -14,7 +14,6 @@ import ru.md.msc.domain.user.service.UserService
 
 abstract class BaseClientContext(
 	var awardId: Long = 0,
-	var medalId: Long = 0,
 
 	var modifyUser: User = User(),
 	var isModifyUserHasAdminRole: Boolean = false,

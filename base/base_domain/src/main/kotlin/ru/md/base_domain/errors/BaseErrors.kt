@@ -83,16 +83,26 @@ fun BaseMedalsContext.s3DeleteError() {
 	)
 }
 
-fun BaseMedalsContext.getGalleryItemMsError() {
+fun extMsGetDataError() = otherError(
+	code = "ms-get error",
+	description = "Ошибка получения данных из микросервиса",
+	field = "ms",
+	level = ContextError.Levels.ERROR
+)
+
+fun extMsGetATError() = otherError(
+	code = "ms-get token error",
+	description = "Ошибка получения токена для микросервиса",
+	field = "ms",
+	level = ContextError.Levels.ERROR
+)
+
+fun BaseMedalsContext.msGetDataError() {
 	fail(
-		otherError(
-			code = "ms-get gallery item",
-			description = "Ошибка получения объекта из микросервиса галереи",
-			field = "gallery",
-			level = ContextError.Levels.ERROR
-		)
+		extMsGetDataError()
 	)
 }
+
 
 class ImageNotFoundException(message: String = "") : RuntimeException(message)
 class S3DeleteException(message: String = "") : RuntimeException(message)

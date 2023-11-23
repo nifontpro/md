@@ -1,8 +1,6 @@
 package ru.md.msc.domain.award.biz.proc
 
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
-import org.springframework.web.reactive.function.client.WebClient
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.base_domain.biz.validate.*
 import ru.md.base_domain.biz.validate.chain.validateDeptIdAndAdminDeptLevelChain
@@ -54,7 +52,6 @@ class AwardProcessor(
 	private val microClient: MicroClient,
 	private val messageService: MessageService,
 	private val emailService: EmailService,
-	@Value("\${gallery-server.url}") private val resourceServerURL: String,
 ) : IBaseProcessor<AwardContext> {
 
 	override suspend fun exec(ctx: AwardContext) = businessChain.exec(ctx.also {
@@ -67,7 +64,6 @@ class AwardProcessor(
 		it.microClient = microClient
 		it.messageService = messageService
 		it.emailService = emailService
-		it.msClient = WebClient.create(resourceServerURL)
 	})
 
 	companion object {

@@ -1,26 +1,30 @@
 package ru.md.msc.domain.base.workers.image
 
+import ru.md.base_domain.biz.helper.getBaseData
 import ru.md.base_domain.biz.proc.ContextState
-import ru.md.base_domain.client.getData
-import ru.md.base_domain.errors.getGalleryItemMsError
+import ru.md.base_domain.client.getDataFromMs
+import ru.md.base_domain.errors.msGetDataError
 import ru.md.base_domain.gallery.request.GetItemByIdRequest
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
-import ru.md.msc.domain.base.biz.BaseClientContext
+import ru.md.msc.domain.award.biz.proc.AwardContext
 
-
-fun <T : BaseClientContext> ICorChainDsl<T>.getGalleryItemTest(title: String) = worker {
+fun ICorChainDsl<AwardContext>.getGalleryItemTest(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
 
 	handle {
-		val request = GetItemByIdRequest(itemId = imageId)
-		smallItem = getData(uri = "/item/get", request = request) ?: return@handle
+		smallItem = getBaseData {
+			getDataFromMs(
+				uri = "/item/get_id",
+				request = GetItemByIdRequest(itemId = imageId)
+			)
+		} ?: return@handle
 	}
 
 	except {
 		log.error(it.message)
-		getGalleryItemMsError()
+		msGetDataError()
 	}
 }

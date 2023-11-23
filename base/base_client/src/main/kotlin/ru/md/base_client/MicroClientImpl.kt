@@ -1,5 +1,6 @@
 package ru.md.base_client
 
+import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.slf4j.Logger
@@ -16,6 +17,8 @@ import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
 import org.springframework.web.reactive.function.client.awaitBody
 import ru.md.base_domain.client.MicroClient
+import ru.md.base_domain.errors.extMsGetATError
+import ru.md.base_domain.errors.extMsGetDataError
 import ru.md.base_domain.model.BaseResponse
 
 /**
@@ -25,7 +28,7 @@ import ru.md.base_domain.model.BaseResponse
 
 @Component
 class MicroClientImpl(
-	@Value("\${gallery-server.url}") private val resourceServerURL: String,
+	@Value("\${ms.gateway.url}") private val resourceServerURL: String,
 	@Value("\${keycloak.url}") private val keycloakUrl: String,
 	@Value("\${keycloak.credentials.secret}") private val clientSecret: String,
 	@Value("\${micro-client.id}") private val microClientId: String,
@@ -37,37 +40,58 @@ class MicroClientImpl(
 	val mutex = Mutex()
 	var token: String? = null
 
-	override suspend fun getDataFromMs(uri: String, requestBody: Any): BaseResponse<String> {
+	override suspend fun <R> getDataFromMs(
+		uri: String,
+		requestBody: Any,
+		responseType: ParameterizedTypeReference<BaseResponse<R>>
+	): BaseResponse<R> {
 		val accessToken = mutex.withLock {
 			token ?: run {
-				val tok = getAccessToken().accessToken
-				token = tok
-				tok
+				val newToken = getAccessToken().accessToken
+				token = newToken
+				newToken
 			}
 		}
 
 		return try {
-			log.trace("Получение данных из мс")
-			postMsRequest(uri = uri, body = requestBody, accessToken = accessToken)
+			postRequest(
+				uri = uri,
+				body = requestBody,
+				accessToken = accessToken,
+				type = responseType
+			)
 		} catch (e: WebClientResponseException) {
 			if (e.statusCode == HttpStatus.UNAUTHORIZED) {
-				log.trace("Получаем [accessToken]")
-				val authResponse = getAccessToken()
+				val authResponse = try {
+					getAccessToken()
+				} catch (e: Exception) {
+					log.error(e.message)
+					return BaseResponse.error(errors = listOf(extMsGetATError()))
+				}
 				token = authResponse.accessToken
-				log.trace("Повторный запрос данных из мс")
-				postMsRequest(uri = uri, body = requestBody, accessToken = authResponse.accessToken)
+				postRequest(
+					uri = uri,
+					body = requestBody,
+					accessToken = accessToken,
+					type = responseType
+				)
 			} else {
-				log.error("Ошибка получения данных из мс, статус: ${e.statusCode}")
-				throw e
+				log.error(e.message)
+				BaseResponse.error(errors = listOf(extMsGetDataError()))
 			}
+		} catch (e: Exception) {
+			log.error(e.message)
+			BaseResponse.error(errors = listOf(extMsGetDataError()))
 		}
 	}
 
-	suspend fun postMsRequest(
+	// https://stackoverflow.com/questions/53378161/webflux-webclient-and-generic-types
+	override suspend fun <R> postRequest(
 		uri: String,
 		body: Any,
-		accessToken: String? = null
-	): BaseResponse<String> {
+		accessToken: String?,
+		type: ParameterizedTypeReference<BaseResponse<R>>
+	): BaseResponse<R> {
 		return msClient
 			.post()
 			.uri(uri)
@@ -79,30 +103,16 @@ class MicroClientImpl(
 				})
 			}
 			.retrieve()
-			.awaitBody()
-	}
-
-	override suspend fun <R> postRequest(
-		uri: String,
-		body: Any,
-		type: ParameterizedTypeReference<BaseResponse<R>>
-	): BaseResponse<R>? {
-		return msClient
-			.post()
-			.uri(uri)
-			.bodyValue(body)
-			.retrieve()
-			.awaitBody()
+			.bodyToMono(type)
+			.awaitSingle()
 	}
 
 	suspend fun getAccessToken(): AuthResponse {
-		log.info("Запрос <accessToken>")
 		val mapForm: MultiValueMap<String, String> = LinkedMultiValueMap()
 		mapForm.add("grant_type", "client_credentials")
 		mapForm.add("client_id", microClientId)
 		mapForm.add("client_secret", clientSecret)
 		mapForm.add("scope", "profile")
-
 		return postKeycloakRequest(uri = "/token", body = mapForm)
 	}
 

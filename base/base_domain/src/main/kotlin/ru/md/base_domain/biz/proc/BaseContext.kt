@@ -1,6 +1,5 @@
 package ru.md.base_domain.biz.proc
 
-import org.springframework.web.reactive.function.client.WebClient
 import ru.md.base_domain.biz.helper.ContextError
 import ru.md.base_domain.client.MicroClient
 import ru.md.base_domain.image.model.FileData
@@ -19,7 +18,6 @@ abstract class BaseContext(
 	var orderFields: List<String> = emptyList(), // Допустимые поля для сортировки
 ) {
 	lateinit var microClient: MicroClient
-	lateinit var msClient: WebClient
 }
 
 interface IBaseCommand
