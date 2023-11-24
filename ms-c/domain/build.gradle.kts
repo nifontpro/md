@@ -16,6 +16,7 @@ dependencies {
 	implementation(project(":cor"))
 	implementation(project(":base:base_domain"))
 
+	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	testImplementation("io.netty:netty-resolver-dns-native-macos:4.1.101.Final")
 
@@ -25,12 +26,13 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
-	implementation("org.springframework.boot:spring-boot-starter")
+//	implementation("io.sentry:sentry-spring-boot-starter")
+	implementation("io.sentry:sentry-spring-boot-starter:6.34.0")
+	implementation("io.sentry:sentry-logback:6.34.0")
 
 	val fastExcelVersion = "0.15.7"
 	implementation("org.dhatim:fastexcel:$fastExcelVersion")
 	implementation("org.dhatim:fastexcel-reader:$fastExcelVersion")
-
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")

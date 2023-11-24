@@ -10,7 +10,7 @@ import ru.md.base_rest.utils.AuthData
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor
-import ru.md.msc.domain.user.model.excel.AddUserReport
+import ru.md.msc.domain.user.model.excel.LoadReport
 import ru.md.msc.domain.user.model.excel.UpdateKey
 import java.io.File
 
@@ -23,7 +23,7 @@ suspend fun excelProcess(
 	authId: Long,
 	deptId: Long,
 	updateKey: UpdateKey,
-): BaseResponse<List<AddUserReport>> {
+): BaseResponse<LoadReport> {
 	val context = UserContext().apply {
 		command = UserCommand.ADD_FROM_EXCEL
 	}
@@ -59,5 +59,5 @@ suspend fun excelProcess(
 
 	processor.exec(context)
 	File(fileUrl).delete()
-	return context.baseResponse(data = context.addReport)
+	return context.baseResponse(data = context.loadReport)
 }

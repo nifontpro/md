@@ -20,19 +20,20 @@ class SpringSecurityConfig {
 		val jwtAuthenticationConverter = JwtAuthenticationConverter()
 		jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(KCRoleConverter())
 
-		http.authorizeHttpRequests()
-			.requestMatchers("/item/admin/**").hasAnyRole("admin")
-			.requestMatchers("/folder/admin/**").hasAnyRole("admin")
-			.anyRequest().hasAnyRole("user", "micro")
-			.and() // добавляем новые настройки, не связанные с предыдущими
-			.csrf().disable()
-//			.cors()// Разрешает запросы типа OPTIONS
-//			.and()
-			.oauth2ResourceServer()// добавляем конвертер ролей из JWT в Authority (Role)
-			.jwt()
-			.jwtAuthenticationConverter(jwtAuthenticationConverter)
-			.and()
-//			.authenticationEntryPoint(OAuth2ExceptionHandler())
+		http
+			.csrf { csrf -> csrf.disable() }
+//			.cors {}// Разрешает запросы типа OPTIONS
+			.authorizeHttpRequests { auth ->
+				auth.requestMatchers("/item/admin/**").hasAnyRole("admin")
+				auth.requestMatchers("/folder/admin/**").hasAnyRole("admin")
+				auth.anyRequest().hasAnyRole("user", "micro")
+			}
+			.oauth2ResourceServer { oauth2ResourceServer ->
+				oauth2ResourceServer
+					.jwt { jwt ->
+						jwt.jwtAuthenticationConverter(jwtAuthenticationConverter)
+					}
+			}
 
 		return http.build()
 	}

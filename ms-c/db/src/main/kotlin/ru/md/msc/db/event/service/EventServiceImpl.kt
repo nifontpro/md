@@ -65,7 +65,15 @@ class EventServiceImpl(
 			userEventRepository.save(newUserEventEntity)
 			return newUserEventEntity.toUserEvent(isUpdate = false)
 		}
-		return userEventEntity.toUserEvent(isUpdate = true)
+
+		val isUpdate = if (userEventEntity.eventDate != userEvent.eventDate) {
+			userEventEntity.eventDate = userEvent.eventDate
+			true
+		} else {
+			false
+		}
+
+		return userEventEntity.toUserEvent(isUpdate = isUpdate)
 	}
 
 	override fun addDeptEvent(deptId: Long, baseEvent: BaseEvent): BaseEvent {

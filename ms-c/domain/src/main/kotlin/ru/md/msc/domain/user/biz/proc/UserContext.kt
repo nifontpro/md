@@ -10,7 +10,7 @@ import ru.md.msc.domain.user.model.GenderCount
 import ru.md.msc.domain.user.model.UserAward
 import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.domain.user.model.UserSettings
-import ru.md.msc.domain.user.model.excel.AddUserReport
+import ru.md.msc.domain.user.model.excel.LoadReport
 import ru.md.msc.domain.user.model.excel.UpdateKey
 
 class UserContext : BaseClientContext() {
@@ -27,8 +27,8 @@ class UserContext : BaseClientContext() {
 	var actionType: ActionType? = null
 	var hasOwnerRole: Boolean = false
 	var fileUrl: String = ""
-	val addReport: MutableList<AddUserReport> = mutableListOf()
-	var updateKey: UpdateKey = UpdateKey.USER_TAB_NO
+	var loadReport: LoadReport = LoadReport()
+	var updateKey: UpdateKey = UpdateKey.USER_FIO
 
 	lateinit var eventService: EventService
 }

@@ -17,7 +17,7 @@ import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.GenderCount
 import ru.md.msc.domain.user.model.UserSettings
-import ru.md.msc.domain.user.model.excel.AddUserReport
+import ru.md.msc.domain.user.model.excel.LoadReport
 import ru.md.msc.domain.user.model.excel.UpdateKey
 import ru.md.msc.rest.user.excel.excelProcess
 import ru.md.msc.rest.user.mappers.*
@@ -174,7 +174,7 @@ class UserController(
 		@RequestPart("authId") authId: String,
 		@RequestPart("deptId") deptId: String,
 		@RequestPart("key") key: String?,
-	): BaseResponse<List<AddUserReport>> {
+	): BaseResponse<LoadReport> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		return excelProcess(
 			authData = authData,
@@ -182,7 +182,7 @@ class UserController(
 			deptId = deptId.toLongOr0(),
 			processor = userProcessor,
 			multipartFile = file,
-			updateKey = if (key=="FIO") UpdateKey.USER_FIO else UpdateKey.USER_TAB_NO
+			updateKey = if (key == "TAB") UpdateKey.USER_TAB_NO else UpdateKey.USER_FIO
 		)
 	}
 

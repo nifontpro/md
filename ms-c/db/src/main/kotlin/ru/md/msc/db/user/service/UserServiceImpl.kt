@@ -184,22 +184,23 @@ class UserServiceImpl(
 	override fun findIdByFullNameAndDeptId(
 		fullName: FullName,
 		deptId: Long
-	): Long? {
-		return userRepository.findIdByFullNameAndDeptId(
+	): UserDetails? {
+		return userDetailsRepository.findIdByFullNameAndDeptId(
 			firstname = fullName.firstName,
 			lastName = fullName.lastName,
 			patronymic = fullName.patronymic,
 			deptId = deptId
-		)
+		).firstOrNull()?.toUserDetailsLazy()
 	}
 
 	override fun findIdByTabIdAndDeptId(
 		tabId: Long,
 		deptId: Long
-	): Long? {
+	): UserDetails? {
 		return userDetailsRepository.findIdByTabIdAndDeptId(
-			tabId = tabId, deptId = deptId
-		)
+			tabId = tabId,
+			deptId = deptId
+		).firstOrNull()?.toUserDetailsLazy()
 	}
 
 	@Transactional

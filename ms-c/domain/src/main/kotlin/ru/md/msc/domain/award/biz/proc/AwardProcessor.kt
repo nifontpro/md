@@ -131,15 +131,6 @@ class AwardProcessor(
 				getGalleryItemTest("Получаем объект галереи из мс")
 			}
 
-			operation("Добавление изображения из галереи", AwardCommand.IMG_ADD_GALLERY) {
-				validateAwardId("Проверяем awardId")
-				validateImageId("Проверка imageId")
-				validateAccessAndDeleteOldImages()
-				getGalleryItemByClient("Получаем объект галереи из мс")
-				addAwardGalleryImageToDb("Сохраняем ссылки на изображение в БД")
-				updateAwardMainImage("Обновление основного изображения")
-			}
-
 			operation("Удаление изображения", AwardCommand.IMG_DELETE) {
 				validateImageId("Проверка imageId")
 				validateAwardIdAndAccessToAwardChain()
