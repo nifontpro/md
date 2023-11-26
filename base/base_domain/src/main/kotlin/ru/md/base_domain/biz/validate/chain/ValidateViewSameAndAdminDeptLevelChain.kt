@@ -19,7 +19,7 @@ fun <T : BaseMedalsContext> ICorChainDsl<T>.validateUserIdSameOrAdminDeptLevelCh
 	chain {
 		on { isAuthUserHasAdminRole }
 		chain {
-			on { userId != authId }
+			on { userId == 0L }
 			worker("") { userId = authUser.id }
 		}
 		chain {

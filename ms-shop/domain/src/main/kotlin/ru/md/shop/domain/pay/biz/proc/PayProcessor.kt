@@ -115,19 +115,6 @@ class PayProcessor(
 				on { !isAuthUserHasAdminRole }
 				worker("") { userId = authUser.id }
 			}
-			/*
-			// То же, в изолированном виде с проверкой доступа к отделу
-			chain {
-				on { userId != 0L }
-				validateUserIdSameOrAdminDeptLevelChain()
-			}
-			chain {
-				on { userId == 0L }
-				chain {
-					on { !isAuthUserHasAdminRole }
-					worker("") { userId = authUser.id }
-				}
-			 */
 		}
 	}
 }
