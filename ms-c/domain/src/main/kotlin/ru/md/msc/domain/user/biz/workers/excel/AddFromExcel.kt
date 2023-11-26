@@ -1,12 +1,8 @@
-package ru.md.msc.domain.user.biz.workers
+package ru.md.msc.domain.user.biz.workers.excel
 
-import org.dhatim.fastexcel.reader.Cell
-import org.dhatim.fastexcel.reader.CellType
 import org.dhatim.fastexcel.reader.ReadableWorkbook
 import ru.md.base_domain.biz.helper.ContextError
 import ru.md.base_domain.biz.helper.errorValidation
-import ru.md.base_domain.biz.helper.fail
-import ru.md.base_domain.biz.helper.otherError
 import ru.md.base_domain.biz.proc.ContextState
 import ru.md.base_domain.dept.biz.errors.DeptIOException
 import ru.md.base_domain.dept.biz.errors.deptDbError
@@ -29,9 +25,6 @@ import ru.md.msc.domain.user.model.excel.AddUserReport
 import ru.md.msc.domain.user.model.excel.LoadReport
 import ru.md.msc.domain.user.model.excel.UpdateKey
 import java.io.FileInputStream
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 
@@ -49,7 +42,7 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 				var currentRow = 0
 
 				if (maxRowIdx < 2) {
-					throw Exception("Слишком мало строк: $maxRowIdx")
+					throw ParseExcelException("Слишком мало строк: $maxRowIdx")
 				}
 
 				/**
@@ -179,8 +172,6 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 							cellToDate(cell, textJobDate)
 						}
 
-						log.info("jobDate: $jobDate")
-
 						userDetails = UserDetails(
 							user = User(
 								firstname = fullName.firstName,
@@ -240,8 +231,6 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 									throw UserIOException()
 								}
 							}
-
-							log.info("findUserDetails: $findUserDetails")
 
 							/**
 							 * Обновление профиля Сотрудника
@@ -372,140 +361,4 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 		}
 
 	}
-}
-
-private fun UserContext.addOrUpdateUserEvent(
-	userId: Long,
-	birthDate: CellDate?,
-	jobDate: CellDate?,
-	userEvents: MutableList<UserEvent>,
-	userErrors: MutableList<ContextError>,
-): Boolean {
-	var isUpdate = false
-
-	birthDate?.let {
-		if (it.success && it.date != null) {
-			val userEvent = UserEvent(
-				eventDate = it.date,
-				eventName = dbBirthday,
-				userId = userId
-			)
-			try {
-				val event = eventService.addOrUpdateUserEvent(userEvent)
-				userEvents.add(event)
-				isUpdate = event.isUpdate
-			} catch (e: Exception) {
-				log.error(e.message)
-				throw EventIOException()
-			}
-		} else {
-			userErrors.add(parseDateError(field = it.field, date = it.text))
-		}
-	}
-
-	jobDate?.let {
-		if (it.success && it.date != null) {
-			val userEvent = UserEvent(
-				eventDate = it.date,
-				eventName = dbJobDate,
-				userId = userId
-			)
-			try {
-				val event = eventService.addOrUpdateUserEvent(userEvent)
-				userEvents.add(event)
-				isUpdate = event.isUpdate || isUpdate
-			} catch (e: Exception) {
-				log.error(e.message)
-				throw EventIOException()
-			}
-		} else {
-			userErrors.add(parseDateError(field = it.field, date = it.text))
-		}
-	}
-	return isUpdate
-}
-
-const val textFio = "Сотрудник"
-const val textTabId = "Табельный номер"
-const val textPost = "Должность"
-const val textPhone = "Телефон рабочий"
-const val textBirthday = "Дата рождения"
-const val dbBirthday = "День рождения"
-const val textJobDate = "Дата приема"
-const val dbJobDate = "Прием на работу"
-
-private class ParseExcelException(message: String?) : RuntimeException(message)
-
-private fun UserContext.excelFormatError(message: String? = null) {
-	fail(
-		otherError(
-			description = message ?: "Ошибка чтения Excel файла",
-			field = "file",
-			code = "excel-format error",
-			level = ContextError.Levels.ERROR
-		)
-	)
-}
-
-private fun parseDateError(field: String, date: String) = errorValidation(
-	field = "date",
-	violationCode = "not valid",
-	description = "Событие: $field, неверный формат даты: $date",
-	level = ContextError.Levels.WARNING
-)
-
-fun String.isInt() = this.toIntOrNull()?.let { true } ?: false
-
-fun String.toDate(): LocalDateTime {
-	return LocalDate.parse(this.trim(), DateTimeFormatter.ofPattern("dd.MM.yyyy")).atStartOfDay()
-}
-
-data class CellDate(
-	val text: String = "",
-	val field: String = "",
-	val date: LocalDateTime? = null,
-	val success: Boolean = true
-)
-
-private fun cellToDate(cell: Cell, field: String): CellDate {
-	return when (cell.type) {
-		CellType.NUMBER -> {
-			try {
-				val date = cell.asDate() ?: throw Exception()
-				CellDate(
-					text = "",
-					date = date,
-					success = true
-				)
-			} catch (e: Exception) {
-				CellDate(
-					text = cell.dataFormatString,
-					date = null,
-					success = false
-				)
-			}
-		}
-
-		CellType.STRING -> {
-			try {
-				val date = cell.text.toDate()
-				CellDate(
-					text = cell.text,
-					date = date,
-					success = true
-				)
-			} catch (e: Exception) {
-				CellDate(
-					text = cell.text,
-					date = null,
-					success = false
-				)
-			}
-		}
-
-		else -> CellDate(
-			date = null,
-			success = false
-		)
-	}.copy(field = field)
 }

@@ -45,7 +45,8 @@ class PayServiceImpl(
 	override fun payProduct(productId: Long, userId: Long): PayData {
 		val productEntity = baseProductRepo.findByIdOrNull(productId) ?: throw ProductNotFoundException()
 		if (productEntity.count < 1) throw InsufficientProductQuantityException()
-		val userPayEntity = baseUserPayRepo.findByUserId(userId) ?: throw UserPayNotFoundException()
+//		val userPayEntity = baseUserPayRepo.findByUserId(userId) ?: throw UserPayNotFoundException()
+		val userPayEntity = baseUserPayRepo.findByUserId(userId) ?: throw InsufficientUserBalanceException()
 		val price = productEntity.price
 
 		if (userPayEntity.balance < price) throw InsufficientUserBalanceException()

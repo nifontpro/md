@@ -34,6 +34,7 @@ import ru.md.msc.domain.user.biz.proc.operation.deleteUserOperation
 import ru.md.msc.domain.user.biz.validate.*
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
 import ru.md.msc.domain.user.biz.workers.*
+import ru.md.msc.domain.user.biz.workers.excel.addFromExcel
 import ru.md.msc.domain.user.biz.workers.sort.setUsersBySubdeptsValidSortedFields
 import ru.md.msc.domain.user.biz.workers.sort.setUsersWithAwardCountValidSortedFields
 import ru.md.msc.domain.user.service.UserService

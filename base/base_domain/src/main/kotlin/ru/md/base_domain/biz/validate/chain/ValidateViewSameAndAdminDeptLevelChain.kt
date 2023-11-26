@@ -12,11 +12,16 @@ import ru.md.cor.worker
 
 /**
  * Проверка возможности просмотра своего профиля и Администратором профиля любого сотрудника
- * Для Администратора должен быть явно указан userId, для Сотрудника он берется из authId
+ * Для Администратора должен быть явно указан userId, если нет - он берется из authId
+ * для Сотрудника он берется из authId
  */
 fun <T : BaseMedalsContext> ICorChainDsl<T>.validateUserIdSameOrAdminDeptLevelChain() {
 	chain {
 		on { isAuthUserHasAdminRole }
+		chain {
+			on { userId != authId }
+			worker("") { userId = authUser.id }
+		}
 		chain {
 			on { userId != authId }
 			worker("Сохраняем deptId") { tempLong = deptId }
