@@ -26,8 +26,8 @@ interface PayDataRepo : JpaRepository<PayDataEntity, Long> {
 		(:userId = 0 or p.userEntity.id = :userId) and 
 		(:isActive is null or p.isActive = :isActive) and
 		(:payCode is null or p.payCode = :payCode) and
-		(coalesce(:minDate, null) is null or p.dateOp >= :minDate) and 
-		(coalesce(:maxDate, null) is null or p.dateOp <= :maxDate) and
+		(:minDateNull = true or p.dateOp >= :minDate) and 
+		(:maxDateNull = true or p.dateOp <= :maxDate) and
 		((:filter is null) or (upper(p.productEntity.name) like :filter))
 	"""
 	)
@@ -36,10 +36,17 @@ interface PayDataRepo : JpaRepository<PayDataEntity, Long> {
 		userId: Long = 0,
 		isActive: Boolean? = null,
 		payCode: PayCode? = null,
-		minDate: LocalDateTime? = null,
-		maxDate: LocalDateTime? = null,
+		minDateNull: Boolean,
+		maxDateNull: Boolean,
+		minDate: LocalDateTime,
+		maxDate: LocalDateTime,
 		filter: String? = null,
 		pageable: Pageable,
 	): Page<PayDataEntity>
 
 }
+
+/*
+(coalesce(:minDate, null) is null or p.dateOp >= :minDate) and
+		(coalesce(:maxDate, null) is null or p.dateOp <= :maxDate) and
+ */

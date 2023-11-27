@@ -9,7 +9,7 @@ import ru.md.msc.domain.award.service.AwardService
 
 @SpringBootTest(classes = [TestBeans::class])
 class AwardTest(
-	@Autowired private val awardService: AwardService
+	@Autowired private val awardService: AwardService,
 ) {
 
 	@Test
@@ -20,6 +20,17 @@ class AwardTest(
 			baseQuery = BaseQuery()
 		)
 		println(awards)
+	}
+
+	@Test
+	fun activityTest() {
+		val acts = awardService.findActivAwardsByUser(
+			userId = 2L,
+			awardState = null,
+			awardType = null,
+			baseQuery = BaseQuery()
+		)
+		println(acts)
 	}
 
 }

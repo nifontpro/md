@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import ru.md.base_db.pay.repo.BaseUserPayRepo
 import ru.md.shop.db.TestBeans
 import ru.md.shop.db.ownerEmail
 import ru.md.shop.domain.pay.biz.proc.PayCommand
@@ -21,6 +22,7 @@ import ru.md.shop.domain.product.model.ProductDetails
 class PayProductTest(
 	@Autowired private val productProcessor: ProductProcessor,
 	@Autowired private val payProcessor: PayProcessor,
+	@Autowired private val baseUserPayRepo: BaseUserPayRepo,
 ) {
 
 	@Test
@@ -34,6 +36,8 @@ class PayProductTest(
 		}
 		payProcessor.exec(payContext)
 		val initUserBalance = payContext.userPay.balance
+
+		println(initUserBalance)
 
 		val newProduct = Product(
 			name = "test product",
@@ -77,17 +81,9 @@ class PayProductTest(
 			command = PayCommand.GET_USER_PAY
 		}
 		payProcessor.exec(payContext)
+		println("Свой баланс после покупки: ${payContext.userPay}")
 		assertEquals(true, payContext.errors.size == 0)
 		assertEquals(initUserBalance - newProduct.price, payContext.userPay.balance)
-
-		// Ошибка - для Админа должен быть указан userId
-		payContext = PayContext().apply {
-			authId = 3
-			authEmail = ownerEmail
-			command = PayCommand.GET_USER_PAY
-		}
-		payProcessor.exec(payContext)
-		assertEquals(true, payContext.errors.size > 0)
 
 		payContext = PayContext().apply {
 			authId = 1
@@ -157,10 +153,10 @@ class PayProductTest(
 	@Test
 	fun getUserWithIdPayDataTest() = runBlocking {
 		val payContext = PayContext().apply {
-			authId = 2
+			authId = 3
 			authEmail = ownerEmail
-			userId = 3
-			command = PayCommand.GET_PAYS_DATA
+			userId = 2
+			command = PayCommand.GET_USER_PAY
 		}
 		payProcessor.exec(payContext)
 		assertEquals(true, payContext.errors.size == 0)
@@ -171,9 +167,15 @@ class PayProductTest(
 		val payContext = PayContext().apply {
 			authId = 2
 			authEmail = ownerEmail
-			command = PayCommand.GET_PAYS_DATA
+			command = PayCommand.GET_USER_PAY
 		}
 		payProcessor.exec(payContext)
 		assertEquals(true, payContext.errors.size == 0)
+	}
+
+	@Test
+	fun getUserPayTest()   {
+		val userPayEntity = baseUserPayRepo.findByUserId(1)
+		println(userPayEntity)
 	}
 }

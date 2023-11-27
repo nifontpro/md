@@ -22,23 +22,6 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 	@Query("delete from AwardEntity a where a.id = :awardId")
 	override fun deleteById(awardId: Long)
 
-	// ((:state is null) or (:state = award_state(a.startDate, a.endDate)))
-	@EntityGraph("awardWithDept")
-	@Query(
-		"""
-		from AwardEntity a where 
-		a.dept.id = :deptId and 
-		((:name is null) or (upper(a.name) like :name)) and 
-		((:state is null) or (:state = a.state))
-		"""
-	)
-	fun findByDeptId(
-		deptId: Long,
-		name: String? = null,
-		state: AwardState? = null,
-		pageable: Pageable
-	): Page<AwardEntity>
-
 	@EntityGraph("awardWithDept")
 	@Query(
 		"""
@@ -48,12 +31,12 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		((:notExclude = true) or (a.id not in :excludeAwardIds)) and 
 		((
 			a.type = 'P'  and 
-			a.startDate <= NOW() and (coalesce(:minDate, null) is null or a.startDate >= :minDate) and
-			a.endDate >= NOW() and (coalesce(:maxDate, null) is null or a.endDate <= :maxDate)
+			a.startDate <= NOW() and (:minDateNull = true or a.startDate >= :minDate) and
+			a.endDate >= NOW() and (:maxDateNull = true or a.endDate <= :maxDate)
 		) or (
 			a.type = 'S' and
-			(coalesce(:minDate, null) is null or a.startDate >= :minDate) and 
-			(coalesce(:maxDate, null) is null or a.endDate <= :maxDate)
+			(:minDateNull = true or a.startDate >= :minDate) and 
+			(:maxDateNull = true or a.endDate <= :maxDate)
 		)) and 
 		(:filter is null or (upper(a.name) like :filter))
 		
@@ -62,8 +45,10 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 	fun findByDeptIdIn(
 		deptsIds: List<Long>,
 		state: AwardState? = null,
-		minDate: LocalDateTime? = null,
-		maxDate: LocalDateTime? = null,
+		minDateNull: Boolean,
+		maxDateNull: Boolean,
+		minDate: LocalDateTime,
+		maxDate: LocalDateTime,
 		filter: String? = null,
 		notExclude: Boolean = true,
 		excludeAwardIds: List<Long> = emptyList(),
@@ -124,10 +109,6 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		excludeAwardIds: List<Long> = emptyList(),
 		pageable: Pageable
 	): Page<AwardEntity>
-
-	fun countByDeptId(deptId: Long): Long
-
-	fun countByDeptIdIn(deptsIds: List<Long>): Long
 
 	@Query(
 		"""select new ru.md.msc.domain.award.model.AwardStateCount(

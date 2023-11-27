@@ -21,22 +21,25 @@ interface ActivityRepository : JpaRepository<ActivityEntity, Long> {
 		"""
 		from ActivityEntity a where 
 		a.user.id = :userId and a.activ and 
-		(:awardType is null or a.award.type = :awardType) and
-		(:awardState is null or a.award.state = :awardState) and
-		(coalesce(:minDate, null) is null or a.date >= :minDate) and
-		(coalesce(:maxDate, null) is null or a.date <= :maxDate) and 
-		((:filter is null) or
-			(upper(a.award.name) like :filter)
-		)
+		(:awardTypeNull = true or a.award.type = :awardType) and
+		(:awardStateNull = true or a.award.state = :awardState) and
+		(:minDateNull = true or a.date >= :minDate) and
+		(:maxDateNull = true or a.date <= :maxDate) and 
+		((:filterNull = true) or (upper(a.award.name) like :filter))
 		"""
 	)
 	fun findActivityByUserId(
 		userId: Long,
-		minDate: LocalDateTime? = null,
-		maxDate: LocalDateTime? = null,
-		filter: String? = null,
-		awardType: AwardType? = null,
-		awardState: AwardState? = null,
+		minDateNull: Boolean,
+		maxDateNull: Boolean,
+		minDate: LocalDateTime,
+		maxDate: LocalDateTime,
+		filterNull: Boolean,
+		filter: String,
+		awardTypeNull: Boolean,
+		awardStateNull: Boolean,
+		awardType: AwardType,
+		awardState: AwardState,
 		pageable: Pageable
 	): Page<ActivityEntity>
 

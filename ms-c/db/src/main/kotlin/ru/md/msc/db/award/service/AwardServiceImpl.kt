@@ -14,6 +14,7 @@ import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.image.model.ImageType
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
+import ru.md.base_domain.model.mappers.orDefault
 import ru.md.base_domain.pay.service.BaseUserPayService
 import ru.md.base_domain.user.biz.errors.UserNotFoundException
 import ru.md.msc.db.award.model.image.AwardImageEntity
@@ -95,8 +96,10 @@ class AwardServiceImpl(
 			awardRepository.findByDeptIdIn(
 				deptsIds = deptsIds,
 				state = awardState,
-				minDate = baseQuery.minDate,
-				maxDate = baseQuery.maxDate,
+				minDateNull = baseQuery.minDate == null,
+				maxDateNull = baseQuery.maxDate == null,
+				minDate = baseQuery.minDate.orDefault(),
+				maxDate = baseQuery.maxDate.orDefault(),
 				filter = baseQuery.filter.toSearchUpperOrNull(),
 				pageable = pageRequest
 			).toPageResult { it.toAward() }
@@ -124,8 +127,10 @@ class AwardServiceImpl(
 
 		val awards = awardRepository.findByDeptIdIn(
 			deptsIds = deptsIds,
-			minDate = baseQuery.minDate,
-			maxDate = baseQuery.maxDate,
+			minDateNull = baseQuery.minDate == null,
+			maxDateNull = baseQuery.maxDate == null,
+			minDate = baseQuery.minDate.orDefault(),
+			maxDate = baseQuery.maxDate.orDefault(),
 			filter = filter,
 			notExclude = excludeAwardIds.isEmpty(),
 			excludeAwardIds = excludeAwardIds,
@@ -273,11 +278,16 @@ class AwardServiceImpl(
 	): PageResult<Activity> {
 		val activities = activityRepository.findActivityByUserId(
 			userId = userId,
-			minDate = baseQuery.minDate,
-			maxDate = baseQuery.maxDate,
-			filter = baseQuery.filter.toSearchUpperOrNull(),
-			awardType = awardType,
-			awardState = awardState,
+			minDateNull = baseQuery.minDate == null,
+			maxDateNull = baseQuery.maxDate == null,
+			minDate = baseQuery.minDate.orDefault(),
+			maxDate = baseQuery.maxDate.orDefault(),
+			filterNull = baseQuery.filter == null,
+			filter = baseQuery.filter.toSearchUpperOrNull() ?: "",
+			awardTypeNull = awardType == null,
+			awardStateNull = awardState == null,
+			awardType = awardType ?: AwardType.UNDEF,
+			awardState = awardState ?: AwardState.ERROR,
 			pageable = baseQuery.toPageRequest()
 		)
 		return activities.toPageResult { it.toActivityOnlyAward() }

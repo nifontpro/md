@@ -31,4 +31,8 @@ class UserPayEntity(
 	override fun hashCode(): Int {
 		return Objects.hash(id, userId, balance, createdAt)
 	}
+
+	override fun toString(): String {
+		return "UserPay {id: $id, userId: $userId, balance: $balance}"
+	}
 }

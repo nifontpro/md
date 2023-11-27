@@ -26,6 +26,16 @@ fun PayContext.getUserPayError() {
 	)
 }
 
+fun PayContext.getPaysDataError() {
+	fail(
+		errorDb(
+			repository = "pays",
+			violationCode = "i/o",
+			description = "Ошибка получения платежных данных"
+		)
+	)
+}
+
 fun PayContext.addPayDataError() {
 	fail(
 		errorDb(
