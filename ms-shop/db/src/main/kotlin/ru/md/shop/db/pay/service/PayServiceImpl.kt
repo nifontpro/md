@@ -11,7 +11,6 @@ import ru.md.base_db.pay.repo.BaseUserPayRepo
 import ru.md.base_db.user.model.UserEntity
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
-import ru.md.base_domain.model.mappers.orDefault
 import ru.md.base_domain.pay.model.UserPay
 import ru.md.shop.db.base.repo.BaseProductRepo
 import ru.md.shop.db.pay.model.PayDataEntity
@@ -83,8 +82,8 @@ class PayServiceImpl(
 			payCode = payCode.toSearch(),
 			minDateNull = baseQuery.minDate == null,
 			maxDateNull = baseQuery.maxDate == null,
-			minDate = baseQuery.minDate.orDefault(),
-			maxDate = baseQuery.maxDate.orDefault(),
+			minDate = baseQuery.minDate,
+			maxDate = baseQuery.maxDate,
 			filter = baseQuery.filter.toSearchUpperOrNull(),
 			pageable = baseQuery.toPageRequest()
 		).toPageResult { it.toPayDataWithUserDept() }

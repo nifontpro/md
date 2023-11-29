@@ -47,8 +47,8 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		state: AwardState? = null,
 		minDateNull: Boolean,
 		maxDateNull: Boolean,
-		minDate: LocalDateTime,
-		maxDate: LocalDateTime,
+		minDate: LocalDateTime? = null,
+		maxDate: LocalDateTime? = null,
 		filter: String? = null,
 		notExclude: Boolean = true,
 		excludeAwardIds: List<Long> = emptyList(),
@@ -64,12 +64,12 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		(:state != 'FINISH' or (:state = 'FINISH' and a.userCount>0)))) and 
 		((
 			a.type = 'P'  and 
-			a.startDate <= NOW() and (coalesce(:minDate, null) is null or a.startDate >= :minDate) and
-			a.endDate >= NOW() and (coalesce(:maxDate, null) is null or a.endDate <= :maxDate)
+			a.startDate <= NOW() and (:minDateNull = true or a.startDate >= :minDate) and
+			a.endDate >= NOW() and (:maxDateNull = true or a.endDate <= :maxDate)
 		) or (
 			a.type = 'S' and
-			(coalesce(:minDate, null) is null or a.startDate >= :minDate) and 
-			(coalesce(:maxDate, null) is null or a.endDate <= :maxDate)
+			(:minDateNull = true or a.startDate >= :minDate) and 
+			(:maxDateNull = true or a.endDate <= :maxDate)
 		)) and 
 		((:filter is null) or (upper(a.name) like :filter))
 		
@@ -78,6 +78,8 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 	fun findByDeptIdInWithUsers(
 		deptsIds: List<Long>,
 		state: AwardState? = null,
+		minDateNull: Boolean,
+		maxDateNull: Boolean,
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
 		filter: String? = null,
@@ -93,8 +95,8 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		((:notExclude = true) or (a.id not in :excludeAwardIds)) and 
 		(
 			a.type = 'S' and
-			(coalesce(:minDate, null) is null or a.startDate >= :minDate) and 
-			(coalesce(:maxDate, null) is null or a.endDate <= :maxDate)
+			(:minDateNull = true or a.startDate >= :minDate) and 
+			(:maxDateNull = true or a.endDate <= :maxDate)
 		) and 
 		((:filter is null) or (upper(a.name) like :filter))
 		
@@ -102,6 +104,8 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 	)
 	fun findSimpleAwardByDeptIdIn(
 		deptsIds: List<Long>,
+		minDateNull: Boolean,
+		maxDateNull: Boolean,
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
 		filter: String? = null,

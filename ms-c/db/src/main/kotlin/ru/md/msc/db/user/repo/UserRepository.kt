@@ -71,7 +71,6 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 	)
 	fun genderCount(deptsIds: List<Long>): GenderCount
 
-	@Suppress("SqlRedundantCodeInCoalesce")
 	@Query(
 		"""
 		select 
@@ -86,14 +85,14 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 			d.classname,
 			
 			(select count (*) from md.activity i where i.user_id=u.id and i.is_activ and i.action_code='A' and
-					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
+					(:minDateNull = true or i.date >= :minDate) and (:maxDateNull = true or i.date <= :maxDate)
 			) as awardCount,
 			
 			(
 				select coalesce(sum(a.score),0) from md.activity i 
 					left join md.award a on i.award_id=a.id 
 					where i.user_id=u.id and i.is_activ and i.action_code='A' and
-					(coalesce(:minDate, null) is null or i.date >= :minDate) and (coalesce(:maxDate, null) is null or i.date <= :maxDate)
+					(:minDateNull = true or i.date >= :minDate) and (:maxDateNull = true or i.date <= :maxDate)
 			) as scores
 			
 		from users.user_data u left join dep.dept d on u.dept_id = d.id
@@ -114,6 +113,8 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 	fun findUsersWithAwardCount(
 		deptsIds: List<Long>,
 		filter: String? = null,
+		minDateNull: Boolean,
+		maxDateNull: Boolean,
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
 		pageable: Pageable

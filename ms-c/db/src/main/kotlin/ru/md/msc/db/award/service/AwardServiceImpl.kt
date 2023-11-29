@@ -14,7 +14,6 @@ import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.image.model.ImageType
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
-import ru.md.base_domain.model.mappers.orDefault
 import ru.md.base_domain.pay.service.BaseUserPayService
 import ru.md.base_domain.user.biz.errors.UserNotFoundException
 import ru.md.msc.db.award.model.image.AwardImageEntity
@@ -87,6 +86,8 @@ class AwardServiceImpl(
 			awardRepository.findByDeptIdInWithUsers(
 				deptsIds = deptsIds,
 				state = awardState,
+				minDateNull = baseQuery.minDate == null,
+				maxDateNull = baseQuery.maxDate == null,
 				minDate = baseQuery.minDate,
 				maxDate = baseQuery.maxDate,
 				filter = baseQuery.filter.toSearchUpperOrNull(),
@@ -98,8 +99,8 @@ class AwardServiceImpl(
 				state = awardState,
 				minDateNull = baseQuery.minDate == null,
 				maxDateNull = baseQuery.maxDate == null,
-				minDate = baseQuery.minDate.orDefault(),
-				maxDate = baseQuery.maxDate.orDefault(),
+				minDate = baseQuery.minDate,
+				maxDate = baseQuery.maxDate,
 				filter = baseQuery.filter.toSearchUpperOrNull(),
 				pageable = pageRequest
 			).toPageResult { it.toAward() }
@@ -129,8 +130,8 @@ class AwardServiceImpl(
 			deptsIds = deptsIds,
 			minDateNull = baseQuery.minDate == null,
 			maxDateNull = baseQuery.maxDate == null,
-			minDate = baseQuery.minDate.orDefault(),
-			maxDate = baseQuery.maxDate.orDefault(),
+			minDate = baseQuery.minDate,
+			maxDate = baseQuery.maxDate,
 			filter = filter,
 			notExclude = excludeAwardIds.isEmpty(),
 			excludeAwardIds = excludeAwardIds,
@@ -159,6 +160,8 @@ class AwardServiceImpl(
 
 		val awards = awardRepository.findSimpleAwardByDeptIdIn(
 			deptsIds = deptsIds,
+			minDateNull = baseQuery.minDate == null,
+			maxDateNull = baseQuery.maxDate == null,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 			filter = filter,
@@ -280,12 +283,9 @@ class AwardServiceImpl(
 			userId = userId,
 			minDateNull = baseQuery.minDate == null,
 			maxDateNull = baseQuery.maxDate == null,
-			minDate = baseQuery.minDate.orDefault(),
-			maxDate = baseQuery.maxDate.orDefault(),
-			filterNull = baseQuery.filter == null,
+			minDate = baseQuery.minDate,
+			maxDate = baseQuery.maxDate,
 			filter = baseQuery.filter.toSearchUpperOrNull() ?: "",
-			awardTypeNull = awardType == null,
-			awardStateNull = awardState == null,
 			awardType = awardType ?: AwardType.UNDEF,
 			awardState = awardState ?: AwardState.ERROR,
 			pageable = baseQuery.toPageRequest()
@@ -300,6 +300,8 @@ class AwardServiceImpl(
 	): PageResult<Activity> {
 		val activities = activityRepository.findActivityByAwardId(
 			awardId = awardId,
+			minDateNull = baseQuery.minDate == null,
+			maxDateNull = baseQuery.maxDate == null,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 			filter = baseQuery.filter.toSearchUpperOrNull(),
@@ -318,6 +320,8 @@ class AwardServiceImpl(
 		val deptIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		val activities = activityRepository.findByDeptIdPage(
 			deptIds = deptIds,
+			minDateNull = baseQuery.minDate == null,
+			maxDateNull = baseQuery.maxDate == null,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 			awardState = awardState,
@@ -341,6 +345,8 @@ class AwardServiceImpl(
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts, nearSub = true)
 		return activityRepository.getAllCountByDept(
 			deptsIds = deptsIds,
+			minDateNull = baseQuery.minDate == null,
+			maxDateNull = baseQuery.maxDate == null,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 		)
@@ -350,6 +356,8 @@ class AwardServiceImpl(
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts, nearSub = true)
 		val count = activityRepository.getGroupAwardCountByDept(
 			deptsIds = deptsIds,
+			minDateNull = baseQuery.minDate == null,
+			maxDateNull = baseQuery.maxDate == null,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 			pageable = baseQuery.toPageRequest()
@@ -361,6 +369,8 @@ class AwardServiceImpl(
 		val deptsIds = deptUtil.getDepts(deptId = deptId, subdepts = baseQuery.subdepts)
 		return activityRepository.getWWAwardCount(
 			deptsIds = deptsIds,
+			minDateNull = baseQuery.minDate == null,
+			maxDateNull = baseQuery.maxDate == null,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 		)

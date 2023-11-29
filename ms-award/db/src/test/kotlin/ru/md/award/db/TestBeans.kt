@@ -1,4 +1,4 @@
-package ru.md.medal.db
+package ru.md.award.db
 
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection

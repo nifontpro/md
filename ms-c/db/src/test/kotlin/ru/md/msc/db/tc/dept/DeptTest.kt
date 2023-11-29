@@ -18,7 +18,7 @@ class DeptTest(
 
 	@Test
 	fun deptExistTest() {
-		val exist = deptService.checkDeptExist(parentId = 2, "Dept 3, id=3")
+		val exist = deptService.checkDeptExist(parentId = 2, "Company 3, id=3")
 		println(exist)
 		assertEquals(true, exist)
 	}

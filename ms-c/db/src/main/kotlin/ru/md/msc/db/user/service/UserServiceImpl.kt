@@ -345,6 +345,8 @@ class UserServiceImpl(
 		val users = userRepository.findUsersWithAwardCount(
 			deptsIds = deptsIds,
 			filter = baseQuery.filter.toSearchUpperOrNull(),
+			minDateNull = baseQuery.minDate == null,
+			maxDateNull = baseQuery.maxDate == null,
 			minDate = baseQuery.minDate,
 			maxDate = baseQuery.maxDate,
 			pageable = baseQuery.toPageRequest()

@@ -14,9 +14,11 @@ import java.time.LocalDateTime
 interface PayDataRepo : JpaRepository<PayDataEntity, Long> {
 
 	@EntityGraph("payDataWithUserDeptAndProduct")
-	@Query("""
+	@Query(
+		"""
 		from PayDataEntity p where p.id = :payId
-	""")
+	"""
+	)
 	fun findByIdWithUserDept(payId: Long): PayDataEntity?
 
 	@EntityGraph("payDataWithUserDeptAndProduct")
@@ -38,8 +40,8 @@ interface PayDataRepo : JpaRepository<PayDataEntity, Long> {
 		payCode: PayCode? = null,
 		minDateNull: Boolean,
 		maxDateNull: Boolean,
-		minDate: LocalDateTime,
-		maxDate: LocalDateTime,
+		minDate: LocalDateTime? = null,
+		maxDate: LocalDateTime? = null,
 		filter: String? = null,
 		pageable: Pageable,
 	): Page<PayDataEntity>
