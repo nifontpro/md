@@ -1,10 +1,8 @@
 package ru.md.msc.db.award.model
 
 import jakarta.persistence.*
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
-import org.hibernate.annotations.Formula
-import org.hibernate.annotations.WhereJoinTable
+import jakarta.persistence.Table
+import org.hibernate.annotations.*
 import ru.md.base_db.dept.model.DeptEntity
 import ru.md.base_db.user.model.UserEntity
 import ru.md.msc.domain.award.model.AwardState
@@ -72,7 +70,8 @@ class AwardEntity(
 		joinColumns = [JoinColumn(name = "award_id")],
 		inverseJoinColumns = [JoinColumn(name = "user_id")]
 	)
-	@WhereJoinTable(clause = "is_activ=true and action_code='A'")
+//	@WhereJoinTable(clause = "is_activ=true and action_code='A'")
+	@SQLJoinTableRestriction("is_activ=true and action_code='A'")
 	val users: List<UserEntity> = emptyList(),
 ) {
 	override fun equals(other: Any?): Boolean {

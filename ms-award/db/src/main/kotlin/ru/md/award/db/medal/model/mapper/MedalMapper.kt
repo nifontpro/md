@@ -9,7 +9,6 @@ import ru.md.base_domain.dept.model.Dept
 fun Medal.toMedalEntity() = MedalEntity(
 	id = if (id == 0L) null else id,
 	name = name,
-	mainImg = mainImg,
 	score = score,
 	deptEntity = dept?.toDeptEntity()
 )
@@ -18,6 +17,7 @@ fun MedalEntity.toMedal()  = Medal(
 	id = id ?: 0,
 	name = name,
 	mainImg = mainImg,
+	normImg = normImg,
 	score = score,
 	dept = Dept(id = deptEntity?.id ?: 0)
 )
@@ -26,6 +26,7 @@ fun MedalEntity.toMedalWithDept() = Medal(
 	id = id ?: 0,
 	name = name,
 	mainImg = mainImg,
+	normImg = normImg,
 	score = score,
 	dept = deptEntity?.toDept()
 )

@@ -3,6 +3,7 @@ package ru.md.shop.db.product.model
 import jakarta.persistence.*
 import ru.md.base_domain.image.model.IBaseImage
 import ru.md.base_domain.image.model.ImageType
+import ru.md.base_domain.model.mappers.defaultDate
 import java.time.LocalDateTime
 import java.util.*
 
@@ -40,7 +41,7 @@ class ProductImageEntity(
 	override var main: Boolean = false,
 
 	@Column(name = "created_at")
-	override var createdAt: LocalDateTime = LocalDateTime.now(),
+	override var createdAt: LocalDateTime = defaultDate(),
 
 	@Column(name = "product_id")
 	var productId: Long = 0,

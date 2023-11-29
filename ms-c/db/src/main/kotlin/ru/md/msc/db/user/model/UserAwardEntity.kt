@@ -1,10 +1,10 @@
 package ru.md.msc.db.user.model
 
 import jakarta.persistence.*
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
-import org.hibernate.annotations.Where
-import org.hibernate.annotations.WhereJoinTable
+import jakarta.persistence.CascadeType
+import jakarta.persistence.OrderBy
+import jakarta.persistence.Table
+import org.hibernate.annotations.*
 import ru.md.base_db.dept.model.DeptEntity
 import ru.md.base_db.user.model.UserEntity
 import ru.md.base_db.user.model.UserImageEntity
@@ -13,7 +13,6 @@ import ru.md.msc.db.award.model.ActivityEntity
 import ru.md.msc.db.award.model.AwardEntity
 import java.io.Serializable
 import java.util.*
-
 
 @NamedEntityGraph(
 	name = "withAwards",
@@ -68,6 +67,7 @@ class UserAwardEntity(
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
 	@JoinColumn(name = "user_id")
+	@Fetch(FetchMode.SUBSELECT)
 	@OrderBy("id DESC")
 	val images: List<UserImageEntity> = emptyList(),
 //	val images: MutableList<UserImageEntity> = mutableListOf(),
@@ -79,12 +79,13 @@ class UserAwardEntity(
 		joinColumns = [JoinColumn(name = "user_id")],
 		inverseJoinColumns = [JoinColumn(name = "award_id")]
 	)
-	@WhereJoinTable(clause = "is_activ=true and action_code='A'")
+	@SQLJoinTableRestriction("is_activ=true and action_code='A'")
 	val awards: List<AwardEntity> = emptyList(),
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@Fetch(FetchMode.SUBSELECT)
-	@Where(clause = "is_activ=true and action_code='A'")
+	@SQLRestriction("is_activ=true and action_code='A'")
+//	@Where(clause = "is_activ=true and action_code='A'")
 	val activities: List<ActivityEntity> = emptyList(),
 
 	@Column(name = "archive")

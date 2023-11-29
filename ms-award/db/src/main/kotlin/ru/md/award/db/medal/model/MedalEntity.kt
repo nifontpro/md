@@ -26,7 +26,9 @@ class MedalEntity(
 	@Column(name = "main_img")
 	var mainImg: String? = null,
 
-	@Column
+	@Column(name = "norm_img")
+	var normImg: String? = null,
+
 	var score: Int = 0,
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

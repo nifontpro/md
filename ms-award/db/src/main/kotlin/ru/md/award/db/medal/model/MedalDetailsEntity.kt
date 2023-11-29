@@ -25,7 +25,6 @@ class MedalDetailsEntity(
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "medal_id")
 	@OrderBy("id DESC")
-//	@Fetch(FetchMode.SUBSELECT)
 	val images: List<MedalImageEntity> = emptyList(),
 
 	) {

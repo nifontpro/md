@@ -3,6 +3,7 @@ package ru.md.award.db.medal.model
 import jakarta.persistence.*
 import ru.md.base_domain.image.model.IBaseImage
 import ru.md.base_domain.image.model.ImageType
+import ru.md.base_domain.model.mappers.defaultDate
 import java.time.LocalDateTime
 import java.util.*
 
@@ -13,7 +14,7 @@ class MedalImageEntity(
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	override var id: Long = 0,
+	override var id: Long? = null,
 
 	@Column(name = "image_url")
 	override var normalUrl: String? = null,
@@ -40,7 +41,7 @@ class MedalImageEntity(
 	override var main: Boolean = false,
 
 	@Column(name = "created_at")
-	override var createdAt: LocalDateTime = LocalDateTime.now(),
+	override var createdAt: LocalDateTime = defaultDate(),
 
 	@Column(name = "medal_id")
 	var medalId: Long = 0,
