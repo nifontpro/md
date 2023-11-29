@@ -25,21 +25,23 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 	@EntityGraph("awardWithDept")
 	@Query(
 		"""
-		from AwardEntity a where 
-		a.dept.id in :deptsIds and 
-		((:state is null) or (:state = a.state)) and
-		((:notExclude = true) or (a.id not in :excludeAwardIds)) and 
-		((
-			a.type = 'P'  and 
-			a.startDate <= NOW() and (:minDateNull = true or a.startDate >= :minDate) and
-			a.endDate >= NOW() and (:maxDateNull = true or a.endDate <= :maxDate)
-		) or (
-			a.type = 'S' and
-			(:minDateNull = true or a.startDate >= :minDate) and 
-			(:maxDateNull = true or a.endDate <= :maxDate)
-		)) and 
+		from AwardEntity a where
+		(a.dept.id in :deptsIds) and
+		(:state is null or :state = a.state) and
+		(:notExclude = true or (a.id not in :excludeAwardIds)) and
+		(
+			(
+				a.type = 'P' and
+				a.startDate <= :now and (:minDateNull = true or a.startDate >= :minDate) and
+				a.endDate >= :now and (:maxDateNull = true or a.endDate <= :maxDate)
+			) or (
+				a.type = 'S' and
+				(:minDateNull = true or a.startDate >= :minDate) and
+				(:maxDateNull = true or a.endDate <= :maxDate)
+			)
+		) and
 		(:filter is null or (upper(a.name) like :filter))
-		
+
 	"""
 	)
 	fun findByDeptIdIn(
@@ -49,10 +51,11 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		maxDateNull: Boolean,
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
+		now: LocalDateTime = LocalDateTime.now(),
 		filter: String? = null,
 		notExclude: Boolean = true,
 		excludeAwardIds: List<Long> = emptyList(),
-		pageable: Pageable
+		pageable: Pageable,
 	): Page<AwardEntity>
 
 	@EntityGraph("awardWithDeptAndUser")
@@ -64,8 +67,8 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		(:state != 'FINISH' or (:state = 'FINISH' and a.userCount>0)))) and 
 		((
 			a.type = 'P'  and 
-			a.startDate <= NOW() and (:minDateNull = true or a.startDate >= :minDate) and
-			a.endDate >= NOW() and (:maxDateNull = true or a.endDate <= :maxDate)
+			a.startDate <= :now and (:minDateNull = true or a.startDate >= :minDate) and
+			a.endDate >= :now and (:maxDateNull = true or a.endDate <= :maxDate)
 		) or (
 			a.type = 'S' and
 			(:minDateNull = true or a.startDate >= :minDate) and 
@@ -82,9 +85,9 @@ interface AwardRepository : JpaRepository<AwardEntity, Long> {
 		maxDateNull: Boolean,
 		minDate: LocalDateTime? = null,
 		maxDate: LocalDateTime? = null,
+		now: LocalDateTime = LocalDateTime.now(),
 		filter: String? = null,
 		pageable: Pageable,
-//		finish: AwardState = AwardState.FINISH
 	): Page<AwardEntity>
 
 	@EntityGraph("awardWithDept")
