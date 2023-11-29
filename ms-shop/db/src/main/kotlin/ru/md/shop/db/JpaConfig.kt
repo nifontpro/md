@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @Configuration
 @AutoConfigurationPackage
-@EntityScan("ru.md.base_db", "ru.md.shop")
+@EntityScan("ru.md.base_db", "ru.md.shop.db")
 @EnableJpaRepositories("ru.md.base_db", "ru.md.shop")
 class JpaConfig

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan
 @SpringBootApplication
 @ComponentScan(
 	basePackages = [
-		"ru.md.award.db",
+		"ru.md.award",
 		"ru.md.base_db",
 		"ru.md.base_rest",
 		"ru.md.base_client",

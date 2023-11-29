@@ -28,7 +28,7 @@ interface PayDataRepo : JpaRepository<PayDataEntity, Long> {
 		(:userId = 0 or p.userEntity.id = :userId) and 
 		(:isActive is null or p.isActive = :isActive) and
 		(:payCode is null or p.payCode = :payCode) and
-		(p.dateOp <= now() and :minDateNull = true or p.dateOp >= :minDate) and 
+		(:minDateNull = true or p.dateOp >= :minDate) and 
 		(:maxDateNull = true or p.dateOp <= :maxDate) and
 		((:filter is null) or (upper(p.productEntity.name) like :filter))
 	"""

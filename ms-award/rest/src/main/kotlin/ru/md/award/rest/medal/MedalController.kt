@@ -25,6 +25,12 @@ class MedalController(
 	private val jwtUtils: JwtUtils,
 ) {
 
+	@GetMapping("test")
+	suspend fun test(): String {
+		val usedMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576
+		return "Test: Ok. URL: " + System.getenv("PREFIX_URL") + ", used: $usedMb Mb"
+	}
+
 	@PostMapping("create")
 	private suspend fun create(
 		@RequestBody request: CreateMedalRequest,
