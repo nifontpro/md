@@ -34,7 +34,7 @@ class MicroClientImpl(
 	@Value("\${micro-client.id}") private val microClientId: String,
 ) : MicroClient {
 
-	val msClient: WebClient = WebClient.create(resourceServerURL)
+	private val msClient: WebClient = WebClient.create(resourceServerURL)
 	private val keycloakClient = WebClient.create(keycloakUrl)
 
 	val mutex = Mutex()

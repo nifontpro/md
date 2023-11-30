@@ -8,7 +8,7 @@ import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
 import ru.md.base_domain.user.biz.validate.validateUserId
 import ru.md.msc.domain.base.workers.chain.validateSameOwnerAndAdminModifyUser
 import ru.md.msc.domain.base.workers.findModifyUserAndGetRolesAndDeptId
-import ru.md.base_domain.image.biz.workers.deleteBaseImagesFromS3
+import ru.md.base_domain.image.biz.workers.deleteAllBaseImagesFromS3
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.workers.deleteUser
@@ -27,7 +27,7 @@ fun ICorChainDsl<UserContext>.deleteUserOperation() {
 			on { deleteForever }
 			deleteUser("Удаляем профиль сотрудника")
 			worker("Подготовка к удалению изображений") { baseImages = userDetails.images }
-			deleteBaseImagesFromS3("Удаляем все изображения")
+			deleteAllBaseImagesFromS3("Удаляем все изображения")
 		}
 
 		chain {

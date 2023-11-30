@@ -55,7 +55,7 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
 	// Load Balancer cache
-	implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")
+	implementation("com.github.ben-manes.caffeine:caffeine")
 
 	runtimeOnly("org.postgresql:postgresql")
 

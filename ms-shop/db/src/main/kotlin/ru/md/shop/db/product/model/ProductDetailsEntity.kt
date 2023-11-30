@@ -1,6 +1,8 @@
 package ru.md.shop.db.product.model
 
 import jakarta.persistence.*
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
 import java.io.Serializable
 import java.time.LocalDateTime
 import java.util.*
@@ -31,7 +33,7 @@ class ProductDetailsEntity(
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id")
 	@OrderBy("id DESC")
-//	@Fetch(FetchMode.SUBSELECT)
+	@Fetch(FetchMode.SUBSELECT)
 	val images: List<ProductImageEntity> = emptyList(),
 
 	@OneToMany(fetch = FetchType.EAGER)

@@ -15,7 +15,7 @@ import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.base_domain.image.biz.validate.validateImageId
 import ru.md.base_domain.image.biz.workers.addImageToS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
-import ru.md.base_domain.image.biz.workers.deleteBaseImagesFromS3
+import ru.md.base_domain.image.biz.workers.deleteAllBaseImagesFromS3
 import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
 import ru.md.base_domain.user.service.BaseUserService
@@ -113,7 +113,7 @@ class DeptProcessor(
 				getDeptDetailsById("Получаем отдел")
 				deleteDept("Удаляем отдел")
 				worker("Подготовка к удалению изображений") { baseImages = deptDetails.images }
-				deleteBaseImagesFromS3("Удаляем все изображения")
+				deleteAllBaseImagesFromS3("Удаляем все изображения")
 			}
 
 			operation("Добавление изображения", DeptCommand.IMG_ADD) {

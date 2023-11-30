@@ -63,8 +63,11 @@ class ImageServiceImpl(
 		}
 
 		productImageEntity.main = true
-		productEntity.mainImg =
-			if (productImageEntity.miniUrl != null) productImageEntity.miniUrl else productImageEntity.normalUrl
+		productEntity.mainImg = if (productImageEntity.miniUrl != null) {
+			productImageEntity.miniUrl
+		} else {
+			productImageEntity.normalUrl
+		}
 		productEntity.normImg = productImageEntity.normalUrl
 		return productImageEntity.toBaseImage()
 	}

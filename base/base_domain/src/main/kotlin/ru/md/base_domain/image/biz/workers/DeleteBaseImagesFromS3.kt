@@ -6,7 +6,7 @@ import ru.md.base_domain.biz.proc.ContextState
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 
-fun <T : BaseMedalsContext> ICorChainDsl<T>.deleteBaseImagesFromS3(title: String) = worker {
+fun <T : BaseMedalsContext> ICorChainDsl<T>.deleteAllBaseImagesFromS3(title: String) = worker {
 	this.title = title
 	on { state == ContextState.RUNNING }
 	handle {

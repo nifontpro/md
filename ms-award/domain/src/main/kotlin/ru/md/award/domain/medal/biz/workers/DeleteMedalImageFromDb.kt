@@ -14,7 +14,7 @@ fun ICorChainDsl<MedalContext>.deleteMedalImageFromDb(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-		baseImage = medalService.deleteImage(medalId = medalId, imageId = imageId)
+		baseImage = medalImageService.deleteImage(medalId = medalId, imageId = imageId)
 	}
 
 	except {

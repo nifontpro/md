@@ -24,7 +24,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
 
     //AWS S3
-    implementation("com.amazonaws:aws-java-sdk-s3:1.12.450")
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.470")
     implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")

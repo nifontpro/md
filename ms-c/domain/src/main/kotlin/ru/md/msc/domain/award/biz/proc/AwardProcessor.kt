@@ -15,7 +15,7 @@ import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.base_domain.image.biz.validate.validateImageId
 import ru.md.base_domain.image.biz.workers.addImageToS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
-import ru.md.base_domain.image.biz.workers.deleteBaseImagesFromS3
+import ru.md.base_domain.image.biz.workers.deleteAllBaseImagesFromS3
 import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.base_domain.user.biz.validate.validateUserId
 import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
@@ -105,7 +105,7 @@ class AwardProcessor(
 				getAwardByIdDetails("Получаем детальную награду")
 				deleteAward("Удаляем")
 				worker("Подготовка к удалению изображений") { baseImages = awardDetails.images }
-				deleteBaseImagesFromS3("Удаляем все изображения")
+				deleteAllBaseImagesFromS3("Удаляем все изображения")
 			}
 
 			operation("Добавление изображения", AwardCommand.IMG_ADD) {
@@ -259,7 +259,7 @@ class AwardProcessor(
 			// Удаляем старые изображения
 			getAwardByIdDetails("Получаем детальную награду")
 			worker("Подготовка к удалению изображений") { baseImages = awardDetails.images }
-			deleteBaseImagesFromS3("Удаляем все изображения")
+			deleteAllBaseImagesFromS3("Удаляем все изображения")
 		}
 
 		private fun ICorChainDsl<AwardContext>.validateMainAwardFieldChain() {

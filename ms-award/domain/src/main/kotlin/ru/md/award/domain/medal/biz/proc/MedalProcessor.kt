@@ -1,6 +1,11 @@
 package ru.md.award.domain.medal.biz.proc
 
 import org.springframework.stereotype.Component
+import ru.md.award.domain.medal.biz.validate.validateMedalId
+import ru.md.award.domain.medal.biz.validate.validateMedalName
+import ru.md.award.domain.medal.biz.validate.validateMedalScore
+import ru.md.award.domain.medal.biz.workers.*
+import ru.md.award.domain.medal.service.MedalImageService
 import ru.md.award.domain.medal.service.MedalService
 import ru.md.base_domain.biz.proc.IBaseProcessor
 import ru.md.base_domain.biz.validate.chain.validateDeptIdAndAdminDeptLevelChain
@@ -15,23 +20,20 @@ import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.base_domain.image.biz.validate.validateImageId
 import ru.md.base_domain.image.biz.workers.addImageToS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
-import ru.md.base_domain.image.biz.workers.deleteBaseImagesFromS3
+import ru.md.base_domain.image.biz.workers.deleteAllBaseImagesFromS3
 import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
 import ru.md.base_domain.user.service.BaseUserService
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.rootChain
 import ru.md.cor.worker
-import ru.md.award.domain.medal.biz.validate.validateMedalId
-import ru.md.award.domain.medal.biz.validate.validateMedalName
-import ru.md.award.domain.medal.biz.validate.validateMedalScore
-import ru.md.award.domain.medal.biz.workers.*
 
 @Component
 class MedalProcessor(
 	private val baseDeptService: BaseDeptService,
 	private val baseUserService: BaseUserService,
 	private val medalService: MedalService,
+	private val medalImageService: MedalImageService,
 	private val baseS3Repository: BaseS3Repository,
 	private val microClient: MicroClient,
 //	private val messageService: MessageService,
@@ -41,6 +43,7 @@ class MedalProcessor(
 		it.baseDeptService = baseDeptService
 		it.baseUserService = baseUserService
 		it.medalService = medalService
+		it.medalImageService = medalImageService
 		it.baseS3Repository = baseS3Repository
 		it.microClient = microClient
 //		it.messageService = messageService
@@ -53,7 +56,6 @@ class MedalProcessor(
 
 			operation("Создать медаль", MedalCommand.CREATE) {
 				validateMainMedalFieldChain()
-				worker("Для проверки") { deptId = medal.dept?.id ?: 0 }
 				validateDeptIdAndAdminDeptLevelChain()
 				trimFieldMedalDetails("Очищаем поля")
 				createMedal("Создаем медаль")
@@ -76,7 +78,7 @@ class MedalProcessor(
 				getMedalByIdDetails("Получаем детальную награду")
 				deleteMedal("Удаляем")
 				worker("Подготовка к удалению изображений") { baseImages = medalDetails.images }
-				deleteBaseImagesFromS3("Удаляем все изображения")
+				deleteAllBaseImagesFromS3("Удаляем все изображения")
 			}
 
 			operation("Добавление изображения", MedalCommand.IMG_ADD) {
@@ -105,128 +107,6 @@ class MedalProcessor(
 				deleteBaseImageFromS3("Удаляем изображение из s3")
 				updateMedalMainImage("Обновление основного изображения")
 			}
-
-//			operation("Получить награды в отделе или подотделах", AwardCommand.GET_BY_DEPT) {
-//				validateDeptId("Проверяем deptId")
-//				validatePageParamsChain()
-////				worker("Допустимые поля сортировки") { orderFields = listOf("name", "type", "startDate", "endDate") }
-//				setAwardWithDeptValidSortedFields("Устанавливаем допустимые поля сортировки")
-//				validateSortedFields("Проверка списка полей сортировки")
-//				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-//				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
-//				getAwardsByDept("Получаем награды из отдела или всех подотделов")
-//			}
-//
-//
-//			operation("Добавить действие в активность награждения", AwardCommand.ADD_ACTION) {
-//				validateUserId("Проверка userId")
-//				validateAwardId("Проверяем awardId")
-//				validateActionType("Проверяем тип действия")
-//				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-//				getAwardById("Получаем награду")
-//				validateAwardPeriod("Проверяем период период действия награды")
-//				worker("Получаем deptId для авторизации") { deptId = award.dept.id }
-//				validateAuthDeptLevel("Проверка доступа к отделу награды")
-//				validateAwardToUserAccess("Проверка доступности (по дереву отделов) награждения сотрудника этой наградой")
-//				addAwardAction("Добавляем операцию в активность")
-//				prepareSendActionMessageToUser("Подготовка к отправке сообщения")
-//				sendMessage("Отправляем сообщение")
-//			}
-//
-//			operation("Получить активные награды сотрудника", AwardCommand.GET_ACTIVE_AWARD_BY_USER) {
-//				validateUserId("Проверка userId")
-//				validatePageParamsChain()
-//				setActionByUserValidSortedFields("Устанавливаем допустимые поля сортировки")
-//				validateSortedFields("Проверка списка полей сортировки")
-//				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-//				validateAuthUserTopLevelForView("Проверка доступа к данным сотрудника для просмотра")
-//				getActiveAwardsByUser("Получаем награды сотрудника")
-//			}
-//
-//			operation("Получить активные награды в отделе", AwardCommand.GET_ACTIVE_AWARD_BY_DEPT) {
-//				validateDeptId("Проверка deptId")
-//				validatePageParamsChain()
-//				setActionByDeptValidSortedFields("Устанавливаем допустимые поля сортировки")
-//				validateSortedFields("Проверка списка полей сортировки")
-//				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-//				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
-//				getActiveAwardsByDept("Получаем награды в отделе")
-//			}
-//
-//			operation("Получить сотрудников, награжденных наградой", AwardCommand.GET_USERS_BY_ACTIVE_AWARD) {
-//				validatePageParamsChain()
-//				setActionByAwardValidSortedFields("Устанавливаем допустимые поля сортировки")
-//				validateSortedFields("Проверка списка полей сортировки")
-//				validateViewAccessToAwardChain()
-//				getUsersByActiveAward("Получаем награды сотрудника")
-//			}
-//
-//			operation("Получить доступные для награждения медали", AwardCommand.GET_ADMIN_AVAILABLE) {
-//				validatePageParamsChain()
-//				setAwardWithDeptValidSortedFields("Устанавливаем допустимые поля сортировки")
-//				validateSortedFields("Проверка списка полей сортировки")
-//				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-//				getAvailableAwardsBySubdepts("Получаем доступные награды")
-//			}
-//
-//			operation(
-//				"Получить доступные для награждения медали, кроме уже полученных сотрудником",
-//				AwardCommand.GET_ADMIN_AVAILABLE_USER_EXCLUDE
-//			) {
-//				validateUserId("Проверяем userId")
-//				validatePageParamsChain()
-//				setAwardWithDeptValidSortedFields("Устанавливаем допустимые поля сортировки")
-//				validateSortedFields("Проверка списка полей сортировки")
-//				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-//				getAvailableAwardsUserExclude("Получаем доступные награды, кроме тех, которыми награжден сотрудник")
-//			}
-//
-//			operation(
-//				"Получить доступные для награждения простые медали, кроме уже полученных сотрудником",
-//				AwardCommand.GET_SIMPLE_AWARD_AVAILABLE_USER_EXCLUDE
-//			) {
-//				validateUserId("Проверяем userId")
-//				validatePageParamsChain()
-//				setAwardWithDeptValidSortedFields("Устанавливаем допустимые поля сортировки")
-//				validateSortedFields("Проверка списка полей сортировки")
-//				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-//				getSimpleAvailableAwardsUserExclude("Получаем доступные простые награды")
-//			}
-//
-//			operation("Количество наград в отделе (включая подотделы - опц.)", AwardCommand.COUNT_BY_DEPTS) {
-//				validateDeptId("Проверяем deptId")
-//				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-//				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
-//				getAwardCountByDepts("Получаем количество наград")
-//			}
-//
-//			operation("Количество активных награждений (включая ближние/дальние подотделы)", AwardCommand.COUNT_ACTIV) {
-//				validateDeptId("Проверяем deptId")
-//				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-//				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
-//				getActivCountByDepts("Получаем количество награждений")
-//			}
-//
-//			operation("Количество активных награждений от корневого отдела", AwardCommand.COUNT_ACTIV_ROOT) {
-//				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-////				validateAuthDeptLevel("Проверка доступа к отделу")
-//				worker("Подготовка") { deptId = authUser.dept?.id ?: 0 }
-//				validateDeptId("Проверяем deptId")
-//				getRootDeptId("Получаем корневой отдел")
-//				worker("Подготовка") { deptId = rootDeptId }
-//				getActivCountByDepts("Получаем количество награждений")
-//			}
-//
-//			operation("Количество сотрудников с наградами и без", AwardCommand.COUNT_USER_AWARD_WW) {
-//				validateDeptId("Проверяем deptId")
-//				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
-//				validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
-//				getUserAwardWWCountByDepts("Получаем количество сотрудников с наградами и без")
-//			}
-//
-//			operation("Установить главные изображения у всех", AwardCommand.SET_MAIN_IMG) {
-//				setMainImagesForAwards("Устанавливаем главные изображения")
-//			}
 
 			finishOperation()
 		}.build()

@@ -12,6 +12,7 @@ import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
 import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.model.response.BaseImageResponse
 import ru.md.base_rest.utils.JwtUtils
+import ru.md.base_rest.utils.testResponse
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor
@@ -361,10 +362,7 @@ class UserController(
 	}
 
 	@GetMapping("test")
-	suspend fun test(): String {
-		val usedMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576
-		return "Test: Ok. URL: " + System.getenv("PREFIX_URL") + ", used: $usedMb Mb"
-	}
+	suspend fun test() = testResponse()
 }
 
 data class RS(

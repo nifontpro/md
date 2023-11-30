@@ -10,10 +10,10 @@ fun Medal.toMedalEntity() = MedalEntity(
 	id = if (id == 0L) null else id,
 	name = name,
 	score = score,
-	deptEntity = dept?.toDeptEntity()
+	deptEntity = dept.toDeptEntity()
 )
 
-fun MedalEntity.toMedal()  = Medal(
+fun MedalEntity.toMedalLazy()  = Medal(
 	id = id ?: 0,
 	name = name,
 	mainImg = mainImg,
@@ -22,11 +22,11 @@ fun MedalEntity.toMedal()  = Medal(
 	dept = Dept(id = deptEntity?.id ?: 0)
 )
 
-fun MedalEntity.toMedalWithDept() = Medal(
+fun MedalEntity.toMedal() = Medal(
 	id = id ?: 0,
 	name = name,
 	mainImg = mainImg,
 	normImg = normImg,
 	score = score,
-	dept = deptEntity?.toDept()
+	dept = deptEntity?.toDept() ?: Dept()
 )

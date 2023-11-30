@@ -12,7 +12,7 @@ fun ICorChainDsl<MedalContext>.addMedalGalleryImageToDb(title: String) = worker 
 	on { state == ContextState.RUNNING }
 
 	handle {
-		baseImage = medalService.addGalleryImage(medalId = medalId, smallItem = smallItem)
+		baseImage = medalImageService.addGalleryImage(medalId = medalId, smallItem = smallItem)
 	}
 
 	except {

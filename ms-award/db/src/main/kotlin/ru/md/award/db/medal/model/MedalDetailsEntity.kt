@@ -1,8 +1,19 @@
 package ru.md.award.db.medal.model
 
 import jakarta.persistence.*
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
+import ru.md.base_domain.model.mappers.defaultDate
 import java.time.LocalDateTime
 import java.util.*
+
+@NamedEntityGraph(
+	name = "medalDetailsWithDept",
+	attributeNodes = [
+		NamedAttributeNode(value = "medalEntity", subgraph = "medalWithDeptSub"),
+	],
+	subgraphs = [NamedSubgraph(name = "medalWithDeptSub", attributeNodes = [NamedAttributeNode("deptEntity")])]
+)
 
 @Entity
 @Table(name = "medal_details", schema = "rew", catalog = "medalist")
@@ -15,7 +26,7 @@ class MedalDetailsEntity(
 	var description: String? = null,
 
 	@Column(name = "created_at")
-	var createdAt: LocalDateTime = LocalDateTime.MIN,
+	var createdAt: LocalDateTime = defaultDate(),
 
 	@MapsId
 	@JoinColumn(name = "medal_id")
@@ -24,6 +35,7 @@ class MedalDetailsEntity(
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "medal_id")
+	@Fetch(FetchMode.SUBSELECT)
 	@OrderBy("id DESC")
 	val images: List<MedalImageEntity> = emptyList(),
 

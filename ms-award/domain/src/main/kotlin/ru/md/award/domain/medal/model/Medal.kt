@@ -8,5 +8,5 @@ data class Medal(
 	val mainImg: String? = null,
 	val normImg: String? = null,
 	val score: Int = 0,
-	val dept: Dept? = null,
+	val dept: Dept = Dept(),
 )

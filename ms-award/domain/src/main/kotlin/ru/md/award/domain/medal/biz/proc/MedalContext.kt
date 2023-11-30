@@ -2,6 +2,7 @@ package ru.md.award.domain.medal.biz.proc
 
 import ru.md.award.domain.medal.model.Medal
 import ru.md.award.domain.medal.model.MedalDetails
+import ru.md.award.domain.medal.service.MedalImageService
 import ru.md.award.domain.medal.service.MedalService
 import ru.md.base_domain.biz.proc.BaseMedalsContext
 import ru.md.base_domain.biz.proc.IBaseCommand
@@ -16,6 +17,7 @@ class MedalContext : BaseMedalsContext() {
 	var smallItem: SmallItem = SmallItem()
 
 	lateinit var medalService: MedalService
+	lateinit var medalImageService: MedalImageService
 }
 
 enum class MedalCommand : IBaseCommand {

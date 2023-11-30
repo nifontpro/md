@@ -12,7 +12,7 @@ fun ICorChainDsl<MedalContext>.updateMedalMainImage(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-		medalService.setMainImage(medalId)
+		medalImageService.setMainImage(medalId)
 	}
 
 	except {

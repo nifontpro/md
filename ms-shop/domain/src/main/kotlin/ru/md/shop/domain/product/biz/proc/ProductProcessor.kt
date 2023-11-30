@@ -100,7 +100,7 @@ class ProductProcessor(
 			operation("Удаление изображения", ProductCommand.IMG_DELETE) {
 				validateImageId("Проверка imageId")
 				validateProductIdAndAdminAccessToProductChain()
-				deleteProductImageFromDb("Удаляем изображение из БД")
+				deleteProductImageFromDbAndS3("Удаляем изображение из БД и s3")
 				updateProductMainImage("Обновление основного изображения")
 			}
 

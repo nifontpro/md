@@ -6,7 +6,7 @@ import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 import ru.md.shop.domain.product.biz.proc.ProductContext
 
-fun ICorChainDsl<ProductContext>.deleteProductImageFromDb(title: String) = worker {
+fun ICorChainDsl<ProductContext>.deleteProductImageFromDbAndS3(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
