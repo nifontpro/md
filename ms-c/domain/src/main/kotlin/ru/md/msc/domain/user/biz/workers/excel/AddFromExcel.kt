@@ -15,15 +15,16 @@ import ru.md.cor.worker
 import ru.md.msc.domain.dept.model.DeptDetails
 import ru.md.msc.domain.event.biz.proc.EventIOException
 import ru.md.msc.domain.event.model.UserEvent
-import ru.md.msc.domain.user.biz.proc.UserContext
-import ru.md.msc.domain.user.biz.proc.UserIOException
-import ru.md.msc.domain.user.biz.proc.userDbError
-import ru.md.msc.domain.user.biz.proc.userEventError
+import ru.md.msc.domain.user.biz.proc.*
+import ru.md.msc.domain.user.biz.validate.isValidEmail
 import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_BIRTH_DATE
+import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_EMAIL
 import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_FIO
+import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_GENDER
 import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_JOB_DATE
 import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_PHONE
 import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_POST
+import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_ROLE
 import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_SCHEDULE
 import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_TAB_ID
 import ru.md.msc.domain.user.model.FullName
@@ -60,6 +61,9 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 				var colPost: Int? = null
 				var colPhone: Int? = null
 				var colSchedule: Int? = null
+				var colEmail: Int? = null
+				var colGender: Int? = null
+				var colRole: Int? = null
 				var colBirthData: Int? = null
 				var colJobDate: Int? = null
 
@@ -72,14 +76,17 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 							isNumberFound = true
 							row.getCells(1, row.cellCount).forEach { cell ->
 								val rowIdx = cell.columnIndex
-								when (cell.text) {
-									FIELD_FIO -> colFioNull = rowIdx
-									FIELD_TAB_ID -> colTabId = rowIdx
-									FIELD_POST -> colPost = rowIdx
-									FIELD_PHONE -> colPhone = rowIdx
-									FIELD_SCHEDULE -> colSchedule = rowIdx
-									FIELD_BIRTH_DATE -> colBirthData = rowIdx
-									FIELD_JOB_DATE -> colJobDate = rowIdx
+								when (cell.text.trim().uppercase()) {
+									FIELD_FIO.uppercase() -> colFioNull = rowIdx
+									FIELD_TAB_ID.uppercase() -> colTabId = rowIdx
+									FIELD_POST.uppercase() -> colPost = rowIdx
+									FIELD_PHONE.uppercase() -> colPhone = rowIdx
+									FIELD_SCHEDULE.uppercase() -> colSchedule = rowIdx
+									FIELD_EMAIL.uppercase() -> colEmail = rowIdx
+									FIELD_GENDER.uppercase() -> colGender = rowIdx
+									FIELD_ROLE.uppercase() -> colRole = rowIdx
+									FIELD_BIRTH_DATE.uppercase() -> colBirthData = rowIdx
+									FIELD_JOB_DATE.uppercase() -> colJobDate = rowIdx
 								}
 							}
 							return@blockEach
@@ -168,9 +175,19 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 						}
 
 						val tabId = colTabId?.let { row.getCellText(it).toLongOrNull() }
-						val post = colPost?.let { row.getCellText(it) }
-						val phone = colPhone?.let { row.getCellText(it) }
-						val schedule = colSchedule?.let { row.getCellText(it) }
+						val post = colPost?.let { row.getCellText(it).trim() }
+						val phone = colPhone?.let { row.getCellText(it).trim() }
+						val schedule = colSchedule?.let { row.getCellText(it).trim() }
+
+						val emailNotVerify = colEmail?.let { row.getCellText(it).trim() }
+						val email = emailNotVerify?.let {
+							if (isValidEmail(it)) {
+								it
+							} else {
+								userErrors.add(parseEmailError(it))
+								null
+							}
+						}
 
 						val birthDate = colBirthData?.let {
 							val cell = row.getCell(it)
@@ -184,6 +201,7 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 
 						userDetails = UserDetails(
 							user = User(
+								authEmail = email,
 								firstname = fullName.firstName,
 								lastname = fullName.lastName,
 								patronymic = fullName.patronymic,
@@ -253,13 +271,15 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 								)
 							)
 
-							if (!(findUserDetails.user.firstname == userDetails.user.firstname &&
-										findUserDetails.user.lastname == userDetails.user.lastname &&
-										findUserDetails.user.patronymic == userDetails.user.patronymic &&
-										findUserDetails.user.post == userDetails.user.post &&
-										findUserDetails.phone == userDetails.phone &&
-										findUserDetails.tabId == userDetails.tabId &&
-										findUserDetails.user.dept?.id == currentDept.id
+							if (!(
+										(findUserDetails.user.authEmail == email || email.isNullOrBlank()) &&
+												findUserDetails.user.firstname == userDetails.user.firstname &&
+												findUserDetails.user.lastname == userDetails.user.lastname &&
+												findUserDetails.user.patronymic == userDetails.user.patronymic &&
+												findUserDetails.user.post == userDetails.user.post &&
+												findUserDetails.phone == userDetails.phone &&
+												findUserDetails.tabId == userDetails.tabId &&
+												findUserDetails.user.dept?.id == currentDept.id
 										)
 							) {
 								try {

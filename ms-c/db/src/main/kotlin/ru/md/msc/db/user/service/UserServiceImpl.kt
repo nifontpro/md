@@ -144,6 +144,7 @@ class UserServiceImpl(
 		}
 		with(oldUserDetailsEntity) {
 			user.dept = userDetails.user.dept?.toDeptEntity()
+			userDetails.user.authEmail?.let { user.authEmail = it }
 			user.firstname = userDetails.user.firstname
 			user.patronymic = userDetails.user.patronymic
 			user.lastname = userDetails.user.lastname

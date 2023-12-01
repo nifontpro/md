@@ -1,6 +1,8 @@
 package ru.md.msc.domain.user.biz.proc
 
+import ru.md.base_domain.biz.helper.ContextError
 import ru.md.base_domain.biz.helper.errorDb
+import ru.md.base_domain.biz.helper.errorValidation
 import ru.md.base_domain.biz.helper.fail
 import ru.md.msc.domain.base.biz.BaseClientContext
 
@@ -57,6 +59,13 @@ fun UserContext.userEventError() {
 		)
 	)
 }
+
+internal fun parseEmailError(email: String) = errorValidation(
+	field = "email",
+	violationCode = "not valid",
+	description = "Неверный формат email: $email",
+	level = ContextError.Levels.WARNING
+)
 
 class UserIOException(message: String = "") : RuntimeException(message)
 
