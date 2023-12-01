@@ -11,7 +11,7 @@ import java.util.*
 class DeptEntity(
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	val id: Long? = null,
+	var id: Long? = null,
 
 	@Column(name = "parent_id")
 	val parentId: Long? = null,

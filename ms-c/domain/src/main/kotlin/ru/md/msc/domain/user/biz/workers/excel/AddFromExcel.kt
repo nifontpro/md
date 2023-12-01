@@ -19,6 +19,13 @@ import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserIOException
 import ru.md.msc.domain.user.biz.proc.userDbError
 import ru.md.msc.domain.user.biz.proc.userEventError
+import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_BIRTH_DATE
+import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_FIO
+import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_JOB_DATE
+import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_PHONE
+import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_POST
+import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_SCHEDULE
+import ru.md.msc.domain.user.biz.workers.excel.ExcelFields.FIELD_TAB_ID
 import ru.md.msc.domain.user.model.FullName
 import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.domain.user.model.excel.AddUserReport
@@ -52,6 +59,7 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 				var colTabId: Int? = null
 				var colPost: Int? = null
 				var colPhone: Int? = null
+				var colSchedule: Int? = null
 				var colBirthData: Int? = null
 				var colJobDate: Int? = null
 
@@ -65,12 +73,13 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 							row.getCells(1, row.cellCount).forEach { cell ->
 								val rowIdx = cell.columnIndex
 								when (cell.text) {
-									textFio -> colFioNull = rowIdx
-									textTabId -> colTabId = rowIdx
-									textPost -> colPost = rowIdx
-									textPhone -> colPhone = rowIdx
-									textBirthday -> colBirthData = rowIdx
-									textJobDate -> colJobDate = rowIdx
+									FIELD_FIO -> colFioNull = rowIdx
+									FIELD_TAB_ID -> colTabId = rowIdx
+									FIELD_POST -> colPost = rowIdx
+									FIELD_PHONE -> colPhone = rowIdx
+									FIELD_SCHEDULE -> colSchedule = rowIdx
+									FIELD_BIRTH_DATE -> colBirthData = rowIdx
+									FIELD_JOB_DATE -> colJobDate = rowIdx
 								}
 							}
 							return@blockEach
@@ -83,8 +92,8 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 				val colFio = colFioNull ?: 0
 
 				var currentDept: Dept? = null
-				var isDeptFound = false
 
+				// Все отделы компании
 				val deptsIds = baseDeptService.findSubTreeIds(deptId)
 
 				val addReport: MutableList<AddUserReport> = mutableListOf()
@@ -161,15 +170,16 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 						val tabId = colTabId?.let { row.getCellText(it).toLongOrNull() }
 						val post = colPost?.let { row.getCellText(it) }
 						val phone = colPhone?.let { row.getCellText(it) }
+						val schedule = colSchedule?.let { row.getCellText(it) }
 
 						val birthDate = colBirthData?.let {
 							val cell = row.getCell(it)
-							cellToDate(cell, textBirthday)
+							cellToDate(cell, FIELD_BIRTH_DATE)
 						}
 
 						val jobDate = colJobDate?.let {
 							val cell = row.getCell(it)
-							cellToDate(cell, textJobDate)
+							cellToDate(cell, FIELD_JOB_DATE)
 						}
 
 						userDetails = UserDetails(
@@ -182,6 +192,7 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 								dept = currentDept
 							),
 							phone = phone,
+							schedule = schedule,
 							tabId = tabId,
 							description = "Профиль загружен автоматически из Excel"
 						)
@@ -206,24 +217,12 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 							continue
 						}
 
-						if (isDeptFound) {
-							// Если Отдел найден, то ищем Сотрудника в нем
-							val findUserDetails = when {
-								tabId != null && updateKey == UpdateKey.USER_TAB_NO -> {
-									try {
-										userService.findIdByTabIdAndDeptId(
-											tabId = tabId,
-											deptId = currentDept.id
-										)
-									} catch (e: Exception) {
-										log.error(e.message)
-										throw UserIOException()
-									}
-								}
-
-								else -> try {
-									userService.findIdByFullNameAndDeptId(
-										fullName = fullName,
+						// Если Отдел найден, то ищем Сотрудника в нем
+						val findUserDetails = when {
+							tabId != null && updateKey == UpdateKey.USER_TAB_NO -> {
+								try {
+									userService.findIdByTabIdAndDeptId(
+										tabId = tabId,
 										deptId = currentDept.id
 									)
 								} catch (e: Exception) {
@@ -232,71 +231,67 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 								}
 							}
 
-							/**
-							 * Обновление профиля Сотрудника
-							 */
-							if (findUserDetails != null
+							else -> try {
+								userService.findIdByFullNameAndDeptsIds(
+									fullName = fullName,
+									deptsIds = deptsIds
+								)
+							} catch (e: Exception) {
+								log.error(e.message)
+								throw UserIOException()
+							}
+						}
+
+						/**
+						 * Обновление профиля Сотрудника
+						 */
+						if (findUserDetails != null
+						) {
+							userDetails = userDetails.copy(
+								user = userDetails.user.copy(
+									id = findUserDetails.user.id,
+								)
+							)
+
+							if (!(findUserDetails.user.firstname == userDetails.user.firstname &&
+										findUserDetails.user.lastname == userDetails.user.lastname &&
+										findUserDetails.user.patronymic == userDetails.user.patronymic &&
+										findUserDetails.user.post == userDetails.user.post &&
+										findUserDetails.phone == userDetails.phone &&
+										findUserDetails.tabId == userDetails.tabId &&
+										findUserDetails.user.dept?.id == currentDept.id
+										)
 							) {
-								userDetails = userDetails.copy(user = userDetails.user.copy(id = findUserDetails.user.id))
-
-								if (!(findUserDetails.user.firstname == userDetails.user.firstname &&
-											findUserDetails.user.lastname == userDetails.user.lastname &&
-											findUserDetails.user.patronymic == userDetails.user.patronymic &&
-											findUserDetails.user.post == userDetails.user.post &&
-											findUserDetails.phone == userDetails.phone &&
-											findUserDetails.tabId == userDetails.tabId
-											)
-								) {
-									try {
-										userService.updateFromExcel(userDetails)
-										isUpdate = true
-									} catch (e: Exception) {
-										log.error(e.message)
-										throw UserIOException()
-									}
-								}
-
-								isUpdate = addOrUpdateUserEvent(
-									userId = findUserDetails.user.id,
-									birthDate = birthDate,
-									jobDate = jobDate,
-									userEvents = userEvents,
-									userErrors = userErrors,
-								) || isUpdate
-
-								if (isUpdate) updatedUserCount++
-
-							} else {
-								/**
-								 * Создание нового профиля Сотрудника
-								 */
 								try {
-									userService.create(userDetails)
-									createdUserCount++
+									userService.updateFromExcel(userDetails)
+									isUpdate = true
 								} catch (e: Exception) {
 									log.error(e.message)
 									throw UserIOException()
 								}
 							}
 
+							isUpdate = addOrUpdateUserEvent(
+								userId = findUserDetails.user.id,
+								birthDate = birthDate,
+								jobDate = jobDate,
+								userEvents = userEvents,
+								userErrors = userErrors,
+							) || isUpdate
+
+							if (isUpdate) updatedUserCount++
+
 						} else {
-							// Если был создан новый Отдел, то добавляем Сотрудника в него
+							/**
+							 * Создание нового профиля Сотрудника
+							 */
 							try {
-								userDetails = userService.create(userDetails)
+								userService.create(userDetails)
 								createdUserCount++
 							} catch (e: Exception) {
 								log.error(e.message)
 								throw UserIOException()
 							}
-
-							addOrUpdateUserEvent(
-								userId = userDetails.user.id,
-								birthDate = birthDate,
-								jobDate = jobDate,
-								userEvents = userEvents,
-								userErrors = userErrors,
-							)
-
 						}
 
 						addReport.add(
@@ -309,16 +304,17 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 							)
 						)
 
+						// Если первый символ - не число
 					} else {
 						/**
 						 * Добавление/Обновление Отдела
 						 */
 						val currentDeptName = row.getCellText(0)
 						if (currentDeptName.isNullOrBlank()) continue
-						isDeptFound = true
+//						isDeptFound = true
 						currentDept = try {
 							deptService.findByIdsAndName(ids = deptsIds, name = currentDeptName).firstOrNull() ?: run {
-								isDeptFound = false
+//								isDeptFound = false
 								// Если не находим, то создаем новый
 								val deptDetails = DeptDetails(
 									dept = Dept(

@@ -1,8 +1,15 @@
 package ru.md.msc.domain.user.biz.workers.excel
 
-internal const val textFio = "Сотрудник"
-internal const val textTabId = "Табельный номер"
-internal const val textPost = "Должность"
-internal const val textPhone = "Телефон рабочий"
-internal const val textBirthday = "Дата рождения"
-internal const val textJobDate = "Дата приема"
+internal object ExcelFields {
+	const val FIELD_FIO = "Сотрудник"
+	const val FIELD_TAB_ID = "Табельный номер"
+	const val FIELD_POST = "Должность"
+	const val FIELD_PHONE = "Телефон рабочий"
+	const val FIELD_BIRTH_DATE = "Дата рождения"
+	const val FIELD_JOB_DATE = "Дата приема"
+	const val FIELD_SCHEDULE = "График работы"
+	const val FIELD_EMAIL = "Email"
+	const val FIELD_GENDER = "Пол"
+	const val FIELD_ROLE = "Роль"
+}
+

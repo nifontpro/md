@@ -8,6 +8,7 @@ import ru.md.base_db.base.mapper.toPageResult
 import ru.md.base_db.base.mapper.toSearch
 import ru.md.base_db.base.mapper.toSearchUpperOrNull
 import ru.md.base_db.dept.model.DeptEntity
+import ru.md.base_db.dept.model.mappers.toDeptEntity
 import ru.md.base_db.image.mappers.toBaseImage
 import ru.md.base_db.user.model.RoleEntity
 import ru.md.base_db.user.model.UserImageEntity
@@ -142,10 +143,12 @@ class UserServiceImpl(
 			throw UserNotFoundException()
 		}
 		with(oldUserDetailsEntity) {
+			user.dept = userDetails.user.dept?.toDeptEntity()
 			user.firstname = userDetails.user.firstname
 			user.patronymic = userDetails.user.patronymic
 			user.lastname = userDetails.user.lastname
 			user.post = userDetails.user.post
+			schedule = userDetails.schedule
 			phone = userDetails.phone
 			tabId = userDetails.tabId
 		}
@@ -182,15 +185,15 @@ class UserServiceImpl(
 		}
 	}
 
-	override fun findIdByFullNameAndDeptId(
+	override fun findIdByFullNameAndDeptsIds(
 		fullName: FullName,
-		deptId: Long
+		deptsIds: List<Long>
 	): UserDetails? {
-		return userDetailsRepository.findIdByFullNameAndDeptId(
+		return userDetailsRepository.findIdByFullNameAndDeptsIds(
 			firstname = fullName.firstName,
 			lastName = fullName.lastName,
 			patronymic = fullName.patronymic,
-			deptId = deptId
+			deptsIds = deptsIds
 		).firstOrNull()?.toUserDetailsLazy()
 	}
 

@@ -18,14 +18,14 @@ interface UserDetailsRepository : JpaRepository<UserDetailsEntity, Long> {
 		u.user.firstname like :firstname and
 		u.user.lastname like :lastName and
 		u.user.patronymic like :patronymic and
-		u.user.dept.id = :deptId
+		u.user.dept.id in :deptsIds
 	"""
 	)
-	fun findIdByFullNameAndDeptId(
+	fun findIdByFullNameAndDeptsIds(
 		firstname: String,
 		lastName: String,
 		patronymic: String,
-		deptId: Long
+		deptsIds: List<Long>
 	): List<UserDetailsEntity>
 
 	@Query(
