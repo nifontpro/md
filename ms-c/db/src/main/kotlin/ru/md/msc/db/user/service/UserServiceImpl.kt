@@ -125,6 +125,7 @@ class UserServiceImpl(
 			phone = userDetails.phone
 			address = userDetails.address
 			description = userDetails.description
+			schedule = userDetails.schedule
 		}
 		if (userDetails.user.roles.isNotEmpty() && isAuthUserHasAdminRole) {
 			addRolesToUserEntity(userDetails, oldUserDetailsEntity)

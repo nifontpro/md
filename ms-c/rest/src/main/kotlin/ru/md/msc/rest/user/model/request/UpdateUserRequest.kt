@@ -16,5 +16,8 @@ data class UpdateUserRequest(
 	val phone: String? = null,
 	val address: String? = null,
 	val description: String? = null,
+	val schedule: String? = null,
+	val birthDate: Long? = null,
+	val jobDate: Long? = null,
 	val roles: Set<RoleUser> = emptySet()
 )

@@ -12,6 +12,7 @@ import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.domain.user.model.UserSettings
 import ru.md.msc.domain.user.model.excel.LoadReport
 import ru.md.msc.domain.user.model.excel.UpdateKey
+import java.time.LocalDateTime
 
 class UserContext : BaseClientContext() {
 	var userDetails: UserDetails = UserDetails()
@@ -29,6 +30,9 @@ class UserContext : BaseClientContext() {
 	var fileUrl: String = ""
 	var loadReport: LoadReport = LoadReport()
 	var updateKey: UpdateKey = UpdateKey.USER_FIO
+
+	var birthDate: LocalDateTime? = null
+	var jobDate: LocalDateTime? = null
 
 	lateinit var eventService: EventService
 }

@@ -7,6 +7,7 @@ data class UserDetailsResponse(
 	val phone: String? = null,
 	val address: String? = null,
 	val description: String? = null,
+	val schedule: String? = null,
 	val createdAt: Long? = null,
 	val images: List<BaseImageResponse> = emptyList(),
 )

@@ -15,5 +15,6 @@ data class CreateUserRequest(
 	val phone: String? = null,
 	val address: String? = null,
 	val description: String? = null,
+	val schedule: String? = null,
 	val roles: Set<RoleUser> = emptySet()
 )

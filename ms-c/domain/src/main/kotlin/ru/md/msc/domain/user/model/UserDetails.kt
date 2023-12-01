@@ -9,6 +9,7 @@ data class UserDetails(
 	val phone: String? = null,
 	val address: String? = null,
 	val description: String? = null,
+	val schedule: String? = null,
 	val createdAt: LocalDateTime? = null,
 	var tabId: Long? = null,
 	val images: List<BaseImage> = emptyList(),

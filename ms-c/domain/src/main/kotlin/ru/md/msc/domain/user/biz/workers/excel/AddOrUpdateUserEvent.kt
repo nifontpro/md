@@ -1,6 +1,8 @@
 package ru.md.msc.domain.user.biz.workers.excel
 
 import ru.md.base_domain.biz.helper.ContextError
+import ru.md.base_domain.constants.DB_BIRTHDAY_FIELD_NAME
+import ru.md.base_domain.constants.DB_JOB_DATE_FIELD_NAME
 import ru.md.msc.domain.event.biz.proc.EventIOException
 import ru.md.msc.domain.event.model.UserEvent
 import ru.md.msc.domain.user.biz.proc.UserContext
@@ -18,7 +20,7 @@ internal fun UserContext.addOrUpdateUserEvent(
 		if (it.success && it.date != null) {
 			val userEvent = UserEvent(
 				eventDate = it.date,
-				eventName = dbBirthday,
+				eventName = DB_BIRTHDAY_FIELD_NAME,
 				userId = userId
 			)
 			try {
@@ -38,7 +40,7 @@ internal fun UserContext.addOrUpdateUserEvent(
 		if (it.success && it.date != null) {
 			val userEvent = UserEvent(
 				eventDate = it.date,
-				eventName = dbJobDate,
+				eventName = DB_JOB_DATE_FIELD_NAME,
 				userId = userId
 			)
 			try {

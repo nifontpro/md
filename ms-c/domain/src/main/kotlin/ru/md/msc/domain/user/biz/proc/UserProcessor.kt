@@ -34,6 +34,7 @@ import ru.md.msc.domain.user.biz.proc.operation.deleteUserOperation
 import ru.md.msc.domain.user.biz.validate.*
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
 import ru.md.msc.domain.user.biz.workers.*
+import ru.md.msc.domain.user.biz.workers.event.addOrUpdateUserEvents
 import ru.md.msc.domain.user.biz.workers.excel.addFromExcel
 import ru.md.msc.domain.user.biz.workers.sort.setUsersBySubdeptsValidSortedFields
 import ru.md.msc.domain.user.biz.workers.sort.setUsersWithAwardCountValidSortedFields
@@ -103,7 +104,7 @@ class UserProcessor(
 				chain {
 					// чтоб не возникала ошибка, если почта уже установлена, даже повторяющаяся
 					on { modifyUser.authEmail?.lowercase()?.trim() != user.authEmail?.lowercase() }
-					validateUserEmailExist("Проверка наличия сотрудника с почтой")
+					validateUserEmailExist("Проверка наличия Сотрудника с почтой")
 				}
 				chain {
 					// При перемещении сотрудника в другой отдел
@@ -112,7 +113,8 @@ class UserProcessor(
 					worker("target deptId") { deptId = user.dept?.id ?: 0 }
 					validateAuthDeptLevel("Проверяем доступ к целевому отделу")
 				}
-				updateUser("Обновляем профиль сотрудника")
+				addOrUpdateUserEvents("Обновляем события Сотрудника")
+				updateUser("Обновляем профиль Сотрудника")
 			}
 
 			deleteUserOperation()

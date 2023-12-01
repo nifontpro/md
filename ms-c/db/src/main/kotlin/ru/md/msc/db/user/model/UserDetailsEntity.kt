@@ -31,6 +31,7 @@ class UserDetailsEntity(
 	var phone: String? = null,
 	var address: String? = null,
 	var description: String? = null,
+	var schedule: String? = null,
 
 	@Column(name = "created_at")
 	val createdAt: LocalDateTime? = null,

@@ -11,6 +11,7 @@ fun UserDetails.toUserDetailsResponse(): UserDetailsResponse {
 		phone = phone,
 		address = address,
 		description = description,
+		schedule = schedule,
 		createdAt = createdAt?.toEpochMilliUTC(),
 		images = images.map { it.toBaseImageResponse() }
 	)

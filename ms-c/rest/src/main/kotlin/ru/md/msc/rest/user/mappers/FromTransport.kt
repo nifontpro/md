@@ -3,6 +3,7 @@ package ru.md.msc.rest.user.mappers
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_rest.model.mapper.toBaseQuery
 import ru.md.base_domain.dept.model.Dept
+import ru.md.base_domain.model.mappers.toLocalDateTimeUTC
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.base_domain.user.model.User
@@ -45,7 +46,8 @@ fun UserContext.fromTransport(request: CreateUserRequest) {
 		user = user,
 		phone = request.phone,
 		address = request.address,
-		description = request.description
+		description = request.description,
+		schedule = request.schedule,
 	)
 }
 
@@ -68,8 +70,11 @@ fun UserContext.fromTransport(request: UpdateUserRequest) {
 		user = user,
 		phone = request.phone,
 		address = request.address,
-		description = request.description
+		description = request.description,
+		schedule = request.schedule,
 	)
+	birthDate = request.birthDate?.toLocalDateTimeUTC()
+	jobDate = request.jobDate?.toLocalDateTimeUTC()
 }
 
 @Suppress("UNUSED_PARAMETER")

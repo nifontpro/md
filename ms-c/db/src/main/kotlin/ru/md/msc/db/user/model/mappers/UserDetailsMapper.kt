@@ -14,6 +14,7 @@ fun UserDetailsEntity.toUserDetails() = UserDetails(
 	description = description,
 	createdAt = createdAt,
 	tabId = tabId,
+	schedule = schedule,
 	user = user.toUser(),
 	images = images.map { it.toBaseImage() }
 )
@@ -24,6 +25,7 @@ fun UserDetailsEntity.toUserDetailsLazy() = UserDetails(
 	description = description,
 	createdAt = createdAt,
 	tabId = tabId,
+	schedule = schedule,
 	user = user.toUserLazy(),
 )
 
@@ -34,5 +36,6 @@ fun UserDetails.toUserDetailsEntity(create: Boolean = false) = UserDetailsEntity
 	description = description,
 	createdAt = if (create) LocalDateTime.now() else createdAt,
 	tabId = tabId,
+	schedule = schedule,
 	user = user.toUserEntity(create = create)
 )

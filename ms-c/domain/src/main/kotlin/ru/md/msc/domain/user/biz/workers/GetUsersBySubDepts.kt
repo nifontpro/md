@@ -16,6 +16,7 @@ fun ICorChainDsl<UserContext>.getUsersBySubDepts(title: String) = worker {
 		users = pageFun { userService.findBySubDepts(deptId = deptId, baseQuery = baseQuery) }
 	}
 	except {
+		log.error(it.message)
 		getUserError()
 	}
 }

@@ -1,4 +1,5 @@
-FROM openjdk:17
+#FROM openjdk:17
+FROM bellsoft/liberica-openjdk-debian:17.0.9
 
 RUN mkdir /app
 
