@@ -1,7 +1,8 @@
 @file:Suppress("GradlePackageUpdate", "GradlePackageVersionRange")
 
-import org.gradle.kotlin.dsl.java
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 project.version = "1.0.0"
 
@@ -24,8 +25,8 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
 	mavenCentral()
-//	maven { url = uri("https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates") }
-	maven { url = uri("https://repo.spring.io/milestone") }
+	maven { url = uri("https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates") }
+//	maven { url = uri("https://repo.spring.io/milestone") }
 }
 
 val springCloudVersion: String by project
@@ -46,7 +47,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 
 	// Send email service
-	 implementation("org.apache.commons:commons-email:1.5")
+	implementation("org.apache.commons:commons-email:1.5")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
@@ -84,7 +85,12 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-val jarFileName = "medal.jar"
-tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
-	this.archiveFileName.set(jarFileName)
+//tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+tasks.withType(BootJar::class) {
+	this.archiveFileName.set("medal.jar")
 }
+
+tasks.withType(BootBuildImage::class) {
+
+}
+

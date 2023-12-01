@@ -1,5 +1,7 @@
 package ru.md.msc.rest.award
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.gallery.SmallItem
@@ -23,6 +25,7 @@ import ru.md.msc.rest.award.model.request.*
 import ru.md.msc.rest.award.model.response.ActivityResponse
 import ru.md.msc.rest.award.model.response.AwardDetailsResponse
 import ru.md.msc.rest.award.model.response.AwardResponse
+import ru.md.msc.rest.event.EventController
 
 @RestController
 @RequestMapping("award")
@@ -36,6 +39,8 @@ class AwardController(
 		@RequestBody request: CreateAwardRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<AwardDetailsResponse> {
+		log.info("Endpoint: create")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -50,6 +55,8 @@ class AwardController(
 		@RequestBody request: UpdateAwardRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<AwardDetailsResponse> {
+		log.info("Endpoint: update")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -64,6 +71,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetAwardByIdRequest
 	): BaseResponse<AwardDetailsResponse> {
+		log.info("Endpoint: get_id")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -89,6 +98,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetAwardsByDeptRequest
 	): BaseResponse<List<AwardResponse>> {
+		log.info("Endpoint: get_dept")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -120,6 +131,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetAwardsBySubDeptsRequest
 	): BaseResponse<List<AwardResponse>> {
+		log.info("Endpoint: get_subdepts")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -153,6 +166,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetAwardsBySubDeptsExcludeUserRequest
 	): BaseResponse<List<AwardResponse>> {
+		log.info("Endpoint: admin_available_user_exclude")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -171,6 +186,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetSimpleAwardsAvailableRequest
 	): BaseResponse<List<AwardResponse>> {
+		log.info("Endpoint: get_simple")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -185,6 +202,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: DeleteAwardRequest
 	): BaseResponse<AwardDetailsResponse> {
+		log.info("Endpoint: delete")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -201,6 +220,8 @@ class AwardController(
 		@RequestPart("authId") authId: String,
 		@RequestPart("awardId") awardId: String,
 	): BaseResponse<BaseImageResponse> {
+		log.info("Endpoint: img_add")
+		log.info("Request: awardId=$awardId")
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = AwardContext().apply { command = AwardCommand.IMG_ADD }
 		return baseImageProcess(
@@ -218,6 +239,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: DeleteAwardImageRequest
 	): BaseResponse<BaseImageResponse> {
+		log.info("Endpoint: img_delete")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -232,6 +255,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: AddAwardImageFromGalleryRequest
 	): BaseResponse<BaseImageResponse> {
+		log.info("Endpoint: img_gal")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -250,6 +275,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: SendActionRequest
 	): BaseResponse<ActivityResponse> {
+		log.info("Endpoint: action")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -279,6 +306,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetActivAwardByUserRequest
 	): BaseResponse<List<ActivityResponse>> {
+		log.info("Endpoint: act_user")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -309,6 +338,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetActivAwardByDeptRequest
 	): BaseResponse<List<ActivityResponse>> {
+		log.info("Endpoint: count_dep")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -337,6 +368,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetUsersByActivAwardRequest
 	): BaseResponse<List<ActivityResponse>> {
+		log.info("Endpoint: act_award")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -357,6 +390,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetAwardCountByDeptRequest
 	): BaseResponse<AwardStateCount> {
+		log.info("Endpoint: count_dep")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -384,6 +419,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetActivCountByDeptRequest
 	): BaseResponse<List<AwardCount>> {
+		log.info("Endpoint: count_activ")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -398,6 +435,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetActivCountByRootDeptRequest
 	): BaseResponse<List<AwardCount>> {
+		log.info("Endpoint: count_activ_root")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -420,6 +459,8 @@ class AwardController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetUsersWWAwardCountByDeptRequest
 	): BaseResponse<WWAwardCount> {
+		log.info("Endpoint: count_user_ww")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = awardProcessor,
@@ -433,6 +474,8 @@ class AwardController(
 	private suspend fun getGalleryItem(
 		@RequestBody request: GetGalleryRequest
 	): BaseResponse<SmallItem> {
+		log.info("Endpoint: get_item")
+		log.info("Request: $request")
 		return process(
 			processor = awardProcessor,
 			request = request,
@@ -459,5 +502,9 @@ class AwardController(
 //			toTransport = { toTransportUnit() }
 //		)
 //	}
+
+	companion object {
+		val log: Logger = LoggerFactory.getLogger(EventController::class.java)
+	}
 
 }

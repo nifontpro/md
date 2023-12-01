@@ -79,12 +79,14 @@ class UserAwardEntity(
 		joinColumns = [JoinColumn(name = "user_id")],
 		inverseJoinColumns = [JoinColumn(name = "award_id")]
 	)
-	@SQLJoinTableRestriction("is_activ=true and action_code='A'")
+//	@SQLJoinTableRestriction("is_activ=true and action_code='A'")
+	@WhereJoinTable(clause = "is_activ=true and action_code='A'")
 	val awards: List<AwardEntity> = emptyList(),
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@Fetch(FetchMode.SUBSELECT)
-	@SQLRestriction("is_activ=true and action_code='A'")
+//	@SQLRestriction("is_activ=true and action_code='A'")
+	@Where(clause = "is_activ=true and action_code='A'")
 //	@Where(clause = "is_activ=true and action_code='A'")
 	val activities: List<ActivityEntity> = emptyList(),
 

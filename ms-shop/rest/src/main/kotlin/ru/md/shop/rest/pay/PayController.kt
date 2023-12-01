@@ -2,6 +2,8 @@
 
 package ru.md.shop.rest.pay
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
 import ru.md.base_domain.model.BaseResponse
 import ru.md.base_rest.base.authProcess
@@ -33,6 +35,8 @@ class PayController(
 		@RequestBody request: GetUserPayRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<UserPayResponse> {
+		log.info("Endpoint: get_user")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = payProcessor,
@@ -50,6 +54,8 @@ class PayController(
 		@RequestBody request: PayProductRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<PayDataResponse> {
+		log.info("Endpoint: pay_product")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = payProcessor,
@@ -68,6 +74,8 @@ class PayController(
 		@RequestBody request: GiveProductRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<PayDataResponse> {
+		log.info("Endpoint: give_admin")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = payProcessor,
@@ -87,6 +95,8 @@ class PayController(
 		@RequestBody request: AdminReturnProductRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<PayDataResponse> {
+		log.info("Endpoint: return_admin")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = payProcessor,
@@ -106,6 +116,8 @@ class PayController(
 		@RequestBody request: UserReturnProductRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<PayDataResponse> {
+		log.info("Endpoint: return_user")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = payProcessor,
@@ -147,6 +159,8 @@ class PayController(
 		@RequestBody request: GetPaysDataRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<List<PayDataResponse>> {
+		log.info("Endpoint: get_pays")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = payProcessor,
@@ -154,6 +168,10 @@ class PayController(
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportPaysDataResponse() }
 		)
+	}
+
+	companion object {
+		val log: Logger = LoggerFactory.getLogger(PayController::class.java)
 	}
 
 }

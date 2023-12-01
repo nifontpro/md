@@ -2,6 +2,8 @@
 
 package ru.md.shop.rest.product
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.model.BaseResponse
@@ -34,6 +36,8 @@ class ProductController(
 		@RequestBody request: CreateProductRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<ProductDetailsResponse> {
+		log.info("Endpoint: create")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = productProcessor,
@@ -48,6 +52,8 @@ class ProductController(
 		@RequestBody request: UpdateProductRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<ProductDetailsResponse> {
+		log.info("Endpoint: update")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = productProcessor,
@@ -62,6 +68,8 @@ class ProductController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetProductByIdRequest
 	): BaseResponse<ProductDetailsResponse> {
+		log.info("Endpoint: get_id")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = productProcessor,
@@ -93,6 +101,8 @@ class ProductController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetProductByCompanyRequest
 	): BaseResponse<List<Product>> {
+		log.info("Endpoint: get_company")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = productProcessor,
@@ -107,6 +117,8 @@ class ProductController(
 		@RequestBody request: DeleteProductRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<ProductDetailsResponse> {
+		log.info("Endpoint: delete")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = productProcessor,
@@ -123,6 +135,8 @@ class ProductController(
 		@RequestPart("authId") authId: String,
 		@RequestPart("productId") productId: String,
 	): BaseResponse<BaseImageResponse> {
+		log.info("Endpoint: img_add")
+		log.info("Request: productId=$productId")
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = ProductContext().apply { command = ProductCommand.IMG_ADD }
 		return baseImageProcess(
@@ -140,6 +154,8 @@ class ProductController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: DeleteProductImageRequest
 	): BaseResponse<BaseImageResponse> {
+		log.info("Endpoint: img_delete")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = productProcessor,
@@ -156,6 +172,8 @@ class ProductController(
 		@RequestPart("authId") authId: String,
 		@RequestPart("productId") productId: String,
 	): BaseResponse<BaseImageResponse> {
+		log.info("Endpoint: img_sec_add")
+		log.info("Request: productId=$productId")
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = ProductContext().apply { command = ProductCommand.IMG_SECOND_ADD }
 		return baseImageProcess(
@@ -173,6 +191,8 @@ class ProductController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: DeleteSecondImageRequest
 	): BaseResponse<BaseImageResponse> {
+		log.info("Endpoint: img_sec_del")
+		log.info("Request: $request")
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = productProcessor,
@@ -180,6 +200,10 @@ class ProductController(
 			fromTransport = { fromTransport(it) },
 			toTransport = { toTransportBaseImageResponse() }
 		)
+	}
+
+	companion object {
+		val log: Logger = LoggerFactory.getLogger(ProductController::class.java)
 	}
 
 }
