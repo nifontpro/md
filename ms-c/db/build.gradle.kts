@@ -1,5 +1,7 @@
 import org.gradle.kotlin.dsl.java
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 project.version = "1.0.0"
 
@@ -82,7 +84,14 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-val jarFileName = "client.jar"
-tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
-	this.archiveFileName.set(jarFileName)
+tasks.getByName<BootJar>("bootJar") {
+	this.archiveFileName.set("client.jar")
+}
+
+tasks.withType(BootBuildImage::class) {
+	doFirst {
+		System.setProperty("spring.profiles.active", "main, remote")
+	}
+	this.imageName.set("8881981/md_client:1.0.0")
+
 }

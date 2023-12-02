@@ -33,6 +33,15 @@ class UserTest(
 		println(users)
 	}
 
+//	fun <T> equalsIgnoreOrder(list1:List<T>, list2:List<T>) = list1.size == list2.size && list1.toSet() == list2.toSet()
+
+	@Test
+	fun compareSets() {
+			val set1 = setOf(RoleUser.USER, RoleUser.ADMIN)
+			val set2 = setOf(RoleUser.ADMIN, RoleUser.USER)
+		assertEquals(set1, set2)
+	}
+
 	@Test
 	fun formatEmailValid() {
 		val email = "sas22d@asd2.ru"

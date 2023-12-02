@@ -20,6 +20,7 @@ import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
 import ru.md.base_domain.user.biz.errors.UserNotFoundException
+import ru.md.base_domain.user.model.Gender
 import ru.md.base_domain.user.model.RoleUser
 import ru.md.base_domain.user.model.User
 import ru.md.msc.db.award.repo.ActivityRepository
@@ -149,6 +150,12 @@ class UserServiceImpl(
 			user.patronymic = userDetails.user.patronymic
 			user.lastname = userDetails.user.lastname
 			user.post = userDetails.user.post
+			if (userDetails.user.gender != Gender.UNDEF) {
+				user.gender = userDetails.user.gender
+			}
+			if (userDetails.user.roles != emptySet<RoleUser>()) {
+				addRolesToUserEntity(userDetails, oldUserDetailsEntity)
+			}
 			schedule = userDetails.schedule
 			phone = userDetails.phone
 			tabId = userDetails.tabId

@@ -1,7 +1,6 @@
 @file:Suppress("GradlePackageUpdate", "GradlePackageVersionRange")
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 project.version = "1.0.0"
@@ -89,8 +88,7 @@ tasks.withType<Test> {
 tasks.withType(BootJar::class) {
 	this.archiveFileName.set("medal.jar")
 }
-
-tasks.withType(BootBuildImage::class) {
-
-}
-
+//
+//tasks.withType(BootBuildImage::class) {
+//	imageName.set("")
+//}

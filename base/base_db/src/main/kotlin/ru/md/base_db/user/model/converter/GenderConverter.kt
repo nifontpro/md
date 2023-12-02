@@ -15,7 +15,7 @@ class GenderConverter : AttributeConverter<Gender, String?> {
 		return if (code == null) {
 			Gender.UNDEF
 		} else {
-			Gender.values().find {
+			Gender.entries.find {
 				it.code == code
 			} ?: Gender.UNDEF
 		}

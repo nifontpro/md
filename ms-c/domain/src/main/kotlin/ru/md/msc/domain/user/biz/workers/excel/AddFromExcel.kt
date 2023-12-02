@@ -8,6 +8,7 @@ import ru.md.base_domain.dept.biz.errors.DeptIOException
 import ru.md.base_domain.dept.biz.errors.deptDbError
 import ru.md.base_domain.dept.model.Dept
 import ru.md.base_domain.dept.model.DeptType
+import ru.md.base_domain.user.model.Gender
 import ru.md.base_domain.user.model.RoleUser
 import ru.md.base_domain.user.model.User
 import ru.md.cor.ICorChainDsl
@@ -179,8 +180,27 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 						val phone = colPhone?.let { row.getCellText(it).trim() }
 						val schedule = colSchedule?.let { row.getCellText(it).trim() }
 
+						val gender = colGender?.let {
+							val ch = row.getCellText(it).trim()
+							when (ch.uppercase()) {
+								"М" -> Gender.MALE
+								"Ж" -> Gender.FEMALE
+								else -> Gender.UNDEF
+							}
+						} ?: Gender.UNDEF
+
+						val roles = colRole?.let {
+							val ch = row.getCellText(it).trim()
+							when (ch.uppercase()) {
+								"П" -> setOf(RoleUser.USER)
+								"А" -> setOf(RoleUser.ADMIN, RoleUser.USER)
+								else -> emptySet()
+							}
+						} ?: emptySet()
+
 						val emailNotVerify = colEmail?.let { row.getCellText(it).trim() }
 						val email = emailNotVerify?.let {
+							if (it.isBlank()) return@let null
 							if (isValidEmail(it)) {
 								it
 							} else {
@@ -205,7 +225,8 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 								firstname = fullName.firstName,
 								lastname = fullName.lastName,
 								patronymic = fullName.patronymic,
-								roles = setOf(RoleUser.USER),
+								gender = gender,
+								roles = roles,
 								post = post,
 								dept = currentDept
 							),
@@ -271,15 +292,17 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 								)
 							)
 
-							if (!(
+							if (!(// Правило пропуска обновления профиля Сотрудника:
 										(findUserDetails.user.authEmail == email || email.isNullOrBlank()) &&
 												findUserDetails.user.firstname == userDetails.user.firstname &&
 												findUserDetails.user.lastname == userDetails.user.lastname &&
 												findUserDetails.user.patronymic == userDetails.user.patronymic &&
+												(findUserDetails.user.gender == gender || gender == Gender.UNDEF) &&
 												findUserDetails.user.post == userDetails.user.post &&
 												findUserDetails.phone == userDetails.phone &&
 												findUserDetails.tabId == userDetails.tabId &&
-												findUserDetails.user.dept?.id == currentDept.id
+												findUserDetails.user.dept?.id == currentDept.id &&
+												(findUserDetails.user.roles == roles || roles == emptySet<RoleUser>())
 										)
 							) {
 								try {
@@ -306,6 +329,14 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 							 * Создание нового профиля Сотрудника
 							 */
 							try {
+								if (roles == emptySet<RoleUser>()) {
+									// Если роль не указана - то USER по умолчанию
+									userDetails = userDetails.copy(
+										user = userDetails.user.copy(
+											roles = setOf(RoleUser.USER)
+										)
+									)
+								}
 								userService.create(userDetails)
 								createdUserCount++
 							} catch (e: Exception) {
