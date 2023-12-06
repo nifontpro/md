@@ -9,6 +9,9 @@ import ru.md.msc.db.user.model.UserDetailsEntity
 @Repository
 interface UserDetailsRepository : JpaRepository<UserDetailsEntity, Long> {
 
+	@Query("select * from gender.get_gender(:firstname, :lastname)", nativeQuery = true)
+	fun getGenderByName(firstname: String, lastname: String): String?
+
 	@EntityGraph("withUserDept")
 	fun findByUserId(userId: Long): UserDetailsEntity?
 

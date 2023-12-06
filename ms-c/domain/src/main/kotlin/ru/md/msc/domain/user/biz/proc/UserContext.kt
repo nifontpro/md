@@ -12,6 +12,7 @@ import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.domain.user.model.UserSettings
 import ru.md.msc.domain.user.model.excel.LoadReport
 import ru.md.msc.domain.user.model.excel.UpdateKey
+import ru.md.msc.domain.user.service.GenderService
 import java.time.LocalDateTime
 
 class UserContext : BaseClientContext() {
@@ -35,6 +36,7 @@ class UserContext : BaseClientContext() {
 	var jobDate: LocalDateTime? = null
 
 	lateinit var eventService: EventService
+	lateinit var genderService: GenderService
 }
 
 enum class UserCommand : IBaseCommand {
@@ -52,9 +54,10 @@ enum class UserCommand : IBaseCommand {
 	GET_WITH_ACTIVITY,
 	GET_WITH_AWARDS,
 	GET_WITH_AWARD_COUNT,
-	SET_MAIN_IMG,
+	SRV_SET_MAIN_IMG,
 	SAVE_SETTINGS,
 	GET_SETTINGS,
 	CHECK_HAS_OWNER_ROLE,
-	ADD_FROM_EXCEL
+	ADD_FROM_EXCEL,
+	SRV_ADD_NAMES_DB,
 }

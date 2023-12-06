@@ -3,6 +3,7 @@ package ru.md.msc.domain.user.service
 import ru.md.base_domain.image.model.BaseImage
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageResult
+import ru.md.base_domain.user.model.Gender
 import ru.md.base_domain.user.model.User
 import ru.md.msc.domain.award.model.ActionType
 import ru.md.msc.domain.user.model.*
@@ -35,4 +36,5 @@ interface UserService {
 	fun updateFromExcel(userDetails: UserDetails): UserDetails
 	fun findIdByFullNameAndDeptsIds(fullName: FullName, deptsIds: List<Long>): UserDetails?
 	fun findIdByTabIdAndDeptId(tabId: Long, deptId: Long): UserDetails?
+	fun getGenderByName(firstname: String, lastname: String): Gender
 }

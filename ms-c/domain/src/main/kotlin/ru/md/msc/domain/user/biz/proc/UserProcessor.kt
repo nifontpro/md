@@ -36,8 +36,10 @@ import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
 import ru.md.msc.domain.user.biz.workers.*
 import ru.md.msc.domain.user.biz.workers.event.addOrUpdateUserEvents
 import ru.md.msc.domain.user.biz.workers.excel.addFromExcel
+import ru.md.msc.domain.user.biz.workers.service.addGender
 import ru.md.msc.domain.user.biz.workers.sort.setUsersBySubdeptsValidSortedFields
 import ru.md.msc.domain.user.biz.workers.sort.setUsersWithAwardCountValidSortedFields
+import ru.md.msc.domain.user.service.GenderService
 import ru.md.msc.domain.user.service.UserService
 
 @Component
@@ -48,6 +50,7 @@ class UserProcessor(
 	private val userService: UserService,
 	private val deptService: DeptService,
 	private val eventService: EventService,
+	private val genderService: GenderService,
 ) : IBaseProcessor<UserContext> {
 
 	override suspend fun exec(ctx: UserContext) = businessChain.exec(ctx.also {
@@ -57,6 +60,7 @@ class UserProcessor(
 		it.userService = userService
 		it.deptService = deptService
 		it.eventService = eventService
+		it.genderService = genderService
 	})
 
 	companion object {
@@ -209,10 +213,6 @@ class UserProcessor(
 				getUsersWithAwardCountByDept("Получаем сотрудников с количеством наград")
 			}
 
-			operation("Установить главные изображения у всех", UserCommand.SET_MAIN_IMG) {
-				setMainImagesForUsers("Устанавливаем главные изображения для всех сотрудников")
-			}
-
 			operation("Сохранить настройки", UserCommand.SAVE_SETTINGS) {
 				validateUserId("Проверка userId")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
@@ -228,6 +228,14 @@ class UserProcessor(
 			operation("Проверка, имеет ли сотрудник роль Владельца", UserCommand.CHECK_HAS_OWNER_ROLE) {
 				validateUserId("Проверка userId")
 				checkUserHasOwnerRole("Проверяем наличие роли Владельца")
+			}
+
+			operation("Установить главные изображения у всех", UserCommand.SRV_SET_MAIN_IMG) {
+				setMainImagesForUsers("Устанавливаем главные изображения для всех сотрудников")
+			}
+
+			operation("Создаем базу мужских имен", UserCommand.SRV_ADD_NAMES_DB) {
+				addGender("заполняем таблицу мужских имен")
 			}
 
 			finishOperation()

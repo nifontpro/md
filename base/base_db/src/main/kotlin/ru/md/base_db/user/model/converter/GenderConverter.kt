@@ -11,13 +11,13 @@ class GenderConverter : AttributeConverter<Gender, String?> {
 		return if (gender == Gender.UNDEF) null else gender.code
 	}
 
-	override fun convertToEntityAttribute(code: String?): Gender {
-		return if (code == null) {
-			Gender.UNDEF
-		} else {
-			Gender.entries.find {
-				it.code == code
-			} ?: Gender.UNDEF
-		}
-	}
+	override fun convertToEntityAttribute(code: String?) = code.toGender()
+}
+
+fun String?.toGender() = if (this == null) {
+	Gender.UNDEF
+} else {
+	Gender.entries.find {
+		it.code == this
+	} ?: Gender.UNDEF
 }

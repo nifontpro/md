@@ -146,11 +146,6 @@ fun UserContext.fromTransport(request: GetUsersWithAwardCountRequest) {
 	baseQuery = request.baseRequest?.toBaseQuery() ?: BaseQuery()
 }
 
-@Suppress("UNUSED_PARAMETER")
-fun UserContext.fromTransport(request: SetMainUserImagesRequest) {
-	command = UserCommand.SET_MAIN_IMG
-}
-
 fun UserContext.fromTransport(request: SaveUserSettingsRequest) {
 	command = UserCommand.SAVE_SETTINGS
 	userId = request.userId
@@ -172,4 +167,18 @@ fun UserContext.fromTransport(request: HasUserOwnerRequest) {
 	command = UserCommand.CHECK_HAS_OWNER_ROLE
 	userId = request.userId
 }
+
+/**
+ * Service
+ */
+@Suppress("UNUSED_PARAMETER")
+fun UserContext.fromTransport(request: SetMainUserImagesRequest) {
+	command = UserCommand.SRV_SET_MAIN_IMG
+}
+
+@Suppress("UNUSED_PARAMETER")
+fun UserContext.fromTransport(request: AddGenderRequest) {
+	command = UserCommand.SRV_ADD_NAMES_DB
+}
+
 

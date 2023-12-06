@@ -185,9 +185,9 @@ fun ICorChainDsl<UserContext>.addFromExcel(title: String) = worker {
 							when (ch.uppercase()) {
 								"М" -> Gender.MALE
 								"Ж" -> Gender.FEMALE
-								else -> Gender.UNDEF
+								else -> userService.getGenderByName(fullName.firstName, fullName.lastName)
 							}
-						} ?: Gender.UNDEF
+						} ?: userService.getGenderByName(fullName.firstName, fullName.lastName)
 
 						val roles = colRole?.let {
 							val ch = row.getCellText(it).trim()

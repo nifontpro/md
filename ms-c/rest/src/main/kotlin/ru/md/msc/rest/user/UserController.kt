@@ -321,6 +321,20 @@ class UserController(
 		)
 	}
 
+	@PostMapping("has_owner")
+	private suspend fun hasUserOwnerRole(
+		@RequestHeader(name = AUTH) bearerToken: String,
+		@RequestBody request: HasUserOwnerRequest
+	): BaseResponse<Boolean> {
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = userProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportHasOwner() }
+		)
+	}
+
 	/**
 	 * !!!! Set ADMIN role
 	 */
@@ -338,19 +352,19 @@ class UserController(
 //		)
 //	}
 
-	@PostMapping("has_owner")
-	private suspend fun hasUserOwnerRole(
-		@RequestHeader(name = AUTH) bearerToken: String,
-		@RequestBody request: HasUserOwnerRequest
-	): BaseResponse<Boolean> {
-		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-		return authProcess(
-			processor = userProcessor,
-			authRequest = baseRequest,
-			fromTransport = { fromTransport(it) },
-			toTransport = { toTransportHasOwner() }
-		)
-	}
+//		@PostMapping("admin/gender")
+//	private suspend fun addMaleName(
+//		@RequestHeader(name = AUTH) bearerToken: String,
+//		@RequestBody request: AddGenderRequest
+//	): BaseResponse<Unit> {
+//		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+//		return authProcess(
+//			processor = userProcessor,
+//			authRequest = baseRequest,
+//			fromTransport = { fromTransport(it) },
+//			toTransport = { toTransportUnit() }
+//		)
+//	}
 
 	@PostMapping("data")
 	suspend fun getData(
