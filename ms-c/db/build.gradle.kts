@@ -41,6 +41,8 @@ dependencies {
 	implementation(project(":ms-c:domain"))
 	implementation(project(":ms-c:rest"))
 
+	implementation("net.logstash.logback:logstash-logback-encoder:7.3")
+
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -89,9 +91,5 @@ tasks.getByName<BootJar>("bootJar") {
 }
 
 tasks.withType(BootBuildImage::class) {
-	doFirst {
-		System.setProperty("spring.profiles.active", "main, remote")
-	}
 	this.imageName.set("8881981/md_client:1.0.0")
-
 }

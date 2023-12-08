@@ -18,17 +18,12 @@ dependencies {
 
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
-	testImplementation("io.netty:netty-resolver-dns-native-macos:4.1.101.Final")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-
-//	implementation("io.sentry:sentry-spring-boot-starter")
-	implementation("io.sentry:sentry-spring-boot-starter:6.34.0")
-	implementation("io.sentry:sentry-logback:6.34.0")
 
 	val fastExcelVersion = "0.15.7"
 	implementation("org.dhatim:fastexcel:$fastExcelVersion")

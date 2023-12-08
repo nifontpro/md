@@ -1,8 +1,0 @@
-http://185.233.186.178:5601/
-
-Ubuntu:
-
-sudo chmod 775 -R data
-sudo chown -R $USER:docker data
-
-power123

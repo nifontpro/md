@@ -1,8 +1,12 @@
 package ru.md.msc.rest.event
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
 import ru.md.base_domain.model.BaseResponse
 import ru.md.base_rest.base.authProcess
+import ru.md.base_rest.logEndpoint
+import ru.md.base_rest.logRequest
 import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.utils.JwtUtils
 import ru.md.msc.domain.event.biz.proc.EventProcessor
@@ -29,6 +33,8 @@ class EventController(
 		@RequestBody request: AddUserEventRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<BaseEventResponse> {
+		log.info(logEndpoint("add_user"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = eventProcessor,
@@ -46,6 +52,8 @@ class EventController(
 		@RequestBody request: AddDeptEventRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<BaseEventResponse> {
+		log.info(logEndpoint("add_dept"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = eventProcessor,
@@ -66,6 +74,8 @@ class EventController(
 		@RequestBody request: GetAllEventsRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<List<BaseEventResponse>> {
+		log.info(logEndpoint("get_all"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = eventProcessor,
@@ -83,6 +93,8 @@ class EventController(
 		@RequestBody request: GetUserEventsRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<List<ShortEventResponse>> {
+		log.info(logEndpoint("get_user"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = eventProcessor,
@@ -100,6 +112,8 @@ class EventController(
 		@RequestBody request: GetDeptEventsRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<List<ShortEventResponse>> {
+		log.info(logEndpoint("get_dept"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = eventProcessor,
@@ -117,6 +131,8 @@ class EventController(
 		@RequestBody request: DeleteUserEventRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<BaseEventResponse> {
+		log.info(logEndpoint("delete_user"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = eventProcessor,
@@ -134,6 +150,8 @@ class EventController(
 		@RequestBody request: DeleteDeptEventRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<BaseEventResponse> {
+		log.info(logEndpoint("delete_dept"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = eventProcessor,
@@ -142,5 +160,10 @@ class EventController(
 			toTransport = { toTransportBaseEvent() }
 		)
 	}
+
+	companion object {
+		private val log: Logger = LoggerFactory.getLogger(EventController::class.java)
+	}
+
 
 }

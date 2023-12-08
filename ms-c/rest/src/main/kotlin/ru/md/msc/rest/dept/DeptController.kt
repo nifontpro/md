@@ -2,12 +2,16 @@
 
 package ru.md.msc.rest.dept
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.model.BaseResponse
 import ru.md.base_rest.base.authProcess
 import ru.md.base_rest.base.toLongOr0
 import ru.md.base_rest.image.baseImageProcess
+import ru.md.base_rest.logEndpoint
+import ru.md.base_rest.logRequest
 import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
 import ru.md.base_rest.model.request.AUTH
 import ru.md.base_rest.model.response.BaseImageResponse
@@ -33,6 +37,8 @@ class DeptController(
 		@RequestBody request: CreateDeptRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<DeptDetailsResponse> {
+		log.info(logEndpoint("create"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = deptProcessor,
@@ -47,6 +53,8 @@ class DeptController(
 		@RequestBody request: UpdateDeptRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<DeptDetailsResponse> {
+		log.info(logEndpoint("update"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = deptProcessor,
@@ -61,6 +69,8 @@ class DeptController(
 		@RequestBody request: GetAuthSubtreeDeptsRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<List<DeptResponse>> {
+		log.info(logEndpoint("auth_subtree"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = deptProcessor,
@@ -75,6 +85,8 @@ class DeptController(
 		@RequestBody request: GetAuthTopLevelTreeDeptsRequest,
 		@RequestHeader(name = AUTH) bearerToken: String
 	): BaseResponse<List<DeptResponse>> {
+		log.info(logEndpoint("top_level_tree"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = deptProcessor,
@@ -89,6 +101,8 @@ class DeptController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetDeptByIdDetailsRequest
 	): BaseResponse<DeptDetailsResponse> {
+		log.info(logEndpoint("get_id"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = deptProcessor,
@@ -103,6 +117,8 @@ class DeptController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetDeptByIdRequest
 	): BaseResponse<DeptResponse> {
+		log.info(logEndpoint("get_id_m"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = deptProcessor,
@@ -117,6 +133,8 @@ class DeptController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetAuthDeptRequest
 	): BaseResponse<DeptResponse> {
+		log.info(logEndpoint("get_auth_dept"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = deptProcessor,
@@ -134,6 +152,8 @@ class DeptController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetCurrentDeptsRequest
 	): BaseResponse<List<DeptResponse>> {
+		log.info(logEndpoint("current_list"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = deptProcessor,
@@ -148,6 +168,8 @@ class DeptController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: DeleteDeptRequest
 	): BaseResponse<DeptDetailsResponse> {
+		log.info(logEndpoint("delete"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = deptProcessor,
@@ -164,6 +186,8 @@ class DeptController(
 		@RequestPart("authId") authId: String,
 		@RequestPart("deptId") deptId: String,
 	): BaseResponse<BaseImageResponse> {
+		log.info(logEndpoint("img_add"))
+		log.info(logRequest(deptId))
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = DeptContext().apply { command = DeptCommand.IMG_ADD }
 		return baseImageProcess(
@@ -181,6 +205,8 @@ class DeptController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: DeleteDeptImageRequest
 	): BaseResponse<BaseImageResponse> {
+		log.info(logEndpoint("img_delete"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = deptProcessor,
@@ -202,6 +228,8 @@ class DeptController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: SaveDeptSettingsRequest
 	): BaseResponse<DeptSettings> {
+		log.info(logEndpoint("save_settings"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = deptProcessor,
@@ -222,6 +250,8 @@ class DeptController(
 		@RequestHeader(name = AUTH) bearerToken: String,
 		@RequestBody request: GetDeptSettingsRequest
 	): BaseResponse<DeptSettings> {
+		log.info(logEndpoint("get_settings"))
+		log.info(logRequest(request))
 		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
 		return authProcess(
 			processor = deptProcessor,
@@ -247,5 +277,9 @@ class DeptController(
 //			toTransport = { toTransportUnit() }
 //		)
 //	}
+
+	companion object {
+		private val log: Logger = LoggerFactory.getLogger(DeptController::class.java)
+	}
 
 }

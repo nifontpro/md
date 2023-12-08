@@ -1,5 +1,6 @@
 import org.gradle.kotlin.dsl.java
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 project.version = "1.0.0"
 
@@ -38,6 +39,8 @@ dependencies {
 
 	implementation(project(":ms-shop:domain"))
 	implementation(project(":ms-shop:rest"))
+
+	implementation("net.logstash.logback:logstash-logback-encoder:7.3")
 
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
@@ -80,7 +83,10 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-val jarFileName = "shop.jar"
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
-	this.archiveFileName.set(jarFileName)
+	this.archiveFileName.set("shop.jar")
+}
+
+tasks.withType(BootBuildImage::class) {
+	this.imageName.set("8881981/md_shop:1.0.0")
 }

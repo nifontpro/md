@@ -1,0 +1,88 @@
+version: '3.9'
+
+services:
+
+  server:
+    image: 8881981/md_server:1.0.0
+    container_name: server
+    restart: always
+    networks:
+      - net
+    env_file:
+      - ./.env
+    ports:
+      - "8761:8761"
+    #    volumes:
+    #      - /home/nifont/v1/md/tmp/git-props-msm:/app/tmp/git-props-msm   
+    
+  client:
+    image: 8881981/md_client:1.0.0
+    # container_name: client
+    restart: always
+    depends_on:
+      - server
+    networks:
+      - net
+    env_file:
+      - ./.env
+      - ./.db-env
+      - ./.s3-env
+      - ./.kc-env
+      - ./.smtp-env
+    volumes:
+      - ./files:/files
+    deploy:
+      mode: replicated
+      replicas: 3
+      endpoint_mode: vip
+
+  gallery:
+    image: 8881981/md_gallery:1.0.0
+    container_name: gallery
+    restart: always
+    depends_on:
+      - server
+    networks:
+      - net
+    env_file:
+      - ./.env
+      - ./.db-env
+      - ./.s3-env
+      - ./.kc-env
+ 
+  shop:
+    image: 8881981/md_shop:1.0.0
+    container_name: shop
+    restart: always
+    depends_on:
+      - server
+    networks:
+      - net
+    env_file:
+      - ./.env
+      - ./.db-env
+      - ./.s3-env
+      - ./.kc-env
+
+
+  gateway:
+    image: 8881981/md_gateway:1.0.0
+    container_name: gateway
+    restart: always
+    depends_on:
+      - client
+      - gallery
+      - shop
+    networks:
+      - net
+    env_file:
+      - ./.env
+    ports:
+      - "8765:8765"
+      - "8780:8780"
+    volumes:
+      - /etc/ssl/:/etc/ssl/
+
+networks:
+  net:
+    name: md_net

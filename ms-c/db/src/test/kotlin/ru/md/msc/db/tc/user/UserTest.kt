@@ -3,6 +3,8 @@ package ru.md.msc.db.tc.user
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import ru.md.base_domain.model.BaseOrder
@@ -40,6 +42,11 @@ class UserTest(
 			val set1 = setOf(RoleUser.USER, RoleUser.ADMIN)
 			val set2 = setOf(RoleUser.ADMIN, RoleUser.USER)
 		assertEquals(set1, set2)
+	}
+
+	@Test
+	fun testLog() {
+		log.error("Test from client")
 	}
 
 	@Test
@@ -110,6 +117,10 @@ class UserTest(
 		userRepository.moveUserToArchive(userId = userId)
 		val user = baseUserService.findById(userId = userId)
 		assertEquals(true, user?.archive)
+	}
+
+	companion object {
+		private val log: Logger = LoggerFactory.getLogger(UserTest::class.java)
 	}
 
 }
