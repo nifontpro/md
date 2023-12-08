@@ -128,6 +128,28 @@ class PayController(
 	}
 
 	/**
+	 * Возврат приза Сотрудником или Администратором.
+	 * Для Сотрудника приз должен быть куплен и не выдан.
+	 * Для Админа приз может быть как в состоянии куплен, так и выдан.
+	 * [payDataId] - номер платежной операции при покупке приза
+	 */
+	@PostMapping("return")
+	private suspend fun returnProduct(
+		@RequestBody request: ReturnProductRequest,
+		@RequestHeader(name = AUTH) bearerToken: String
+	): BaseResponse<PayDataResponse> {
+		log.info("Endpoint: return")
+		log.info("Request: $request")
+		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
+		return authProcess(
+			processor = payProcessor,
+			authRequest = baseRequest,
+			fromTransport = { fromTransport(it) },
+			toTransport = { toTransportPayDataResponse() }
+		)
+	}
+
+	/**
 	 * Получение списка платежных данных.
 	 * [userId] - необходимо указать Администратору, счет какого Сотрудника нужно получить,
 	 *    если не указан, выводится собственные платежные данные Сотрудника.

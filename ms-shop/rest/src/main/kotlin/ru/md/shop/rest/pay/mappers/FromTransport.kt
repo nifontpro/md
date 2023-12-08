@@ -45,3 +45,9 @@ fun PayContext.fromTransport(request: UserReturnProductRequest) {
 	payDataId = request.payDataId
 }
 
+fun PayContext.fromTransport(request: ReturnProductRequest) {
+	command = PayCommand.RETURN_PRODUCT
+	authId = request.authId
+	payDataId = request.payDataId
+}
+

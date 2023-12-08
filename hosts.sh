@@ -1,0 +1,1 @@
+ssh nifont@nmedalist.ru

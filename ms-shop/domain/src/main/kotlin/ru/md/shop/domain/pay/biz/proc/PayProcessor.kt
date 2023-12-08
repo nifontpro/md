@@ -11,6 +11,7 @@ import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
 import ru.md.base_domain.dept.biz.validate.validateDeptId
+import ru.md.base_domain.dept.biz.workers.chain.findCompanyDeptIdByOwnerOrAuthUserChain
 import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
 import ru.md.base_domain.user.service.BaseUserService
@@ -19,7 +20,6 @@ import ru.md.cor.chain
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.shop.domain.base.biz.validate.chain.validateProductIdAndAccessToProductChain
-import ru.md.base_domain.dept.biz.workers.chain.findCompanyDeptIdByOwnerOrAuthUserChain
 import ru.md.shop.domain.base.service.BaseProductService
 import ru.md.shop.domain.pay.biz.validate.*
 import ru.md.shop.domain.pay.biz.workers.*
@@ -42,7 +42,7 @@ class PayProcessor(
 
 	companion object {
 
-		private val businessChain = rootChain {
+		private val businessChain = rootChain<PayContext> {
 			initStatus()
 
 			operation("Получит баланс счета сотрудника", PayCommand.GET_USER_PAY) {
@@ -79,18 +79,43 @@ class PayProcessor(
 				validatePayDataId("Проверяем payDataId")
 				getPayDataById("Получаем платежку")
 				validateActivePayData("Проверка выбранной операции на доступность")
-				validatePayDataPayCodeGIVEN("Проверяем состояние операции - GIVEN")
+				validatePayDataPayCodeGIVENorPAY("Проверяем состояние операции - GIVEN")
 				validateAdminAccessToPayData()
 				returnProduct("Возвращаем приз")
 			}
 
-			operation("Возврат приза Админом", PayCommand.USER_RETURN_PRODUCT) {
+			operation("Возврат приза Сотрудником", PayCommand.USER_RETURN_PRODUCT) {
 				validatePayDataId("Проверяем payDataId")
 				getPayDataById("Получаем платежку")
 				validateActivePayData("Проверка выбранной операции на доступность")
 				validatePayDataPayCodePAY("Проверяем состояние операции - PAY")
 				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
 				validatePayDataEqAthUser("Проверка, чтоб операция принадлежала пользователю")
+				returnProduct("Возвращаем приз")
+			}
+
+			operation("Возврат приза", PayCommand.RETURN_PRODUCT) {
+				validatePayDataId("Проверяем payDataId")
+				getPayDataById("Получаем платежку")
+				validateActivePayData("Проверка выбранной операции на доступность")
+				getAuthUserAndVerifyEmail("Проверка авторизованного пользователя по authId")
+				chain {
+					// Возврат совершается самим сотрудником
+					on { payData.user.id == authUser.id }
+					chain {
+						on { !isAuthUserHasAdminRole }
+						validatePayDataPayCodePAY("Проверяем состояние операции - PAY")
+					}
+					chain {
+						on { isAuthUserHasAdminRole }
+						validatePayDataPayCodeGIVENorPAY("Проверяем состояние операции - GIVEN")
+					}
+				}
+				chain {
+					// Возврат совершается другим сотрудником
+					on { payData.user.id != authUser.id }
+					validateAdminAccessToPayData()
+				}
 				returnProduct("Возвращаем приз")
 			}
 
