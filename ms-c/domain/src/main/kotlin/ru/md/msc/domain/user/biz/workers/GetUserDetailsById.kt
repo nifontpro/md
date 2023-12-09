@@ -13,7 +13,6 @@ fun ICorChainDsl<UserContext>.getUserDetailsById(title: String) = worker {
 	on { state == ContextState.RUNNING }
 
 	handle {
-
 		userDetails = userService.findByIdDetails(userId = userId) ?: run {
 			userNotFoundError()
 			return@handle

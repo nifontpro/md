@@ -13,6 +13,8 @@ fun UserDetails.toUserDetailsResponse(): UserDetailsResponse {
 		description = description,
 		schedule = schedule,
 		createdAt = createdAt?.toEpochMilliUTC(),
+		birthDate = birthDate?.toEpochMilliUTC(),
+		jobDate = jobDate?.toEpochMilliUTC(),
 		images = images.map { it.toBaseImageResponse() }
 	)
 }

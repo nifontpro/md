@@ -9,5 +9,7 @@ data class UserDetailsResponse(
 	val description: String? = null,
 	val schedule: String? = null,
 	val createdAt: Long? = null,
+	val birthDate: Long? = null,
+	val jobDate: Long? = null,
 	val images: List<BaseImageResponse> = emptyList(),
 )

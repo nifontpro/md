@@ -34,6 +34,7 @@ import ru.md.msc.domain.user.biz.proc.operation.deleteUserOperation
 import ru.md.msc.domain.user.biz.validate.*
 import ru.md.msc.domain.user.biz.validate.db.validateOwnerByEmailExist
 import ru.md.msc.domain.user.biz.workers.*
+import ru.md.msc.domain.user.biz.workers.event.addBaseEventToUserDetails
 import ru.md.msc.domain.user.biz.workers.event.addOrUpdateUserEvents
 import ru.md.msc.domain.user.biz.workers.excel.addFromExcel
 import ru.md.msc.domain.user.biz.workers.service.addGender
@@ -157,8 +158,8 @@ class UserProcessor(
 					getDeptIdByUserId("Находим отдел для авторизации")
 					validateAuthDeptTopLevelForView("Проверка доступа к чтению данных отдела")
 				}
-
 				getUserDetailsById("Получаем сотрудника")
+				addBaseEventToUserDetails("Добавляем основные события")
 			}
 
 			operation("Добавление изображения", UserCommand.IMG_ADD) {

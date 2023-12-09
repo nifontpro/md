@@ -11,6 +11,8 @@ data class UserDetails(
 	val description: String? = null,
 	val schedule: String? = null,
 	val createdAt: LocalDateTime? = null,
-	var tabId: Long? = null,
+	val tabId: Long? = null,
+	val birthDate: LocalDateTime? = null,
+	val jobDate: LocalDateTime? = null,
 	val images: List<BaseImage> = emptyList(),
 )
