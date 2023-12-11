@@ -7,4 +7,5 @@ data class UpdateMedalRequest(
 	val name: String = "",
 	val score: Int = 1,
 	val description: String? = null,
+	val criteria: String? = null,
 )

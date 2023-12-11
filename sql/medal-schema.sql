@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS rew.medal_details
     medal_id bigint NOT NULL,
     description text COLLATE pg_catalog."default",
     created_at timestamp without time zone NOT NULL DEFAULT now(),
+    criteria text COLLATE pg_catalog."default",
     CONSTRAINT medal_details_pkey PRIMARY KEY (medal_id),
     CONSTRAINT medal_id_fkey FOREIGN KEY (medal_id)
         REFERENCES rew.medal (id) MATCH SIMPLE

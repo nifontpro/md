@@ -11,6 +11,7 @@ import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor
 
 @SpringBootTest(classes = [TestBeans::class])
+
 class ExcelTest(
 	@Autowired private val userProcessor: UserProcessor,
 ) {
@@ -21,7 +22,7 @@ class ExcelTest(
 			authId = 3
 			authEmail = ownerEmail
 			command = UserCommand.ADD_FROM_EXCEL
-			fileUrl = "/Users/nifont/Downloads/users.xlsx"
+			fileUrl = "\$MD_APP/sql/users.xlsx"
 		}
 		userProcessor.exec(userContext)
 
@@ -29,7 +30,7 @@ class ExcelTest(
 			authId = 3
 			authEmail = ownerEmail
 			command = UserCommand.ADD_FROM_EXCEL
-			fileUrl = "/Users/nifont/Downloads/users.xlsx"
+			fileUrl = "\$MD_APP/sql/users.xlsx"
 		}
 		userProcessor.exec(userContext)
 	}

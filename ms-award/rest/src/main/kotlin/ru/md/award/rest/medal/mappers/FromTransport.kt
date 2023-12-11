@@ -38,7 +38,8 @@ fun MedalContext.fromTransport(request: UpdateMedalRequest) {
 
 	medalDetails = MedalDetails(
 		medal = medal,
-		description = request.description
+		description = request.description,
+		criteria = request.criteria
 	)
 }
 
