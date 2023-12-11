@@ -92,6 +92,7 @@ class EventServiceImpl(
 			.toPageResult { it.toBaseEvent() }
 	}
 
+	// При добавлении пагинации - оставить без нее для получения базовых событий
 	override fun getEventsByUser(userId: Long): List<ShortEvent> {
 		return userEventRepository.findByUserId(userId = userId)
 			.map { it.toShortEvent() }

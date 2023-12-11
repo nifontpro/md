@@ -3,9 +3,9 @@ package ru.md.award.db.medal.service
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import ru.md.award.db.medal.model.mapper.toMedalDetails
-import ru.md.award.db.medal.model.mapper.toMedalDetailsEntity
-import ru.md.award.db.medal.model.mapper.toMedalLazy
+import ru.md.award.db.medal.model.mappers.toMedalDetails
+import ru.md.award.db.medal.model.mappers.toMedalDetailsEntity
+import ru.md.award.db.medal.model.mappers.toMedalLazy
 import ru.md.award.db.medal.repo.MedalDetailsRepository
 import ru.md.award.db.medal.repo.MedalRepository
 import ru.md.award.domain.medal.biz.proc.MedalNotFoundException
@@ -38,6 +38,7 @@ class MedalServiceImpl(
 			medalEntity.name = medalDetails.medal.name
 			medalEntity.score = medalDetails.medal.score
 			description = medalDetails.description
+			criteria = medalDetails.criteria
 		}
 
 		return oldMedalDetailsEntity.toMedalDetails()

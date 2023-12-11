@@ -20,6 +20,7 @@ fun ICorChainDsl<MedalContext>.trimFieldMedalDetails(title: String) = worker {
 		medalDetails = medalDetails.copy(
 			medal = medal,
 			description = medalDetails.description?.trim(),
+			criteria = medalDetails.criteria?.trim(),
 			createdAt = LocalDateTime.now()
 		)
 	}

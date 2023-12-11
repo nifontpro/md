@@ -31,7 +31,8 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
 	): Page<UserEntity>
 
 	@EntityGraph("withDept")
-	@Query("""from UserEntity u where u.dept.id in :deptsIds and 
+	@Query("""
+		from UserEntity u where u.dept.id in :deptsIds and 
 		((:notExclude = true) or (u.id not in :usersIds)) and
 		((:filter is null) or (
 			upper(u.lastname) like :filter or 

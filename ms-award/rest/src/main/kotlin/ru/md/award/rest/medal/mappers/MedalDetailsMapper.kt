@@ -8,6 +8,7 @@ import ru.md.base_rest.model.mapper.toBaseImageResponse
 fun MedalDetails.toMedalDetailsResponse() = MedalDetailsResponse(
 	medal = medal,
 	description = description,
+	criteria = criteria,
 	createdAt = createdAt.toEpochMilliUTC(),
 	images = images.map { it.toBaseImageResponse() }
 )

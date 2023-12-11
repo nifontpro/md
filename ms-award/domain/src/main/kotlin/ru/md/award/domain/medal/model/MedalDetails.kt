@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 data class MedalDetails(
 	val medal: Medal = Medal(),
 	val description: String? = null,
+	val criteria: String? = null,
 	val createdAt: LocalDateTime = LocalDateTime.now(),
 	val images: List<BaseImage> = emptyList(),
 )

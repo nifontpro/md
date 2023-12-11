@@ -25,6 +25,8 @@ class MedalDetailsEntity(
 
 	var description: String? = null,
 
+	var criteria: String? = null,
+
 	@Column(name = "created_at")
 	var createdAt: LocalDateTime = defaultDate(),
 

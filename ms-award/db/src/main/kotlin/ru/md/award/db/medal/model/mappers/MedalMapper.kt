@@ -1,4 +1,4 @@
-package ru.md.award.db.medal.model.mapper
+package ru.md.award.db.medal.model.mappers
 
 import ru.md.award.db.medal.model.MedalEntity
 import ru.md.award.domain.medal.model.Medal

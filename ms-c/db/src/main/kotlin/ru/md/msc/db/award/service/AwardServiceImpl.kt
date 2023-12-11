@@ -54,6 +54,7 @@ class AwardServiceImpl(
 		}
 		with(oldAwardDetailsEntity) {
 			award.name = awardDetails.award.name
+			award.score = awardDetails.award.score
 			award.description = awardDetails.award.description
 			award.type = awardDetails.award.type
 			award.startDate = awardDetails.award.startDate

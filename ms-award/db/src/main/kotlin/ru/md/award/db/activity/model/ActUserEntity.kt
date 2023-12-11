@@ -6,16 +6,13 @@ import java.util.*
 @Entity
 @Table(name = "act_user", schema = "rew", catalog = "medalist")
 class ActUserEntity {
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	@Column(name = "id")
-	var id: Long = 0
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	var id: Long? = null
 
-	@Basic
 	@Column(name = "act_id")
 	var actId: Long = 0
 
-	@Basic
 	@Column(name = "user_id")
 	var userId: Long = 0
 	override fun equals(other: Any?): Boolean {

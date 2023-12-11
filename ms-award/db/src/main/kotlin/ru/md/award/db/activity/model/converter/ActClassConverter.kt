@@ -1,8 +1,8 @@
-package ru.md.award.db.medal.model.converter
+package ru.md.award.db.activity.model.converter
 
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter
-import ru.md.award.domain.medal.model.ActClass
+import ru.md.award.domain.activity.model.ActClass
 
 @Converter(autoApply = true)
 class ActClassConverter : AttributeConverter<ActClass, String> {

@@ -1,4 +1,4 @@
-package ru.md.award.domain.medal.model
+package ru.md.award.domain.activity.model
 
 enum class ActClass(val code: String) {
 	INSTANT("I"),
