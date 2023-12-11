@@ -70,8 +70,8 @@ class AwardEntity(
 		joinColumns = [JoinColumn(name = "award_id")],
 		inverseJoinColumns = [JoinColumn(name = "user_id")]
 	)
-	@WhereJoinTable(clause = "is_activ=true and action_code='A'")
-//	@SQLJoinTableRestriction("is_activ=true and action_code='A'")
+//	@WhereJoinTable(clause = "is_activ=true and action_code='A'")
+	@SQLJoinTableRestriction("is_activ=true and action_code='A'")
 	val users: List<UserEntity> = emptyList(),
 ) {
 	override fun equals(other: Any?): Boolean {
