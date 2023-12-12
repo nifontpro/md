@@ -17,7 +17,6 @@ import ru.md.msc.db.event.model.mappers.toShortEvent
 import ru.md.msc.db.event.model.mappers.toUserEvent
 import ru.md.msc.db.event.repo.DeptEventRepository
 import ru.md.msc.db.event.repo.UserEventRepository
-import ru.md.msc.domain.base.biz.BaseClientContext
 import ru.md.msc.domain.event.biz.proc.EventNotFoundException
 import ru.md.msc.domain.event.model.BaseEvent
 import ru.md.msc.domain.event.model.ShortEvent
@@ -117,13 +116,20 @@ class EventServiceImpl(
 		userEventRepository.deleteById(eventId)
 	}
 
+	override fun deleteByUserIdAndEventName(
+		userId: Long,
+		eventName: String
+	) {
+		userEventRepository.deleteByUserIdAndEventName(userId = userId, eventName = eventName)
+	}
+
 	override fun deleteDeptEventById(eventId: Long) {
 		deptEventRepository.deleteById(eventId)
 	}
 
 	companion object {
 		@Suppress("unused")
-		val log: Logger = LoggerFactory.getLogger(BaseClientContext::class.java)
+		val log: Logger = LoggerFactory.getLogger(EventServiceImpl::class.java)
 	}
 
 }

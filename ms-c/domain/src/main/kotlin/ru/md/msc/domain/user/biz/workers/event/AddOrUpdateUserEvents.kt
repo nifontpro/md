@@ -10,7 +10,7 @@ import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.userEventError
 import java.time.LocalDateTime
 
-fun ICorChainDsl<UserContext>.addOrUpdateUserEvents(title: String) = worker {
+internal fun ICorChainDsl<UserContext>.addOrUpdateUserEvents(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
@@ -33,5 +33,7 @@ private fun UserContext.addEvent(eventDate: LocalDateTime?, eventName: String) {
 			userId = userId
 		)
 		eventService.addOrUpdateUserEvent(userEvent)
+	} ?: run {
+		eventService.deleteByUserIdAndEventName(userId = userId, eventName = eventName)
 	}
 }

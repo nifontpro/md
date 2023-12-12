@@ -25,9 +25,8 @@ class EmailServiceImpl(
 			setSmtpPort(port.toInt())
 			setAuthenticator(DefaultAuthenticator(username, password))
 			isSSLOnConnect = ssl
-//			setStartTLSEnabled(true)
 			setFrom(fromEmail, fromName)
-			subject = fromSubject
+			subject = "Награждение"
 			setMsg(message)
 			addTo(toEmail)
 			send()
@@ -51,13 +50,13 @@ class EmailServiceImpl(
 			setSmtpPort(port.toInt())
 			setAuthenticator(DefaultAuthenticator(username, password))
 			isSSLOnConnect = ssl
-//			setStartTLSEnabled(true)
 			setFrom(fromEmail, fromName)
 			subject = fromSubject
 			setMsg(message)
 			addTo(toEmail)
 		}
 
+		email.setCharset("UTF-8")
 		email.attach(attachment)
 		email.send()
 	}
@@ -68,9 +67,8 @@ class EmailServiceImpl(
 			setSmtpPort(port.toInt())
 			setAuthenticator(DefaultAuthenticator(username, password))
 			isSSLOnConnect = ssl
-//			setStartTLSEnabled(true)
 			setFrom(fromEmail, fromName)
-			subject = fromSubject
+			subject = "Награждение"
 			addTo(toEmail)
 		}
 

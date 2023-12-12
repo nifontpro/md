@@ -165,9 +165,13 @@ class UserServiceImpl(
 	}
 
 	private fun addRolesToUserEntity(
-		userDetails: UserDetails,
-		userDetailsEntity: UserDetailsEntity
+		userDetails: UserDetails, //new
+		userDetailsEntity: UserDetailsEntity //old
 	) {
+		val newRoles = userDetails.user.roles
+		val oldRoles = userDetailsEntity.user.roles.map { it.roleUser }.toSet()
+		if (newRoles == oldRoles) return
+
 		val roles = userDetails.user.roles.map { roleEnum ->
 			RoleEntity(roleUser = roleEnum, user = userDetailsEntity.user)
 		}
@@ -423,9 +427,5 @@ class UserServiceImpl(
 	override fun getGenderByName(firstname: String, lastname: String): Gender {
 		return userDetailsRepository.getGenderByName(firstname = firstname, lastname = lastname).toGender()
 	}
-
-//	companion object {
-//		val log: Logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
-//	}
 
 }

@@ -18,4 +18,5 @@ interface EventService {
 	fun deleteDeptEventById(eventId: Long)
 	fun addOrUpdateUserEvent(userEvent: UserEvent): UserEvent
 	fun addUserEvent(userEvent: UserEvent): UserEvent
+	fun deleteByUserIdAndEventName(userId: Long, eventName: String)
 }

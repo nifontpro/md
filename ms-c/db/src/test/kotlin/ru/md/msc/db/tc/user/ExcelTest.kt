@@ -22,7 +22,7 @@ class ExcelTest(
 			authId = 3
 			authEmail = ownerEmail
 			command = UserCommand.ADD_FROM_EXCEL
-			fileUrl = "\$MD_APP/sql/users.xlsx"
+			fileUrl = "/Users/nifont/IdeaProjects/md/sql/users.xlsx"
 		}
 		userProcessor.exec(userContext)
 
@@ -30,7 +30,7 @@ class ExcelTest(
 			authId = 3
 			authEmail = ownerEmail
 			command = UserCommand.ADD_FROM_EXCEL
-			fileUrl = "\$MD_APP/sql/users.xlsx"
+			fileUrl = "/Users/nifont/IdeaProjects/md/sql/users.xlsx"
 		}
 		userProcessor.exec(userContext)
 	}

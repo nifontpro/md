@@ -28,4 +28,6 @@ interface UserEventRepository : JpaRepository<UserEventEntity, Long> {
 		eventName: String
 	): UserEventEntity?
 
+	fun deleteByUserIdAndEventName(userId: Long, eventName: String)
+
 }

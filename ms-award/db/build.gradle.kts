@@ -24,8 +24,6 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
 	mavenCentral()
-//	maven { url = uri("https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates") }
-//	maven { url = uri("https://repo.spring.io/milestone") }
 }
 
 val springCloudVersion: String by project
@@ -86,11 +84,6 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-//tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
 tasks.withType(BootJar::class) {
 	this.archiveFileName.set("medal.jar")
 }
-//
-//tasks.withType(BootBuildImage::class) {
-//	imageName.set("")
-//}
