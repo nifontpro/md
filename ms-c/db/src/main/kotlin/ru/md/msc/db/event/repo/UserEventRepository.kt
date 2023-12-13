@@ -23,6 +23,9 @@ interface UserEventRepository : JpaRepository<UserEventEntity, Long> {
 	)
 	fun findByUserId(userId: Long): List<IShortEvent>
 
+	@Query("""
+		from UserEventEntity e where e.userId=:userId and e.eventName like :eventName
+	""")
 	fun findByUserIdAndEventName(
 		userId: Long,
 		eventName: String

@@ -198,26 +198,17 @@ class UserServiceImpl(
 		}
 	}
 
-	override fun findIdByFullNameAndDeptsIds(
+	@Transactional
+	override fun findByFullNameAndDeptsIds(
 		fullName: FullName,
 		deptsIds: List<Long>
 	): UserDetails? {
-		return userDetailsRepository.findIdByFullNameAndDeptsIds(
+		return userDetailsRepository.findByFullNameAndDeptsIds(
 			firstname = fullName.firstName,
 			lastName = fullName.lastName,
 			patronymic = fullName.patronymic,
 			deptsIds = deptsIds
-		).firstOrNull()?.toUserDetailsLazy()
-	}
-
-	override fun findIdByTabIdAndDeptId(
-		tabId: Long,
-		deptId: Long
-	): UserDetails? {
-		return userDetailsRepository.findIdByTabIdAndDeptId(
-			tabId = tabId,
-			deptId = deptId
-		).firstOrNull()?.toUserDetailsLazy()
+		).firstOrNull()?.toUserDetailsWithRoles()
 	}
 
 	@Transactional

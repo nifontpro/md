@@ -22,6 +22,7 @@ class BaseS3RepositoryImpl(
 
 	val log: Logger = LoggerFactory.getLogger(BaseS3RepositoryImpl::class.java)
 
+	// https://stackoverflow.com/questions/8351886/amazons3-putobject-with-inputstream-length-example
 	override suspend fun putObject(key: String, fileUrl: String): String? {
 		return try {
 			withContext(Dispatchers.IO) {

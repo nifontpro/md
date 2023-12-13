@@ -11,8 +11,8 @@ import ru.md.msc.domain.user.model.UserAward
 import ru.md.msc.domain.user.model.UserDetails
 import ru.md.msc.domain.user.model.UserSettings
 import ru.md.msc.domain.user.model.excel.LoadReport
-import ru.md.msc.domain.user.model.excel.UpdateKey
 import ru.md.msc.domain.user.service.GenderService
+import java.io.InputStream
 import java.time.LocalDateTime
 
 class UserContext : BaseClientContext() {
@@ -28,9 +28,11 @@ class UserContext : BaseClientContext() {
 	// for exclude award:
 	var actionType: ActionType? = null
 	var hasOwnerRole: Boolean = false
+
+	// add excel:
 	var fileUrl: String = ""
+	var inputStream: InputStream? = null
 	var loadReport: LoadReport = LoadReport()
-	var updateKey: UpdateKey = UpdateKey.USER_FIO
 
 	var birthDate: LocalDateTime? = null
 	var jobDate: LocalDateTime? = null

@@ -55,5 +55,6 @@ internal fun UserContext.addOrUpdateUserEvent(
 			userErrors.add(parseDateError(field = it.field, date = it.text))
 		}
 	}
+
 	return isUpdate
 }

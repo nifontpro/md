@@ -33,4 +33,8 @@ class UserEventEntity(
 	override fun hashCode(): Int {
 		return Objects.hash(id, eventDate, userId, eventName)
 	}
+
+	override fun toString(): String {
+		return "UserEventEntity {id: $id, eventName: $eventName, date: $eventDate, userId: $userId}"
+	}
 }

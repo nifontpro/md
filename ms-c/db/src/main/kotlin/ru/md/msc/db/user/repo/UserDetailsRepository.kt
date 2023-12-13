@@ -24,29 +24,11 @@ interface UserDetailsRepository : JpaRepository<UserDetailsEntity, Long> {
 		u.user.dept.id in :deptsIds
 	"""
 	)
-	fun findIdByFullNameAndDeptsIds(
+	fun findByFullNameAndDeptsIds(
 		firstname: String,
 		lastName: String,
 		patronymic: String,
 		deptsIds: List<Long>
 	): List<UserDetailsEntity>
-
-	@Query(
-		"""
-		from UserDetailsEntity d 
-		where d.tabId=:tabId and d.user.dept.id=:deptId
-	"""
-	)
-	fun findIdByTabIdAndDeptId(
-		tabId: Long,
-		deptId: Long
-	): List<UserDetailsEntity>
-
-//	@EntityGraph("withUser")
-//	@Query("""
-//		from UserDetailsEntity u where u.user.dept.id=:deptId and
-//		u.user.authEmail=:authEmail
-//	""")
-//	fun findByDeptIdAndAuthEmail(deptId: Long, authEmail: String): UserDetailsEntity?
 
 }

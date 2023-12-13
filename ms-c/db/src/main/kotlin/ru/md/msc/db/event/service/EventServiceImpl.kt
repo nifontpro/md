@@ -52,6 +52,7 @@ class EventServiceImpl(
 	}
 
 	override fun addOrUpdateUserEvent(userEvent: UserEvent): UserEvent {
+		log.info("New User Event (Excel): $userEvent")
 		val userEventEntity = userEventRepository.findByUserIdAndEventName(
 			userId = userEvent.userId,
 			eventName = userEvent.eventName
@@ -62,16 +63,17 @@ class EventServiceImpl(
 				userId = userEvent.userId,
 			)
 			userEventRepository.save(newUserEventEntity)
+			log.info("Add new event: $newUserEventEntity")
 			return newUserEventEntity.toUserEvent(isUpdate = false)
 		}
-
+		log.info("Old User Event (DB): $userEventEntity")
 		val isUpdate = if (userEventEntity.eventDate != userEvent.eventDate) {
 			userEventEntity.eventDate = userEvent.eventDate
 			true
 		} else {
 			false
 		}
-
+		log.info("Event isUpdate: $isUpdate")
 		return userEventEntity.toUserEvent(isUpdate = isUpdate)
 	}
 

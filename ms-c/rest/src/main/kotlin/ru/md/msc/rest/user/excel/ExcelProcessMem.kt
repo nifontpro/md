@@ -5,24 +5,22 @@ import ru.md.base_domain.model.BaseResponse
 import ru.md.base_domain.model.baseResponse
 import ru.md.base_rest.base.emailNotVerified
 import ru.md.base_rest.base.fileContentTypeError
-import ru.md.base_rest.base.fileSaveError
 import ru.md.base_rest.utils.AuthData
 import ru.md.msc.domain.user.biz.proc.UserCommand
 import ru.md.msc.domain.user.biz.proc.UserContext
 import ru.md.msc.domain.user.biz.proc.UserProcessor
 import ru.md.msc.domain.user.model.excel.LoadReport
-import ru.md.msc.domain.user.model.excel.UpdateKey
-import java.io.File
+import java.io.ByteArrayInputStream
+import java.io.InputStream
 
 private val mimes = listOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 
-suspend fun excelProcess(
+suspend fun excelProcessMem(
 	authData: AuthData,
 	processor: UserProcessor,
 	multipartFile: MultipartFile,
 	authId: Long,
 	deptId: Long,
-	updateKey: UpdateKey,
 ): BaseResponse<LoadReport> {
 	val context = UserContext().apply {
 		command = UserCommand.ADD_FROM_EXCEL
@@ -35,29 +33,16 @@ suspend fun excelProcess(
 	context.authEmail = authData.email
 
 	val contentType = multipartFile.contentType
-	if (mimes.find { it ==contentType } == null) {
+	if (mimes.find { it == contentType } == null) {
 		context.fileContentTypeError(contentType ?: "", "Загружаемый файл должен быть таблицей Excel")
 		return BaseResponse.error(errors = context.errors)
 	}
 
-	val fileUrl = try {
-		saveExcelFile(multipartFile = multipartFile)
-	} catch (e: Exception) {
-		when (e) {
-			is FileSaveException -> context.fileSaveError(e.message)
-			else -> context.fileSaveError()
-		}
-		return BaseResponse.error(errors = context.errors)
-	}
+	val inputStream: InputStream = ByteArrayInputStream(multipartFile.bytes)
 
 	context.authId = authId
 	context.deptId = deptId
-	context.fileUrl = fileUrl
-	context.updateKey = updateKey
-
-	context.log.info("--> updateKey: $updateKey")
-
+	context.inputStream = inputStream
 	processor.exec(context)
-	File(fileUrl).delete()
 	return context.baseResponse(data = context.loadReport)
 }
