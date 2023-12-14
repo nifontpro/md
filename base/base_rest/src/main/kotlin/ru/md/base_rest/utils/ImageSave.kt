@@ -51,8 +51,6 @@ fun saveImageFile(multipartFile: MultipartFile, entityId: Long = 0, compress: Bo
 			resizedMiniImage.flush()
 		}
 
-		println("Image width: ${originalImage.width}")
-
 		if (originalImage.width > NORM_COMPRESS_IMAGE_SIZE) {
 			val resizedNormImage = try {
 				Scalr.resize(originalImage, NORM_COMPRESS_IMAGE_SIZE)

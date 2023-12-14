@@ -1,6 +1,7 @@
 package ru.md.base_s3.repo
 
 import com.amazonaws.services.s3.AmazonS3
+import com.amazonaws.services.s3.model.ObjectMetadata
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -13,6 +14,7 @@ import ru.md.base_domain.image.model.IBaseImage
 import ru.md.base_domain.image.model.ImageType
 import ru.md.base_domain.s3.repo.BaseS3Repository
 import java.io.File
+import java.io.InputStream
 
 @Repository
 class BaseS3RepositoryImpl(
@@ -33,6 +35,23 @@ class BaseS3RepositoryImpl(
 		} catch (e: Exception) {
 			log.error(e.message)
 			null
+		}
+	}
+
+	override suspend fun putObjectIs(
+		key: String,
+		imageName: String,
+		contentType: String,
+		data: Pair<InputStream, Int>
+	): String {
+		return withContext(Dispatchers.IO) {
+			val metadata = ObjectMetadata().apply {
+				setContentType(contentType)
+				contentLength = data.second.toLong()
+				setHeader("filename", imageName)
+			}
+			s3.putObject(bucketName, key, data.first, metadata)
+			s3.getUrl(bucketName, key).toExternalForm() ?: throw Exception()
 		}
 	}
 

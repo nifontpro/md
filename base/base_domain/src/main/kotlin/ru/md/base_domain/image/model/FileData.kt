@@ -8,7 +8,6 @@ data class FileData(
 	val filename: String = "",
 	val fileExtension: String = "",
 	val size: Long = 0,
-	val system: Boolean = false, // Признак системного изображения
 	val compress: Boolean = true, // Сжималось ли изображение
 	val normCompress: Boolean = true, // Сжималось ли изображение до нормального размера
 )

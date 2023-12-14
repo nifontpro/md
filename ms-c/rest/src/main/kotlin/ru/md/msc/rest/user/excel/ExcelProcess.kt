@@ -1,5 +1,7 @@
 package ru.md.msc.rest.user.excel
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.model.BaseResponse
 import ru.md.base_domain.model.baseResponse
@@ -15,7 +17,7 @@ import java.io.InputStream
 
 private val mimes = listOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 
-suspend fun excelProcessMem(
+suspend fun excelProcess(
 	authData: AuthData,
 	processor: UserProcessor,
 	multipartFile: MultipartFile,
@@ -44,5 +46,8 @@ suspend fun excelProcessMem(
 	context.deptId = deptId
 	context.inputStream = inputStream
 	processor.exec(context)
+	withContext(Dispatchers.IO) {
+		context.inputStream?.close()
+	}
 	return context.baseResponse(data = context.loadReport)
 }

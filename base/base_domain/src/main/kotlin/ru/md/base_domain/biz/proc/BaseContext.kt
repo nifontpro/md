@@ -3,6 +3,7 @@ package ru.md.base_domain.biz.proc
 import ru.md.base_domain.biz.helper.ContextError
 import ru.md.base_domain.client.MicroClient
 import ru.md.base_domain.image.model.FileData
+import ru.md.base_domain.image.model.ImageData
 import ru.md.base_domain.model.BaseQuery
 import ru.md.base_domain.model.PageInfo
 
@@ -13,6 +14,7 @@ abstract class BaseContext(
 
 	var authEmail: String = "",
 	var fileData: FileData = FileData(),
+	var imageData: ImageData = ImageData(),
 	var pageInfo: PageInfo? = null,
 	var baseQuery: BaseQuery = BaseQuery(),
 	var orderFields: List<String> = emptyList(), // Допустимые поля для сортировки
