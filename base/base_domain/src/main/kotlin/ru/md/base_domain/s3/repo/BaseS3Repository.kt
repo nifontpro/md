@@ -8,5 +8,5 @@ interface BaseS3Repository {
 	suspend fun putObject(key: String, fileUrl: String): String?
 	suspend fun deleteBaseImage(entity: IBaseImage)
 	suspend fun deleteImages(images: List<IBaseImage>)
-	suspend fun putObjectIs(key: String, imageName: String, contentType: String, data: Pair<InputStream, Int>): String
+	suspend fun putObjectMem(key: String, imageName: String, contentType: String, data: Pair<InputStream, Int>): String
 }

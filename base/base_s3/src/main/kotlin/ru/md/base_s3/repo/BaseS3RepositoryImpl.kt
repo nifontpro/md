@@ -38,7 +38,7 @@ class BaseS3RepositoryImpl(
 		}
 	}
 
-	override suspend fun putObjectIs(
+	override suspend fun putObjectMem(
 		key: String,
 		imageName: String,
 		contentType: String,

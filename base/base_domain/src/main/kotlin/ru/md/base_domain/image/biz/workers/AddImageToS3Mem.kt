@@ -17,7 +17,7 @@ fun <T : BaseMedalsContext> ICorChainDsl<T>.addImageToS3Mem(title: String) = wor
 
 		val originKey = "$prefixUrl/${imageData.imageName}"
 		val originUrl = imageData.originImage?.let {
-			baseS3Repository.putObjectIs(
+			baseS3Repository.putObjectMem(
 				key = originKey,
 				imageName = imageData.imageName,
 				contentType = imageData.contentType,
@@ -37,7 +37,7 @@ fun <T : BaseMedalsContext> ICorChainDsl<T>.addImageToS3Mem(title: String) = wor
 		if (fileData.compress) {
 			val miniKey = "$prefixUrl/mini/${imageData.imageName}"
 			val miniUrl = imageData.miniImage?.let {
-				baseS3Repository.putObjectIs(
+				baseS3Repository.putObjectMem(
 					key = miniKey,
 					imageName = imageData.imageName,
 					contentType = imageData.contentType,
@@ -52,7 +52,7 @@ fun <T : BaseMedalsContext> ICorChainDsl<T>.addImageToS3Mem(title: String) = wor
 			if (fileData.normCompress) {
 				val normalKey = "$prefixUrl/normal/${imageData.imageName}"
 				val normalUrl = imageData.normalImage?.let {
-					baseS3Repository.putObjectIs(
+					baseS3Repository.putObjectMem(
 						key = normalKey,
 						imageName = imageData.imageName,
 						contentType = imageData.contentType,

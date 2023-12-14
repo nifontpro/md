@@ -18,9 +18,9 @@ import ru.md.base_domain.client.MicroClient
 import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.base_domain.image.biz.validate.validateImageId
-import ru.md.base_domain.image.biz.workers.addImageToS3
-import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
+import ru.md.base_domain.image.biz.workers.addImageToS3Mem
 import ru.md.base_domain.image.biz.workers.deleteAllBaseImagesFromS3
+import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
 import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
 import ru.md.base_domain.user.service.BaseUserService
@@ -82,10 +82,10 @@ class MedalProcessor(
 			}
 
 			operation("Добавление изображения", MedalCommand.IMG_ADD) {
-				worker("Получение id сущности") { medalId = fileData.entityId }
+				worker("Получение id сущности") { medalId = imageData.entityId }
 				validateMedalIdAndAccessToMedalChain()
 				prepareMedalImagePrefixUrl("Получаем префикс изображения")
-				addImageToS3("Сохраняем изображение в s3")
+				addImageToS3Mem("Сохраняем изображение в s3")
 				addMedalImageToDb("Сохраняем ссылки на изображение в БД")
 				updateMedalMainImage("Обновление основного изображения")
 				deleteS3ImageOnFailingChain()

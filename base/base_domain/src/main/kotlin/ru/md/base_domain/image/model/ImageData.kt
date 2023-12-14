@@ -4,7 +4,7 @@ import java.io.InputStream
 
 data class ImageData(
 	val entityId: Long = 0, // id сущности, например сотрудника
-	val normalImage: Pair<InputStream, Int>? = null, // нормализованное изображение
+	val normalImage: Pair<InputStream, Int>? = null, // нормализованное изображение <is,size>
 	val miniImage: Pair<InputStream, Int>? = null, // мини
 	val originImage: Pair<InputStream, Int>? = null, // оригинальное
 	val imageName: String = "",

@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile
 import ru.md.base_domain.model.BaseResponse
 import ru.md.base_rest.base.authProcess
 import ru.md.base_rest.base.toLongOr0
-import ru.md.base_rest.image.baseImageProcess
+import ru.md.base_rest.image.baseImageProcessMem
 import ru.md.base_rest.logEndpoint
 import ru.md.base_rest.logRequest
 import ru.md.base_rest.model.mapper.toTransportBaseImageResponse
@@ -217,7 +217,7 @@ class UserController(
 		log.info(logRequest(userId))
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
 		val context = UserContext().apply { command = UserCommand.IMG_ADD }
-		return baseImageProcess(
+		return baseImageProcessMem(
 			authData = authData,
 			context = context,
 			processor = userProcessor,
