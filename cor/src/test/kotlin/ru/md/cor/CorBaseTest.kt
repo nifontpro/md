@@ -1,8 +1,7 @@
-package ru.otus
+package ru.md.cor
 
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
-import ru.md.cor.*
 import ru.md.cor.handlers.CorChain
 import ru.md.cor.handlers.CorWorker
 import ru.md.cor.handlers.executeSequential
@@ -166,18 +165,4 @@ class CorBaseTest {
 
 private fun ICorChainDsl<TestContext>.printResult() = worker(title = "Print example") {
 	println("some = $some")
-}
-
-
-data class TestContext(
-	var status: CorStatuses = CorStatuses.NONE,
-	var some: Int = 0,
-	var history: String = "",
-)
-
-enum class CorStatuses {
-	NONE,
-	RUNNING,
-	FAILING,
-	ERROR
 }

@@ -8,12 +8,18 @@ import ru.md.base_domain.image.model.ImageType
 import ru.md.cor.ICorChainDsl
 import ru.md.cor.worker
 
-fun <T : BaseMedalsContext> ICorChainDsl<T>.addImageToS3Mem(title: String) = worker {
+fun <T : BaseMedalsContext> ICorChainDsl<T>.addImageToS3(title: String) = worker {
 
 	this.title = title
 	on { state == ContextState.RUNNING }
 
 	handle {
+
+		log.info("imageData.compress = ${imageData.compress}")
+		log.info("imageData.normCompress = ${imageData.normCompress}")
+		log.info("imageData.originImage.size = ${imageData.originImage?.second}")
+		log.info("imageData.normalImage.size = ${imageData.normalImage?.second}")
+		log.info("imageData.miniImage.size = ${imageData.miniImage?.second}")
 
 		val originKey = "$prefixUrl/${imageData.imageName}"
 		val originUrl = imageData.originImage?.let {
@@ -34,7 +40,7 @@ fun <T : BaseMedalsContext> ICorChainDsl<T>.addImageToS3Mem(title: String) = wor
 			type = ImageType.USER
 		)
 
-		if (fileData.compress) {
+		if (imageData.compress) {
 			val miniKey = "$prefixUrl/mini/${imageData.imageName}"
 			val miniUrl = imageData.miniImage?.let {
 				baseS3Repository.putObjectMem(
@@ -49,7 +55,8 @@ fun <T : BaseMedalsContext> ICorChainDsl<T>.addImageToS3Mem(title: String) = wor
 				miniUrl = miniUrl,
 				miniKey = miniKey,
 			)
-			if (fileData.normCompress) {
+
+			if (imageData.normCompress) {
 				val normalKey = "$prefixUrl/normal/${imageData.imageName}"
 				val normalUrl = imageData.normalImage?.let {
 					baseS3Repository.putObjectMem(

@@ -13,7 +13,7 @@ import ru.md.base_domain.dept.biz.workers.chain.findCompanyDeptIdByOwnerOrAuthUs
 import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.base_domain.image.biz.validate.validateImageId
-import ru.md.base_domain.image.biz.workers.addImageToS3Mem
+import ru.md.base_domain.image.biz.workers.addImageToS3
 import ru.md.base_domain.image.biz.workers.deleteAllBaseImagesFromS3
 import ru.md.base_domain.image.biz.workers.deleteBaseImageFromS3
 import ru.md.base_domain.s3.repo.BaseS3Repository
@@ -120,7 +120,7 @@ class DeptProcessor(
 				worker("Получение id сущности") { deptId = imageData.entityId }
 				validateDeptIdAndAdminDeptLevelChain()
 				prepareDeptImagePrefixUrl("Получаем префикс изображения")
-				addImageToS3Mem("Сохраняем изображение в s3")
+				addImageToS3("Сохраняем изображение в s3")
 				addDeptImageToDb("Добавляем картинку в БД")
 				updateDeptMainImage("Обновление основного изображения")
 				deleteS3ImageOnFailingChain()

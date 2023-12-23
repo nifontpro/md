@@ -52,6 +52,7 @@ fun compressImage(
 		}
 		originalImage.flush()
 	}
+
 	return ImageData(
 		entityId = entityId,
 		normalImage = normIs,

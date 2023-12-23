@@ -12,7 +12,7 @@ import ru.md.base_domain.dept.biz.workers.chain.findCompanyDeptIdByOwnerOrAuthUs
 import ru.md.base_domain.dept.service.BaseDeptService
 import ru.md.base_domain.image.biz.chain.deleteS3ImageOnFailingChain
 import ru.md.base_domain.image.biz.validate.validateImageId
-import ru.md.base_domain.image.biz.workers.addImageToS3Mem
+import ru.md.base_domain.image.biz.workers.addImageToS3
 import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.base_domain.user.biz.workers.getAuthUserAndVerifyEmail
 import ru.md.base_domain.user.service.BaseUserService
@@ -90,7 +90,7 @@ class ProductProcessor(
 				worker("Получение id сущности") { productId = imageData.entityId }
 				validateProductIdAndAdminAccessToProductChain()
 				prepareProductImagePrefixUrl("Получаем префикс изображения")
-				addImageToS3Mem("Сохраняем изображение в s3")
+				addImageToS3("Сохраняем изображение в s3")
 				addProductImageToDb("Сохраняем ссылки на изображение в БД")
 				updateProductMainImage("Обновление основного изображения")
 				deleteS3ImageOnFailingChain()
@@ -108,7 +108,7 @@ class ProductProcessor(
 				worker("Получение id сущности") { productId = imageData.entityId }
 				validateProductIdAndAdminAccessToProductChain()
 				prepareProductSecondImagePrefixUrl("Получаем префикс изображения")
-				addImageToS3Mem("Сохраняем изображение в s3")
+				addImageToS3("Сохраняем изображение в s3")
 				addProductSecondImageToDb("Сохраняем ссылки на изображение в БД")
 				deleteS3ImageOnFailingChain()
 				getProductDetailsById("Получаем приз")

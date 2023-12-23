@@ -168,17 +168,27 @@ class UserServiceImpl(
 		userDetails: UserDetails, //new
 		userDetailsEntity: UserDetailsEntity //old
 	) {
-		val newRoles = userDetails.user.roles
-		val oldRoles = userDetailsEntity.user.roles.map { it.roleUser }.toSet()
-		if (newRoles == oldRoles) return
-
-		val roles = userDetails.user.roles.map { roleEnum ->
+		val newRoles = userDetails.user.roles.map { roleEnum ->
 			RoleEntity(roleUser = roleEnum, user = userDetailsEntity.user)
 		}
-//		userDetailsEntity.user?.roles = roles.toMutableList()
-		userDetailsEntity.user.roles.apply {
-			removeAll { true }
-			addAll(roles)
+
+		with(userDetailsEntity.user.roles) {
+			// this - oldRoles
+			var delRole: RoleEntity? = null
+			this.forEach { oldRole ->
+				newRoles.find { newRole -> oldRole.roleUser == newRole.roleUser } ?: run {
+					delRole = oldRole
+				}
+			}
+			delRole?.let { this.remove(it) }
+
+			var addRole: RoleEntity? = null
+			newRoles.forEach { newRole ->
+				this.find { oldRole -> oldRole.roleUser == newRole.roleUser } ?: run {
+					addRole = newRole
+				}
+			}
+			addRole?.let { this.add(it) }
 		}
 	}
 
