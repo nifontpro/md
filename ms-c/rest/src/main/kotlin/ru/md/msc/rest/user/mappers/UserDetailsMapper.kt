@@ -15,6 +15,7 @@ fun UserDetails.toUserDetailsResponse(): UserDetailsResponse {
 		createdAt = createdAt?.toEpochMilliUTC(),
 		birthDate = birthDate?.toEpochMilliUTC(),
 		jobDate = jobDate?.toEpochMilliUTC(),
-		images = images.map { it.toBaseImageResponse() }
+		images = images.map { it.toBaseImageResponse() },
+//				images = images.map(BaseImage::toBaseImageResponse)
 	)
 }

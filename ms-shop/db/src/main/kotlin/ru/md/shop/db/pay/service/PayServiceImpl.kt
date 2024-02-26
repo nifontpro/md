@@ -1,6 +1,8 @@
 package ru.md.shop.db.pay.service
 
 import jakarta.transaction.Transactional
+import org.springframework.beans.factory.config.ConfigurableBeanFactory
+import org.springframework.context.annotation.Scope
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.md.base_db.base.mapper.toPageRequest
@@ -29,6 +31,7 @@ import ru.md.shop.domain.product.biz.proc.ProductNotFoundException
 import java.time.LocalDateTime
 
 @Service
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 class PayServiceImpl(
 //	private val userPayRepo: UserPayRepo,
 	private val baseUserPayRepo: BaseUserPayRepo,

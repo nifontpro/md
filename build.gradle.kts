@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") apply false
-    id("io.spring.dependency-management")  apply false
+    id("io.spring.dependency-management") apply false
 }
 
 allprojects {
