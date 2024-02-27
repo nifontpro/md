@@ -11,7 +11,7 @@ import java.util.*
 class FemaleEntity(
 
 	@Id
-	@Column(name = "name")
+	@Column(name = "firstname")
 	val name: String
 
 ) {

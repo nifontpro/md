@@ -15,14 +15,14 @@ fun ICorChainDsl<UserContext>.addGender(title: String) = worker {
 
 	handle {
 //		val file = File("/Users/nifont/prog/less/ru-names/lists/male_names_rus.txt")
-		//		val file = File("/Users/nifont/prog/less/ru-names/lists/female_names_rus.txt")
-		val file = File("/Users/nifont/prog/less/ru-names/lists/male_surnames_rus.txt")
+		val file = File("/Users/nifont/prog/less/ru-names/lists/female_names_rus.txt")
+//		val file = File("/Users/nifont/prog/less/ru-names/lists/male_surnames_rus.txt")
 		BufferedReader(FileReader(file)).use { br ->
 			var name: String?
 			while (br.readLine().also { name = it } != null) {
 //				name?.let { genderService.addMaleName(it) }
-//				name?.let { genderService.addFemaleName(it) }
-				name?.let { genderService.addMaleLastname(it) }
+				name?.let { genderService.addFemaleName(it) }
+//				name?.let { genderService.addMaleLastname(it) }
 			}
 		}
 	}

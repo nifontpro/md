@@ -28,6 +28,7 @@ class SpringSecurityConfig {
 			.authorizeHttpRequests { auth ->
 				auth.requestMatchers("/award/get_item/**").permitAll()
 				auth.requestMatchers("/user/test/**").permitAll()
+				auth.requestMatchers("/user/admin/gender/**").permitAll()
 				auth.anyRequest().hasRole("user")
 			}
 			.oauth2ResourceServer { oauth2ResourceServer ->

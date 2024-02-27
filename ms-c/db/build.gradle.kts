@@ -39,7 +39,7 @@ dependencies {
 	implementation(project(":ms-c:domain"))
 	implementation(project(":ms-c:rest"))
 
-	implementation("net.logstash.logback:logstash-logback-encoder:7.3")
+//	implementation("net.logstash.logback:logstash-logback-encoder:7.3")
 
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")

@@ -235,8 +235,8 @@ class UserProcessor(
 				setMainImagesForUsers("Устанавливаем главные изображения для всех сотрудников")
 			}
 
-			operation("Создаем базу мужских имен", UserCommand.SRV_ADD_NAMES_DB) {
-				addGender("заполняем таблицу мужских имен")
+			operation("Создаем базу имен", UserCommand.SRV_ADD_NAMES_DB) {
+				addGender("заполняем таблицу имен")
 			}
 
 			finishOperation()

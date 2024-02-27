@@ -389,15 +389,13 @@ class UserController(
 //		)
 //	}
 
-//		@PostMapping("admin/gender")
+//	@PostMapping("admin/gender")
 //	private suspend fun addMaleName(
-//		@RequestHeader(name = AUTH) bearerToken: String,
 //		@RequestBody request: AddGenderRequest
 //	): BaseResponse<Unit> {
-//		val baseRequest = jwtUtils.baseRequest(request, bearerToken)
-//		return authProcess(
+//		return process(
 //			processor = userProcessor,
-//			authRequest = baseRequest,
+//			request = request,
 //			fromTransport = { fromTransport(it) },
 //			toTransport = { toTransportUnit() }
 //		)
