@@ -5,7 +5,7 @@ image='md_gateway'
 #docker build . -t 8881981/rs:$version
 DOCKER_BUILDKIT=1 docker build . --platform=linux/amd64 -t 8881981/$image:$version
 docker push 8881981/$image:$version
-ssh nifont@nmedalist.ru << EOF
+ssh root@medalists.ru << EOF
   docker pull 8881981/$image:$version
   cd ~/md;
 #  docker compose up -d

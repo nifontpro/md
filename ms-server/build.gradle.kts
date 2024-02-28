@@ -19,7 +19,7 @@ extra["springCloudVersion"] = springCloudVersion
 val sshAntTask = configurations.create("sshAntTask")
 
 dependencies {
-	implementation("net.logstash.logback:logstash-logback-encoder:7.3")
+//	implementation("net.logstash.logback:logstash-logback-encoder:7.3")
 
 	implementation(kotlin("stdlib-jdk8"))
 	implementation("org.jetbrains.kotlin:kotlin-reflect")

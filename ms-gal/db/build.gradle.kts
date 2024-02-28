@@ -36,7 +36,7 @@ dependencies {
 	implementation(project(":ms-gal:rest"))
 	implementation(project(":ms-gal:s3"))
 
-	implementation("net.logstash.logback:logstash-logback-encoder:7.3")
+//	implementation("net.logstash.logback:logstash-logback-encoder:7.3")
 
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
