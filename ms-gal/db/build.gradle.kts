@@ -31,10 +31,10 @@ dependencies {
 	implementation(project(":base:base_db"))
 	implementation(project(":base:base_domain"))
 	implementation(project(":base:base_rest"))
+	implementation(project(":base:base_s3"))
 
 	implementation(project(":ms-gal:domain"))
 	implementation(project(":ms-gal:rest"))
-	implementation(project(":ms-gal:s3"))
 
 //	implementation("net.logstash.logback:logstash-logback-encoder:7.3")
 

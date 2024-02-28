@@ -6,6 +6,7 @@ import ru.md.base_domain.biz.validate.validateSortedFields
 import ru.md.base_domain.biz.workers.finishOperation
 import ru.md.base_domain.biz.workers.initStatus
 import ru.md.base_domain.biz.workers.operation
+import ru.md.base_domain.s3.repo.BaseS3Repository
 import ru.md.cor.rootChain
 import ru.md.cor.worker
 import ru.md.msgal.domain.base.validate.validateFolderExist
@@ -15,19 +16,18 @@ import ru.md.msgal.domain.item.biz.validate.validateItemId
 import ru.md.msgal.domain.item.biz.validate.validateItemName
 import ru.md.msgal.domain.item.biz.workers.*
 import ru.md.msgal.domain.item.service.ItemService
-import ru.md.msgal.domain.s3.repository.S3Repository
 
 @Component
 class ItemProcessor(
 	private val itemService: ItemService,
 	private val folderService: FolderService,
-	private val s3Repository: S3Repository,
+	private val baseS3Repository: BaseS3Repository,
 ) : IBaseProcessor<ItemContext> {
 
 	override suspend fun exec(ctx: ItemContext) = businessChain.exec(ctx.also {
 		it.itemService = itemService
 		it.folderService = folderService
-		it.s3Repository = s3Repository
+		it.baseS3Repository = baseS3Repository
 	})
 
 	companion object {

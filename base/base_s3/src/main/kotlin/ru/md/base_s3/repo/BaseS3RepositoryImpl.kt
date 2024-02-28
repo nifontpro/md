@@ -55,7 +55,7 @@ class BaseS3RepositoryImpl(
 		}
 	}
 
-	fun deleteObject(key: String) {
+	override fun deleteObject(key: String) {
 		try {
 			s3.deleteObject(bucketName, key)
 		} catch (e: Exception) {

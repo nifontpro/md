@@ -14,8 +14,15 @@ fun ICorChainDsl<ItemContext>.addItemImageToS3(title: String) = worker {
 	handle {
 		val prefixUrl = "F$folderId"
 
-		val originKey = "$prefixUrl/${fileData.filename}"
-		val originUrl = s3Repository.putObject(key = originKey, fileUrl = fileData.originUrl) ?: throw Exception()
+		val originKey = "$prefixUrl/${imageData.imageName}"
+		val originUrl = imageData.originImage?.let {
+			baseS3Repository.putObjectMem(
+				key = originKey,
+				imageName = imageData.imageName,
+				contentType = imageData.contentType,
+				data = it
+			)
+		}
 
 		// Поэтапное заполнение для удаления из S3 в случае ошибки
 		item = item.copy(
@@ -25,16 +32,33 @@ fun ICorChainDsl<ItemContext>.addItemImageToS3(title: String) = worker {
 			normalUrl = originUrl,
 		)
 
-		if (fileData.compress) {
-			val miniKey = "$prefixUrl/mini/${fileData.filename}"
-			val miniUrl = s3Repository.putObject(key = miniKey, fileUrl = fileData.miniUrl) ?: throw Exception()
+		if (imageData.compress) {
+			val miniKey = "$prefixUrl/mini/${imageData.imageName}"
+			val miniUrl = imageData.miniImage?.let {
+				baseS3Repository.putObjectMem(
+					key = miniKey,
+					imageName = imageData.imageName,
+					contentType = imageData.contentType,
+					data = it
+				)
+			}
+
 			item = item.copy(
 				miniUrl = miniUrl,
 				miniKey = miniKey,
 			)
-			if (fileData.normCompress) {
-				val normalKey = "$prefixUrl/normal/${fileData.filename}"
-				val normalUrl = s3Repository.putObject(key = normalKey, fileUrl = fileData.normalUrl) ?: throw Exception()
+
+			if (imageData.normCompress) {
+				val normalKey = "$prefixUrl/normal/${imageData.imageName}"
+				val normalUrl = imageData.normalImage?.let {
+					baseS3Repository.putObjectMem(
+						key = normalKey,
+						imageName = imageData.imageName,
+						contentType = imageData.contentType,
+						data = it
+					)
+				}
+
 				item = item.copy(
 					normalUrl = normalUrl,
 					normalKey = normalKey,

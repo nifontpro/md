@@ -15,12 +15,6 @@ fun <T : BaseMedalsContext> ICorChainDsl<T>.addImageToS3(title: String) = worker
 
 	handle {
 
-		log.info("imageData.compress = ${imageData.compress}")
-		log.info("imageData.normCompress = ${imageData.normCompress}")
-		log.info("imageData.originImage.size = ${imageData.originImage?.second}")
-		log.info("imageData.normalImage.size = ${imageData.normalImage?.second}")
-		log.info("imageData.miniImage.size = ${imageData.miniImage?.second}")
-
 		val originKey = "$prefixUrl/${imageData.imageName}"
 		val originUrl = imageData.originImage?.let {
 			baseS3Repository.putObjectMem(

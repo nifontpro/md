@@ -9,8 +9,12 @@ import ru.md.base_domain.model.BaseResponse
 import ru.md.base_rest.base.authProcess
 import ru.md.base_rest.base.process
 import ru.md.base_rest.base.toLongOr0
+import ru.md.base_rest.image.baseImageProcessMem
 import ru.md.base_rest.model.request.AUTH
+import ru.md.base_rest.model.response.BaseImageResponse
 import ru.md.base_rest.utils.JwtUtils
+import ru.md.msgal.domain.item.biz.proc.ItemCommand
+import ru.md.msgal.domain.item.biz.proc.ItemContext
 import ru.md.msgal.domain.item.biz.proc.ItemProcessor
 import ru.md.msgal.rest.item.mappers.fromTransport
 import ru.md.msgal.rest.item.mappers.toTransportItems
@@ -32,15 +36,25 @@ class ItemController(
 		@RequestPart("folderId") folderId: String,
 		@RequestPart("name") name: String,
 		@RequestPart("description") description: String?,
-	): BaseResponse<GalleryItem> {
+	): BaseResponse<BaseImageResponse> {
 		val authData = jwtUtils.decodeBearerJwt(bearerToken = bearerToken)
-		return addItemProc(
+		val context = ItemContext().apply {
+			command = ItemCommand.CREATE
+			val fId = folderId.toLongOr0()
+			this.folderId = fId
+			item = GalleryItem(
+				folderId = fId,
+				name = name,
+				description = description
+			)
+		}
+		return baseImageProcessMem(
 			authData = authData,
-			itemProcessor = itemProcessor,
+			context = context,
+			processor = itemProcessor,
 			multipartFile = file,
-			folderId = folderId.toLongOr0(),
-			name = name,
-			description = description
+			authId = 0,
+			entityId = 0,
 		)
 	}
 

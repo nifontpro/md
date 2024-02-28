@@ -9,4 +9,5 @@ interface BaseS3Repository {
 	suspend fun deleteBaseImage(entity: IBaseImage)
 	suspend fun deleteImages(images: List<IBaseImage>)
 	suspend fun putObjectMem(key: String, imageName: String, contentType: String, data: Pair<InputStream, Int>): String
+	fun deleteObject(key: String)
 }

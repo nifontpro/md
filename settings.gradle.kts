@@ -38,7 +38,6 @@ include("ms-gal")
 include("ms-gal:db")
 include("ms-gal:domain")
 include("ms-gal:rest")
-include("ms-gal:s3")
 
 include("ms-shop")
 include("ms-shop:db")
