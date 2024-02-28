@@ -6,6 +6,6 @@ eureka:
 server:
   ssl:
     enabled: ${SSL_ENABLED:false}
-    certificate: /etc/ssl/nmedalist.crt
-    certificate-private-key: /etc/ssl/nmedalist.key
+    certificate: /etc/ssl/medalists.crt
+    certificate-private-key: /etc/ssl/medalists.key
     trust-certificate: /etc/ssl/ca.crt
